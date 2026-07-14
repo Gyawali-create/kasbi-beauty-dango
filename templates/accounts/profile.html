@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-5" style="max-width: 640px;">
+  <h2 class="text-kasbi mb-4">My Profile</h2>
+  <div class="card p-4 stat-card mb-4">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <h6 class="mb-3">Account Details</h6>
+      {% for field in user_form %}
+        <div class="mb-3">
+          <label class="form-label">{{ field.label }}</label>
+          {{ field }}
+        </div>
+      {% endfor %}
+      <hr>
+      <h6 class="mb-3">Shipping Details</h6>
+      {% for field in profile_form %}
+        <div class="mb-3">
+          <label class="form-label">{{ field.label }}</label>
+          {{ field }}
+        </div>
+      {% endfor %}
+      <button type="submit" class="btn btn-kasbi">Save Changes</button>
+      <a href="{% url 'accounts:password_change' %}" class="btn btn-outline-kasbi">Change Password</a>
+    </form>
+  </div>
+  <a href="{% url 'orders:history' %}" class="btn btn-outline-kasbi">View My Orders</a>
+</div>
+{% endblock %}

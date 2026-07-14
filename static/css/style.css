@@ -1,0 +1,104 @@
+:root {
+  --kb-pink: #d6336c;
+  --kb-gold: #c49a5a;
+  --kb-dark: #2d1e28;
+  --kb-cream: #fbf3f0;
+}
+
+body {
+  background-color: var(--kb-cream);
+  color: var(--kb-dark);
+  font-family: 'Segoe UI', Roboto, sans-serif;
+}
+
+.navbar-brand img { height: 42px; }
+
+.navbar-kasbi {
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.btn-kasbi {
+  background-color: var(--kb-pink);
+  border-color: var(--kb-pink);
+  color: #fff;
+}
+.btn-kasbi:hover {
+  background-color: #b52a5a;
+  border-color: #b52a5a;
+  color: #fff;
+}
+
+.btn-outline-kasbi {
+  border: 1px solid var(--kb-pink);
+  color: var(--kb-pink);
+  background: transparent;
+}
+.btn-outline-kasbi:hover {
+  background-color: var(--kb-pink);
+  color: #fff;
+}
+
+.text-kasbi { color: var(--kb-pink); }
+.bg-kasbi { background-color: var(--kb-pink); }
+
+.hero-kasbi {
+  background: linear-gradient(120deg, #fdeef2 0%, #fbf3f0 100%);
+  border-radius: 0 0 24px 24px;
+  padding: 56px 0;
+}
+
+.product-card {
+  border: none;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  transition: transform .15s ease, box-shadow .15s ease;
+  height: 100%;
+}
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.10);
+}
+.product-card .card-img-top {
+  height: 220px;
+  object-fit: cover;
+  background-color: #f1e5e9;
+}
+.price-old { text-decoration: line-through; color: #999; font-size: .9em; }
+.price-new { color: var(--kb-pink); font-weight: 700; }
+
+.badge-featured {
+  background-color: var(--kb-gold);
+  color: #fff;
+}
+
+.footer-kasbi {
+  background-color: var(--kb-dark);
+  color: #f2e9ec;
+  padding: 40px 0 20px;
+  margin-top: 60px;
+}
+.footer-kasbi a { color: #f2c9d6; text-decoration: none; }
+.footer-kasbi a:hover { color: #fff; }
+
+.category-pill {
+  border-radius: 999px;
+  padding: 6px 16px;
+  border: 1px solid #eaced7;
+  background: #fff;
+  color: var(--kb-dark);
+  font-size: .9rem;
+  display: inline-block;
+}
+.category-pill.active, .category-pill:hover {
+  background-color: var(--kb-pink);
+  border-color: var(--kb-pink);
+  color: #fff;
+}
+
+.stat-card {
+  border-radius: 14px;
+  border: none;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}

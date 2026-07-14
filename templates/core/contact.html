@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-5">
+  <h1 class="text-kasbi mb-4">Contact Us</h1>
+  <div class="row">
+    <div class="col-md-7">
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label class="form-label">Name</label>
+          {{ form.name }}
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          {{ form.email }}
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Subject</label>
+          {{ form.subject }}
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Message</label>
+          {{ form.message }}
+        </div>
+        <button type="submit" class="btn btn-kasbi">Send Message</button>
+      </form>
+    </div>
+    <div class="col-md-5">
+      <div class="card p-4 stat-card">
+        <h6>Get in touch</h6>
+        <p class="mb-1"><i class="bi bi-envelope"></i> {{ site_settings.email }}</p>
+        {% if site_settings.phone %}<p class="mb-0"><i class="bi bi-telephone"></i> {{ site_settings.phone }}</p>{% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

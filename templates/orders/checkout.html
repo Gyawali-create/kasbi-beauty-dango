@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-4">
+  <h2 class="text-kasbi mb-4">Checkout</h2>
+  <div class="row g-4">
+    <div class="col-md-7">
+      <div class="card p-4 stat-card">
+        <form method="post">
+          {% csrf_token %}
+          {% for field in form %}
+          <div class="mb-3">
+            <label class="form-label">{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}<div class="text-danger small">{{ field.errors|striptags }}</div>{% endif %}
+          </div>
+          {% endfor %}
+          <button type="submit" class="btn btn-kasbi w-100">Place Order</button>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="card p-4 stat-card">
+        <h6 class="mb-3">Order Summary</h6>
+        {% for item in cart.items.all %}
+        <div class="d-flex justify-content-between small mb-2">
+          <span>{{ item.product.name }} &times; {{ item.quantity }}</span>
+          <span>Rs. {{ item.subtotal }}</span>
+        </div>
+        {% endfor %}
+        <hr>
+        <div class="d-flex justify-content-between fw-bold">
+          <span>Total</span>
+          <span>Rs. {{ cart.total }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

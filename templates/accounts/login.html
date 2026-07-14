@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-5" style="max-width: 480px;">
+  <h2 class="text-kasbi mb-4 text-center">Login to Kasbi Beauty</h2>
+  <div class="card p-4 stat-card">
+    <form method="post">
+      {% csrf_token %}
+      {% if form.errors %}
+        <div class="alert alert-danger">Invalid username or password.</div>
+      {% endif %}
+      <div class="mb-3">
+        <label class="form-label">Username</label>
+        <input type="text" name="username" class="form-control" required autofocus>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input type="password" name="password" class="form-control" required>
+      </div>
+      <button type="submit" class="btn btn-kasbi w-100">Login</button>
+    </form>
+    <p class="text-center mt-3 mb-0">Don't have an account? <a href="{% url 'accounts:register' %}">Sign up</a></p>
+  </div>
+</div>
+{% endblock %}

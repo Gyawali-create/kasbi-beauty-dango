@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section class="hero-kasbi text-center mb-5">
+  <div class="container">
+    <h1 class="display-5 fw-bold">{{ site_settings.tagline|default:"Beauty, delivered." }}</h1>
+    <p class="lead">Discover skincare, makeup and self-care essentials curated just for you.</p>
+    <a href="{% url 'products:list' %}" class="btn btn-kasbi btn-lg mt-2">Shop Now</a>
+  </div>
+</section>
+
+<div class="container">
+  {% if categories %}
+  <div class="d-flex flex-wrap gap-2 justify-content-center mb-5">
+    {% for c in categories %}
+      <a class="category-pill" href="{% url 'products:list' %}?category={{ c.slug }}">{{ c.name }}</a>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if featured %}
+  <h3 class="mb-3">Featured Products</h3>
+  <div class="row g-4 mb-5">
+    {% for p in featured %}
+    <div class="col-6 col-md-3">
+      <div class="card product-card">
+        <a href="{{ p.get_absolute_url }}">
+          {% if p.thumbnail %}
+            <img src="{{ p.thumbnail.url }}" class="card-img-top" alt="{{ p.name }}">
+          {% else %}
+            <img src="{% static 'img/logo.png' %}" class="card-img-top p-4" alt="{{ p.name }}">
+          {% endif %}
+        </a>
+        <div class="card-body">
+          <span class="badge badge-featured mb-1">Featured</span>
+          <h6 class="card-title"><a href="{{ p.get_absolute_url }}" class="text-decoration-none text-dark">{{ p.name }}</a></h6>
+          <p class="mb-0">
+            {% if p.discount_price %}
+              <span class="price-old">Rs. {{ p.price }}</span>
+              <span class="price-new">Rs. {{ p.discount_price }}</span>
+            {% else %}
+              <span class="price-new">Rs. {{ p.price }}</span>
+            {% endif %}
+          </p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <h3 class="mb-3">New Arrivals</h3>
+  <div class="row g-4 mb-5">
+    {% for p in newest %}
+    <div class="col-6 col-md-3">
+      <div class="card product-card">
+        <a href="{{ p.get_absolute_url }}">
+          {% if p.thumbnail %}
+            <img src="{{ p.thumbnail.url }}" class="card-img-top" alt="{{ p.name }}">
+          {% else %}
+            <img src="{% static 'img/logo.png' %}" class="card-img-top p-4" alt="{{ p.name }}">
+          {% endif %}
+        </a>
+        <div class="card-body">
+          <h6 class="card-title"><a href="{{ p.get_absolute_url }}" class="text-decoration-none text-dark">{{ p.name }}</a></h6>
+          <p class="mb-0">
+            {% if p.discount_price %}
+              <span class="price-old">Rs. {{ p.price }}</span>
+              <span class="price-new">Rs. {{ p.discount_price }}</span>
+            {% else %}
+              <span class="price-new">Rs. {{ p.price }}</span>
+            {% endif %}
+          </p>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <p class="text-muted">No products yet — add some from the admin dashboard.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

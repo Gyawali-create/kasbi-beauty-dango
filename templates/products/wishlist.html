@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container py-4">
+  <h2 class="text-kasbi mb-4">My Wishlist</h2>
+  <div class="row g-4">
+    {% for item in items %}
+    <div class="col-6 col-md-3">
+      <div class="card product-card">
+        <a href="{{ item.product.get_absolute_url }}">
+          {% if item.product.thumbnail %}<img src="{{ item.product.thumbnail.url }}" class="card-img-top" alt="{{ item.product.name }}">
+          {% else %}<img src="{% static 'img/logo.png' %}" class="card-img-top p-4" alt="{{ item.product.name }}">{% endif %}
+        </a>
+        <div class="card-body">
+          <h6 class="card-title"><a href="{{ item.product.get_absolute_url }}" class="text-decoration-none text-dark">{{ item.product.name }}</a></h6>
+          <span class="price-new">Rs. {{ item.product.current_price }}</span>
+          <div class="d-flex gap-2 mt-2">
+            <form method="post" action="{% url 'cart:add' item.product.id %}" class="flex-grow-1">
+              {% csrf_token %}
+              <input type="hidden" name="quantity" value="1">
+              <button type="submit" class="btn btn-kasbi btn-sm w-100">Add to Cart</button>
+            </form>
+            <a href="{% url 'products:wishlist_remove' item.product.id %}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-trash"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <p class="text-muted">Your wishlist is empty. <a href="{% url 'products:list' %}">Browse products</a></p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

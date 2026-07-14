@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text-kasbi mb-0">Admin Dashboard</h2>
+    <a href="/admin/" class="btn btn-outline-kasbi btn-sm">Go to Full Admin Panel <i class="bi bi-box-arrow-up-right"></i></a>
+  </div>
+
+  <div class="row g-3 mb-4">
+    <div class="col-md-3">
+      <div class="card stat-card p-3 text-center">
+        <div class="text-muted small">Total Sales</div>
+        <div class="fs-4 fw-bold text-kasbi">Rs. {{ total_sales }}</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card stat-card p-3 text-center">
+        <div class="text-muted small">Total Orders</div>
+        <div class="fs-4 fw-bold">{{ total_orders }}</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card stat-card p-3 text-center">
+        <div class="text-muted small">Pending Orders</div>
+        <div class="fs-4 fw-bold">{{ pending_orders }}</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card stat-card p-3 text-center">
+        <div class="text-muted small">Products</div>
+        <div class="fs-4 fw-bold">{{ total_products }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="card stat-card p-4">
+        <h6 class="mb-3">Recent Orders</h6>
+        <table class="table table-sm">
+          <thead><tr><th>Order</th><th>Customer</th><th>Total</th><th>Status</th></tr></thead>
+          <tbody>
+            {% for order in recent_orders %}
+            <tr>
+              <td><a href="/admin/orders/order/{{ order.id }}/change/">{{ order.order_number }}</a></td>
+              <td>{{ order.user.username }}</td>
+              <td>Rs. {{ order.total }}</td>
+              <td><span class="badge bg-secondary">{{ order.get_status_display }}</span></td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4" class="text-muted">No orders yet.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card stat-card p-4">
+        <h6 class="mb-3">Top Selling Products</h6>
+        <table class="table table-sm">
+          <thead><tr><th>Product</th><th>Units Sold</th><th>Revenue</th></tr></thead>
+          <tbody>
+            {% for p in top_products %}
+            <tr>
+              <td>{{ p.product_name }}</td>
+              <td>{{ p.units_sold }}</td>
+              <td>Rs. {{ p.revenue }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="3" class="text-muted">No sales yet.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card stat-card p-4 mt-4">
+        <h6 class="mb-3">Low Stock Alerts (&le; 5 units)</h6>
+        <table class="table table-sm">
+          <thead><tr><th>Product</th><th>Stock</th></tr></thead>
+          <tbody>
+            {% for p in low_stock %}
+            <tr>
+              <td><a href="/admin/products/product/{{ p.id }}/change/">{{ p.name }}</a></td>
+              <td><span class="badge bg-danger">{{ p.stock }}</span></td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="2" class="text-muted">All stock levels are healthy.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card stat-card p-4 mt-4">
+    <h6 class="mb-2">Quick Actions</h6>
+    <div class="d-flex flex-wrap gap-2">
+      <a href="/admin/products/product/add/" class="btn btn-kasbi btn-sm">+ Add Product</a>
+      <a href="/admin/products/category/add/" class="btn btn-outline-kasbi btn-sm">+ Add Category</a>
+      <a href="/admin/products/coupon/add/" class="btn btn-outline-kasbi btn-sm">+ Add Coupon</a>
+      <a href="/admin/orders/order/" class="btn btn-outline-kasbi btn-sm">Manage Orders</a>
+      <a href="/admin/auth/user/" class="btn btn-outline-kasbi btn-sm">Manage Customers</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

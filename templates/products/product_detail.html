@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container py-4">
+  <div class="row g-5">
+    <div class="col-md-5">
+      {% if product.thumbnail %}
+        <img src="{{ product.thumbnail.url }}" class="img-fluid rounded-4" alt="{{ product.name }}">
+      {% else %}
+        <img src="{% static 'img/logo.png' %}" class="img-fluid rounded-4 p-5 bg-white" alt="{{ product.name }}">
+      {% endif %}
+      {% if product.images.all %}
+      <div class="row g-2 mt-2">
+        {% for img in product.images.all %}
+        <div class="col-3"><img src="{{ img.image.url }}" class="img-fluid rounded"></div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+    <div class="col-md-7">
+      {% if product.category %}<a href="{% url 'products:list' %}?category={{ product.category.slug }}" class="text-muted small text-decoration-none">{{ product.category.name }}</a>{% endif %}
+      <h2 class="mt-1">{{ product.name }}</h2>
+      {% if product.brand %}<p class="text-muted">by {{ product.brand.name }}</p>{% endif %}
+      <div class="mb-3">
+        {% if product.discount_price %}
+          <span class="price-old fs-5">Rs. {{ product.price }}</span>
+          <span class="price-new fs-3">Rs. {{ product.discount_price }}</span>
+        {% else %}
+          <span class="price-new fs-3">Rs. {{ product.price }}</span>
+        {% endif %}
+      </div>
+      <p>{{ product.description|linebreaks }}</p>
+      <p>
+        {% if product.in_stock %}
+          <span class="badge bg-success">In Stock ({{ product.stock }} available)</span>
+        {% else %}
+          <span class="badge bg-danger">Out of Stock</span>
+        {% endif %}
+      </p>
+
+      {% if user.is_authenticated %}
+      <form method="post" action="{% url 'cart:add' product.id %}" class="d-flex gap-2 align-items-center mb-3">
+        {% csrf_token %}
+        <input type="number" name="quantity" value="1" min="1" max="{{ product.stock }}" class="form-control" style="width: 90px;">
+        <button type="submit" class="btn btn-kasbi" {% if not product.in_stock %}disabled{% endif %}>
+          <i class="bi bi-bag-plus"></i> Add to Cart
+        </button>
+        {% if in_wishlist %}
+          <a href="{% url 'products:wishlist_remove' product.id %}" class="btn btn-outline-kasbi"><i class="bi bi-heart-fill"></i> Wishlisted</a>
+        {% else %}
+          <a href="{% url 'products:wishlist_add' product.id %}" class="btn btn-outline-kasbi"><i class="bi bi-heart"></i> Add to Wishlist</a>
+        {% endif %}
+      </form>
+      {% else %}
+        <a href="{% url 'accounts:login' %}" class="btn btn-kasbi">Login to purchase</a>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if related %}
+  <h4 class="mt-5 mb-3">You may also like</h4>
+  <div class="row g-4">
+    {% for p in related %}
+    <div class="col-6 col-md-3">
+      <div class="card product-card">
+        <a href="{{ p.get_absolute_url }}">
+          {% if p.thumbnail %}<img src="{{ p.thumbnail.url }}" class="card-img-top" alt="{{ p.name }}">
+          {% else %}<img src="{% static 'img/logo.png' %}" class="card-img-top p-4" alt="{{ p.name }}">{% endif %}
+        </a>
+        <div class="card-body">
+          <h6 class="card-title"><a href="{{ p.get_absolute_url }}" class="text-decoration-none text-dark">{{ p.name }}</a></h6>
+          <span class="price-new">Rs. {{ p.current_price }}</span>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

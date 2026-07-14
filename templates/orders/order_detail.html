@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-4">
+  <h2 class="text-kasbi mb-1">Order {{ order.order_number }}</h2>
+  <p class="text-muted">Placed on {{ order.created_at|date:"M d, Y H:i" }}</p>
+
+  <div class="row g-4">
+    <div class="col-md-8">
+      <div class="card p-4 stat-card mb-4">
+        <h6 class="mb-3">Order Status</h6>
+        <div class="progress" style="height: 10px;">
+          {% if order.status == 'cancelled' %}
+            <div class="progress-bar bg-danger" style="width: 100%">Cancelled</div>
+          {% else %}
+            {% if order.status == 'pending' %}
+              <div class="progress-bar bg-kasbi" style="width: 25%"></div>
+            {% elif order.status == 'processing' %}
+              <div class="progress-bar bg-kasbi" style="width: 50%"></div>
+            {% elif order.status == 'shipped' %}
+              <div class="progress-bar bg-kasbi" style="width: 75%"></div>
+            {% elif order.status == 'delivered' %}
+              <div class="progress-bar bg-kasbi" style="width: 100%"></div>
+            {% endif %}
+          {% endif %}
+        </div>
+        <p class="mt-2 mb-0">Current status: <span class="badge bg-secondary">{{ order.get_status_display }}</span></p>
+      </div>
+
+      <div class="card p-4 stat-card">
+        <h6 class="mb-3">Items</h6>
+        <table class="table">
+          <thead><tr><th>Product</th><th>Price</th><th>Qty</th><th>Subtotal</th></tr></thead>
+          <tbody>
+            {% for item in order.items.all %}
+            <tr>
+              <td>{{ item.product_name }}</td>
+              <td>Rs. {{ item.price }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>Rs. {{ item.subtotal }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card p-4 stat-card mb-4">
+        <h6>Shipping To</h6>
+        <p class="mb-1">{{ order.full_name }}</p>
+        <p class="mb-1">{{ order.address_line }}, {{ order.city }}</p>
+        <p class="mb-1">{{ order.postal_code }} {{ order.country }}</p>
+        <p class="mb-0">{{ order.phone }}</p>
+      </div>
+      <div class="card p-4 stat-card">
+        <h6>Payment Summary</h6>
+        <div class="d-flex justify-content-between"><span>Subtotal</span><span>Rs. {{ order.subtotal }}</span></div>
+        <div class="d-flex justify-content-between"><span>Discount</span><span>-Rs. {{ order.discount_amount }}</span></div>
+        <hr>
+        <div class="d-flex justify-content-between fw-bold"><span>Total</span><span>Rs. {{ order.total }}</span></div>
+        <p class="mt-2 mb-0 small text-muted">Payment method: {{ order.get_payment_method_display }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
