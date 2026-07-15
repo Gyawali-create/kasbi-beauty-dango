@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kasbi Beauty — Hair Care</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <!-- ===== TOP BAR ===== -->
+    <div class="topbar">
+        <div class="left">
+            <i class="fa-solid fa-truck-fast"></i> Free Delivery inside Kathmandu on Orders above Rs.3000
+        </div>
+        <div class="right">
+            <a href="#"><i class="fa-regular fa-clock"></i> Track Order</a>
+            <a href="#"><i class="fa-regular fa-newspaper"></i> Beauty Blog</a>
+            <a href="#"><i class="fa-regular fa-circle-question"></i> Help Center</a>
+        </div>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <div class="logo">
+            <a href="index.html"><img src="images/logo.png" alt="Kasbi Beauty"></a>
+        </div>
+        <div class="search">
+            <input type="text" placeholder="Search skincare, makeup, serum...">
+            <button><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+        <div class="header-icons">
+            <div>
+                <a href="wishlist.html" style="display:flex; flex-direction:column; align-items:center; text-decoration:none; color:inherit;">
+                    <i class="fa-regular fa-heart"></i>
+                    <span>Wishlist</span>
+                </a>
+            </div>
+            <div>
+                <a href="cart.html" style="display:flex; flex-direction:column; align-items:center; text-decoration:none; color:inherit;">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span>Cart</span>
+                    <span class="cart-badge">3</span>
+                </a>
+            </div>
+            <div>
+                <i class="fa-regular fa-user"></i>
+                <span>Account</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navigation">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="brands.html">Brands</a></li>
+            <li><a href="skincare.html">Skincare</a></li>
+            <li><a href="makeup.html">Makeup</a></li>
+            <li><a href="haircare.html" class="active">Hair Care</a></li>
+            <li><a href="newarrivals.html">New Arrivals</a></li>
+            <li><a href="bestsellers.html">Best Sellers</a></li>
+            <li><a href="offers.html">Offers</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- ===== PAGE HEADER ===== -->
+    <div class="page-header">
+        <h1>Hair Care</h1>
+        <p>Nourish, style, and protect your hair</p>
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <span class="sep">/</span>
+            <span class="current">Hair Care</span>
+        </div>
+    </div>
+
+    <!-- ===== CATEGORY BANNER ===== -->
+    <div style="margin: 40px 6%;">
+        <div style="background: linear-gradient(135deg, #D4E8D4, #E8F0E0); border-radius: 32px; padding: 50px 60px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 30px;">
+            <div>
+                <span style="font-size: 12px; letter-spacing: 2px; color: #2d6b55; font-weight: 600;">PREMIUM COLLECTION</span>
+                <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 42px; margin: 8px 0; color: #1a3a2a;">Healthy Hair Starts Here</h2>
+                <p style="color: #3a5a4a; max-width: 400px; font-weight: 300;">Shampoos, conditioners, serums, and masks for every hair type.</p>
+            </div>
+            <div style="display: flex; gap: 12px;">
+                <span style="background: white; padding: 8px 20px; border-radius: 40px; font-weight: 600; font-size: 13px; color: #5E4074;">60+ Products</span>
+                <span style="background: rgba(255,255,255,0.4); padding: 8px 20px; border-radius: 40px; font-weight: 500; font-size: 13px; color: #5E4074;">12+ Brands</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SHOP SECTION ===== -->
+    <section class="shop-section">
+        <!-- Filters -->
+        <div class="filter-sidebar">
+            <h3><i class="fa-solid fa-sliders" style="margin-right:10px;"></i>Filters</h3>
+
+            <div class="filter-group">
+                <h4>Categories</h4>
+                <label><input type="checkbox"> Shampoo</label>
+                <label><input type="checkbox" checked> Conditioner</label>
+                <label><input type="checkbox"> Hair Serum</label>
+                <label><input type="checkbox"> Hair Mask</label>
+                <label><input type="checkbox"> Hair Oil</label>
+                <label><input type="checkbox"> Styling Products</label>
+            </div>
+
+            <div class="filter-group">
+                <h4>Hair Type</h4>
+                <label><input type="checkbox"> All Hair Types</label>
+                <label><input type="checkbox"> Curly Hair</label>
+                <label><input type="checkbox"> Straight Hair</label>
+                <label><input type="checkbox"> Damaged Hair</label>
+                <label><input type="checkbox"> Colored Hair</label>
+            </div>
+
+            <div class="filter-group">
+                <h4>Price Range</h4>
+                <div class="price-range">
+                    <input type="text" placeholder="Min" value="500">
+                    <span>—</span>
+                    <input type="text" placeholder="Max" value="4000">
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <h4>Brands</h4>
+                <label><input type="checkbox"> L'Oreal</label>
+                <label><input type="checkbox"> Garnier</label>
+                <label><input type="checkbox"> TRESemmé</label>
+                <label><input type="checkbox"> OGX</label>
+                <label><input type="checkbox"> Moroccanoil</label>
+            </div>
+
+            <button class="btn-primary"><i class="fa-solid fa-rotate-right"></i> Apply Filters</button>
+        </div>
+
+        <!-- Products -->
+        <div>
+            <div class="shop-toolbar">
+                <span>Showing 1–12 of 60 products</span>
+                <select>
+                    <option>Sort by: Newest</option>
+                    <option>Sort by: Price: Low to High</option>
+                    <option>Sort by: Price: High to Low</option>
+                    <option>Sort by: Best Selling</option>
+                    <option>Sort by: Rating</option>
+                </select>
+            </div>
+
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="image-wrap">
+                        <span class="discount">-20%</span>
+                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
+                        <img src="images/product4.png" alt="Shampoo">
+                    </div>
+                    <div class="info">
+                        <span class="brand">L'Oreal</span>
+                        <h3>Expert Repair Shampoo</h3>
+                        <div class="rating">★★★★★ <span>(412)</span></div>
+                        <div class="price">
+                            <span class="current">Rs.1,800</span>
+                            <span class="old">Rs.2,250</span>
+                        </div>
+                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-wrap">
+                        <span class="discount">-15%</span>
+                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
+                        <img src="images/product1.png" alt="Conditioner">
+                    </div>
+                    <div class="info">
+                        <span class="brand">Garnier</span>
+                        <h3>Ultimate Blends Conditioner</h3>
+                        <div class="rating">★★★★★ <span>(328)</span></div>
+                        <div class="price">
+                            <span class="current">Rs.1,500</span>
+                            <span class="old">Rs.1,800</span>
+                        </div>
+                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-wrap">
+                        <span class="discount">-30%</span>
+                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
+                        <img src="images/product2.png" alt="Hair Mask">
+                    </div>
+                    <div class="info">
+                        <span class="brand">Moroccanoil</span>
+                        <h3>Intensive Hair Mask</h3>
+                        <div class="rating">★★★★★ <span>(289)</span></div>
+                        <div class="price">
+                            <span class="current">Rs.3,500</span>
+                            <span class="old">Rs.5,000</span>
+                        </div>
+                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-wrap">
+                        <span class="discount">-10%</span>
+                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
+                        <img src="images/product3.png" alt="Hair Serum">
+                    </div>
+                    <div class="info">
+                        <span class="brand">OGX</span>
+                        <h3>Argan Oil Hair Serum</h3>
+                        <div class="rating">★★★★★ <span>(234)</span></div>
+                        <div class="price">
+                            <span class="current">Rs.2,200</span>
+                            <span class="old">Rs.2,500</span>
+                        </div>
+                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-wrap">
+                        <span class="discount">-25%</span>
+                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
+                        <img src="images/product4.png" alt="Hair Oil">
+                    </div>
+                    <div class="info">
+                        <span class="brand">L'Oreal</span>
+                        <h3>Hair Oil Serum</h3>
+                        <div class="rating">★★★★★ <span>(198)</span></div>
+                        <div class="price">
+                            <span class="current">Rs.1,600</span>
+                            <span class="old">Rs.2,100</span>
+                        </div>
+                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-wrap">
+                        <span class="discount">-5%</span>
+                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
+                        <img src="images/product1.png" alt="Styling">
+                    </div>
+                    <div class="info">
+                        <span class="brand">TRESemmé</span>
+                        <h3>Heat Protectant Spray</h3>
+                        <div class="rating">★★★★★ <span>(167)</span></div>
+                        <div class="price">
+                            <span class="current">Rs.1,200</span>
+                            <span class="old">Rs.1,300</span>
+                        </div>
+                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pagination">
+                <a href="#" class="active">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#"><i class="fa-solid fa-chevron-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <a href="index.html"><img src="images/logo.png" alt="Kasbi Beauty" style="height:45px; width:auto; margin-bottom:16px; filter:brightness(10) grayscale(1) opacity(0.8);"></a>
+                <p>Your trusted beauty destination in Nepal. Premium skincare, makeup, haircare & more — all 100% authentic.</p>
+                <div class="social">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="#">Beauty Blog</a></li>
+                    <li><a href="#">Track Order</a></li>
+                    <li><a href="#">Returns & Refunds</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Categories</h4>
+                <ul>
+                    <li><a href="skincare.html">Skincare</a></li>
+                    <li><a href="makeup.html">Makeup</a></li>
+                    <li><a href="haircare.html">Hair Care</a></li>
+                    <li><a href="shop.html">Fragrance</a></li>
+                    <li><a href="shop.html">Beauty Tools</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="#"><i class="fa-solid fa-phone" style="margin-right:8px;"></i>+977 980-0000000</a></li>
+                    <li><a href="#"><i class="fa-regular fa-envelope" style="margin-right:8px;"></i>hello@kasbi.com</a></li>
+                    <li><a href="#"><i class="fa-regular fa-location-dot" style="margin-right:8px;"></i>Kathmandu, Nepal</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Kasbi Beauty. All rights reserved.</span>
+            <div class="payment">
+                <i class="fa-brands fa-cc-visa"></i>
+                <i class="fa-brands fa-cc-mastercard"></i>
+                <i class="fa-brands fa-cc-paypal"></i>
+                <i class="fa-solid fa-wallet"></i>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

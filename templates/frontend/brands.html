@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kasbi Beauty — Brands</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+
+</head>
+<body>
+
+    <!-- ===== TOP BAR ===== -->
+    <div class="topbar">
+        <div class="left">
+            <i class="fa-solid fa-truck-fast"></i> Free Delivery inside Kathmandu on Orders above Rs.3000
+        </div>
+        <div class="right">
+            <a href="#"><i class="fa-regular fa-clock"></i> Track Order</a>
+            <a href="#"><i class="fa-regular fa-newspaper"></i> Beauty Blog</a>
+            <a href="#"><i class="fa-regular fa-circle-question"></i> Help Center</a>
+        </div>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <div class="logo">
+            <a href="index.html"><img src="images/logo.png" alt="Kasbi Beauty"></a>
+        </div>
+        <div class="search">
+            <input type="text" placeholder="Search skincare, makeup, serum...">
+            <button><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+        <div class="header-icons">
+            <div>
+                <a href="wishlist.html" style="display:flex; flex-direction:column; align-items:center; text-decoration:none; color:inherit;">
+                    <i class="fa-regular fa-heart"></i>
+                    <span>Wishlist</span>
+                </a>
+            </div>
+            <div>
+                <a href="cart.html" style="display:flex; flex-direction:column; align-items:center; text-decoration:none; color:inherit;">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span>Cart</span>
+                    <span class="cart-badge">3</span>
+                </a>
+            </div>
+            <div>
+                <a href="account.html" style="display:flex; flex-direction:column; align-items:center; text-decoration:none; color:inherit;">
+                    <i class="fa-regular fa-user"></i>
+                    <span>Account</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navigation">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="brands.html" class="active">Brands</a></li>
+            <li><a href="skincare.html">Skincare</a></li>
+            <li><a href="makeup.html">Makeup</a></li>
+            <li><a href="haircare.html">Hair Care</a></li>
+            <li><a href="newarrivals.html">New Arrivals</a></li>
+            <li><a href="bestsellers.html">Best Sellers</a></li>
+            <li><a href="offers.html">Offers</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- ===== BRANDS HERO ===== -->
+    <section class="brands-hero">
+        <h1>Our Brands</h1>
+        <p>Discover trusted beauty brands from around the world</p>
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <span class="sep">/</span>
+            <span class="current">Brands</span>
+        </div>
+    </section>
+
+    <!-- ===== BRANDS SECTION ===== -->
+    <section class="brands-section">
+        <div class="section-header">
+            <h2>All <span class="highlight">Brands</span></h2>
+            <span class="brand-count">Showing 30+ Brands</span>
+        </div>
+
+        <!-- Filter -->
+        <div class="brand-filter">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="skincare">Skincare</button>
+            <button class="filter-btn" data-filter="makeup">Makeup</button>
+            <button class="filter-btn" data-filter="haircare">Hair Care</button>
+            <button class="filter-btn" data-filter="fragrance">Fragrance</button>
+            <button class="filter-btn" data-filter="korean">Korean Beauty</button>
+            <button class="filter-btn" data-filter="babycare">Babycare</button>
+        </div>
+
+        <!-- Brands Grid -->
+        <div class="brands-grid-full" id="brandsGrid">
+            <!-- Row 1 -->
+            <div class="brand-card-full" data-category="skincare">
+                <div class="brand-logo">
+                    <img src="images/CeraVe.png" alt="CeraVe">
+                </div>
+                <h4>CeraVe</h4>
+                <span class="product-count">30 Products</span>
+                <span class="featured-badge">⭐ Featured</span>
+            </div>
+
+            <div class="brand-card-full" data-category="skincare">
+                <div class="brand-logo">
+                    <img src="images/Cetaphil.png" alt="Cetaphil">
+                </div>
+                <h4>Cetaphil</h4>
+                <span class="product-count">25 Products</span>
+            </div>
+
+            <div class="brand-card-full" data-category="skincare">
+                <div class="brand-logo">
+                    <img src="images/The-Ordinary.png" alt="The Ordinary">
+                </div>
+                <h4>The Ordinary</h4>
+                <span class="product-count">42 Products</span>
+                <span class="featured-badge">⭐ Featured</span>
+            </div>
+
+            <div class="brand-card-full" data-category="skincare">
+                <div class="brand-logo">
+                    <img src="images/The-Purest-Solutions.png" alt="The Purest Solutions">
+                </div>
+                <h4>The Purest Solutions</h4>
+                <span class="product-count">22 Products</span>
+            </div>
+
+            <!-- Row 2 -->
+            <div class="brand-card-full" data-category="makeup">
+                <div class="brand-logo">
+                    <img src="images/Maybelline.png" alt="Maybelline">
+                </div>
+                <h4>Maybelline</h4>
+                <span class="product-count">38 Products</span>
+                <span class="featured-badge">⭐ Featured</span>
+            </div>
+
+            <div class="brand-card-full" data-category="makeup">
+                <div class="brand-logo">
+                    <img src="images/L'Oreal.png" alt="L'Oreal">
+                </div>
+                <h4>L'Oreal</h4>
+                <span class="product-count">45 Products</span>
+                <span class="featured-badge">⭐ Featured</span>
+            </div>
+
+            <div class="brand-card-full" data-category="makeup">
+                <div class="brand-logo">
+                    <img src="images/NYX.png" alt="NYX">
+                </div>
+                <h4>NYX</h4>
+                <span class="product-count">28 Products</span>
+            </div>
+
+            <div class="brand-card-full" data-category="makeup">
+                <div class="brand-logo">
+                    <img src="images/MAC.png" alt="MAC">
+                </div>
+                <h4>MAC</h4>
+                <span class="product-count">32 Products</span>
+                <span class="featured-badge">⭐ Featured</span>
+            </div>
+
+            <!-- Row 3 -->
+            <div class="brand-card-full" data-category="makeup">
+                <div class="brand-logo">
+                    <img src="images/wet-n-wild.png" alt="wet n wild">
+                </div>
+                <h4>wet n wild</h4>
+                <span class="product-count">30 Products</span>
+            </div>
+
+            <div class="brand-card-full" data-category="makeup">
+                <div class="brand-logo">
+                    <img src="images/LA-Girl.png" alt="L.A. Girl">
+                </div>
+                <h4>L.A. Girl</h4>
+                <span class="product-count">22 Products</span>
+            </div>
+
+            <div class="brand-card-full" data-category="makeup">
+                <div class="brand-logo">
+                    <img src="images/Huda-Beauty.png" alt="Huda Beauty">
+                </div>
+                <h4>Huda Beauty</h4>
+                <span class="product-count">28 Products</span>
+                <span class="new-badge">✨ New</span>
+            </div>
+
+            <div class="brand-card-full" data-category="makeup">
+                <div class="brand-logo">
+                    <img src="images/Airspun.png" alt="Airspun">
+                </div>
+                <h4>Airspun</h4>
+                <span class="product-count">18 Products</span>
+            </div>
+
+            <!-- Row 4 -->
+            <div class="brand-card-full" data-category="makeup">
+                <div class="brand-logo">
+                    <img src="images/OTWO.png" alt="O.TWO.O">
+                </div>
+                <h4>O.TWO.O</h4>
+                <span class="product-count">16 Products</span>
+            </div>
+
+            <div class="brand-card-full" data-category="makeup">
+                <div class="brand-logo">
+                    <img src="images/DUcare.png" alt="DUcare">
+                </div>
+                <h4>DUcare</h4>
+                <span class="product-count">20 Products</span>
+            </div>
+
+            <div class="brand-card-full" data-category="fragrance">
+                <div class="brand-logo">
+                    <img src="images/Victorias-Secret.png" alt="Victoria's Secret">
+                </div>
+                <h4>Victoria's Secret</h4>
+                <span class="product-count">15 Products</span>
+                <span class="featured-badge">⭐ Featured</span>
+            </div>
+
+            <div class="brand-card-full" data-category="fragrance">
+                <div class="brand-logo">
+                    <img src="images/Bath-Body-Works.png" alt="Bath & Body Works">
+                </div>
+                <h4>Bath & Body Works</h4>
+                <span class="product-count">32 Products</span>
+            </div>
+
+            <!-- Row 5 -->
+            <div class="brand-card-full" data-category="haircare">
+                <div class="brand-logo">
+                    <img src="images/Garnier.png" alt="Garnier">
+                </div>
+                <h4>Garnier</h4>
+                <span class="product-count">35 Products</span>
+                <span class="featured-badge">⭐ Featured</span>
+            </div>
+
+            <div class="brand-card-full" data-category="skincare">
+                <div class="brand-logo">
+                    <img src="images/Simple.png" alt="Simple">
+                </div>
+                <h4>Simple</h4>
+                <span class="product-count">24 Products</span>
+            </div>
+
+            <div class="brand-card-full" data-category="babycare">
+                <div class="brand-logo">
+                    <img src="images/sanosan.jpeg" alt="Sanosan">
+                </div>
+                <h4>Sanosan</h4>
+                <span class="product-count">12 Products</span>
+                <span class="new-badge">✨ New</span>
+            </div>
+
+            <div class="brand-card-full" data-category="korean">
+                <div class="brand-logo">
+                    <img src="images/COSRX.png" alt="COSRX">
+                </div>
+                <h4>COSRX</h4>
+                <span class="product-count">38 Products</span>
+                <span class="featured-badge">⭐ Featured</span>
+            </div>
+
+            <!-- Row 6 -->
+            <div class="brand-card-full" data-category="korean">
+                <div class="brand-logo">
+                    <img src="images/Innisfree.jpeg" alt="Innisfree">
+                </div>
+                <h4>Innisfree</h4>
+                <span class="product-count">28 Products</span>
+            </div>
+
+            <div class="brand-card-full" data-category="korean">
+                <div class="brand-logo">
+                    <img src="images/Laneige.png" alt="Laneige">
+                </div>
+                <h4>Laneige</h4>
+                <span class="product-count">20 Products</span>
+                <span class="new-badge">✨ New</span>
+            </div>
+
+            <div class="brand-card-full" data-category="korean">
+                <div class="brand-logo">
+                    <img src="images/Skin1004.jpeg" alt="Skin1004">
+                </div>
+                <h4>Skin1004</h4>
+                <span class="product-count">18 Products</span>
+            </div>
+
+            <div class="brand-card-full" data-category="korean">
+                <div class="brand-logo">
+                    <img src="images/Dr-Althea.jpeg" alt="Dr. Althea">
+                </div>
+                <h4>Dr. Althea</h4>
+                <span class="product-count">15 Products</span>
+            </div>
+
+            <!-- Row 7 -->
+            <div class="brand-card-full" data-category="skincare">
+                <div class="brand-logo">
+                    <img src="images/La-Roche-Posay.png" alt="La Roche-Posay">
+                </div>
+                <h4>La Roche-Posay</h4>
+                <span class="product-count">22 Products</span>
+                <span class="featured-badge">⭐ Featured</span>
+            </div>
+
+            <div class="brand-card-full" data-category="skincare">
+                <div class="brand-logo">
+                    <img src="images/Axis-Y.jpeg" alt="Axis-Y">
+                </div>
+                <h4>Axis-Y</h4>
+                <span class="product-count">14 Products</span>
+            </div>
+
+            <div class="brand-card-full" data-category="makeup">
+                <div class="brand-logo">
+                    <img src="images/Inglot.jpg" alt="Inglot">
+                </div>
+                <h4>Inglot</h4>
+                <span class="product-count">16 Products</span>
+            </div>
+
+            <div class="brand-card-full" data-category="skincare">
+                <div class="brand-logo">
+                    <img src="images/Plum.jpeg" alt="Plum">
+                </div>
+                <h4>Plum</h4>
+                <span class="product-count">25 Products</span>
+                <span class="new-badge">✨ New</span>
+            </div>
+
+            <!-- Row 8 -->
+            <div class="brand-card-full" data-category="makeup">
+                <div class="brand-logo">
+                    <img src="images/Forever52.png" alt="Forever52">
+                </div>
+                <h4>Forever52</h4>
+                <span class="product-count">20 Products</span>
+            </div>
+
+            <div class="brand-card-full" data-category="skincare">
+                <div class="brand-logo">
+                    <img src="images/Mamaearth.png" alt="Mamaearth">
+                </div>
+                <h4>Mamaearth</h4>
+                <span class="product-count">18 Products</span>
+            </div>
+
+            <div class="brand-card-full" data-category="skincare">
+                <div class="brand-logo">
+                    <img src="images/Dot-Key.png" alt="Dot & Key">
+                </div>
+                <h4>Dot &amp; Key</h4>
+                <span class="product-count">15 Products</span>
+            </div>
+
+            <div class="brand-card-full" data-category="makeup">
+                <div class="brand-logo">
+                    <img src="images/Pastel.jpeg" alt="Pastel">
+                </div>
+                <h4>Pastel</h4>
+                <span class="product-count">12 Products</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <a href="index.html"><img src="images/logo.png" alt="Kasbi Beauty" style="height:45px; width:auto; margin-bottom:16px; filter:brightness(10) grayscale(1) opacity(0.8);"></a>
+                <p>Your trusted beauty destination in Nepal. Premium skincare, makeup, haircare & more — all 100% authentic.</p>
+                <div class="social">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="#">Beauty Blog</a></li>
+                    <li><a href="#">Track Order</a></li>
+                    <li><a href="#">Returns & Refunds</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Categories</h4>
+                <ul>
+                    <li><a href="skincare.html">Skincare</a></li>
+                    <li><a href="makeup.html">Makeup</a></li>
+                    <li><a href="haircare.html">Hair Care</a></li>
+                    <li><a href="shop.html?category=fragrance">Fragrance</a></li>
+                    <li><a href="shop.html?category=tools">Beauty Tools</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="#"><i class="fa-solid fa-phone" style="margin-right:8px;"></i>+977 980-0000000</a></li>
+                    <li><a href="#"><i class="fa-regular fa-envelope" style="margin-right:8px;"></i>hello@kasbi.com</a></li>
+                    <li><a href="#"><i class="fa-regular fa-location-dot" style="margin-right:8px;"></i>Kathmandu, Nepal</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Kasbi Beauty. All rights reserved.</span>
+            <div class="payment">
+                <i class="fa-brands fa-cc-visa"></i>
+                <i class="fa-brands fa-cc-mastercard"></i>
+                <i class="fa-brands fa-cc-paypal"></i>
+                <i class="fa-solid fa-wallet"></i>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ===== BRAND FILTER =====
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const brandCards = document.querySelectorAll('.brand-card-full');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+
+                const filter = this.dataset.filter;
+
+                brandCards.forEach(card => {
+                    if (filter === 'all' || card.dataset.category === filter) {
+                        card.style.display = 'block';
+                        card.style.animation = 'fadeIn 0.5s ease forwards';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // ===== FADE IN ANIMATION =====
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                0% { opacity: 0; transform: translateY(20px); }
+                100% { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // ===== WISHLIST TOGGLE (if any) =====
+        document.querySelectorAll('.wishlist').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-regular');
+                icon.classList.toggle('fa-solid');
+                if (icon.classList.contains('fa-solid')) {
+                    this.style.background = '#5E4074';
+                    this.style.color = 'white';
+                    this.style.borderColor = '#5E4074';
+                } else {
+                    this.style.background = 'white';
+                    this.style.color = '#ccc';
+                    this.style.borderColor = '#eee';
+                }
+            });
+        });
+
+        console.log('🏷️ Kasbi Beauty — Brands Page 🏷️');
+    </script>
+
+</body>
+</html>
