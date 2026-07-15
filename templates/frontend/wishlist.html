@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kasbi Beauty — Wishlist</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <!-- ===== TOP BAR ===== -->
+    <div class="topbar">
+        <div class="left">
+            <i class="fa-solid fa-truck-fast"></i> Free Delivery inside Kathmandu on Orders above Rs.3000
+        </div>
+        <div class="right">
+            <a href="#"><i class="fa-regular fa-clock"></i> Track Order</a>
+            <a href="#"><i class="fa-regular fa-newspaper"></i> Beauty Blog</a>
+            <a href="#"><i class="fa-regular fa-circle-question"></i> Help Center</a>
+        </div>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <div class="logo">
+            <a href="index.html"><img src="images/logo.png" alt="Kasbi Beauty"></a>
+        </div>
+        <div class="search">
+            <input type="text" placeholder="Search skincare, makeup, serum...">
+            <button><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+        <div class="header-icons">
+            <div>
+                <a href="wishlist.html" style="display:flex; flex-direction:column; align-items:center; text-decoration:none; color:inherit;">
+                    <i class="fa-regular fa-heart" style="color: var(--primary);"></i>
+                    <span style="color: var(--primary); font-weight: 600;">Wishlist</span>
+                    <span class="cart-badge" style="background: var(--primary); color: white;">4</span>
+                </a>
+            </div>
+            <div>
+                <a href="cart.html" style="display:flex; flex-direction:column; align-items:center; text-decoration:none; color:inherit;">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span>Cart</span>
+                    <span class="cart-badge">3</span>
+                </a>
+            </div>
+            <div>
+                <i class="fa-regular fa-user"></i>
+                <span>Account</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navigation">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="brands.html">Brands</a></li>
+            <li><a href="skincare.html">Skincare</a></li>
+            <li><a href="makeup.html">Makeup</a></li>
+            <li><a href="haircare.html">Hair Care</a></li>
+            <li><a href="newarrivals.html">New Arrivals</a></li>
+            <li><a href="bestsellers.html">Best Sellers</a></li>
+            <li><a href="offers.html">Offers</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- ===== PAGE HEADER ===== -->
+    <div class="page-header">
+        <h1>My Wishlist</h1>
+        <p>Your saved favorites — shop them anytime</p>
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <span class="sep">/</span>
+            <span class="current">Wishlist</span>
+        </div>
+    </div>
+
+    <!-- ===== WISHLIST SECTION ===== -->
+    <section style="padding: 40px 6% 80px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 12px;">
+            <span style="color: var(--gray); font-size: 14px;">4 items in your wishlist</span>
+            <button class="btn-secondary btn-sm" style="padding: 10px 24px; font-size: 13px;">
+                <i class="fa-regular fa-heart"></i> Add All to Cart
+            </button>
+        </div>
+
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="image-wrap">
+                    <span class="discount">-25%</span>
+                    <span class="wishlist" style="background: var(--primary); color: white; border-color: var(--primary);">
+                        <i class="fa-solid fa-heart"></i>
+                    </span>
+                    <img src="images/product1.png" alt="CeraVe Cleanser">
+                </div>
+                <div class="info">
+                    <span class="brand">CeraVe</span>
+                    <h3>Hydrating Cleanser</h3>
+                    <div class="rating">★★★★★ <span>(325)</span></div>
+                    <div class="price">
+                        <span class="current">Rs.2,650</span>
+                        <span class="old">Rs.3,200</span>
+                    </div>
+                    <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="image-wrap">
+                    <span class="discount">-15%</span>
+                    <span class="wishlist" style="background: var(--primary); color: white; border-color: var(--primary);">
+                        <i class="fa-solid fa-heart"></i>
+                    </span>
+                    <img src="images/product2.png" alt="The Ordinary">
+                </div>
+                <div class="info">
+                    <span class="brand">The Ordinary</span>
+                    <h3>Niacinamide 10%</h3>
+                    <div class="rating">★★★★★ <span>(280)</span></div>
+                    <div class="price">
+                        <span class="current">Rs.2,350</span>
+                        <span class="old">Rs.2,850</span>
+                    </div>
+                    <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="image-wrap">
+                    <span class="discount">-35%</span>
+                    <span class="wishlist" style="background: var(--primary); color: white; border-color: var(--primary);">
+                        <i class="fa-solid fa-heart"></i>
+                    </span>
+                    <img src="images/product3.png" alt="Maybelline">
+                </div>
+                <div class="info">
+                    <span class="brand">Maybelline</span>
+                    <h3>SuperStay Lipstick</h3>
+                    <div class="rating">★★★★★ <span>(540)</span></div>
+                    <div class="price">
+                        <span class="current">Rs.1,450</span>
+                        <span class="old">Rs.2,000</span>
+                    </div>
+                    <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="image-wrap">
+                    <span class="discount">-20%</span>
+                    <span class="wishlist" style="background: var(--primary); color: white; border-color: var(--primary);">
+                        <i class="fa-solid fa-heart"></i>
+                    </span>
+                    <img src="images/product4.png" alt="Cetaphil">
+                </div>
+                <div class="info">
+                    <span class="brand">Cetaphil</span>
+                    <h3>Moisturizing Lotion</h3>
+                    <div class="rating">★★★★★ <span>(198)</span></div>
+                    <div class="price">
+                        <span class="current">Rs.2,850</span>
+                        <span class="old">Rs.3,400</span>
+                    </div>
+                    <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <a href="index.html"><img src="images/logo.png" alt="Kasbi Beauty" style="height:45px; width:auto; margin-bottom:16px; filter:brightness(10) grayscale(1) opacity(0.8);"></a>
+                <p>Your trusted beauty destination in Nepal. Premium skincare, makeup, haircare & more — all 100% authentic.</p>
+                <div class="social">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="#">Beauty Blog</a></li>
+                    <li><a href="#">Track Order</a></li>
+                    <li><a href="#">Returns & Refunds</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Categories</h4>
+                <ul>
+                    <li><a href="skincare.html">Skincare</a></li>
+                    <li><a href="makeup.html">Makeup</a></li>
+                    <li><a href="haircare.html">Hair Care</a></li>
+                    <li><a href="shop.html">Fragrance</a></li>
+                    <li><a href="shop.html">Beauty Tools</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="#"><i class="fa-solid fa-phone" style="margin-right:8px;"></i>+977 980-0000000</a></li>
+                    <li><a href="#"><i class="fa-regular fa-envelope" style="margin-right:8px;"></i>hello@kasbi.com</a></li>
+                    <li><a href="#"><i class="fa-regular fa-location-dot" style="margin-right:8px;"></i>Kathmandu, Nepal</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Kasbi Beauty. All rights reserved.</span>
+            <div class="payment">
+                <i class="fa-brands fa-cc-visa"></i>
+                <i class="fa-brands fa-cc-mastercard"></i>
+                <i class="fa-brands fa-cc-paypal"></i>
+                <i class="fa-solid fa-wallet"></i>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

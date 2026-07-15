@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kasbi Beauty — My Account</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+        /* ===== ACCOUNT SPECIFIC STYLES ===== */
+        
+        /* Account Layout */
+        .account-wrapper {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 40px;
+            padding: 40px 6% 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Sidebar */
+        .account-sidebar {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 28px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .account-sidebar .user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+            margin: 0 auto 12px;
+            font-weight: 700;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .account-sidebar .user-name {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .account-sidebar .user-email {
+            text-align: center;
+            font-size: 13px;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        .account-sidebar .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            color: var(--gray);
+            transition: var(--transition);
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .account-sidebar .nav-item i {
+            width: 20px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .account-sidebar .nav-item:hover {
+            background: rgba(94,64,116,0.06);
+            color: var(--primary);
+        }
+
+        .account-sidebar .nav-item.active {
+            background: rgba(94,64,116,0.08);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .account-sidebar .nav-item.logout {
+            margin-top: 16px;
+            border-top: 1px solid #eee;
+            padding-top: 16px;
+            color: #e74c3c;
+        }
+
+        .account-sidebar .nav-item.logout:hover {
+            background: rgba(231,76,60,0.06);
+            color: #c0392b;
+        }
+
+        /* Main Content */
+        .account-content {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 32px;
+            box-shadow: var(--shadow);
+        }
+
+        .account-content .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--dark);
+        }
+
+        .account-content .section-subtitle {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        /* Dashboard Cards */
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .dash-card {
+            background: var(--cream);
+            padding: 24px;
+            border-radius: 18px;
+            border: 1px solid rgba(0,0,0,0.04);
+        }
+
+        .dash-card .number {
+            font-size: 32px;
+            font-weight: 700;
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--primary);
+        }
+
+        .dash-card .label {
+            font-size: 13px;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        /* Orders List */
+        .orders-list {
+            margin-top: 24px;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f0ea;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .order-item .order-info {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .order-item .order-id {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--dark);
+        }
+
+        .order-item .order-date {
+            font-size: 13px;
+            color: var(--gray);
+        }
+
+        .order-item .order-total {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 16px;
+        }
+
+        .order-item .order-status {
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .order-status.delivered {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .order-status.shipped {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .order-status.processing {
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        .order-status.cancelled {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        /* Profile Form */
+        .profile-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .profile-form .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .profile-form label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--dark);
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .profile-form input,
+        .profile-form select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+            outline: none;
+            background: var(--white);
+        }
+
+        .profile-form input:focus,
+        .profile-form select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(94,64,116,0.06);
+        }
+
+        .profile-form .btn-primary {
+            grid-column: 1 / -1;
+            justify-self: start;
+            padding: 12px 40px;
+        }
+
+        /* Login Page */
+        .login-page {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 6%;
+            background: var(--cream);
+        }
+
+        .login-container {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 48px 40px;
+            max-width: 440px;
+            width: 100%;
+            box-shadow: var(--shadow-hover);
+        }
+
+        .login-container .logo {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .login-container .logo img {
+            height: 50px;
+            width: auto;
+            margin: 0 auto;
+        }
+
+        .login-container h2 {
+            text-align: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 6px;
+        }
+
+        .login-container .subtitle {
+            text-align: center;
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 28px;
+        }
+
+        .login-container .form-group {
+            margin-bottom: 18px;
+        }
+
+        .login-container .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 6px;
+        }
+
+        .login-container .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .login-container .form-group input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(94,64,116,0.06);
+        }
+
+        .login-container .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 13px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .login-container .form-options label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--gray);
+            cursor: pointer;
+        }
+
+        .login-container .form-options a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .login-container .form-options a:hover {
+            text-decoration: underline;
+        }
+
+        .login-container .btn-primary {
+            width: 100%;
+            justify-content: center;
+            padding: 14px;
+        }
+
+        .login-container .divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 20px 0;
+            color: var(--gray);
+            font-size: 13px;
+        }
+
+        .login-container .divider::before,
+        .login-container .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #ddd;
+        }
+
+        .login-container .social-login {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .login-container .social-login button {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            background: var(--white);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .login-container .social-login button:hover {
+            border-color: var(--primary);
+            background: var(--cream);
+        }
+
+        .login-container .social-login .google {
+            color: #ea4335;
+        }
+        .login-container .social-login .facebook {
+            color: #1877f2;
+        }
+
+        .login-container .register-link {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .login-container .register-link a {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .login-container .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .account-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .account-sidebar {
+                position: relative;
+                top: 0;
+                display: grid;
+                grid-template-columns: auto 1fr auto;
+                gap: 12px;
+                align-items: center;
+                padding: 20px 24px;
+            }
+            .account-sidebar .user-avatar {
+                margin: 0;
+                width: 56px;
+                height: 56px;
+                font-size: 22px;
+            }
+            .account-sidebar .user-name {
+                text-align: left;
+                font-size: 16px;
+            }
+            .account-sidebar .user-email {
+                text-align: left;
+                margin-bottom: 0;
+                font-size: 12px;
+            }
+            .account-sidebar .nav-links {
+                display: flex;
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+            .account-sidebar .nav-item {
+                padding: 8px 14px;
+                font-size: 13px;
+                margin-bottom: 0;
+            }
+            .account-sidebar .nav-item.logout {
+                margin-top: 0;
+                border-top: none;
+                padding-top: 8px;
+            }
+            .dashboard-cards {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .account-wrapper {
+                padding: 20px 4% 60px;
+            }
+            .account-content {
+                padding: 20px;
+            }
+            .dashboard-cards {
+                grid-template-columns: 1fr 1fr;
+            }
+            .profile-form {
+                grid-template-columns: 1fr;
+            }
+            .profile-form .full-width {
+                grid-column: 1;
+            }
+            .profile-form .btn-primary {
+                grid-column: 1;
+                width: 100%;
+                justify-content: center;
+            }
+            .login-container {
+                padding: 32px 24px;
+            }
+            .login-container .social-login {
+                grid-template-columns: 1fr;
+            }
+            .account-sidebar {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding: 16px;
+            }
+            .account-sidebar .user-avatar {
+                margin: 0 auto;
+            }
+            .account-sidebar .user-name {
+                text-align: center;
+            }
+            .account-sidebar .user-email {
+                text-align: center;
+            }
+            .account-sidebar .nav-links {
+                justify-content: center;
+            }
+            .order-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .order-item .order-info {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .dashboard-cards {
+                grid-template-columns: 1fr;
+            }
+            .login-container {
+                padding: 24px 16px;
+            }
+            .login-container h2 {
+                font-size: 26px;
+            }
+            .account-content {
+                padding: 16px;
+            }
+        }
+
+        /* Toggle between login and account */
+        .account-page {
+            display: block;
+        }
+
+        .login-page {
+            display: none;
+        }
+
+        .account-page.hidden {
+            display: none;
+        }
+
+        .login-page.hidden {
+            display: none;
+        }
+
+        /* Show login by default, account when logged in */
+        body:not(.logged-in) .account-page {
+            display: none;
+        }
+
+        body:not(.logged-in) .login-page {
+            display: flex;
+        }
+
+        body.logged-in .login-page {
+            display: none;
+        }
+
+        body.logged-in .account-page {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== TOP BAR ===== -->
+    <div class="topbar">
+        <div class="left">
+            <i class="fa-solid fa-truck-fast"></i> Free Delivery inside Kathmandu on Orders above Rs.3000
+        </div>
+        <div class="right">
+            <a href="#"><i class="fa-regular fa-clock"></i> Track Order</a>
+            <a href="#"><i class="fa-regular fa-newspaper"></i> Beauty Blog</a>
+            <a href="#"><i class="fa-regular fa-circle-question"></i> Help Center</a>
+        </div>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <div class="logo">
+            <a href="index.html"><img src="images/logo.png" alt="Kasbi Beauty"></a>
+        </div>
+        <div class="search">
+            <input type="text" placeholder="Search skincare, makeup, serum...">
+            <button><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+        <div class="header-icons">
+            <div>
+                <a href="wishlist.html" style="display:flex; flex-direction:column; align-items:center; text-decoration:none; color:inherit;">
+                    <i class="fa-regular fa-heart"></i>
+                    <span>Wishlist</span>
+                </a>
+            </div>
+            <div>
+                <a href="cart.html" style="display:flex; flex-direction:column; align-items:center; text-decoration:none; color:inherit;">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span>Cart</span>
+                    <span class="cart-badge">3</span>
+                </a>
+            </div>
+            <div>
+                <a href="account.html" style="display:flex; flex-direction:column; align-items:center; text-decoration:none; color:inherit;">
+                    <i class="fa-regular fa-user" style="color: var(--primary);"></i>
+                    <span style="color: var(--primary); font-weight: 600;">Account</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navigation">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="brands.html">Brands</a></li>
+            <li><a href="skincare.html">Skincare</a></li>
+            <li><a href="makeup.html">Makeup</a></li>
+            <li><a href="haircare.html">Hair Care</a></li>
+            <li><a href="newarrivals.html">New Arrivals</a></li>
+            <li><a href="bestsellers.html">Best Sellers</a></li>
+            <li><a href="offers.html">Offers</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- ===== LOGIN PAGE ===== -->
+    <div class="login-page">
+        <div class="login-container">
+            <div class="logo">
+                <img src="images/logo.png" alt="Kasbi Beauty">
+            </div>
+            <h2>Welcome Back</h2>
+            <p class="subtitle">Sign in to your account to access orders &amp; wishlist</p>
+
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" placeholder="hello@kasbi.com" required />
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••" required />
+                </div>
+
+                <div class="form-options">
+                    <label><input type="checkbox" checked /> Remember me</label>
+                    <a href="#">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    <i class="fa-regular fa-right-to-bracket" style="margin-right:10px;"></i> Sign In
+                </button>
+
+                <div class="divider">or continue with</div>
+
+                <div class="social-login">
+                    <button type="button" class="google"><i class="fa-brands fa-google"></i> Google</button>
+                    <button type="button" class="facebook"><i class="fa-brands fa-facebook"></i> Facebook</button>
+                </div>
+
+                <p class="register-link">
+                    Don't have an account? <a href="#" onclick="showRegister(event)">Sign up now</a>
+                </p>
+            </form>
+
+            <form id="registerForm" style="display:none;" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label for="regName">Full Name</label>
+                    <input type="text" id="regName" placeholder="Your Name" required />
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">Email Address</label>
+                    <input type="email" id="regEmail" placeholder="hello@kasbi.com" required />
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Password</label>
+                    <input type="password" id="regPassword" placeholder="••••••••" required />
+                </div>
+                <div class="form-group">
+                    <label><input type="checkbox" checked /> Email me with news and offers</label>
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    <i class="fa-regular fa-user-plus" style="margin-right:10px;"></i> Create Account
+                </button>
+
+                <p class="register-link" style="margin-top:16px;">
+                    Already have an account? <a href="#" onclick="showLogin(event)">Sign in</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== ACCOUNT PAGE ===== -->
+    <div class="account-page">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>My Account</h1>
+            <p>Manage your orders, profile, and preferences</p>
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span class="sep">/</span>
+                <span class="current">My Account</span>
+            </div>
+        </div>
+
+        <!-- Account Wrapper -->
+        <div class="account-wrapper">
+            <!-- Sidebar -->
+            <aside class="account-sidebar">
+                <div class="user-avatar">KS</div>
+                <div class="user-name">Kasbi Beauty User</div>
+                <div class="user-email">hello@kasbi.com</div>
+
+                <div class="nav-links">
+                    <a href="#" class="nav-item active" data-section="dashboard">
+                        <i class="fa-solid fa-gauge-high"></i> Dashboard
+                    </a>
+                    <a href="#" class="nav-item" data-section="orders">
+                        <i class="fa-solid fa-truck"></i> Orders
+                    </a>
+                    <a href="#" class="nav-item" data-section="wishlist">
+                        <i class="fa-regular fa-heart"></i> Wishlist
+                    </a>
+                    <a href="#" class="nav-item" data-section="profile">
+                        <i class="fa-regular fa-user"></i> Profile
+                    </a>
+                    <a href="#" class="nav-item" data-section="addresses">
+                        <i class="fa-regular fa-location-dot"></i> Addresses
+                    </a>
+                    <a href="#" class="nav-item" data-section="settings">
+                        <i class="fa-regular fa-gear"></i> Settings
+                    </a>
+                    <a href="#" class="nav-item logout" onclick="handleLogout(event)">
+                        <i class="fa-regular fa-right-from-bracket"></i> Logout
+                    </a>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="account-content">
+                <!-- Dashboard Section -->
+                <div id="section-dashboard">
+                    <h2 class="section-title">Dashboard</h2>
+                    <p class="section-subtitle">Welcome back! Here's what's happening with your account.</p>
+
+                    <div class="dashboard-cards">
+                        <div class="dash-card">
+                            <div class="number">3</div>
+                            <div class="label">Total Orders</div>
+                        </div>
+                        <div class="dash-card">
+                            <div class="number">2</div>
+                            <div class="label">In Transit</div>
+                        </div>
+                        <div class="dash-card">
+                            <div class="number">4</div>
+                            <div class="label">Wishlist Items</div>
+                        </div>
+                    </div>
+
+                    <h3 style="font-size:16px; font-weight:600; margin-bottom:12px;">Recent Orders</h3>
+                    <div class="orders-list">
+                        <div class="order-item">
+                            <div class="order-info">
+                                <span class="order-id">#ORD-2024-001</span>
+                                <span class="order-date">Jan 15, 2026</span>
+                                <span class="order-status delivered">Delivered</span>
+                            </div>
+                            <span class="order-total">Rs. 3,850</span>
+                        </div>
+                        <div class="order-item">
+                            <div class="order-info">
+                                <span class="order-id">#ORD-2024-002</span>
+                                <span class="order-date">Jan 20, 2026</span>
+                                <span class="order-status shipped">Shipped</span>
+                            </div>
+                            <span class="order-total">Rs. 2,650</span>
+                        </div>
+                        <div class="order-item">
+                            <div class="order-info">
+                                <span class="order-id">#ORD-2024-003</span>
+                                <span class="order-date">Jan 25, 2026</span>
+                                <span class="order-status processing">Processing</span>
+                            </div>
+                            <span class="order-total">Rs. 4,200</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Orders Section -->
+                <div id="section-orders" style="display:none;">
+                    <h2 class="section-title">My Orders</h2>
+                    <p class="section-subtitle">Track and manage all your orders in one place.</p>
+
+                    <div class="orders-list">
+                        <div class="order-item">
+                            <div class="order-info">
+                                <span class="order-id">#ORD-2024-001</span>
+                                <span class="order-date">Jan 15, 2026</span>
+                                <span class="order-status delivered">Delivered</span>
+                            </div>
+                            <span class="order-total">Rs. 3,850</span>
+                        </div>
+                        <div class="order-item">
+                            <div class="order-info">
+                                <span class="order-id">#ORD-2024-002</span>
+                                <span class="order-date">Jan 20, 2026</span>
+                                <span class="order-status shipped">Shipped</span>
+                            </div>
+                            <span class="order-total">Rs. 2,650</span>
+                        </div>
+                        <div class="order-item">
+                            <div class="order-info">
+                                <span class="order-id">#ORD-2024-003</span>
+                                <span class="order-date">Jan 25, 2026</span>
+                                <span class="order-status processing">Processing</span>
+                            </div>
+                            <span class="order-total">Rs. 4,200</span>
+                        </div>
+                        <div class="order-item">
+                            <div class="order-info">
+                                <span class="order-id">#ORD-2024-004</span>
+                                <span class="order-date">Jan 28, 2026</span>
+                                <span class="order-status cancelled">Cancelled</span>
+                            </div>
+                            <span class="order-total">Rs. 1,450</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wishlist Section -->
+                <div id="section-wishlist" style="display:none;">
+                    <h2 class="section-title">Wishlist</h2>
+                    <p class="section-subtitle">Your saved favorites — shop them anytime.</p>
+
+                    <div class="product-grid" style="grid-template-columns: repeat(2, 1fr);">
+                        <div class="product-card">
+                            <div class="image-wrap">
+                                <span class="discount">-25%</span>
+                                <span class="wishlist" style="background: var(--primary); color: white; border-color: var(--primary);">
+                                    <i class="fa-solid fa-heart"></i>
+                                </span>
+                                <img src="images/product1.png" alt="CeraVe Cleanser">
+                            </div>
+                            <div class="info">
+                                <span class="brand">CeraVe</span>
+                                <h3>Hydrating Cleanser</h3>
+                                <div class="rating">★★★★★ <span>(325)</span></div>
+                                <div class="price">
+                                    <span class="current">Rs.2,650</span>
+                                    <span class="old">Rs.3,200</span>
+                                </div>
+                                <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                            </div>
+                        </div>
+                        <div class="product-card">
+                            <div class="image-wrap">
+                                <span class="discount">-15%</span>
+                                <span class="wishlist" style="background: var(--primary); color: white; border-color: var(--primary);">
+                                    <i class="fa-solid fa-heart"></i>
+                                </span>
+                                <img src="images/product2.png" alt="The Ordinary">
+                            </div>
+                            <div class="info">
+                                <span class="brand">The Ordinary</span>
+                                <h3>Niacinamide 10%</h3>
+                                <div class="rating">★★★★★ <span>(280)</span></div>
+                                <div class="price">
+                                    <span class="current">Rs.2,350</span>
+                                    <span class="old">Rs.2,850</span>
+                                </div>
+                                <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Section -->
+                <div id="section-profile" style="display:none;">
+                    <h2 class="section-title">My Profile</h2>
+                    <p class="section-subtitle">Update your personal information and preferences.</p>
+
+                    <form class="profile-form">
+                        <div>
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" value="Kasbi" />
+                        </div>
+                        <div>
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" value="Beauty" />
+                        </div>
+                        <div class="full-width">
+                            <label for="profileEmail">Email Address</label>
+                            <input type="email" id="profileEmail" value="hello@kasbi.com" />
+                        </div>
+                        <div class="full-width">
+                            <label for="profilePhone">Phone Number</label>
+                            <input type="tel" id="profilePhone" value="+977 980-0000000" />
+                        </div>
+                        <div class="full-width">
+                            <label for="profileBio">About Me</label>
+                            <input type="text" id="profileBio" placeholder="Tell us a little about yourself..." />
+                        </div>
+                        <button type="submit" class="btn-primary"><i class="fa-regular fa-floppy-disk" style="margin-right:10px;"></i> Save Changes</button>
+                    </form>
+                </div>
+
+                <!-- Addresses Section -->
+                <div id="section-addresses" style="display:none;">
+                    <h2 class="section-title">My Addresses</h2>
+                    <p class="section-subtitle">Manage your shipping and billing addresses.</p>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div style="border: 1px solid #eee; border-radius: 16px; padding: 20px;">
+                            <h4 style="font-size: 15px; font-weight: 600; margin-bottom: 6px;">🏠 Home Address</h4>
+                            <p style="color: var(--gray); font-size: 14px; line-height: 1.6;">
+                                Kasbi Beauty<br />
+                                Kathmandu, Nepal<br />
+                                +977 980-0000000
+                            </p>
+                            <span style="display: inline-block; background: var(--primary); color: white; padding: 2px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; margin-top: 8px;">Default</span>
+                        </div>
+                        <div style="border: 1px solid #eee; border-radius: 16px; padding: 20px; border-style: dashed; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px; cursor: pointer; transition: var(--transition);">
+                            <i class="fa-solid fa-plus" style="font-size: 24px; color: var(--gray);"></i>
+                            <span style="color: var(--gray); font-size: 14px;">Add New Address</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Section -->
+                <div id="section-settings" style="display:none;">
+                    <h2 class="section-title">Settings</h2>
+                    <p class="section-subtitle">Manage your account preferences.</p>
+
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px solid #f0f0ea;">
+                            <div>
+                                <h4 style="font-size: 15px; font-weight: 600;">Email Notifications</h4>
+                                <p style="font-size: 13px; color: var(--gray);">Receive order updates and promotional emails</p>
+                            </div>
+                            <label style="position: relative; width: 48px; height: 28px; cursor: pointer;">
+                                <input type="checkbox" checked style="opacity:0; width:0; height:0;" />
+                                <span style="position: absolute; inset:0; background: var(--primary); border-radius: 40px; transition: var(--transition);"></span>
+                                <span style="position: absolute; top: 2px; left: 2px; width: 24px; height: 24px; background: white; border-radius: 50%; transition: var(--transition);"></span>
+                            </label>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px solid #f0f0ea;">
+                            <div>
+                                <h4 style="font-size: 15px; font-weight: 600;">Two-Factor Authentication</h4>
+                                <p style="font-size: 13px; color: var(--gray);">Add an extra layer of security to your account</p>
+                            </div>
+                            <label style="position: relative; width: 48px; height: 28px; cursor: pointer;">
+                                <input type="checkbox" style="opacity:0; width:0; height:0;" />
+                                <span style="position: absolute; inset:0; background: #ccc; border-radius: 40px; transition: var(--transition);"></span>
+                                <span style="position: absolute; top: 2px; left: 2px; width: 24px; height: 24px; background: white; border-radius: 50%; transition: var(--transition);"></span>
+                            </label>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px solid #f0f0ea;">
+                            <div>
+                                <h4 style="font-size: 15px; font-weight: 600;">Dark Mode</h4>
+                                <p style="font-size: 13px; color: var(--gray);">Switch between light and dark theme</p>
+                            </div>
+                            <label style="position: relative; width: 48px; height: 28px; cursor: pointer;">
+                                <input type="checkbox" style="opacity:0; width:0; height:0;" />
+                                <span style="position: absolute; inset:0; background: #ccc; border-radius: 40px; transition: var(--transition);"></span>
+                                <span style="position: absolute; top: 2px; left: 2px; width: 24px; height: 24px; background: white; border-radius: 50%; transition: var(--transition);"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <a href="index.html"><img src="images/logo.png" alt="Kasbi Beauty" style="height:45px; width:auto; margin-bottom:16px; filter:brightness(10) grayscale(1) opacity(0.8);"></a>
+                <p>Your trusted beauty destination in Nepal. Premium skincare, makeup, haircare & more — all 100% authentic.</p>
+                <div class="social">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="#">Beauty Blog</a></li>
+                    <li><a href="#">Track Order</a></li>
+                    <li><a href="#">Returns & Refunds</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Categories</h4>
+                <ul>
+                    <li><a href="skincare.html">Skincare</a></li>
+                    <li><a href="makeup.html">Makeup</a></li>
+                    <li><a href="haircare.html">Hair Care</a></li>
+                    <li><a href="shop.html">Fragrance</a></li>
+                    <li><a href="shop.html">Beauty Tools</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="#"><i class="fa-solid fa-phone" style="margin-right:8px;"></i>+977 980-0000000</a></li>
+                    <li><a href="#"><i class="fa-regular fa-envelope" style="margin-right:8px;"></i>hello@kasbi.com</a></li>
+                    <li><a href="#"><i class="fa-regular fa-location-dot" style="margin-right:8px;"></i>Kathmandu, Nepal</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Kasbi Beauty. All rights reserved.</span>
+            <div class="payment">
+                <i class="fa-brands fa-cc-visa"></i>
+                <i class="fa-brands fa-cc-mastercard"></i>
+                <i class="fa-brands fa-cc-paypal"></i>
+                <i class="fa-solid fa-wallet"></i>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ===== LOGIN / REGISTER TOGGLE =====
+        function showRegister(e) {
+            e.preventDefault();
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'block';
+        }
+
+        function showLogin(e) {
+            e.preventDefault();
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+        }
+
+        // ===== HANDLE LOGIN =====
+        function handleLogin(e) {
+            e.preventDefault();
+            document.body.classList.add('logged-in');
+            document.querySelector('.login-page').style.display = 'none';
+            document.querySelector('.account-page').style.display = 'block';
+            
+            // Update user info
+            const email = document.getElementById('loginEmail').value;
+            document.querySelector('.user-email').textContent = email;
+            document.querySelector('.user-name').textContent = email.split('@')[0];
+            
+            // Update avatar initials
+            const name = email.split('@')[0];
+            const initials = name.substring(0, 2).toUpperCase();
+            document.querySelector('.user-avatar').textContent = initials;
+        }
+
+        // ===== HANDLE REGISTER =====
+        function handleRegister(e) {
+            e.preventDefault();
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            
+            document.body.classList.add('logged-in');
+            document.querySelector('.login-page').style.display = 'none';
+            document.querySelector('.account-page').style.display = 'block';
+            
+            document.querySelector('.user-name').textContent = name;
+            document.querySelector('.user-email').textContent = email;
+            
+            const initials = name.substring(0, 2).toUpperCase();
+            document.querySelector('.user-avatar').textContent = initials;
+        }
+
+        // ===== HANDLE LOGOUT =====
+        function handleLogout(e) {
+            e.preventDefault();
+            document.body.classList.remove('logged-in');
+            document.querySelector('.account-page').style.display = 'none';
+            document.querySelector('.login-page').style.display = 'flex';
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('registerForm').style.display = 'none';
+        }
+
+        // ===== SIDEBAR NAVIGATION =====
+        document.querySelectorAll('.nav-item[data-section]').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all nav items
+                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Hide all sections
+                const sections = ['dashboard', 'orders', 'wishlist', 'profile', 'addresses', 'settings'];
+                sections.forEach(s => {
+                    document.getElementById(`section-${s}`).style.display = 'none';
+                });
+                
+                // Show selected section
+                const section = this.dataset.section;
+                document.getElementById(`section-${section}`).style.display = 'block';
+            });
+        });
+
+        // ===== WISHLIST TOGGLE =====
+        document.querySelectorAll('.wishlist').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-regular');
+                icon.classList.toggle('fa-solid');
+                if (icon.classList.contains('fa-solid')) {
+                    this.style.background = '#5E4074';
+                    this.style.color = 'white';
+                    this.style.borderColor = '#5E4074';
+                } else {
+                    this.style.background = 'white';
+                    this.style.color = '#ccc';
+                    this.style.borderColor = '#eee';
+                }
+            });
+        });
+
+        // ===== ADD TO CART ANIMATION =====
+        document.querySelectorAll('.add-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const originalText = this.innerHTML;
+                this.innerHTML = '<i class="fa-solid fa-check" style="margin-right:8px;"></i>Added!';
+                this.style.background = '#2ecc71';
+                
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                    this.style.background = '';
+                }, 2000);
+            });
+        });
+
+        // ===== TOGGLE SWITCHES =====
+        document.querySelectorAll('label input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const toggle = this.parentElement.querySelector('span:last-child');
+                if (this.checked) {
+                    this.parentElement.querySelector('span:first-child').style.background = '#5E4074';
+                } else {
+                    this.parentElement.querySelector('span:first-child').style.background = '#ccc';
+                }
+            });
+        });
+
+        // ===== INITIAL STATE - SHOW LOGIN =====
+        document.body.classList.remove('logged-in');
+        document.querySelector('.account-page').style.display = 'none';
+        document.querySelector('.login-page').style.display = 'flex';
+    </script>
+
+</body>
+</html>
