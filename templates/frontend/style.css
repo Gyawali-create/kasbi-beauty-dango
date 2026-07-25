@@ -2810,3 +2810,277 @@ ul {
     justify-content:center;
     font-weight:bold;
 }
+/* ===== NEW ARRIVALS ANIMATION ===== */
+.new-arrivals-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+    padding: 0 !important;
+}
+
+.new-arrivals-text {
+    position: relative;
+    font-weight: 700;
+    background: linear-gradient(90deg, #e91e63, #ff6b6b, #e91e63);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: textShine 3s ease-in-out infinite;
+    text-shadow: none;
+}
+
+@keyframes textShine {
+    0% {
+        background-position: 0% center;
+    }
+    50% {
+        background-position: 200% center;
+    }
+    100% {
+        background-position: 0% center;
+    }
+}
+
+.new-arrivals-text::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #e91e63, #ff6b6b);
+    transition: width 0.3s ease;
+    -webkit-text-fill-color: initial;
+}
+
+.new-arrivals-link:hover .new-arrivals-text::after {
+    width: 100%;
+}
+
+.new-badge-animated {
+    display: inline-block;
+    background: linear-gradient(135deg, #e91e63, #ff6b6b);
+    color: white;
+    font-size: 8px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    animation: badgePulse 1.5s ease-in-out infinite;
+    box-shadow: 0 2px 10px rgba(233, 30, 99, 0.3);
+    line-height: 1.6;
+}
+
+@keyframes badgePulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 2px 10px rgba(233, 30, 99, 0.3);
+    }
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 4px 20px rgba(233, 30, 99, 0.5);
+    }
+}
+
+/* Glowing dot indicator for New Arrivals */
+.new-arrivals-link::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    width: 10px;
+    height: 10px;
+    background: #e91e63;
+    border-radius: 50%;
+    animation: ringPulse 2s ease-in-out infinite;
+    opacity: 0.8;
+}
+
+@keyframes ringPulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.8);
+        opacity: 0;
+    }
+}
+
+/* ===== OFFERS ANIMATION (GOLD THEME) ===== */
+.offers-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+    padding: 0 !important;
+}
+
+.offers-text {
+    position: relative;
+    font-weight: 700;
+    background: linear-gradient(90deg, #D4AF37, #F5D76E, #D4AF37);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: textShineGold 3s ease-in-out infinite;
+    text-shadow: none;
+}
+
+@keyframes textShineGold {
+    0% {
+        background-position: 0% center;
+    }
+    50% {
+        background-position: 200% center;
+    }
+    100% {
+        background-position: 0% center;
+    }
+}
+
+.offers-text::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #D4AF37, #F5D76E);
+    transition: width 0.3s ease;
+    -webkit-text-fill-color: initial;
+}
+
+.offers-link:hover .offers-text::after {
+    width: 100%;
+}
+
+.offers-badge-animated {
+    display: inline-block;
+    background: linear-gradient(135deg, #D4AF37, #F5D76E);
+    color: #2d1a3a;
+    font-size: 8px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    animation: badgePulseGold 1.5s ease-in-out infinite;
+    box-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+    line-height: 1.6;
+}
+
+@keyframes badgePulseGold {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+    }
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 4px 20px rgba(212, 175, 55, 0.5);
+    }
+}
+
+/* Glowing dot indicator for Offers */
+.offers-link::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    width: 10px;
+    height: 10px;
+    background: #D4AF37;
+    border-radius: 50%;
+    animation: ringPulseGold 2s ease-in-out infinite;
+    opacity: 0.8;
+}
+
+@keyframes ringPulseGold {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.8);
+        opacity: 0;
+    }
+}
+
+/* Active state for New Arrivals */
+.navigation ul li a.active .new-badge-animated {
+    animation: badgePulse 1s ease-in-out infinite;
+    box-shadow: 0 2px 15px rgba(233, 30, 99, 0.6);
+}
+
+.navigation ul li a.active .new-arrivals-text {
+    background: linear-gradient(90deg, #e91e63, #ff6b6b, #e91e63);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: textShine 1.5s ease-in-out infinite;
+}
+
+/* Active state for Offers */
+.navigation ul li a.active .offers-badge-animated {
+    animation: badgePulseGold 1s ease-in-out infinite;
+    box-shadow: 0 2px 15px rgba(212, 175, 55, 0.6);
+}
+
+.navigation ul li a.active .offers-text {
+    background: linear-gradient(90deg, #D4AF37, #F5D76E, #D4AF37);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: textShineGold 1.5s ease-in-out infinite;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .new-badge-animated,
+    .offers-badge-animated {
+        font-size: 6px;
+        padding: 1px 6px;
+    }
+    .new-arrivals-link::before,
+    .offers-link::before {
+        width: 8px;
+        height: 8px;
+        top: -4px;
+        right: -4px;
+    }
+    .new-arrivals-text,
+    .offers-text {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    .new-arrivals-link,
+    .offers-link {
+        gap: 4px;
+    }
+    .new-badge-animated,
+    .offers-badge-animated {
+        font-size: 5px;
+        padding: 1px 5px;
+    }
+    .new-arrivals-link::before,
+    .offers-link::before {
+        display: none;
+    }
+    .new-arrivals-text,
+    .offers-text {
+        font-size: 13px;
+    }
+}
+

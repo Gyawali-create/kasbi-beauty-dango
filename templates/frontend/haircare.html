@@ -49,53 +49,41 @@
                 </a>
             </div>
             <div>
-                <i class="fa-regular fa-user"></i>
-                <span>Account</span>
+                <a href="account.html" style="display:flex; flex-direction:column; align-items:center; text-decoration:none; color:inherit;">
+                    <i class="fa-regular fa-user"></i>
+                    <span>Account</span>
+                </a>
             </div>
         </div>
     </header>
 
-    <!-- ===== NAVIGATION ===== -->
-    <nav class="navigation">
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="shop.html">Shop</a></li>
-            <li><a href="brands.html">Brands</a></li>
-            <li><a href="skincare.html">Skincare</a></li>
-            <li><a href="makeup.html">Makeup</a></li>
-            <li><a href="haircare.html" class="active">Hair Care</a></li>
-            <li><a href="newarrivals.html">New Arrivals</a></li>
-            <li><a href="bestsellers.html">Best Sellers</a></li>
-            <li><a href="offers.html">Offers</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
-    </nav>
+<!-- ===== NAVIGATION ===== -->
+<nav class="navigation">
+    <ul>
+        <li><a href="index.html"></a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="brands.html">Brands</a></li>
+        <li><a href="skincare.html">Skincare</a></li>
+        <li><a href="makeup.html">Makeup</a></li>
+        <li><a href="haircare.html" class="active">Hair Care</a></li>
+        <li>
+            <a href="newarrivals.html" class="new-arrivals-link">
+                <span class="new-arrivals-text">New Arrivals</span>
+                <span class="new-badge-animated">✨ NEW</span>
+            </a>
+        </li>
+        <li><a href="bestsellers.html">Best Sellers</a></li>
+        <li>
+            <a href="offers.html" class="offers-link">
+                <span class="offers-text">Offers</span>
+                <span class="offers-badge-animated">🔥 SALE</span>
+            </a>
+        </li>
+       
+    </ul>
+</nav>
 
-    <!-- ===== PAGE HEADER ===== -->
-    <div class="page-header">
-        <h1>Hair Care</h1>
-        <p>Nourish, style, and protect your hair</p>
-        <div class="breadcrumb">
-            <a href="index.html">Home</a>
-            <span class="sep">/</span>
-            <span class="current">Hair Care</span>
-        </div>
-    </div>
-
-    <!-- ===== CATEGORY BANNER ===== -->
-    <div style="margin: 40px 6%;">
-        <div style="background: linear-gradient(135deg, #D4E8D4, #E8F0E0); border-radius: 32px; padding: 50px 60px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 30px;">
-            <div>
-                <span style="font-size: 12px; letter-spacing: 2px; color: #2d6b55; font-weight: 600;">PREMIUM COLLECTION</span>
-                <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 42px; margin: 8px 0; color: #1a3a2a;">Healthy Hair Starts Here</h2>
-                <p style="color: #3a5a4a; max-width: 400px; font-weight: 300;">Shampoos, conditioners, serums, and masks for every hair type.</p>
-            </div>
-            <div style="display: flex; gap: 12px;">
-                <span style="background: white; padding: 8px 20px; border-radius: 40px; font-weight: 600; font-size: 13px; color: #5E4074;">60+ Products</span>
-                <span style="background: rgba(255,255,255,0.4); padding: 8px 20px; border-radius: 40px; font-weight: 500; font-size: 13px; color: #5E4074;">12+ Brands</span>
-            </div>
-        </div>
-    </div>
+\
 
     <!-- ===== SHOP SECTION ===== -->
     <section class="shop-section">
@@ -323,6 +311,231 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // ===== TOAST NOTIFICATION =====
+        function showSearchToast(message) {
+            const existingToast = document.querySelector('.toast-notification');
+            if (existingToast) {
+                existingToast.remove();
+            }
+
+            const toast = document.createElement('div');
+            toast.className = 'toast-notification';
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                background: #2d1a3a;
+                color: white;
+                padding: 14px 24px;
+                border-radius: 12px;
+                font-size: 14px;
+                font-weight: 500;
+                box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+                z-index: 10000;
+                animation: slideInUp 0.4s ease forwards;
+                font-family: 'Inter', sans-serif;
+                max-width: 350px;
+                border-left: 4px solid #e91e63;
+            `;
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'slideOutDown 0.4s ease forwards';
+                setTimeout(() => {
+                    toast.remove();
+                }, 400);
+            }, 3000);
+        }
+
+        // ===== WISHLIST TOGGLE =====
+        document.querySelectorAll('.wishlist, .wishlist-deal').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const icon = this.querySelector('i');
+                const productName = this.closest('.product-card')?.querySelector('h3')?.textContent || 'Product';
+                
+                icon.classList.toggle('fa-regular');
+                icon.classList.toggle('fa-solid');
+                if (icon.classList.contains('fa-solid')) {
+                    this.style.background = '#5E4074';
+                    this.style.color = 'white';
+                    this.style.borderColor = '#5E4074';
+                    this.style.transform = 'scale(1.2)';
+                    setTimeout(() => { this.style.transform = ''; }, 300);
+                    this.classList.add('active');
+                    showSearchToast(`❤️ ${productName} added to Wishlist!`);
+                } else {
+                    this.style.background = '';
+                    this.style.color = '';
+                    this.style.borderColor = '';
+                    this.classList.remove('active');
+                    showSearchToast(`💔 ${productName} removed from Wishlist`);
+                }
+            });
+        });
+
+        // ===== ADD TO CART ANIMATION =====
+        document.querySelectorAll('.add-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const originalText = this.innerHTML;
+                const productName = this.closest('.product-card')?.querySelector('h3')?.textContent || 'Product';
+                
+                this.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="margin-right:8px;"></i>Adding...';
+                this.style.background = '#5E4074';
+                this.style.color = 'white';
+                this.disabled = true;
+                
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fa-solid fa-check" style="margin-right:8px;"></i>Added!';
+                    this.style.background = '#2ecc71';
+                    this.style.color = 'white';
+                    
+                    // Update cart badge
+                    updateCartBadge();
+                    showSearchToast(`✅ ${productName} added to cart!`);
+                    
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                        this.style.background = '';
+                        this.style.color = '';
+                        this.disabled = false;
+                    }, 2000);
+                }, 800);
+            });
+        });
+
+        // ===== CART BADGE UPDATE =====
+        let cartCount = 3;
+
+        function updateCartBadge() {
+            cartCount++;
+            const badge = document.querySelector('.cart-badge');
+            if (badge) {
+                badge.textContent = cartCount;
+                badge.style.animation = 'none';
+                setTimeout(() => {
+                    badge.style.animation = 'badgePulse 0.5s ease';
+                }, 10);
+            }
+        }
+
+        // ===== ADD CSS ANIMATIONS =====
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+            @keyframes slideInUp {
+                0% { transform: translateY(100px); opacity: 0; }
+                100% { transform: translateY(0); opacity: 1; }
+            }
+            
+            @keyframes slideOutDown {
+                0% { transform: translateY(0); opacity: 1; }
+                100% { transform: translateY(100px); opacity: 0; }
+            }
+            
+            @keyframes badgePulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.4); }
+                100% { transform: scale(1); }
+            }
+            
+            .cart-badge {
+                display: inline-block;
+                background: #e91e63;
+                color: white;
+                font-size: 10px;
+                font-weight: 700;
+                border-radius: 50%;
+                padding: 2px 6px;
+                min-width: 18px;
+                text-align: center;
+                position: absolute;
+                top: -8px;
+                right: -10px;
+            }
+            
+            .header-icons > div {
+                position: relative;
+            }
+            
+            .wishlist {
+                transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 36px;
+                height: 36px;
+                background: white;
+                border-radius: 50%;
+                border: 1px solid #eee;
+                color: #ccc;
+                font-size: 14px;
+                position: absolute;
+                top: 14px;
+                right: 14px;
+                z-index: 2;
+            }
+            
+            .wishlist i {
+                pointer-events: none;
+            }
+            
+            .add-btn {
+                transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+                cursor: pointer;
+            }
+            
+            .add-btn:disabled {
+                opacity: 0.7;
+                cursor: not-allowed;
+            }
+            
+            .product-card .image-wrap {
+                position: relative;
+            }
+        `;
+        document.head.appendChild(styleSheet);
+
+        // ===== SEARCH FUNCTIONALITY =====
+        const searchInput = document.querySelector('.search input');
+        const searchButton = document.querySelector('.search button');
+
+        function performSearch() {
+            const searchTerm = searchInput.value.trim();
+            if (searchTerm) {
+                showSearchToast(`🔍 Searching for "${searchTerm}"...`);
+                setTimeout(() => {
+                    window.location.href = `shop.html?search=${encodeURIComponent(searchTerm)}`;
+                }, 800);
+            } else {
+                showSearchToast('⚠️ Please enter a search term');
+            }
+        }
+
+        if (searchButton) {
+            searchButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                performSearch();
+            });
+        }
+
+        if (searchInput) {
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    performSearch();
+                }
+            });
+        }
+
+        console.log('💇‍♀️ Kasbi Beauty — Hair Care Page Loaded! 💇‍♀️');
+    </script>
 
 </body>
 </html>
