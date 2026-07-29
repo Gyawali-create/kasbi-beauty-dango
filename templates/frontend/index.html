@@ -100,10 +100,41 @@
             100% { transform: translateX(100%) rotate(45deg); }
         }
 
+        /* Hero heading — staggered entrance for every line */
+        .hero h1 .hero-line {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(26px);
+            animation: heroFadeUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .hero h1 .hero-line-1 { animation-delay: 0.1s; }
+        .hero h1 .hero-line-2 { animation-delay: 0.35s; }
+
+        @keyframes heroFadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* Hero text typing effect */
         .hero h1 .highlight {
             position: relative;
             display: inline-block;
+            background: linear-gradient(90deg, #D58A94, #F0C3CA, #D58A94, #C97786, #D58A94);
+            background-size: 300% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #D58A94;
+            text-shadow: 0 4px 24px rgba(213,138,148,0.3);
+            opacity: 0;
+            transform: translateY(26px);
+            animation: heroFadeUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.6s forwards,
+                       kasbiShine 5s linear 1.4s infinite;
+        }
+
+        @keyframes kasbiShine {
+            0% { background-position: 0% center; }
+            100% { background-position: 300% center; }
         }
 
         .hero h1 .highlight::after {
@@ -113,15 +144,28 @@
             left: 0;
             width: 100%;
             height: 6px;
-            background: linear-gradient(90deg, #D4AF37, #EBCB65);
-            opacity: 0.4;
+            background: linear-gradient(90deg, #D58A94, #E8AEB7);
+            opacity: 0;
             border-radius: 4px;
-            animation: expandLine 2s ease-out forwards;
+            animation: expandLine 1s ease-out 1.4s forwards;
         }
 
         @keyframes expandLine {
             0% { width: 0; opacity: 0; }
-            100% { width: 100%; opacity: 0.4; }
+            100% { width: 100%; opacity: 0.45; }
+        }
+
+        /* Shop Now button — dusty pink to match the KASBI highlight */
+        .hero-buttons .btn-primary {
+            background: linear-gradient(135deg, #D58A94, #C97786);
+            border-color: #D58A94;
+            box-shadow: 0 10px 30px rgba(213,138,148,0.35);
+        }
+
+        .hero-buttons .btn-primary:hover {
+            background: linear-gradient(135deg, #C97786, #BA6774);
+            box-shadow: 0 14px 36px rgba(213,138,148,0.45);
+            transform: translateY(-2px);
         }
 
         /* Floating card enhanced */
@@ -507,6 +551,305 @@
 
         .mouse-glow.active {
             opacity: 1;
+        }
+
+        /* ===== FLOATING QUICK-ACCESS DOCK ===== */
+
+        .quick-dock {
+            position: fixed;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 500;
+        }
+
+        .qd-btn {
+            display: flex;
+            align-items: center;
+            height: 50px;
+            width: 50px;
+            padding-left: 15px;
+            background: var(--white);
+            border: 1px solid rgba(0,0,0,0.06);
+            border-radius: 14px;
+            box-shadow: var(--shadow);
+            color: var(--gray);
+            font-size: 17px;
+            text-decoration: none;
+            cursor: pointer;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: width 0.3s ease, padding 0.3s ease, background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .qd-btn i.qd-icon {
+            width: 20px;
+            flex-shrink: 0;
+            text-align: center;
+        }
+
+        .qd-btn .qd-label {
+            max-width: 0;
+            opacity: 0;
+            margin-left: 0;
+            overflow: hidden;
+            font-size: 13px;
+            font-weight: 700;
+            color: #C9932E;
+            transition: max-width 0.3s ease, opacity 0.2s ease, margin 0.3s ease;
+        }
+
+        .qd-btn:hover,
+        .qd-btn:focus-visible,
+        .qd-btn.active {
+            width: auto;
+            padding-right: 18px;
+            background: var(--cream);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .qd-btn:hover .qd-label,
+        .qd-btn:focus-visible .qd-label,
+        .qd-btn.active .qd-label {
+            max-width: 160px;
+            opacity: 1;
+            margin-left: 10px;
+        }
+
+        .qd-btn.qd-top {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+        }
+
+        .qd-btn.qd-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .qd-btn.qd-fire i.qd-icon { color: #e74c3c; }
+        .qd-btn.qd-categories i.qd-icon { color: var(--primary); }
+        .qd-btn.qd-account i.qd-icon { color: var(--primary); }
+        .qd-btn.qd-top i.qd-icon { color: var(--primary); }
+
+        /* Distinct, more vibrant label colors per button on hover/active
+           (instead of everything turning the same purple) */
+        .qd-btn.qd-top:hover,
+        .qd-btn.qd-top:focus-visible,
+        .qd-btn.qd-top.active {
+            color: var(--dark);
+        }
+
+        .qd-btn.qd-fire:hover,
+        .qd-btn.qd-fire:focus-visible,
+        .qd-btn.qd-fire.active {
+            color: #e74c3c;
+            background: #fdecea;
+        }
+
+        .qd-btn.qd-categories:hover,
+        .qd-btn.qd-categories:focus-visible,
+        .qd-btn.qd-categories.active {
+            color: #C9891B;
+            background: #FBF1DC;
+        }
+
+        .qd-btn.qd-categories:hover i.qd-icon,
+        .qd-btn.qd-categories:focus-visible i.qd-icon,
+        .qd-btn.qd-categories.active i.qd-icon {
+            color: #C9891B;
+        }
+
+        .qd-btn.qd-account:hover,
+        .qd-btn.qd-account:focus-visible,
+        .qd-btn.qd-account.active {
+            color: var(--primary);
+            background: #F1EAF5;
+        }
+
+        /* ===== CATEGORY FLYOUT PANEL ===== */
+
+        .category-flyout {
+            position: fixed;
+            top: 50%;
+            left: 84px;
+            transform: translateY(-50%) translateX(-16px);
+            width: 270px;
+            max-height: 78vh;
+            overflow-y: auto;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-hover);
+            border: 1px solid rgba(0,0,0,0.06);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+        }
+
+        .category-flyout.open {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: translateY(-50%) translateX(0);
+        }
+
+        .category-flyout .cf-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 16px 18px 14px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--dark);
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+
+        .category-flyout .cf-heading i.fa-bars { color: var(--primary); }
+
+        .category-flyout .cf-close {
+            background: none;
+            border: none;
+            font-size: 16px;
+            color: var(--gray);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .category-flyout .cf-close:hover { color: var(--primary); }
+
+        .category-flyout ul {
+            list-style: none;
+            margin: 0;
+            padding: 6px 0;
+        }
+
+        .category-flyout a.cf-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 18px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--dark);
+            text-decoration: none;
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+        }
+
+        .category-flyout a.cf-link .cf-icon {
+            width: 20px;
+            text-align: center;
+            color: var(--primary);
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+
+        .category-flyout a.cf-link span.cf-label { flex: 1; }
+
+        .category-flyout a.cf-link .cf-count {
+            font-size: 11px;
+            color: var(--gray);
+        }
+
+        .category-flyout a.cf-link .cf-arrow {
+            font-size: 11px;
+            opacity: 0;
+            transform: translateX(-4px);
+            transition: var(--transition);
+            color: var(--primary);
+        }
+
+        .category-flyout a.cf-link:hover {
+            background: var(--cream);
+            border-left-color: var(--gold);
+            color: #C9932E;
+            padding-left: 22px;
+        }
+
+        .category-flyout a.cf-link:hover .cf-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .category-flyout .cf-divider {
+            height: 1px;
+            background: rgba(0,0,0,0.06);
+            margin: 6px 0;
+        }
+
+        .category-flyout .cf-viewall {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin: 12px 16px 16px;
+            padding: 10px;
+            background: var(--gold-gradient);
+            color: var(--dark);
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .category-flyout .cf-viewall:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .category-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(20,10,25,0.4);
+            z-index: 998;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .category-backdrop.visible {
+            display: block;
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .quick-dock {
+                left: 10px;
+                gap: 8px;
+            }
+
+            .qd-btn {
+                height: 44px;
+                width: 44px;
+                padding-left: 12px;
+                font-size: 15px;
+            }
+
+            .category-flyout {
+                left: 0;
+                top: 0;
+                transform: translateX(-100%);
+                width: 82vw;
+                max-width: 300px;
+                height: 100vh;
+                max-height: 100vh;
+                border-radius: 0;
+            }
+
+            .category-flyout.open {
+                transform: translateX(0);
+            }
         }
 
         /* ===== NEW SECTIONS ===== */
@@ -1084,8 +1427,8 @@
         </div>
 
         <div class="search">
-            <input type="text" placeholder="Search skincare, makeup, serum...">
-            <button><i class="fa-solid fa-magnifying-glass"></i></button>
+            <input type="text" id="headerSearchInput" placeholder="Search skincare, makeup, serum...">
+            <button id="headerSearchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
         <div class="header-icons">
             <div>
@@ -1109,31 +1452,70 @@
             </div>
         </div>
     </header>
-<!-- ===== NAVIGATION ===== -->
-<nav class="navigation">
-    <ul>
-        <li><a href="index.html"></a></li>
-        <li><a href="shop.html">Shop</a></li>
-        <li><a href="brands.html">Brands</a></li>
-        <li><a href="skincare.html">Skincare</a></li>
-        <li><a href="makeup.html">Makeup</a></li>
-        <li><a href="haircare.html">Hair Care</a></li>
-        <li>
-            <a href="newarrivals.html" class="new-arrivals-link">
-                <span class="new-arrivals-text">New Arrivals</span>
-                <span class="new-badge-animated">✨ NEW</span>
-            </a>
-        </li>
-        <li><a href="bestsellers.html">Best Sellers</a></li>
-        <li>
-            <a href="offers.html" class="offers-link">
-                <span class="offers-text">Offers</span>
-                <span class="offers-badge-animated">🔥 SALE</span>
-            </a>
-        </li>
-     
-    </ul>
-</nav>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navigation">
+        <ul>
+            <li><a href="index.html"></a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="brands.html">Brands</a></li>
+            <li><a href="skincare.html">Skincare</a></li>
+            <li><a href="makeup.html">Makeup</a></li>
+            <li><a href="haircare.html">Hair Care</a></li>
+            <li>
+                <a href="newarrivals.html" class="new-arrivals-link">
+                    <span class="new-arrivals-text">New Arrivals</span>
+                    <span class="new-badge-animated">✨ NEW</span>
+                </a>
+            </li>
+            <li><a href="bestsellers.html">Best Sellers</a></li>
+            <li>
+                <a href="offers.html" class="offers-link">
+                    <span class="offers-text">Offers</span>
+                    <span class="offers-badge-animated">🔥 SALE</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- ===== FLOATING QUICK-ACCESS DOCK ===== -->
+    <div class="quick-dock" id="quickDock">
+        <button class="qd-btn qd-top" id="qdScrollTop" title="Back to top">
+            <i class="fa-solid fa-chevron-up qd-icon"></i><span class="qd-label">Top</span>
+        </button>
+        <a href="offers.html" class="qd-btn qd-fire" title="Hot Deals">
+            <i class="fa-solid fa-fire qd-icon"></i><span class="qd-label">Hot Deals</span>
+        </a>
+        <button class="qd-btn qd-categories" id="qdCategoriesBtn" title="Categories" aria-expanded="false" aria-controls="categoryFlyout">
+            <i class="fa-solid fa-grip qd-icon"></i><span class="qd-label">Categories</span>
+        </button>
+        <a href="account.html" class="qd-btn qd-account" title="Account">
+            <i class="fa-regular fa-circle-user qd-icon"></i><span class="qd-label">Account</span>
+        </a>
+    </div>
+
+    <!-- ===== CATEGORY FLYOUT PANEL ===== -->
+    <div class="category-backdrop" id="categoryBackdrop"></div>
+    <aside class="category-flyout" id="categoryFlyout">
+        <div class="cf-heading">
+            <span><i class="fa-solid fa-bars"></i> Shop By Category</span>
+            <button class="cf-close" id="categoryClose" aria-label="Close categories"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <ul>
+            <li><a href="skincare.html" class="cf-link"><i class="fa-solid fa-pump-soap cf-icon"></i><span class="cf-label">Skincare</span><span class="cf-count">120+</span><i class="fa-solid fa-chevron-right cf-arrow"></i></a></li>
+            <li><a href="haircare.html" class="cf-link"><i class="fa-solid fa-spa cf-icon"></i><span class="cf-label">Haircare</span><span class="cf-count">60+</span><i class="fa-solid fa-chevron-right cf-arrow"></i></a></li>
+            <li><a href="makeup.html" class="cf-link"><i class="fa-solid fa-palette cf-icon"></i><span class="cf-label">Makeup</span><span class="cf-count">85+</span><i class="fa-solid fa-chevron-right cf-arrow"></i></a></li>
+            <li><a href="shop.html?category=tools" class="cf-link"><i class="fa-solid fa-brush cf-icon"></i><span class="cf-label">Brushes &amp; Tools</span><span class="cf-count">25+</span><i class="fa-solid fa-chevron-right cf-arrow"></i></a></li>
+            <li><a href="shop.html?category=bodycare" class="cf-link"><i class="fa-solid fa-bath cf-icon"></i><span class="cf-label">Body Care</span><span class="cf-count">40+</span><i class="fa-solid fa-chevron-right cf-arrow"></i></a></li>
+            <li><a href="shop.html?category=babycare" class="cf-link"><i class="fa-solid fa-baby cf-icon"></i><span class="cf-label">Babycare</span><span class="cf-count">15+</span><i class="fa-solid fa-chevron-right cf-arrow"></i></a></li>
+            <li><a href="shop.html?category=fragrance" class="cf-link"><i class="fa-solid fa-spray-can-sparkles cf-icon"></i><span class="cf-label">Fragrances</span><span class="cf-count">45+</span><i class="fa-solid fa-chevron-right cf-arrow"></i></a></li>
+            <li><a href="shop.html?category=lashes" class="cf-link"><i class="fa-regular fa-eye cf-icon"></i><span class="cf-label">Lashes &amp; Glue</span><span class="cf-count">12+</span><i class="fa-solid fa-chevron-right cf-arrow"></i></a></li>
+            <li class="cf-divider"></li>
+            <li><a href="brands.html" class="cf-link"><i class="fa-solid fa-tags cf-icon"></i><span class="cf-label">All Brands</span><i class="fa-solid fa-chevron-right cf-arrow"></i></a></li>
+            <li><a href="offers.html" class="cf-link"><i class="fa-solid fa-fire cf-icon"></i><span class="cf-label">Offers &amp; Deals</span><i class="fa-solid fa-chevron-right cf-arrow"></i></a></li>
+        </ul>
+        <a href="shop.html" class="cf-viewall"><i class="fa-solid fa-bag-shopping"></i> View All Products</a>
+    </aside>
 
     <!-- ===== HERO ===== -->
     <section class="hero">
@@ -1148,8 +1530,8 @@
                 <span style="font-weight:300; opacity:0.7;">★★★★★ 4.9</span>
             </div>
             <h1>
-                YOUR BEAUTY.<br>
-                <span class="highlight">YOUR KASBI.</span>
+                <span class="hero-line hero-line-1">YOUR BEAUTY.</span><br>
+                <span class="hero-line hero-line-2">YOUR</span> <span class="highlight">KASBI.</span>
             </h1>
             <p>
                 Discover authentic Korean skincare, premium makeup, luxury fragrances,
@@ -1182,19 +1564,18 @@
         </div>
     </section>
 
- 
-<!-- ===== KASBI BEAUTY ===== -->
-<section class="kasbi-beauty scroll-reveal">
-    <div class="kasbi-container">
-        <div class="kasbi-image">
-            <a href="offers.html">
-                <img src="images/kasbi-beauty.png" alt="Kasbi Beauty">
-            </a>
+    <!-- ===== KASBI BEAUTY ===== -->
+    <section class="kasbi-beauty scroll-reveal">
+        <div class="kasbi-container">
+            <div class="kasbi-image">
+                <a href="offers.html">
+                    <img src="images/kasbi-beauty.png" alt="Kasbi Beauty">
+                </a>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-        <!-- ===== FLASH SALE ===== -->
+    <!-- ===== FLASH SALE ===== -->
     <section class="flash-sale scroll-reveal">
         <div class="left">
             <span class="tag"><i class="fa-regular fa-clock"></i> SELLING OUT FAST</span>
@@ -1224,7 +1605,7 @@
         </div>
     </section>
 
-     <!-- ===== SHOP BY CATEGORY ===== -->
+    <!-- ===== SHOP BY CATEGORY ===== -->
     <section class="shop-categories scroll-reveal">
         <div class="section-header">
             <h2>Shop By <span class="highlight">Category</span></h2>
@@ -1232,236 +1613,234 @@
         </div>
         <div class="cat-grid">
             <a href="skincare.html" class="cat-item">
-               <img src="images/skincare.png">
+                <img src="images/skincare.png" alt="Skincare">
                 <h4>Skincare</h4>
                 <span>120+ Products</span>
             </a>
             <a href="haircare.html" class="cat-item">
-                <img src="images/haircare.png">
+                <img src="images/haircare.png" alt="Haircare">
                 <h4>Haircare</h4>
                 <span>60+ Products</span>
             </a>
             <a href="makeup.html" class="cat-item">
-                <img src="images/makeup.png">
+                <img src="images/makeup.png" alt="Makeup">
                 <h4>Makeup</h4>
                 <span>85+ Products</span>
             </a>
             <a href="shop.html?category=tools" class="cat-item">
-                <img src="images/tools.png">
+                <img src="images/tools.png" alt="Tools">
                 <h4>Brushes &amp; Tools</h4>
                 <span>25+ Products</span>
             </a>
             <a href="shop.html?category=bodycare" class="cat-item">
-                <img src="images/bodycare.png">
+                <img src="images/bodycare.png" alt="Body Care">
                 <h4>Body Care</h4>
                 <span>40+ Products</span>
             </a>
             <a href="shop.html?category=babycare" class="cat-item">
-                <img src="images/babycare.png">
+                <img src="images/babycare.png" alt="Babycare">
                 <h4>Babycare</h4>
                 <span>15+ Products</span>
             </a>
             <a href="shop.html?category=fragrance" class="cat-item">
-                <img src="images/fragrance.png">
+                <img src="images/fragrance.png" alt="Fragrance">
                 <h4>Fragrances</h4>
                 <span>45+ Products</span>
             </a>
             <a href="shop.html?category=lashes" class="cat-item">
-                <img src="images/lashes.png">
+                <img src="images/lashes.png" alt="Lashes">
                 <h4>Lashes &amp; Glue</h4>
                 <span>12+ Products</span>
             </a>
         </div>
     </section>
-    
-  
-<!-- ===== FEATURED BRANDS ===== -->
-<section class="featured-brands scroll-reveal">
-    <div class="section-header">
-        <div class="section-title">
-            <span class="sub">FEATURED BRANDS</span>
-            <h2>Top <span class="highlight">Beauty Brands</span></h2>
+
+    <!-- ===== FEATURED BRANDS ===== -->
+    <section class="featured-brands scroll-reveal">
+        <div class="section-header">
+            <div class="section-title">
+                <span class="sub">FEATURED BRANDS</span>
+                <h2>Top <span class="highlight">Beauty Brands</span></h2>
+            </div>
+            <div class="section-controls">
+                <button class="nav-btn prev-btn" aria-label="Previous">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <button class="nav-btn next-btn" aria-label="Next">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
         </div>
-        <div class="section-controls">
-            <button class="nav-btn prev-btn" aria-label="Previous">
-                <i class="fa-solid fa-chevron-left"></i>
-            </button>
-            <button class="nav-btn next-btn" aria-label="Next">
-                <i class="fa-solid fa-chevron-right"></i>
-            </button>
-        </div>
-    </div>
-    
-    <div class="brands-grid" id="brandsGrid">
-        <!-- Page 1 -->
-        <div class="brand-page active" data-page="1">
-            <div class="brand-card">
-                <div class="brand-logo">
-                    <img src="images/Maybelline.png" alt="Maybelline">
+        
+        <div class="brands-grid" id="brandsGrid">
+            <!-- Page 1 -->
+            <div class="brand-page active" data-page="1">
+                <div class="brand-card">
+                    <div class="brand-logo">
+                        <img src="images/Maybelline.png" alt="Maybelline">
+                    </div>
+                    <h4>Maybelline</h4>
+                    <p>38 Products</p>
                 </div>
-                <h4>Maybelline</h4>
-                <p>38 Products</p>
+                <div class="brand-card">
+                    <div class="brand-logo">
+                        <img src="images/L'Oreal.png" alt="L'Oreal">
+                    </div>
+                    <h4>L'Oreal</h4>
+                    <p>45 Products</p>
+                </div>
+                <div class="brand-card">
+                    <div class="brand-logo">
+                        <img src="images/NYX.png" alt="NYX">
+                    </div>
+                    <h4>NYX</h4>
+                    <p>28 Products</p>
+                </div>
+                <div class="brand-card">
+                    <div class="brand-logo">
+                        <img src="images/MAC.png" alt="MAC">
+                    </div>
+                    <h4>MAC</h4>
+                    <p>32 Products</p>
+                </div>
             </div>
-            <div class="brand-card">
-                <div class="brand-logo">
-                    <img src="images/L'Oreal.png" alt="L'Oreal">
+
+            <!-- Page 2 -->
+            <div class="brand-page" data-page="2">
+                <div class="brand-card">
+                    <div class="brand-logo">
+                        <img src="images/Cetaphil.png" alt="Cetaphil">
+                    </div>
+                    <h4>Cetaphil</h4>
+                    <p>25 Products</p>
                 </div>
-                <h4>L'Oreal</h4>
-                <p>45 Products</p>
+                <div class="brand-card">
+                    <div class="brand-logo">
+                        <img src="images/wet-n-wild.png" alt="wet n wild">
+                    </div>
+                    <h4>wet n wild</h4>
+                    <p>30 Products</p>
+                </div>
+                <div class="brand-card">
+                    <div class="brand-logo">
+                        <img src="images/LA-Girl.png" alt="L.A. Girl">
+                    </div>
+                    <h4>L.A. Girl</h4>
+                    <p>22 Products</p>
+                </div>
+                <div class="brand-card">
+                    <div class="brand-logo">
+                        <img src="images/Garnier.png" alt="Garnier">
+                    </div>
+                    <h4>Garnier</h4>
+                    <p>35 Products</p>
+                </div>
             </div>
-            <div class="brand-card">
-                <div class="brand-logo">
-                    <img src="images/NYX.png" alt="NYX">
+
+            <!-- Page 3 -->
+            <div class="brand-page" data-page="3">
+                <div class="brand-card">
+                    <div class="brand-logo">
+                        <img src="images/Airspun.png" alt="Airspun">
+                    </div>
+                    <h4>Airspun</h4>
+                    <p>18 Products</p>
                 </div>
-                <h4>NYX</h4>
-                <p>28 Products</p>
+                <div class="brand-card">
+                    <div class="brand-logo">
+                        <img src="images/The-Ordinary.png" alt="The Ordinary">
+                    </div>
+                    <h4>The Ordinary</h4>
+                    <p>42 Products</p>
+                </div>
+                <div class="brand-card">
+                    <div class="brand-logo">
+                        <img src="images/Huda-Beauty.png" alt="Huda Beauty">
+                    </div>
+                    <h4>Huda Beauty</h4>
+                    <p>28 Products</p>
+                </div>
+                <div class="brand-card">
+                    <div class="brand-logo">
+                        <img src="images/Victorias-Secret.png" alt="Victoria's Secret">
+                    </div>
+                    <h4>Victoria's Secret</h4>
+                    <p>15 Products</p>
+                </div>
             </div>
-            <div class="brand-card">
-                <div class="brand-logo">
-                    <img src="images/MAC.png" alt="MAC">
+
+            <!-- Page 4 -->
+            <div class="brand-page" data-page="4">
+                <div class="brand-card">
+                    <div class="brand-logo">
+                        <img src="images/DUcare.png" alt="DUcare">
+                    </div>
+                    <h4>DUcare</h4>
+                    <p>20 Products</p>
                 </div>
-                <h4>MAC</h4>
-                <p>32 Products</p>
+                <div class="brand-card">
+                    <div class="brand-logo">
+                        <img src="images/Bath-Body-Works.png" alt="Bath & Body Works">
+                    </div>
+                    <h4>Bath & Body Works</h4>
+                    <p>32 Products</p>
+                </div>
+                <div class="brand-card">
+                    <div class="brand-logo">
+                        <img src="images/OTWO.png" alt="O.TWO.O">
+                    </div>
+                    <h4>O.TWO.O</h4>
+                    <p>16 Products</p>
+                </div>
+                <div class="brand-card">
+                    <div class="brand-logo">
+                        <img src="images/Simple.png" alt="Simple">
+                    </div>
+                    <h4>Simple</h4>
+                    <p>24 Products</p>
+                </div>
+            </div>
+
+            <!-- Page 5 -->
+            <div class="brand-page" data-page="5">
+                <div class="brand-card">
+                    <div class="brand-logo">
+                        <img src="images/COSRX.png" alt="COSRX">
+                    </div>
+                    <h4>COSRX</h4>
+                    <p>38 Products</p>
+                </div>
+                <div class="brand-card">
+                    <div class="brand-logo">
+                        <img src="images/CeraVe.png" alt="CeraVe">
+                    </div>
+                    <h4>CeraVe</h4>
+                    <p>30 Products</p>
+                </div>
+                <div class="brand-card">
+                    <div class="brand-logo">
+                        <img src="images/The-Purest-Solutions.png" alt="The Purest Solutions">
+                    </div>
+                    <h4>The Purest Solutions</h4>
+                    <p>22 Products</p>
+                </div>
+                <div class="brand-card">
+                    <div class="brand-logo">
+                        <img src="images/Paxmoly.png" alt="Paxmoly">
+                    </div>
+                    <h4>Paxmoly</h4>
+                    <p>12 Products</p>
+                </div>
             </div>
         </div>
 
-        <!-- Page 2 -->
-        <div class="brand-page" data-page="2">
-            <div class="brand-card">
-                <div class="brand-logo">
-                    <img src="images/Cetaphil.png" alt="Cetaphil">
-                </div>
-                <h4>Cetaphil</h4>
-                <p>25 Products</p>
-            </div>
-            <div class="brand-card">
-                <div class="brand-logo">
-                    <img src="images/wet-n-wild.png" alt="wet n wild">
-                </div>
-                <h4>wet n wild</h4>
-                <p>30 Products</p>
-            </div>
-            <div class="brand-card">
-                <div class="brand-logo">
-                    <img src="images/LA-Girl.png" alt="L.A. Girl">
-                </div>
-                <h4>L.A. Girl</h4>
-                <p>22 Products</p>
-            </div>
-            <div class="brand-card">
-                <div class="brand-logo">
-                    <img src="images/Garnier.png" alt="Garnier">
-                </div>
-                <h4>Garnier</h4>
-                <p>35 Products</p>
-            </div>
+        <div class="view-all-container">
+            <a href="brands.html" class="view-all-btn">
+                View All Brands <i class="fa-solid fa-arrow-right"></i>
+            </a>
         </div>
+    </section>
 
-        <!-- Page 3 -->
-        <div class="brand-page" data-page="3">
-            <div class="brand-card">
-                <div class="brand-logo">
-                    <img src="images/Airspun.png" alt="Airspun">
-                </div>
-                <h4>Airspun</h4>
-                <p>18 Products</p>
-            </div>
-            <div class="brand-card">
-                <div class="brand-logo">
-                    <img src="images/The-Ordinary.png" alt="The Ordinary">
-                </div>
-                <h4>The Ordinary</h4>
-                <p>42 Products</p>
-            </div>
-            <div class="brand-card">
-                <div class="brand-logo">
-                    <img src="images/Huda-Beauty.png" alt="Huda Beauty">
-                </div>
-                <h4>Huda Beauty</h4>
-                <p>28 Products</p>
-            </div>
-            <div class="brand-card">
-                <div class="brand-logo">
-                    <img src="images/Victorias-Secret.png" alt="Victoria's Secret">
-                </div>
-                <h4>Victoria's Secret</h4>
-                <p>15 Products</p>
-            </div>
-        </div>
-
-        <!-- Page 4 -->
-        <div class="brand-page" data-page="4">
-            <div class="brand-card">
-                <div class="brand-logo">
-                    <img src="images/DUcare.png" alt="DUcare">
-                </div>
-                <h4>DUcare</h4>
-                <p>20 Products</p>
-            </div>
-            <div class="brand-card">
-                <div class="brand-logo">
-                    <img src="images/Bath-Body-Works.png" alt="Bath & Body Works">
-                </div>
-                <h4>Bath & Body Works</h4>
-                <p>32 Products</p>
-            </div>
-            <div class="brand-card">
-                <div class="brand-logo">
-                    <img src="images/OTWO.png" alt="O.TWO.O">
-                </div>
-                <h4>O.TWO.O</h4>
-                <p>16 Products</p>
-            </div>
-            <div class="brand-card">
-                <div class="brand-logo">
-                    <img src="images/Simple.png" alt="Simple">
-                </div>
-                <h4>Simple</h4>
-                <p>24 Products</p>
-            </div>
-        </div>
-
-        <!-- Page 5 -->
-        <div class="brand-page" data-page="5">
-            <div class="brand-card">
-                <div class="brand-logo">
-                    <img src="images/COSRX.png" alt="COSRX">
-                </div>
-                <h4>COSRX</h4>
-                <p>38 Products</p>
-            </div>
-            <div class="brand-card">
-                <div class="brand-logo">
-                    <img src="images/CeraVe.png" alt="CeraVe">
-                </div>
-                <h4>CeraVe</h4>
-                <p>30 Products</p>
-            </div>
-            <div class="brand-card">
-                <div class="brand-logo">
-                    <img src="images/The-Purest-Solutions.png" alt="The Purest Solutions">
-                </div>
-                <h4>The Purest Solutions</h4>
-                <p>22 Products</p>
-            </div>
-            <div class="brand-card">
-                <div class="brand-logo">
-                    <img src="images/Paxmoly.png" alt="Paxmoly">
-                </div>
-                <h4>Paxmoly</h4>
-                <p>12 Products</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="view-all-container">
-        <a href="brands.html" class="view-all-btn">
-            View All Brands <i class="fa-solid fa-arrow-right"></i>
-        </a>
-    </div>
-</section>
-
-  
     <!-- ===== KOREAN GLOW PICKS ===== -->
     <section class="korean-picks scroll-reveal">
         <div class="section-header">
@@ -1696,7 +2075,6 @@
         </div>
     </section>
 
-
     <!-- ===== OFFER BANNERS ===== -->
     <section class="offers">
         <div class="offer-card purple scroll-reveal">
@@ -1719,7 +2097,7 @@
         </div>
     </section>
 
-      <!-- ===== FEATURES ===== -->
+    <!-- ===== FEATURES ===== -->
     <section class="features">
         <div class="feature scroll-reveal">
             <div class="icon"><i class="fa-solid fa-truck-fast"></i></div>
@@ -1829,7 +2207,6 @@
             <p style="font-size:12px; opacity:0.5; margin-top:14px;">No spam. Unsubscribe anytime.</p>
         </div>
     </section>
-    
 
     <!-- ===== FOOTER ===== -->
     <footer class="footer">
@@ -1884,10 +2261,10 @@
         </div>
     </footer>
 
-   <script>
-    // ===== SEARCH FUNCTIONALITY =====
-    const searchInput = document.querySelector('.search input');
-    const searchButton = document.querySelector('.search button');
+    <script>
+    // ===== SEARCH FUNCTIONALITY (CONNECTED TO SEARCH PAGE) =====
+    const searchInput = document.getElementById('headerSearchInput');
+    const searchButton = document.getElementById('headerSearchBtn');
 
     function performSearch() {
         const searchTerm = searchInput.value.trim();
@@ -1895,9 +2272,9 @@
             // Show toast notification
             showSearchToast(`🔍 Searching for "${searchTerm}"...`);
             
-            // Redirect to shop page with search query
+            // Redirect to SEARCH PAGE with query parameter
             setTimeout(() => {
-                window.location.href = `shop.html?search=${encodeURIComponent(searchTerm)}`;
+                window.location.href = `search.html?q=${encodeURIComponent(searchTerm)}`;
             }, 800);
         } else {
             showSearchToast('⚠️ Please enter a search term');
@@ -1959,6 +2336,63 @@
             }, 400);
         }, 3000);
     }
+
+    // ===== FLOATING QUICK-ACCESS DOCK =====
+    const qdScrollTop = document.getElementById('qdScrollTop');
+    const qdCategoriesBtn = document.getElementById('qdCategoriesBtn');
+    const categoryFlyout = document.getElementById('categoryFlyout');
+    const categoryBackdrop = document.getElementById('categoryBackdrop');
+    const categoryClose = document.getElementById('categoryClose');
+
+    // Back-to-top button: only show once the user has scrolled down
+    if (qdScrollTop) {
+        window.addEventListener('scroll', () => {
+            qdScrollTop.classList.toggle('visible', window.scrollY > 400);
+        });
+
+        qdScrollTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+    // Categories flyout open/close
+    function openCategoryFlyout() {
+        categoryFlyout.classList.add('open');
+        categoryBackdrop.classList.add('visible');
+        qdCategoriesBtn.classList.add('active');
+        qdCategoriesBtn.setAttribute('aria-expanded', 'true');
+        if (window.innerWidth <= 768) document.body.style.overflow = 'hidden';
+    }
+
+    function closeCategoryFlyout() {
+        categoryFlyout.classList.remove('open');
+        categoryBackdrop.classList.remove('visible');
+        qdCategoriesBtn.classList.remove('active');
+        qdCategoriesBtn.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+    }
+
+    if (qdCategoriesBtn) {
+        qdCategoriesBtn.addEventListener('click', () => {
+            if (categoryFlyout.classList.contains('open')) {
+                closeCategoryFlyout();
+            } else {
+                openCategoryFlyout();
+            }
+        });
+    }
+
+    if (categoryClose) {
+        categoryClose.addEventListener('click', closeCategoryFlyout);
+    }
+
+    if (categoryBackdrop) {
+        categoryBackdrop.addEventListener('click', closeCategoryFlyout);
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeCategoryFlyout();
+    });
 
     // ===== MOUSE GLOW EFFECT =====
     const mouseGlow = document.getElementById('mouseGlow');
@@ -2250,52 +2684,7 @@
     document.head.appendChild(styleSheet);
 
     console.log('✨ Kasbi Beauty — Glow with Confidence ✨');
-</script>
-
-    <script>
-    // ===== BRAND CAROUSEL PAGINATION =====
-    document.addEventListener('DOMContentLoaded', function() {
-        const pages = document.querySelectorAll('.brand-page');
-        const prevBtn = document.querySelector('.prev-btn');
-        const nextBtn = document.querySelector('.next-btn');
-        let currentPage = 0;
-        const totalPages = pages.length;
-
-        function updateButtons() {
-            prevBtn.disabled = currentPage === 0;
-            nextBtn.disabled = currentPage === totalPages - 1;
-        }
-
-        function showPage(index) {
-            pages.forEach((page, i) => {
-                page.classList.remove('active');
-                if (i === index) {
-                    page.classList.add('active');
-                }
-            });
-            updateButtons();
-        }
-
-        if (prevBtn && nextBtn) {
-            prevBtn.addEventListener('click', function() {
-                if (currentPage > 0) {
-                    currentPage--;
-                    showPage(currentPage);
-                }
-            });
-
-            nextBtn.addEventListener('click', function() {
-                if (currentPage < totalPages - 1) {
-                    currentPage++;
-                    showPage(currentPage);
-                }
-            });
-        }
-
-        // Initialize first page
-        showPage(0);
-    });
-</script>
+    </script>
 
 </body>
 </html>

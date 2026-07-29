@@ -19,29 +19,37 @@
             margin: 0 auto;
         }
 
-        .breadcrumb-detail {
-            padding: 20px 6% 0;
-            font-size: 13px;
+        .back-button-container {
+            padding: 10px 6% 0;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .breadcrumb-detail a {
-            color: var(--gray);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .breadcrumb-detail a:hover {
-            color: var(--primary);
-        }
-
-        .breadcrumb-detail .sep {
-            color: #ccc;
-            margin: 0 8px;
-        }
-
-        .breadcrumb-detail .current {
-            color: var(--primary);
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: transparent;
+            border: 2px solid #e0e0e0;
+            border-radius: 30px;
+            color: #666;
+            font-size: 14px;
             font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateX(-4px);
+        }
+
+        .back-button i {
+            font-size: 14px;
         }
 
         .product-detail-grid {
@@ -481,6 +489,163 @@
             color: var(--gray);
         }
 
+        /* Product Reviews Section */
+        .reviews-section {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .reviews-section .reviews-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .reviews-section .reviews-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            color: var(--dark);
+        }
+
+        .reviews-section .reviews-header .review-summary {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .reviews-section .reviews-header .review-summary .big-rating {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .reviews-section .reviews-header .review-summary .stars-large {
+            color: #f5a623;
+            font-size: 20px;
+        }
+
+        .reviews-section .reviews-header .review-summary .total-ratings {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .reviews-section .review-filters {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .reviews-section .review-filters button {
+            padding: 6px 16px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            background: white;
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .reviews-section .review-filters button:hover,
+        .reviews-section .review-filters button.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .reviews-section .review-item {
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .reviews-section .review-item:last-child {
+            border-bottom: none;
+        }
+
+        .reviews-section .review-item .reviewer {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+
+        .reviews-section .review-item .review-stars {
+            color: #f5a623;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .reviews-section .review-item .review-text {
+            color: var(--gray);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .reviews-section .review-item .review-date {
+            color: #bbb;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .reviews-section .write-review-btn {
+            margin-top: 20px;
+            padding: 12px 30px;
+            border-radius: 30px;
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .reviews-section .write-review-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Questions Section */
+        .questions-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .questions-section h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            color: var(--dark);
+            margin-bottom: 16px;
+        }
+
+        .questions-section .no-questions {
+            color: var(--gray);
+            font-size: 14px;
+            padding: 20px 0;
+        }
+
+        .questions-section .ask-btn {
+            padding: 10px 24px;
+            border-radius: 30px;
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .questions-section .ask-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
         /* You May Also Like */
         .also-like {
             margin-top: 60px;
@@ -565,6 +730,10 @@
             .product-highlights {
                 grid-template-columns: repeat(3, 1fr);
             }
+            .reviews-section .reviews-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
 
         @media (max-width: 768px) {
@@ -596,12 +765,16 @@
             .product-detail-images .main-image {
                 height: 300px;
             }
-            .breadcrumb-detail {
-                padding: 16px 4% 0;
-                font-size: 12px;
-            }
             .product-highlights {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            .back-button {
+                font-size: 12px;
+                padding: 8px 16px;
+            }
+            .reviews-section .reviews-header .review-summary {
+                flex-wrap: wrap;
+                gap: 8px;
             }
         }
 
@@ -631,6 +804,10 @@
             .product-highlights {
                 grid-template-columns: 1fr 1fr;
                 gap: 10px;
+            }
+            .back-button {
+                font-size: 11px;
+                padding: 6px 14px;
             }
         }
     </style>
@@ -684,7 +861,7 @@
     <!-- ===== NAVIGATION ===== -->
     <nav class="navigation">
         <ul>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html"></a></li>
             <li><a href="shop.html">Shop</a></li>
             <li><a href="brands.html">Brands</a></li>
             <li><a href="skincare.html">Skincare</a></li>
@@ -707,13 +884,11 @@
         </ul>
     </nav>
 
-    <!-- ===== BREADCRUMB ===== -->
-    <div class="breadcrumb-detail">
-        <a href="index.html">Home</a>
-        <span class="sep">/</span>
-        <a href="shop.html">Shop</a>
-        <span class="sep">/</span>
-        <span class="current" id="productBreadcrumb">Hydrating Cleanser</span>
+    <!-- ===== BACK BUTTON ===== -->
+    <div class="back-button-container">
+        <a href="javascript:history.back()" class="back-button">
+            <i class="fa-solid fa-arrow-left"></i> Back
+        </a>
     </div>
 
     <!-- ===== PRODUCT DETAIL ===== -->
@@ -725,34 +900,34 @@
                     <span class="badge bestseller" id="productBadge">⭐ Best Seller</span>
                 </div>
                 <div class="main-image">
-                    <button class="wishlist-btn" onclick="addToWishlistDetail()">
+                    <button class="wishlist-btn" onclick="toggleWishlist()">
                         <i class="fa-regular fa-heart"></i>
                     </button>
-                    <img id="mainProductImage" src="images/CeraVE.png" alt="Product">
+                    <img id="mainProductImage" src="images/product3.png" alt="Product">
                 </div>
                 <div class="thumbnails" id="thumbnails">
-                    <img src="images/CeraVE.png" alt="Thumbnail 1" class="active" onclick="changeMainImage(this, 'images/CeraVE.png')">
-                    <img src="images/The-ordinary.png" alt="Thumbnail 2" onclick="changeMainImage(this, 'images/The-ordinary.png')">
-                    <img src="images/Maybelline.png" alt="Thumbnail 3" onclick="changeMainImage(this, 'images/Maybelline.png')">
-                    <img src="images/Cetaphil.png" alt="Thumbnail 4" onclick="changeMainImage(this, 'images/Cetaphil.png')">
+                    <img src="images/product3.png" alt="Thumbnail 1" class="active" onclick="changeMainImage(this, 'images/product3.png')">
+                    <img src="images/product1.png" alt="Thumbnail 2" onclick="changeMainImage(this, 'images/product1.png')">
+                    <img src="images/product2.png" alt="Thumbnail 3" onclick="changeMainImage(this, 'images/product2.png')">
+                    <img src="images/product4.png" alt="Thumbnail 4" onclick="changeMainImage(this, 'images/product4.png')">
                 </div>
             </div>
 
             <!-- Info -->
             <div class="product-detail-info" id="productDetailInfo">
-                <span class="brand" id="productBrand">CeraVe</span>
-                <h1 id="productName">Hydrating Cleanser</h1>
+                <span class="brand" id="productBrand">wet n wild</span>
+                <h1 id="productName">Give Me Mocha MegaLast Liquid Lipstick</h1>
                 <div class="rating">
-                    <span class="stars" id="productStars">★★★★★</span>
-                    <span class="count" id="productRating">(325)</span>
-                    <span class="rating-badge">4.9/5</span>
+                    <span class="stars" id="productStars">★★★★☆</span>
+                    <span class="count" id="productRating">(77)</span>
+                    <span class="rating-badge">4.7/5</span>
                 </div>
 
                 <div class="price-section">
-                    <span class="current" id="productCurrentPrice">Rs. 2,650</span>
-                    <span class="old" id="productOldPrice">Rs. 3,200</span>
-                    <span class="discount-badge" id="productDiscount">-25%</span>
-                    <span class="save-badge">Save Rs. 550</span>
+                    <span class="current" id="productCurrentPrice">Rs. 850</span>
+                    <span class="old" id="productOldPrice">Rs. 990</span>
+                    <span class="discount-badge" id="productDiscount">-14%</span>
+                    <span class="save-badge" id="productSaveBadge">Save Rs. 140</span>
                 </div>
 
                 <!-- Product Highlights -->
@@ -773,40 +948,36 @@
 
                 <div class="description" id="productDescription">
                     <p><strong>Description:</strong></p>
-                    <p>This gentle hydrating cleanser effectively removes dirt, oil, and makeup without stripping the skin's natural moisture barrier. Formulated with ceramides and hyaluronic acid, it leaves skin feeling clean, soft, and hydrated.</p>
-                    <p>Perfect for normal to dry skin types.</p>
+                    <p>Loading product details...</p>
                     <ul class="key-features">
-                        <li><i class="fa-regular fa-circle-check"></i> Gentle & hydrating formula</li>
-                        <li><i class="fa-regular fa-circle-check"></i> With ceramides & hyaluronic acid</li>
-                        <li><i class="fa-regular fa-circle-check"></i> Fragrance-free & non-comedogenic</li>
-                        <li><i class="fa-regular fa-circle-check"></i> Suitable for sensitive skin</li>
+                        <li><i class="fa-regular fa-circle-check"></i> Loading features...</li>
                     </ul>
                 </div>
 
                 <div class="specs" id="productSpecs">
                     <div class="spec-item">
                         <span class="label">Brand</span>
-                        <span class="value" id="specBrand">CeraVe</span>
+                        <span class="value" id="specBrand">--</span>
                     </div>
                     <div class="spec-item">
                         <span class="label">SKU</span>
-                        <span class="value" id="specSku">128202298_NP-1195059147</span>
+                        <span class="value" id="specSku">--</span>
                     </div>
                     <div class="spec-item">
                         <span class="label">Texture</span>
-                        <span class="value" id="specTexture">Gel</span>
+                        <span class="value" id="specTexture">--</span>
                     </div>
                     <div class="spec-item">
                         <span class="label">Vegan</span>
-                        <span class="value" id="specVegan">Yes</span>
+                        <span class="value" id="specVegan">--</span>
                     </div>
                     <div class="spec-item">
                         <span class="label">Skin Type</span>
-                        <span class="value" id="specSkinType">Normal to Dry</span>
+                        <span class="value" id="specSkinType">--</span>
                     </div>
                     <div class="spec-item">
                         <span class="label">Size</span>
-                        <span class="value" id="specSize">236 ml</span>
+                        <span class="value" id="specSize">--</span>
                     </div>
                 </div>
 
@@ -827,7 +998,7 @@
                     <button class="btn-success" onclick="buyNow()">
                         <i class="fa-solid fa-bolt" style="margin-right:8px;"></i> Buy Now
                     </button>
-                    <button class="btn-secondary" onclick="addToWishlistDetail()">
+                    <button class="btn-secondary" onclick="toggleWishlist()">
                         <i class="fa-regular fa-heart" style="margin-right:8px;"></i> Wishlist
                     </button>
                 </div>
@@ -853,8 +1024,67 @@
                         <span class="label"><i class="fa-regular fa-circle-check" style="color:#2ecc71;"></i> Cash on Delivery Available</span>
                         <span class="value available">Available</span>
                     </div>
+                    <div class="delivery-row">
+                        <span class="label"><i class="fa-regular fa-store" style="margin-right:8px;"></i> Sold by</span>
+                        <span class="value">Genuine Collection</span>
+                    </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Reviews Section -->
+        <div class="reviews-section" id="reviewsSection">
+            <div class="reviews-header">
+                <h2>Ratings & Reviews</h2>
+                <div class="review-summary">
+                    <span class="big-rating" id="avgRating">4.7/5</span>
+                    <span class="stars-large" id="avgStars">★★★★☆</span>
+                    <span class="total-ratings" id="totalRatings">77 Ratings</span>
+                </div>
+            </div>
+
+            <div class="review-filters">
+                <button class="active">All Stars</button>
+                <button>★★★★★ (5)</button>
+                <button>★★★★☆ (0)</button>
+                <button>★★★☆☆ (0)</button>
+                <button>★★☆☆☆ (0)</button>
+                <button>★☆☆☆☆ (0)</button>
+            </div>
+
+            <div id="reviewsList">
+                <div class="review-item">
+                    <div class="reviewer">E***</div>
+                    <div class="review-stars">★★★★★</div>
+                    <div class="review-text">After purchasing so many products I found my best colour. Thank you.</div>
+                    <div class="review-date">Verified Purchase • 2 months ago</div>
+                </div>
+                <div class="review-item">
+                    <div class="reviewer">S***</div>
+                    <div class="review-stars">★★★★★</div>
+                    <div class="review-text">Great quality and long lasting. The color is perfect for daily wear.</div>
+                    <div class="review-date">Verified Purchase • 3 months ago</div>
+                </div>
+                <div class="review-item">
+                    <div class="reviewer">M***</div>
+                    <div class="review-stars">★★★★☆</div>
+                    <div class="review-text">Nice product but a bit drying. Use lip balm before applying.</div>
+                    <div class="review-date">Verified Purchase • 1 month ago</div>
+                </div>
+            </div>
+
+            <button class="write-review-btn" onclick="showToast('✍️ Write a review feature coming soon!')">
+                <i class="fa-regular fa-pen-to-square" style="margin-right:8px;"></i> Write a Review
+            </button>
+        </div>
+
+        <!-- Questions Section -->
+        <div class="questions-section">
+            <h2>Questions about this product</h2>
+            <div class="no-questions">There are no questions yet.</div>
+            <button class="ask-btn" onclick="showToast('❓ Ask a question feature coming soon!')">
+                <i class="fa-regular fa-circle-question" style="margin-right:8px;"></i> Ask a Question
+            </button>
         </div>
 
         <!-- You May Also Like -->
@@ -863,31 +1093,8 @@
                 <h2>You May Also Like</h2>
                 <a href="shop.html" style="color:var(--primary); font-weight:500; text-decoration:none; transition:var(--transition);">View All →</a>
             </div>
-            <div class="also-grid">
-                <a href="#" class="also-card">
-                    <img src="images/product3.png" alt="Product">
-                    <h4>SuperStay Lipstick</h4>
-                    <span class="also-brand">Maybelline</span>
-                    <span class="also-price">Rs. 1,450</span>
-                </a>
-                <a href="#" class="also-card">
-                    <img src="images/product1.png" alt="Product">
-                    <h4>Advanced Snail 96 Mucin</h4>
-                    <span class="also-brand">COSRX</span>
-                    <span class="also-price">Rs. 2,150</span>
-                </a>
-                <a href="#" class="also-card">
-                    <img src="images/product2.png" alt="Product">
-                    <h4>Low pH Good Morning Gel</h4>
-                    <span class="also-brand">COSRX</span>
-                    <span class="also-price">Rs. 1,485</span>
-                </a>
-                <a href="#" class="also-card">
-                    <img src="images/product4.png" alt="Product">
-                    <h4>Moisturizing Lotion</h4>
-                    <span class="also-brand">Cetaphil</span>
-                    <span class="also-price">Rs. 2,850</span>
-                </a>
+            <div class="also-grid" id="alsoGrid">
+                <!-- Will be populated by JavaScript -->
             </div>
         </div>
     </section>
@@ -946,13 +1153,7 @@
     </footer>
 
     <script>
-        // ===== GET PRODUCT FROM URL =====
-        function getProductId() {
-            const params = new URLSearchParams(window.location.search);
-            return params.get('id') || '1';
-        }
-
-        // ===== PRODUCT DATA =====
+        // ===== COMPLETE PRODUCT DATABASE (ALL 48 PRODUCTS) =====
         const productsData = {
             1: {
                 name: 'Hydrating Cleanser',
@@ -960,12 +1161,11 @@
                 image: 'images/CeraVE.png',
                 price: 2650,
                 oldPrice: 3200,
-                discount: '-25%',
                 badge: 'bestseller',
                 rating: '★★★★★',
                 ratingCount: '(325)',
                 ratingBadge: '4.9/5',
-                description: 'This gentle hydrating cleanser effectively removes dirt, oil, and makeup without stripping the skin\'s natural moisture barrier. Formulated with ceramides and hyaluronic acid, it leaves skin feeling clean, soft, and hydrated. Perfect for normal to dry skin types.',
+                description: 'This gentle hydrating cleanser effectively removes dirt, oil, and makeup without stripping the skin\'s natural moisture barrier. Formulated with ceramides and hyaluronic acid, it leaves skin feeling clean, soft, and hydrated.',
                 sku: '128202298_NP-1195059147',
                 texture: 'Gel',
                 vegan: 'Yes',
@@ -973,21 +1173,23 @@
                 size: '236 ml',
                 stockStatus: 'Almost sold out!',
                 category: 'skincare',
-                brandSlug: 'cerave',
-                features: ['Gentle & hydrating formula', 'With ceramides & hyaluronic acid', 'Fragrance-free & non-comedogenic', 'Suitable for sensitive skin']
+                features: ['Gentle & hydrating formula', 'With ceramides & hyaluronic acid', 'Fragrance-free & non-comedogenic', 'Suitable for sensitive skin'],
+                reviews: [
+                    { name: 'A***', stars: '★★★★★', text: 'Best cleanser I\'ve ever used! My skin feels so clean and soft.', date: 'Verified Purchase • 1 month ago' },
+                    { name: 'R***', stars: '★★★★★', text: 'Perfect for my sensitive skin. No irritation at all.', date: 'Verified Purchase • 2 months ago' }
+                ]
             },
             2: {
-                name: 'Niacinamide 10%',
+                name: 'Niacinamide 10% Serum',
                 brand: 'The Ordinary',
                 image: 'images/The-ordinary.png',
                 price: 2350,
                 oldPrice: 2850,
-                discount: '-15%',
                 badge: 'bestseller',
                 rating: '★★★★★',
                 ratingCount: '(280)',
                 ratingBadge: '4.8/5',
-                description: 'This high-strength niacinamide serum helps to reduce the appearance of blemishes and congestion. It also helps to visibly brighten skin tone and improve skin texture. Formulated with Zinc PCA to support skin barrier function.',
+                description: 'This high-strength niacinamide serum helps to reduce the appearance of blemishes and congestion. It also helps to visibly brighten skin tone and improve skin texture.',
                 sku: '128202298_NP-1195059148',
                 texture: 'Serum',
                 vegan: 'Yes',
@@ -995,8 +1197,11 @@
                 size: '30 ml',
                 stockStatus: 'In stock',
                 category: 'skincare',
-                brandSlug: 'theordinary',
-                features: ['Reduces blemishes & congestion', 'Brightens skin tone', 'Supports skin barrier', 'Suitable for all skin types']
+                features: ['Reduces blemishes & congestion', 'Brightens skin tone', 'Supports skin barrier', 'Suitable for all skin types'],
+                reviews: [
+                    { name: 'S***', stars: '★★★★★', text: 'My skin has never looked better! This serum is a game changer.', date: 'Verified Purchase • 3 weeks ago' },
+                    { name: 'M***', stars: '★★★★☆', text: 'Good product but takes time to see results.', date: 'Verified Purchase • 1 month ago' }
+                ]
             },
             3: {
                 name: 'SuperStay Lipstick',
@@ -1004,7 +1209,6 @@
                 image: 'images/Maybelline.png',
                 price: 1450,
                 oldPrice: 2000,
-                discount: '-35%',
                 badge: 'bestseller',
                 rating: '★★★★★',
                 ratingCount: '(540)',
@@ -1017,8 +1221,11 @@
                 size: '6 ml',
                 stockStatus: 'Best Seller',
                 category: 'makeup',
-                brandSlug: 'maybelline',
-                features: ['24-hour long-lasting wear', 'High-impact vibrant color', 'Infused with aloe & vitamin E', 'Comfortable & non-drying']
+                features: ['24-hour long-lasting wear', 'High-impact vibrant color', 'Infused with aloe & vitamin E', 'Comfortable & non-drying'],
+                reviews: [
+                    { name: 'L***', stars: '★★★★★', text: 'Lasts all day! I don\'t need to reapply after meals.', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'K***', stars: '★★★★☆', text: 'Great color but a bit drying. Use lip balm first.', date: 'Verified Purchase • 1 month ago' }
+                ]
             },
             4: {
                 name: 'Moisturizing Lotion',
@@ -1026,12 +1233,11 @@
                 image: 'images/Cetaphil.png',
                 price: 2850,
                 oldPrice: 3400,
-                discount: '-20%',
                 badge: 'sale',
                 rating: '★★★★★',
                 ratingCount: '(198)',
                 ratingBadge: '4.6/5',
-                description: 'This rich, creamy moisturizer provides long-lasting hydration for dry to very dry skin. Formulated with a blend of emollients and humectants to lock in moisture and restore skin barrier. Fragrance-free and non-comedogenic.',
+                description: 'This rich, creamy moisturizer provides long-lasting hydration for dry to very dry skin. Formulated with a blend of emollients and humectants to lock in moisture and restore skin barrier.',
                 sku: '128202298_NP-1195059150',
                 texture: 'Cream',
                 vegan: 'Yes',
@@ -1039,8 +1245,11 @@
                 size: '250 ml',
                 stockStatus: 'Almost sold out!',
                 category: 'skincare',
-                brandSlug: 'cetaphil',
-                features: ['Long-lasting hydration', 'Restores skin barrier', 'Fragrance-free', 'Non-comedogenic']
+                features: ['Long-lasting hydration', 'Restores skin barrier', 'Fragrance-free', 'Non-comedogenic'],
+                reviews: [
+                    { name: 'P***', stars: '★★★★★', text: 'Perfect for my dry skin. Absorbs quickly and leaves my skin soft.', date: 'Verified Purchase • 3 months ago' },
+                    { name: 'J***', stars: '★★★★★', text: 'My dermatologist recommended this and it works wonders.', date: 'Verified Purchase • 2 months ago' }
+                ]
             },
             5: {
                 name: 'Revitalift Serum',
@@ -1048,7 +1257,6 @@
                 image: 'images/L\'Oreal.png',
                 price: 3200,
                 oldPrice: 4500,
-                discount: '-30%',
                 badge: 'new',
                 rating: '★★★★★',
                 ratingCount: '(412)',
@@ -1061,8 +1269,11 @@
                 size: '30 ml',
                 stockStatus: 'In stock',
                 category: 'skincare',
-                brandSlug: 'loreal',
-                features: ['Reduces wrinkles', 'Firms & tightens skin', 'Restores elasticity', 'Youthful radiance']
+                features: ['Reduces wrinkles', 'Firms & tightens skin', 'Restores elasticity', 'Youthful radiance'],
+                reviews: [
+                    { name: 'C***', stars: '★★★★★', text: 'I can see visible results in just 2 weeks! My skin looks younger.', date: 'Verified Purchase • 1 month ago' },
+                    { name: 'T***', stars: '★★★★☆', text: 'Good product but expensive. Works well though.', date: 'Verified Purchase • 2 months ago' }
+                ]
             },
             6: {
                 name: 'Micellar Water',
@@ -1070,7 +1281,6 @@
                 image: 'images/garnier.png',
                 price: 1800,
                 oldPrice: 2000,
-                discount: '-10%',
                 badge: 'sale',
                 rating: '★★★★★',
                 ratingCount: '(267)',
@@ -1083,17 +1293,1055 @@
                 size: '400 ml',
                 stockStatus: 'In stock',
                 category: 'haircare',
-                brandSlug: 'garnier',
-                features: ['Removes makeup effectively', 'Gentle no-rub formula', 'Contains botanical oils', 'Soothes & nourishes']
+                features: ['Removes makeup effectively', 'Gentle no-rub formula', 'Contains botanical oils', 'Soothes & nourishes'],
+                reviews: [
+                    { name: 'N***', stars: '★★★★★', text: 'Removes even waterproof makeup easily. My skin feels fresh.', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'D***', stars: '★★★★☆', text: 'Good for sensitive eyes. Doesn\'t sting.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            },
+            7: {
+                name: 'Advanced Snail 96 Mucin',
+                brand: 'COSRX',
+                image: 'images/product1.png',
+                price: 2150,
+                oldPrice: 2800,
+                badge: 'bestseller',
+                rating: '★★★★★',
+                ratingCount: '(363)',
+                ratingBadge: '4.9/5',
+                description: 'This advanced snail mucin essence deeply hydrates and repairs the skin barrier. It helps to improve skin elasticity, reduce fine lines, and promote a radiant complexion.',
+                sku: '128202298_NP-1195059153',
+                texture: 'Essence',
+                vegan: 'Yes',
+                skinType: 'All Skin Types',
+                size: '100 ml',
+                stockStatus: 'Best Seller',
+                category: 'skincare',
+                features: ['Deep hydration', 'Repairs skin barrier', 'Improves elasticity', 'Reduces fine lines'],
+                reviews: [
+                    { name: 'Y***', stars: '★★★★★', text: 'Holy grail! My skin is glowing and hydrated.', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'Z***', stars: '★★★★★', text: 'I can\'t imagine my skincare routine without this.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            },
+            8: {
+                name: 'Low pH Good Morning Gel',
+                brand: 'COSRX',
+                image: 'images/product2.png',
+                price: 1485,
+                oldPrice: 1650,
+                badge: 'sale',
+                rating: '★★★★★',
+                ratingCount: '(289)',
+                ratingBadge: '4.7/5',
+                description: 'This gentle, low pH cleanser effectively removes impurities without stripping the skin. Formulated with tea tree oil and BHA to soothe and calm the skin.',
+                sku: '128202298_NP-1195059154',
+                texture: 'Gel',
+                vegan: 'Yes',
+                skinType: 'All Skin Types',
+                size: '150 ml',
+                stockStatus: 'In stock',
+                category: 'skincare',
+                features: ['Gentle low pH formula', 'Removes impurities', 'With tea tree oil & BHA', 'Soothes & calms skin'],
+                reviews: [
+                    { name: 'H***', stars: '★★★★★', text: 'Perfect morning cleanser. My skin feels fresh and clean.', date: 'Verified Purchase • 3 weeks ago' },
+                    { name: 'A***', stars: '★★★★☆', text: 'Good but a bit drying for my dry skin.', date: 'Verified Purchase • 2 months ago' }
+                ]
+            },
+            9: {
+                name: 'Niacinamide 15% Serum',
+                brand: 'COSRX',
+                image: 'images/product3.png',
+                price: 2565,
+                oldPrice: 2850,
+                badge: 'new',
+                rating: '★★★★★',
+                ratingCount: '(412)',
+                ratingBadge: '4.8/5',
+                description: 'This potent serum with 15% Niacinamide and Zinc PCA helps to control excess sebum, minimize pores, and improve skin texture. Perfect for oily and combination skin types.',
+                sku: '128202298_NP-1195059155',
+                texture: 'Serum',
+                vegan: 'Yes',
+                skinType: 'Oily & Combination',
+                size: '30 ml',
+                stockStatus: 'New Arrival',
+                category: 'skincare',
+                features: ['Controls excess sebum', 'Minimizes pores', 'Improves skin texture', 'Suitable for oily skin'],
+                reviews: [
+                    { name: 'F***', stars: '★★★★★', text: 'My pores are visibly smaller after 2 weeks!', date: 'Verified Purchase • 1 month ago' },
+                    { name: 'B***', stars: '★★★★★', text: 'Great for oily skin. Controls shine all day.', date: 'Verified Purchase • 3 weeks ago' }
+                ]
+            },
+            10: {
+                name: 'Hyaluronic Acid Cream',
+                brand: 'COSRX',
+                image: 'images/product4.png',
+                price: 2880,
+                oldPrice: 3200,
+                badge: 'sale',
+                rating: '★★★★★',
+                ratingCount: '(234)',
+                ratingBadge: '4.6/5',
+                description: 'This intensive moisturizing cream delivers deep hydration with hyaluronic acid. Helps plump and firm the skin, reducing the appearance of fine lines and wrinkles.',
+                sku: '128202298_NP-1195059156',
+                texture: 'Cream',
+                vegan: 'Yes',
+                skinType: 'Dry to Normal',
+                size: '50 ml',
+                stockStatus: 'In stock',
+                category: 'skincare',
+                features: ['Deep hydration', 'Plumps & firms skin', 'Reduces fine lines', 'Suitable for dry skin'],
+                reviews: [
+                    { name: 'E***', stars: '★★★★★', text: 'My dry skin loves this! Absorbs quickly and hydrates deeply.', date: 'Verified Purchase • 2 months ago' },
+                    { name: 'K***', stars: '★★★★☆', text: 'Nice cream but a bit heavy for summer.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            },
+            11: {
+                name: 'Soft Matte Lip Cream',
+                brand: 'NYX',
+                image: 'images/NYX.png',
+                price: 1650,
+                oldPrice: 2100,
+                badge: 'sale',
+                rating: '★★★★☆',
+                ratingCount: '(156)',
+                ratingBadge: '4.3/5',
+                description: 'This velvety, matte lip cream provides intense color with a comfortable, non-drying formula. Long-lasting and highly pigmented for a flawless finish.',
+                sku: '128202298_NP-1195059157',
+                texture: 'Cream',
+                vegan: 'Yes',
+                skinType: 'All',
+                size: '8 ml',
+                stockStatus: 'In stock',
+                category: 'makeup',
+                features: ['Velvety matte finish', 'Intense color payoff', 'Long-lasting formula', 'Non-drying'],
+                reviews: [
+                    { name: 'G***', stars: '★★★★★', text: 'Love the texture! Not drying at all.', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'W***', stars: '★★★☆☆', text: 'Color is nice but doesn\'t last as long as expected.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            },
+            12: {
+                name: 'Refreshing Face Wash',
+                brand: 'Simple',
+                image: 'images/Simple.png',
+                price: 1200,
+                oldPrice: 1400,
+                badge: 'sale',
+                rating: '★★★★☆',
+                ratingCount: '(178)',
+                ratingBadge: '4.4/5',
+                description: 'This gentle, refreshing face wash cleanses without drying. Free from artificial perfumes and colors, making it suitable for sensitive skin.',
+                sku: '128202298_NP-1195059158',
+                texture: 'Gel',
+                vegan: 'Yes',
+                skinType: 'Sensitive',
+                size: '150 ml',
+                stockStatus: 'In stock',
+                category: 'skincare',
+                features: ['Gentle cleansing', 'Free from artificial perfumes', 'Suitable for sensitive skin', 'Refreshing formula'],
+                reviews: [
+                    { name: 'O***', stars: '★★★★★', text: 'Perfect for my sensitive skin. No breakouts.', date: 'Verified Purchase • 3 months ago' },
+                    { name: 'R***', stars: '★★★★☆', text: 'Simple and effective. Does exactly what it says.', date: 'Verified Purchase • 2 months ago' }
+                ]
+            },
+            13: {
+                name: 'Matte Lipstick',
+                brand: 'MAC',
+                image: 'images/MAC.png',
+                price: 3200,
+                oldPrice: 3800,
+                badge: 'bestseller',
+                rating: '★★★★★',
+                ratingCount: '(412)',
+                ratingBadge: '4.9/5',
+                description: 'This iconic matte lipstick delivers intense, long-wearing color with a smooth, creamy texture. Hydrating formula keeps lips comfortable all day.',
+                sku: '128202298_NP-1195059159',
+                texture: 'Cream',
+                vegan: 'No',
+                skinType: 'All',
+                size: '3.5 g',
+                stockStatus: 'Best Seller',
+                category: 'makeup',
+                features: ['Intense color payoff', 'Long-wearing formula', 'Smooth creamy texture', 'Hydrating'],
+                reviews: [
+                    { name: 'V***', stars: '★★★★★', text: 'MAC never disappoints! This is my go-to lipstick.', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'L***', stars: '★★★★★', text: 'Perfect color and lasts all day.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            },
+            14: {
+                name: 'Anthelios Sunscreen SPF 50',
+                brand: 'La Roche-Posay',
+                image: 'images/La-Roche-Posay.png',
+                price: 3600,
+                oldPrice: 4800,
+                badge: 'new',
+                rating: '★★★★★',
+                ratingCount: '(234)',
+                ratingBadge: '4.9/5',
+                description: 'This advanced sunscreen provides broad-spectrum SPF 50 protection with a lightweight, invisible finish. Suitable for sensitive and sun-intolerant skin.',
+                sku: '128202298_NP-1195059160',
+                texture: 'Lotion',
+                vegan: 'No',
+                skinType: 'Sensitive',
+                size: '50 ml',
+                stockStatus: 'New Arrival',
+                category: 'skincare',
+                features: ['SPF 50 protection', 'Lightweight invisible finish', 'Suitable for sensitive skin', 'Broad-spectrum'],
+                reviews: [
+                    { name: 'U***', stars: '★★★★★', text: 'Best sunscreen I\'ve ever used. No white cast, no greasy feeling.', date: 'Verified Purchase • 3 weeks ago' },
+                    { name: 'T***', stars: '★★★★★', text: 'Perfect for my sensitive skin. Doesn\'t sting my eyes.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            },
+            15: {
+                name: 'Volcanic Clay Face Mask',
+                brand: 'Innisfree',
+                image: 'images/Innisfree.jpeg',
+                price: 2100,
+                oldPrice: 2500,
+                badge: 'bestseller',
+                rating: '★★★★★',
+                ratingCount: '(189)',
+                ratingBadge: '4.7/5',
+                description: 'This purifying clay mask absorbs excess sebum and impurities for clear, smooth skin. Formulated with Jeju volcanic clay for deep pore cleansing.',
+                sku: '128202298_NP-1195059161',
+                texture: 'Clay',
+                vegan: 'Yes',
+                skinType: 'Oily & Combination',
+                size: '100 ml',
+                stockStatus: 'Best Seller',
+                category: 'skincare',
+                features: ['Absorbs excess sebum', 'Deep pore cleansing', 'With Jeju volcanic clay', 'Clears impurities'],
+                reviews: [
+                    { name: 'I***', stars: '★★★★★', text: 'My pores look so clean after using this!', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'J***', stars: '★★★★☆', text: 'Good mask but a bit drying. Use moisturizer after.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            },
+            16: {
+                name: 'Green Tea Face Wash',
+                brand: 'Plum',
+                image: 'images/Plum.jpeg',
+                price: 850,
+                oldPrice: 1100,
+                badge: 'sale',
+                rating: '★★★★☆',
+                ratingCount: '(156)',
+                ratingBadge: '4.3/5',
+                description: 'This refreshing face wash with green tea extract cleanses and rejuvenates the skin. Helps to control excess oil and prevent breakouts.',
+                sku: '128202298_NP-1195059162',
+                texture: 'Gel',
+                vegan: 'Yes',
+                skinType: 'Oily & Combination',
+                size: '100 ml',
+                stockStatus: 'In stock',
+                category: 'skincare',
+                features: ['Refreshing cleanse', 'With green tea extract', 'Controls excess oil', 'Prevents breakouts'],
+                reviews: [
+                    { name: 'P***', stars: '★★★★☆', text: 'Good for oily skin. Leaves my face clean and fresh.', date: 'Verified Purchase • 3 weeks ago' },
+                    { name: 'A***', stars: '★★★★★', text: 'Affordable and effective. Controls oil throughout the day.', date: 'Verified Purchase • 2 months ago' }
+                ]
+            },
+            17: {
+                name: 'Eyeshadow Palette',
+                brand: 'Huda Beauty',
+                image: 'images/Huda-Beauty.png',
+                price: 4500,
+                oldPrice: 5000,
+                badge: 'new',
+                rating: '★★★★★',
+                ratingCount: '(289)',
+                ratingBadge: '4.8/5',
+                description: 'This versatile eyeshadow palette features a stunning range of matte, shimmer, and metallic finishes. Highly pigmented and easy to blend for endless looks.',
+                sku: '128202298_NP-1195059163',
+                texture: 'Powder',
+                vegan: 'Yes',
+                skinType: 'All',
+                size: '15.5 g',
+                stockStatus: 'New Arrival',
+                category: 'makeup',
+                features: ['Versatile color range', 'Matte, shimmer & metallic finishes', 'Highly pigmented', 'Easy to blend'],
+                reviews: [
+                    { name: 'N***', stars: '★★★★★', text: 'The pigment is incredible! Worth every penny.', date: 'Verified Purchase • 1 week ago' },
+                    { name: 'M***', stars: '★★★★★', text: 'My favorite palette. The shades are so versatile.', date: 'Verified Purchase • 3 weeks ago' }
+                ]
+            },
+            18: {
+                name: 'Vitamin C Face Serum',
+                brand: 'Mamaearth',
+                image: 'images/Mamaearth.png',
+                price: 950,
+                oldPrice: 1200,
+                badge: 'sale',
+                rating: '★★★★☆',
+                ratingCount: '(134)',
+                ratingBadge: '4.2/5',
+                description: 'This vitamin C serum brightens and evens out skin tone, reducing dark spots and pigmentation. Enriched with turmeric for additional skin benefits.',
+                sku: '128202298_NP-1195059164',
+                texture: 'Serum',
+                vegan: 'Yes',
+                skinType: 'All Skin Types',
+                size: '30 ml',
+                stockStatus: 'In stock',
+                category: 'skincare',
+                features: ['Brightens skin tone', 'Reduces dark spots', 'With turmeric', 'Even skin tone'],
+                reviews: [
+                    { name: 'S***', stars: '★★★★☆', text: 'My dark spots are fading after regular use.', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'R***', stars: '★★★★★', text: 'Good product at an affordable price.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            },
+            19: {
+                name: 'Total Repair 5 Shampoo',
+                brand: 'L\'Oreal',
+                image: 'images/L\'Oreal.png',
+                price: 2200,
+                oldPrice: 2800,
+                badge: 'bestseller',
+                rating: '★★★★★',
+                ratingCount: '(234)',
+                ratingBadge: '4.6/5',
+                description: 'This repairing shampoo nourishes and strengthens damaged hair. Formulated with ceramides and glycerin to restore hair health and shine.',
+                sku: '128202298_NP-1195059165',
+                texture: 'Liquid',
+                vegan: 'No',
+                skinType: 'All Hair Types',
+                size: '400 ml',
+                stockStatus: 'Best Seller',
+                category: 'haircare',
+                features: ['Repairs damaged hair', 'Nourishes & strengthens', 'Restores shine', 'With ceramides'],
+                reviews: [
+                    { name: 'H***', stars: '★★★★★', text: 'My hair feels so much healthier after using this.', date: 'Verified Purchase • 3 weeks ago' },
+                    { name: 'I***', stars: '★★★★☆', text: 'Good shampoo but need to use conditioner too.', date: 'Verified Purchase • 2 months ago' }
+                ]
+            },
+            20: {
+                name: 'Eye Repair Cream',
+                brand: 'Cetaphil',
+                image: 'images/Cetaphil.png',
+                price: 2400,
+                oldPrice: 3000,
+                badge: 'sale',
+                rating: '★★★★★',
+                ratingCount: '(156)',
+                ratingBadge: '4.5/5',
+                description: 'This gentle eye cream reduces the appearance of dark circles, puffiness, and fine lines. Formulated with vitamin B3 and hyaluronic acid for optimal hydration.',
+                sku: '128202298_NP-1195059166',
+                texture: 'Cream',
+                vegan: 'Yes',
+                skinType: 'Sensitive',
+                size: '14 ml',
+                stockStatus: 'In stock',
+                category: 'skincare',
+                features: ['Reduces dark circles', 'Reduces puffiness', 'With vitamin B3', 'Hydrating formula'],
+                reviews: [
+                    { name: 'E***', stars: '★★★★★', text: 'My dark circles are noticeably reduced!', date: 'Verified Purchase • 3 weeks ago' },
+                    { name: 'L***', stars: '★★★★☆', text: 'Gentle on my sensitive eyes. Good product.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            },
+            21: {
+                name: 'Hyaluronic Acid 2%',
+                brand: 'The Ordinary',
+                image: 'images/The-ordinary.png',
+                price: 1800,
+                oldPrice: 2000,
+                badge: 'sale',
+                rating: '★★★★★',
+                ratingCount: '(198)',
+                ratingBadge: '4.7/5',
+                description: 'This hydration support serum offers multi-depth hydration, attracting water to the skin\'s surface and binding it in place for lasting moisture.',
+                sku: '128202298_NP-1195059167',
+                texture: 'Serum',
+                vegan: 'Yes',
+                skinType: 'All Skin Types',
+                size: '30 ml',
+                stockStatus: 'In stock',
+                category: 'skincare',
+                features: ['Multi-depth hydration', 'Attracts water to skin', 'Lasting moisture', 'Suitable for all skin types'],
+                reviews: [
+                    { name: 'C***', stars: '★★★★★', text: 'My skin feels so plump and hydrated!', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'D***', stars: '★★★★★', text: 'Great product at a great price.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            },
+            22: {
+                name: 'Fit Me Foundation',
+                brand: 'Maybelline',
+                image: 'images/Maybelline.png',
+                price: 1850,
+                oldPrice: 2200,
+                badge: 'new',
+                rating: '★★★★☆',
+                ratingCount: '(189)',
+                ratingBadge: '4.4/5',
+                description: 'This lightweight foundation provides natural-looking coverage that blends seamlessly. Formulated with exclusive micro-powders to control shine and blur pores.',
+                sku: '128202298_NP-1195059168',
+                texture: 'Liquid',
+                vegan: 'No',
+                skinType: 'Normal to Oily',
+                size: '30 ml',
+                stockStatus: 'New Arrival',
+                category: 'makeup',
+                features: ['Natural-looking coverage', 'Blends seamlessly', 'Controls shine', 'Blurs pores'],
+                reviews: [
+                    { name: 'B***', stars: '★★★★☆', text: 'Great everyday foundation. Lightweight and natural.', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'M***', stars: '★★★★★', text: 'Perfect match for my skin tone!', date: 'Verified Purchase • 1 month ago' }
+                ]
+            },
+            23: {
+                name: 'Lip Sleeping Mask',
+                brand: 'Laneige',
+                image: 'images/Laneige.png',
+                price: 3800,
+                oldPrice: 4200,
+                badge: 'bestseller',
+                rating: '★★★★★',
+                ratingCount: '(267)',
+                ratingBadge: '4.9/5',
+                description: 'This overnight lip mask delivers intense hydration to dry, flaky lips. Formulated with berry extracts and hyaluronic acid for soft, smooth lips by morning.',
+                sku: '128202298_NP-1195059169',
+                texture: 'Gel',
+                vegan: 'No',
+                skinType: 'All',
+                size: '20 g',
+                stockStatus: 'Best Seller',
+                category: 'skincare',
+                features: ['Overnight hydration', 'Softens dry lips', 'With berry extracts', 'Smooth lips by morning'],
+                reviews: [
+                    { name: 'S***', stars: '★★★★★', text: 'My lips have never been softer!', date: 'Verified Purchase • 3 weeks ago' },
+                    { name: 'K***', stars: '★★★★★', text: 'Worth the price. Lasts for months.', date: 'Verified Purchase • 2 months ago' }
+                ]
+            },
+            24: {
+                name: 'Studio Fix Foundation',
+                brand: 'MAC',
+                image: 'images/MAC.png',
+                price: 2800,
+                oldPrice: 3500,
+                badge: 'sale',
+                rating: '★★★★★',
+                ratingCount: '(198)',
+                ratingBadge: '4.7/5',
+                description: 'This iconic foundation provides a natural matte finish with buildable coverage. Formulated with oil-control properties for all-day wear.',
+                sku: '128202298_NP-1195059170',
+                texture: 'Liquid',
+                vegan: 'No',
+                skinType: 'All Skin Types',
+                size: '30 ml',
+                stockStatus: 'In stock',
+                category: 'makeup',
+                features: ['Natural matte finish', 'Buildable coverage', 'All-day wear', 'Oil-control properties'],
+                reviews: [
+                    { name: 'T***', stars: '★★★★★', text: 'My go-to foundation for special occasions.', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'A***', stars: '★★★★☆', text: 'Good coverage but a bit heavy for daily use.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            },
+            25: {
+                name: 'AHA/BHA Clarifying Toner',
+                brand: 'COSRX',
+                image: 'images/product2.png',
+                price: 1950,
+                oldPrice: 2300,
+                badge: 'bestseller',
+                rating: '★★★★★',
+                ratingCount: '(312)',
+                ratingBadge: '4.8/5',
+                description: 'This clarifying toner gently exfoliates with AHA and BHA to remove dead skin cells and unclog pores. Helps improve skin texture and promote radiance.',
+                sku: '128202298_NP-1195059171',
+                texture: 'Liquid',
+                vegan: 'Yes',
+                skinType: 'All Skin Types',
+                size: '150 ml',
+                stockStatus: 'Best Seller',
+                category: 'skincare',
+                features: ['Gentle exfoliation', 'Removes dead skin cells', 'Unclogs pores', 'Improves skin texture'],
+                reviews: [
+                    { name: 'F***', stars: '★★★★★', text: 'My skin texture has improved so much!', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'G***', stars: '★★★★☆', text: 'Good toner but use sparingly if you have sensitive skin.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            },
+            26: {
+                name: 'Daily Moisturizing Cream',
+                brand: 'CeraVe',
+                image: 'images/CeraVE.png',
+                price: 2200,
+                oldPrice: 2800,
+                badge: 'sale',
+                rating: '★★★★★',
+                ratingCount: '(278)',
+                ratingBadge: '4.6/5',
+                description: 'This daily moisturizing cream provides 24-hour hydration with a non-greasy formula. Enriched with ceramides and hyaluronic acid to restore and maintain the skin barrier.',
+                sku: '128202298_NP-1195059172',
+                texture: 'Cream',
+                vegan: 'Yes',
+                skinType: 'Normal to Dry',
+                size: '453 g',
+                stockStatus: 'In stock',
+                category: 'skincare',
+                features: ['24-hour hydration', 'Non-greasy formula', 'Restores skin barrier', 'With ceramides & hyaluronic acid'],
+                reviews: [
+                    { name: 'W***', stars: '★★★★★', text: 'Perfect daily moisturizer. Not greasy at all.', date: 'Verified Purchase • 1 month ago' },
+                    { name: 'X***', stars: '★★★★★', text: 'My skin feels so soft and hydrated.', date: 'Verified Purchase • 2 months ago' }
+                ]
+            },
+            27: {
+                name: 'Epic Ink Liner',
+                brand: 'NYX',
+                image: 'images/NYX.png',
+                price: 1250,
+                oldPrice: 1400,
+                badge: 'new',
+                rating: '★★★★☆',
+                ratingCount: '(167)',
+                ratingBadge: '4.3/5',
+                description: 'This waterproof liquid eyeliner delivers ultra-precise lines with intense black color. Smudge-proof and long-lasting for all-day wear.',
+                sku: '128202298_NP-1195059173',
+                texture: 'Liquid',
+                vegan: 'Yes',
+                skinType: 'All',
+                size: '1.5 ml',
+                stockStatus: 'New Arrival',
+                category: 'makeup',
+                features: ['Ultra-precise lines', 'Intense black color', 'Waterproof & smudge-proof', 'Long-lasting'],
+                reviews: [
+                    { name: 'P***', stars: '★★★★★', text: 'Best eyeliner ever! So precise and long-lasting.', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'Q***', stars: '★★★★☆', text: 'Good but takes practice to apply perfectly.', date: 'Verified Purchase • 3 weeks ago' }
+                ]
+            },
+            28: {
+                name: 'Hydrating Moisturizer',
+                brand: 'La Roche-Posay',
+                image: 'images/La-Roche-Posay.png',
+                price: 2800,
+                oldPrice: 3300,
+                badge: 'sale',
+                rating: '★★★★★',
+                ratingCount: '(198)',
+                ratingBadge: '4.6/5',
+                description: 'This ultra-hydrating moisturizer restores the skin\'s moisture barrier with a lightweight, non-greasy formula. Suitable for sensitive and dehydrated skin.',
+                sku: '128202298_NP-1195059174',
+                texture: 'Cream',
+                vegan: 'No',
+                skinType: 'Sensitive & Dehydrated',
+                size: '50 ml',
+                stockStatus: 'In stock',
+                category: 'skincare',
+                features: ['Ultra-hydrating', 'Restores moisture barrier', 'Lightweight formula', 'Suitable for sensitive skin'],
+                reviews: [
+                    { name: 'R***', stars: '★★★★★', text: 'My sensitive skin loves this! No irritation.', date: 'Verified Purchase • 2 months ago' },
+                    { name: 'S***', stars: '★★★★☆', text: 'Good moisturizer but expensive.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            },
+            29: {
+                name: 'Hair Mask Banana',
+                brand: 'Garnier',
+                image: 'images/garnier.png',
+                price: 950,
+                oldPrice: 1100,
+                badge: 'sale',
+                rating: '★★★★☆',
+                ratingCount: '(145)',
+                ratingBadge: '4.2/5',
+                description: 'This nourishing hair mask with banana extract deeply conditions and repairs dry, damaged hair. Leaves hair soft, shiny, and manageable.',
+                sku: '128202298_NP-1195059175',
+                texture: 'Cream',
+                vegan: 'Yes',
+                skinType: 'Dry & Damaged Hair',
+                size: '250 ml',
+                stockStatus: 'In stock',
+                category: 'haircare',
+                features: ['Deep conditioning', 'Repairs dry hair', 'With banana extract', 'Soft & shiny results'],
+                reviews: [
+                    { name: 'T***', stars: '★★★★★', text: 'My hair feels like silk after using this!', date: 'Verified Purchase • 3 weeks ago' },
+                    { name: 'U***', stars: '★★★☆☆', text: 'Good but the smell is too strong for me.', date: 'Verified Purchase • 2 months ago' }
+                ]
+            },
+            30: {
+                name: 'Lash Sensational Mascara',
+                brand: 'Maybelline',
+                image: 'images/Maybelline.png',
+                price: 1550,
+                oldPrice: 2100,
+                badge: 'bestseller',
+                rating: '★★★★★',
+                ratingCount: '(456)',
+                ratingBadge: '4.9/5',
+                description: 'This cult-favorite mascara delivers voluminous, fanned-out lashes with its innovative brush design. Buildable formula for custom intensity.',
+                sku: '128202298_NP-1195059176',
+                texture: 'Liquid',
+                vegan: 'No',
+                skinType: 'All',
+                size: '9.5 ml',
+                stockStatus: 'Best Seller',
+                category: 'makeup',
+                features: ['Voluminous lashes', 'Fanned-out effect', 'Innovative brush design', 'Buildable formula'],
+                reviews: [
+                    { name: 'L***', stars: '★★★★★', text: 'My lashes have never looked this good!', date: 'Verified Purchase • 1 week ago' },
+                    { name: 'M***', stars: '★★★★★', text: 'No clumping, perfect lashes every time.', date: 'Verified Purchase • 2 weeks ago' }
+                ]
+            },
+            31: {
+                name: 'Retinol 0.5% Serum',
+                brand: 'The Ordinary',
+                image: 'images/The-ordinary.png',
+                price: 1500,
+                oldPrice: 1700,
+                badge: 'sale',
+                rating: '★★★★★',
+                ratingCount: '(223)',
+                ratingBadge: '4.7/5',
+                description: 'This anti-aging serum with 0.5% retinol helps to reduce fine lines, wrinkles, and uneven skin tone. Promotes smoother, more youthful-looking skin.',
+                sku: '128202298_NP-1195059177',
+                texture: 'Serum',
+                vegan: 'Yes',
+                skinType: 'Mature Skin',
+                size: '30 ml',
+                stockStatus: 'In stock',
+                category: 'skincare',
+                features: ['Reduces fine lines & wrinkles', 'Even skin tone', 'Smoother skin', 'Anti-aging benefits'],
+                reviews: [
+                    { name: 'O***', stars: '★★★★★', text: 'I can see a noticeable difference in my skin.', date: 'Verified Purchase • 3 weeks ago' },
+                    { name: 'P***', stars: '★★★★☆', text: 'Works well but need to use sunscreen with it.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            },
+            32: {
+                name: 'Gentle Face Wash',
+                brand: 'Cetaphil',
+                image: 'images/Cetaphil.png',
+                price: 1650,
+                oldPrice: 1950,
+                badge: 'sale',
+                rating: '★★★★★',
+                ratingCount: '(189)',
+                ratingBadge: '4.5/5',
+                description: 'This gentle, soap-free face wash cleanses without irritating or stripping the skin. Formulated with a mild formula suitable for sensitive and dry skin.',
+                sku: '128202298_NP-1195059178',
+                texture: 'Liquid',
+                vegan: 'Yes',
+                skinType: 'Sensitive & Dry',
+                size: '200 ml',
+                stockStatus: 'In stock',
+                category: 'skincare',
+                features: ['Gentle cleansing', 'Soap-free formula', 'Suitable for sensitive skin', 'Non-irritating'],
+                reviews: [
+                    { name: 'Q***', stars: '★★★★★', text: 'My dermatologist recommended this. Love it!', date: 'Verified Purchase • 2 months ago' },
+                    { name: 'R***', stars: '★★★★☆', text: 'Good for sensitive skin but a bit pricey.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            },
+            33: {
+                name: 'Advanced Snail Peptide Eye Cream',
+                brand: 'COSRX',
+                image: 'images/product1.png',
+                price: 2200,
+                oldPrice: 2500,
+                badge: 'new',
+                rating: '★★★★★',
+                ratingCount: '(167)',
+                ratingBadge: '4.6/5',
+                description: 'This nourishing eye cream with snail mucin and peptides helps to reduce fine lines, wrinkles, and dark circles. Provides intense hydration and firming benefits.',
+                sku: '128202298_NP-1195059179',
+                texture: 'Cream',
+                vegan: 'Yes',
+                skinType: 'All Skin Types',
+                size: '25 ml',
+                stockStatus: 'New Arrival',
+                category: 'skincare',
+                features: ['Reduces fine lines & wrinkles', 'Reduces dark circles', 'With snail mucin & peptides', 'Intense hydration'],
+                reviews: [
+                    { name: 'S***', stars: '★★★★★', text: 'My eye area looks so much brighter!', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'T***', stars: '★★★★☆', text: 'Good cream but takes time to see results.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            },
+            34: {
+                name: 'Liquid Matte Lipstick',
+                brand: 'Huda Beauty',
+                image: 'images/Huda-Beauty.png',
+                price: 3200,
+                oldPrice: 3800,
+                badge: 'sale',
+                rating: '★★★★★',
+                ratingCount: '(234)',
+                ratingBadge: '4.8/5',
+                description: 'This highly pigmented liquid matte lipstick delivers long-lasting color with a comfortable, creamy texture. Available in a range of stunning shades.',
+                sku: '128202298_NP-1195059180',
+                texture: 'Liquid',
+                vegan: 'Yes',
+                skinType: 'All',
+                size: '5 ml',
+                stockStatus: 'In stock',
+                category: 'makeup',
+                features: ['Highly pigmented', 'Long-lasting color', 'Comfortable formula', 'Creamy texture'],
+                reviews: [
+                    { name: 'U***', stars: '★★★★★', text: 'Beautiful color and lasts all day!', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'V***', stars: '★★★★☆', text: 'Love the shade but a bit expensive.', date: 'Verified Purchase • 3 weeks ago' }
+                ]
+            },
+            35: {
+                name: 'Water Bank Moisture Cream',
+                brand: 'Laneige',
+                image: 'images/Laneige.png',
+                price: 2900,
+                oldPrice: 3600,
+                badge: 'bestseller',
+                rating: '★★★★★',
+                ratingCount: '(198)',
+                ratingBadge: '4.7/5',
+                description: 'This moisture cream provides intense hydration with a lightweight gel formula. Helps to plump and rejuvenate the skin for a radiant, dewy complexion.',
+                sku: '128202298_NP-1195059181',
+                texture: 'Gel',
+                vegan: 'No',
+                skinType: 'Normal to Dry',
+                size: '50 ml',
+                stockStatus: 'Best Seller',
+                category: 'skincare',
+                features: ['Intense hydration', 'Lightweight gel formula', 'Plumps skin', 'Radiant complexion'],
+                reviews: [
+                    { name: 'W***', stars: '★★★★★', text: 'My skin feels so hydrated and bouncy!', date: 'Verified Purchase • 3 weeks ago' },
+                    { name: 'X***', stars: '★★★★★', text: 'Perfect for my dry skin. Love the texture.', date: 'Verified Purchase • 2 months ago' }
+                ]
+            },
+            36: {
+                name: 'Powder Blush',
+                brand: 'MAC',
+                image: 'images/MAC.png',
+                price: 2100,
+                oldPrice: 2500,
+                badge: 'sale',
+                rating: '★★★★★',
+                ratingCount: '(178)',
+                ratingBadge: '4.6/5',
+                description: 'This iconic powder blush delivers buildable, natural-looking color with a silky texture. Provides a healthy, radiant flush to the cheeks.',
+                sku: '128202298_NP-1195059182',
+                texture: 'Powder',
+                vegan: 'No',
+                skinType: 'All',
+                size: '6 g',
+                stockStatus: 'In stock',
+                category: 'makeup',
+                features: ['Buildable color', 'Natural-looking finish', 'Silky texture', 'Radiant flush'],
+                reviews: [
+                    { name: 'Y***', stars: '★★★★★', text: 'The perfect blush for everyday wear.', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'Z***', stars: '★★★★☆', text: 'Good pigment but need to blend well.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            },
+            37: {
+                name: 'Eye Repair Cream',
+                brand: 'CeraVe',
+                image: 'images/CeraVE.png',
+                price: 1950,
+                oldPrice: 2200,
+                badge: 'sale',
+                rating: '★★★★★',
+                ratingCount: '(145)',
+                ratingBadge: '4.5/5',
+                description: 'This gentle eye cream hydrates and soothes the delicate eye area. Formulated with ceramides and niacinamide to restore the skin barrier.',
+                sku: '128202298_NP-1195059183',
+                texture: 'Cream',
+                vegan: 'Yes',
+                skinType: 'Sensitive',
+                size: '14 ml',
+                stockStatus: 'In stock',
+                category: 'skincare',
+                features: ['Gentle hydration', 'Soothes eye area', 'With ceramides & niacinamide', 'Restores skin barrier'],
+                reviews: [
+                    { name: 'A1***', stars: '★★★★★', text: 'My under-eye area feels so much smoother.', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'B1***', stars: '★★★★☆', text: 'Good product but takes time to show results.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            },
+            38: {
+                name: 'Can\'t Stop Won\'t Stop Foundation',
+                brand: 'NYX',
+                image: 'images/NYX.png',
+                price: 1400,
+                oldPrice: 1700,
+                badge: 'sale',
+                rating: '★★★★☆',
+                ratingCount: '(156)',
+                ratingBadge: '4.3/5',
+                description: 'This full-coverage, matte foundation provides all-day wear with a lightweight feel. Oil-free formula controls shine and blurs imperfections.',
+                sku: '128202298_NP-1195059184',
+                texture: 'Liquid',
+                vegan: 'Yes',
+                skinType: 'Oily & Combination',
+                size: '30 ml',
+                stockStatus: 'In stock',
+                category: 'makeup',
+                features: ['Full coverage', 'Matte finish', 'All-day wear', 'Oil-free formula'],
+                reviews: [
+                    { name: 'C1***', stars: '★★★★★', text: 'Perfect for my oily skin. Stays matte all day.', date: 'Verified Purchase • 3 weeks ago' },
+                    { name: 'D1***', stars: '★★★★☆', text: 'Good coverage but can be drying.', date: 'Verified Purchase • 2 months ago' }
+                ]
+            },
+            39: {
+                name: 'Hyaluronic Acid Serum',
+                brand: 'La Roche-Posay',
+                image: 'images/La-Roche-Posay.png',
+                price: 4200,
+                oldPrice: 4700,
+                badge: 'new',
+                rating: '★★★★★',
+                ratingCount: '(189)',
+                ratingBadge: '4.8/5',
+                description: 'This pure hyaluronic acid serum provides intense hydration to plump and smooth the skin. Helps to reduce fine lines and restore skin\'s radiance.',
+                sku: '128202298_NP-1195059185',
+                texture: 'Serum',
+                vegan: 'No',
+                skinType: 'All Skin Types',
+                size: '30 ml',
+                stockStatus: 'New Arrival',
+                category: 'skincare',
+                features: ['Intense hydration', 'Plumps & smooths skin', 'Reduces fine lines', 'Restores radiance'],
+                reviews: [
+                    { name: 'E1***', stars: '★★★★★', text: 'My skin has never been so hydrated!', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'F1***', stars: '★★★★★', text: 'Worth the price. This serum is amazing.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            },
+            40: {
+                name: 'Green Tea Toner',
+                brand: 'Innisfree',
+                image: 'images/Innisfree.jpeg',
+                price: 1850,
+                oldPrice: 2200,
+                badge: 'sale',
+                rating: '★★★★★',
+                ratingCount: '(178)',
+                ratingBadge: '4.5/5',
+                description: 'This refreshing toner with green tea extract hydrates and balances the skin. Helps to soothe and revitalize for a healthy, glowing complexion.',
+                sku: '128202298_NP-1195059186',
+                texture: 'Liquid',
+                vegan: 'Yes',
+                skinType: 'All Skin Types',
+                size: '200 ml',
+                stockStatus: 'In stock',
+                category: 'skincare',
+                features: ['Hydrates & balances', 'Soothes skin', 'With green tea extract', 'Revitalizes complexion'],
+                reviews: [
+                    { name: 'G1***', stars: '★★★★★', text: 'My skin feels so refreshed after using this.', date: 'Verified Purchase • 3 weeks ago' },
+                    { name: 'H1***', stars: '★★★★☆', text: 'Good toner but the smell is strong.', date: 'Verified Purchase • 2 months ago' }
+                ]
+            },
+            41: {
+                name: 'Total Repair 5 Conditioner',
+                brand: 'L\'Oreal',
+                image: 'images/L\'Oreal.png',
+                price: 1850,
+                oldPrice: 2300,
+                badge: 'bestseller',
+                rating: '★★★★★',
+                ratingCount: '(234)',
+                ratingBadge: '4.6/5',
+                description: 'This repairing conditioner nourishes and strengthens damaged hair. Enriched with ceramides and glycerin to restore hair health and shine.',
+                sku: '128202298_NP-1195059187',
+                texture: 'Cream',
+                vegan: 'No',
+                skinType: 'All Hair Types',
+                size: '400 ml',
+                stockStatus: 'Best Seller',
+                category: 'haircare',
+                features: ['Nourishes damaged hair', 'Strengthens hair', 'Restores shine', 'With ceramides'],
+                reviews: [
+                    { name: 'I1***', stars: '★★★★★', text: 'My hair feels so soft and healthy!', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'J1***', stars: '★★★★☆', text: 'Good conditioner but need to use shampoo too.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            },
+            42: {
+                name: 'Vitamin C Serum',
+                brand: 'The Ordinary',
+                image: 'images/The-ordinary.png',
+                price: 1400,
+                oldPrice: 1600,
+                badge: 'sale',
+                rating: '★★★★★',
+                ratingCount: '(234)',
+                ratingBadge: '4.7/5',
+                description: 'This potent vitamin C serum brightens the skin and reduces signs of aging. Formulated with ascorbic acid and vitamin E for antioxidant protection.',
+                sku: '128202298_NP-1195059188',
+                texture: 'Serum',
+                vegan: 'Yes',
+                skinType: 'All Skin Types',
+                size: '30 ml',
+                stockStatus: 'In stock',
+                category: 'skincare',
+                features: ['Brightens skin', 'Reduces signs of aging', 'Antioxidant protection', 'With vitamin C & E'],
+                reviews: [
+                    { name: 'K1***', stars: '★★★★★', text: 'My skin is glowing after using this!', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'L1***', stars: '★★★★☆', text: 'Good serum but need to store it properly.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            },
+            43: {
+                name: 'Fit Me Concealer',
+                brand: 'Maybelline',
+                image: 'images/Maybelline.png',
+                price: 950,
+                oldPrice: 1200,
+                badge: 'sale',
+                rating: '★★★★☆',
+                ratingCount: '(178)',
+                ratingBadge: '4.4/5',
+                description: 'This lightweight concealer provides natural-looking coverage that blends seamlessly. Formulated to cover dark circles, blemishes, and imperfections.',
+                sku: '128202298_NP-1195059189',
+                texture: 'Liquid',
+                vegan: 'No',
+                skinType: 'All Skin Types',
+                size: '6.8 ml',
+                stockStatus: 'In stock',
+                category: 'makeup',
+                features: ['Natural-looking coverage', 'Blends seamlessly', 'Covers imperfections', 'Lightweight formula'],
+                reviews: [
+                    { name: 'M1***', stars: '★★★★★', text: 'Perfect for hiding dark circles!', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'N1***', stars: '★★★★☆', text: 'Good concealer but creases a bit.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            },
+            44: {
+                name: 'Aloe Soothing Sunscreen SPF 50',
+                brand: 'COSRX',
+                image: 'images/product3.png',
+                price: 1850,
+                oldPrice: 2100,
+                badge: 'new',
+                rating: '★★★★★',
+                ratingCount: '(156)',
+                ratingBadge: '4.7/5',
+                description: 'This soothing sunscreen provides broad-spectrum SPF 50 protection with a lightweight, non-sticky formula. Enriched with aloe vera to calm and hydrate the skin.',
+                sku: '128202298_NP-1195059190',
+                texture: 'Lotion',
+                vegan: 'Yes',
+                skinType: 'Sensitive',
+                size: '50 ml',
+                stockStatus: 'New Arrival',
+                category: 'skincare',
+                features: ['SPF 50 protection', 'Soothing formula', 'With aloe vera', 'Lightweight & non-sticky'],
+                reviews: [
+                    { name: 'O1***', stars: '★★★★★', text: 'No white cast and feels so lightweight!', date: 'Verified Purchase • 1 week ago' },
+                    { name: 'P1***', stars: '★★★★★', text: 'Perfect for my sensitive skin.', date: 'Verified Purchase • 3 weeks ago' }
+                ]
+            },
+            45: {
+                name: 'Green Tea Moisturizer',
+                brand: 'Plum',
+                image: 'images/Plum.jpeg',
+                price: 750,
+                oldPrice: 950,
+                badge: 'sale',
+                rating: '★★★★☆',
+                ratingCount: '(134)',
+                ratingBadge: '4.2/5',
+                description: 'This lightweight moisturizer with green tea extract hydrates and nourishes the skin. Helps to control excess oil and prevent breakouts for clear, healthy skin.',
+                sku: '128202298_NP-1195059191',
+                texture: 'Gel',
+                vegan: 'Yes',
+                skinType: 'Oily & Combination',
+                size: '100 ml',
+                stockStatus: 'In stock',
+                category: 'skincare',
+                features: ['Lightweight hydration', 'Controls excess oil', 'Prevents breakouts', 'With green tea extract'],
+                reviews: [
+                    { name: 'Q1***', stars: '★★★★★', text: 'My oily skin loves this!', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'R1***', stars: '★★★★☆', text: 'Good but the smell is a bit strong.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            },
+            46: {
+                name: 'Highlighter Palette',
+                brand: 'Huda Beauty',
+                image: 'images/Huda-Beauty.png',
+                price: 2800,
+                oldPrice: 3200,
+                badge: 'sale',
+                rating: '★★★★★',
+                ratingCount: '(189)',
+                ratingBadge: '4.8/5',
+                description: 'This stunning highlighter palette features four versatile shades with a silky, blendable formula. Provides a luminous, glowing finish for all skin tones.',
+                sku: '128202298_NP-1195059192',
+                texture: 'Powder',
+                vegan: 'Yes',
+                skinType: 'All',
+                size: '12 g',
+                stockStatus: 'In stock',
+                category: 'makeup',
+                features: ['Four versatile shades', 'Silky blendable formula', 'Luminous finish', 'Suitable for all skin tones'],
+                reviews: [
+                    { name: 'S1***', stars: '★★★★★', text: 'The glow is unreal! Love this palette.', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'T1***', stars: '★★★★☆', text: 'Beautiful shades but a bit expensive.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            },
+            47: {
+                name: 'Vitamin C Moisturizer',
+                brand: 'Mamaearth',
+                image: 'images/Mamaearth.png',
+                price: 850,
+                oldPrice: 1100,
+                badge: 'sale',
+                rating: '★★★★☆',
+                ratingCount: '(145)',
+                ratingBadge: '4.3/5',
+                description: 'This vitamin C moisturizer brightens and hydrates the skin. Helps to reduce dark spots and pigmentation for a more even, radiant complexion.',
+                sku: '128202298_NP-1195059193',
+                texture: 'Cream',
+                vegan: 'Yes',
+                skinType: 'All Skin Types',
+                size: '50 ml',
+                stockStatus: 'In stock',
+                category: 'skincare',
+                features: ['Brightens skin', 'Hydrates & nourishes', 'Reduces dark spots', 'Radiant complexion'],
+                reviews: [
+                    { name: 'U1***', stars: '★★★★★', text: 'My skin looks so bright and even!', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'V1***', stars: '★★★★☆', text: 'Good moisturizer but takes time to see results.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            },
+            48: {
+                name: 'Hydrating Light Moisturizer',
+                brand: 'Simple',
+                image: 'images/Simple.png',
+                price: 900,
+                oldPrice: 1000,
+                badge: 'sale',
+                rating: '★★★★☆',
+                ratingCount: '(167)',
+                ratingBadge: '4.3/5',
+                description: 'This lightweight moisturizer provides 24-hour hydration with a non-greasy formula. Free from artificial perfumes and colors, suitable for sensitive skin.',
+                sku: '128202298_NP-1195059194',
+                texture: 'Lotion',
+                vegan: 'Yes',
+                skinType: 'Sensitive',
+                size: '100 ml',
+                stockStatus: 'In stock',
+                category: 'skincare',
+                features: ['24-hour hydration', 'Non-greasy formula', 'Free from artificial perfumes', 'Suitable for sensitive skin'],
+                reviews: [
+                    { name: 'W1***', stars: '★★★★★', text: 'Perfect for my sensitive skin!', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'X1***', stars: '★★★★☆', text: 'Good lightweight moisturizer for summer.', date: 'Verified Purchase • 1 month ago' }
+                ]
             }
         };
+
+        // ===== GET PRODUCT ID FROM URL =====
+        function getProductId() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            return id ? parseInt(id) : 1;
+        }
 
         // ===== LOAD PRODUCT =====
         function loadProduct() {
             const id = getProductId();
             const product = productsData[id] || productsData[1];
 
-            document.getElementById('productBreadcrumb').textContent = product.name;
+            // Update badge
+            const badge = document.getElementById('productBadge');
+            if (product.badge === 'bestseller') {
+                badge.textContent = '⭐ Best Seller';
+                badge.className = 'badge bestseller';
+                badge.style.display = 'inline-block';
+            } else if (product.badge === 'new') {
+                badge.textContent = '✨ New';
+                badge.className = 'badge new';
+                badge.style.display = 'inline-block';
+            } else if (product.badge === 'sale') {
+                badge.textContent = '🔥 Sale';
+                badge.className = 'badge sale';
+                badge.style.display = 'inline-block';
+            } else {
+                badge.textContent = '';
+                badge.className = 'badge';
+                badge.style.display = 'none';
+            }
+
+            // Update main info
             document.getElementById('productBrand').textContent = product.brand;
             document.getElementById('productName').textContent = product.name;
             document.getElementById('productStars').textContent = product.rating;
@@ -1101,24 +2349,22 @@
             document.getElementById('mainProductImage').src = product.image;
             document.getElementById('productCurrentPrice').textContent = `Rs. ${product.price.toLocaleString()}`;
             document.getElementById('productOldPrice').textContent = `Rs. ${product.oldPrice.toLocaleString()}`;
-            document.getElementById('productDiscount').textContent = product.discount;
+            document.getElementById('productDiscount').textContent = `-${Math.round((1 - product.price / product.oldPrice) * 100)}%`;
+            document.getElementById('productSaveBadge').textContent = `Save Rs. ${(product.oldPrice - product.price).toLocaleString()}`;
 
-            // Update badge
-            const badge = document.getElementById('productBadge');
-            if (product.badge === 'bestseller') {
-                badge.textContent = '⭐ Best Seller';
-                badge.className = 'badge bestseller';
-            } else if (product.badge === 'new') {
-                badge.textContent = '✨ New';
-                badge.className = 'badge new';
-            } else if (product.badge === 'sale') {
-                badge.textContent = '🔥 Sale';
-                badge.className = 'badge sale';
-            }
+            // Update rating badge
+            document.querySelector('.rating-badge').textContent = product.ratingBadge;
+
+            // Update average rating and stars
+            document.getElementById('avgRating').textContent = product.ratingBadge;
+            document.getElementById('avgStars').textContent = product.rating;
+            document.getElementById('totalRatings').textContent = product.ratingCount.replace(/[()]/g, '') + ' Ratings';
 
             // Update description
             const desc = document.getElementById('productDescription');
-            desc.querySelector('p:nth-child(2)').textContent = product.description;
+            const descP = desc.querySelector('p:nth-child(2)');
+            if (descP) descP.textContent = product.description;
+            
             const featuresList = desc.querySelector('.key-features');
             if (featuresList && product.features) {
                 featuresList.innerHTML = product.features.map(f => 
@@ -1128,23 +2374,20 @@
 
             // Update specs
             document.getElementById('specBrand').textContent = product.brand;
+            document.getElementById('specSku').textContent = product.sku;
             document.getElementById('specTexture').textContent = product.texture;
             document.getElementById('specVegan').textContent = product.vegan;
             document.getElementById('specSkinType').textContent = product.skinType;
             document.getElementById('specSize').textContent = product.size;
-            document.getElementById('stockStatus').textContent = product.stockStatus;
 
-            // Update stock status color
+            // Update stock status
             const stockStatus = document.getElementById('stockStatus');
-            if (product.stockStatus === 'In stock' || product.stockStatus === 'Best Seller') {
+            stockStatus.textContent = product.stockStatus;
+            if (product.stockStatus === 'In stock' || product.stockStatus === 'Best Seller' || product.stockStatus === 'New Arrival') {
                 stockStatus.className = 'stock-status in-stock';
             } else {
                 stockStatus.className = 'stock-status';
             }
-
-            // Update save badge
-            const saveAmount = product.oldPrice - product.price;
-            document.querySelector('.save-badge').textContent = `Save Rs. ${saveAmount.toLocaleString()}`;
 
             // Update delivery date
             const today = new Date();
@@ -1154,11 +2397,74 @@
 
             // Update thumbnails
             const thumbnails = document.querySelectorAll('.thumbnails img');
+            const thumbnailImages = [product.image, 'images/product1.png', 'images/product2.png', 'images/product4.png'];
             thumbnails.forEach((thumb, index) => {
-                if (index === 0) {
-                    thumb.src = product.image;
-                    thumb.onclick = function() { changeMainImage(this, product.image); };
+                if (index < thumbnailImages.length) {
+                    thumb.src = thumbnailImages[index];
+                    thumb.onclick = function() { changeMainImage(this, thumbnailImages[index]); };
                 }
+            });
+
+            // Load reviews
+            loadReviews(product);
+
+            // Load "You May Also Like"
+            loadAlsoLike(product.category, id);
+        }
+
+        // ===== LOAD REVIEWS =====
+        function loadReviews(product) {
+            const reviewsList = document.getElementById('reviewsList');
+            reviewsList.innerHTML = '';
+
+            if (product.reviews && product.reviews.length > 0) {
+                product.reviews.forEach(review => {
+                    const item = document.createElement('div');
+                    item.className = 'review-item';
+                    item.innerHTML = `
+                        <div class="reviewer">${review.name}</div>
+                        <div class="review-stars">${review.stars}</div>
+                        <div class="review-text">${review.text}</div>
+                        <div class="review-date">${review.date}</div>
+                    `;
+                    reviewsList.appendChild(item);
+                });
+            } else {
+                reviewsList.innerHTML = '<div class="no-questions" style="padding:20px 0;">No reviews yet. Be the first to review!</div>';
+            }
+        }
+
+        // ===== LOAD "YOU MAY ALSO LIKE" =====
+        function loadAlsoLike(category, currentId) {
+            const grid = document.getElementById('alsoGrid');
+            grid.innerHTML = '';
+
+            // Find products in same category (excluding current)
+            const similarProducts = Object.keys(productsData)
+                .map(id => ({ id: parseInt(id), ...productsData[id] }))
+                .filter(p => p.category === category && p.id !== currentId)
+                .slice(0, 4);
+
+            if (similarProducts.length < 4) {
+                // Add more products from other categories
+                const moreProducts = Object.keys(productsData)
+                    .map(id => ({ id: parseInt(id), ...productsData[id] }))
+                    .filter(p => p.category !== category && p.id !== currentId)
+                    .slice(0, 4 - similarProducts.length);
+                similarProducts.push(...moreProducts);
+            }
+
+            similarProducts.forEach(product => {
+                const card = document.createElement('a');
+                card.href = `product-detail.html?id=${product.id}`;
+                card.className = 'also-card';
+                card.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h4>${product.name}</h4>
+                    <span class="also-brand">${product.brand}</span>
+                    <span class="also-price">Rs. ${product.price.toLocaleString()}</span>
+                `;
+                grid.appendChild(card);
             });
         }
 
@@ -1190,7 +2496,6 @@
         function buyNow() {
             const qty = parseInt(document.getElementById('qtyNum').textContent);
             const productName = document.getElementById('productName').textContent;
-            const price = document.getElementById('productCurrentPrice').textContent;
             
             showToast(`🛒 Redirecting to checkout...`);
             setTimeout(() => {
@@ -1198,8 +2503,8 @@
             }, 1000);
         }
 
-        // ===== ADD TO WISHLIST =====
-        function addToWishlistDetail() {
+        // ===== TOGGLE WISHLIST =====
+        function toggleWishlist() {
             const productName = document.getElementById('productName').textContent;
             const wishlistBtn = document.querySelector('.wishlist-btn');
             const icon = wishlistBtn.querySelector('i');
@@ -1300,7 +2605,7 @@
             });
         }
 
-        // ===== ADD CSS =====
+        // ===== ADD CSS ANIMATIONS =====
         const styleSheet = document.createElement('style');
         styleSheet.textContent = `
             @keyframes slideInUp {
@@ -1339,7 +2644,7 @@
         // ===== LOAD PRODUCT ON PAGE LOAD =====
         document.addEventListener('DOMContentLoaded', loadProduct);
 
-        console.log('✨ Kasbi Beauty — Product Detail Page Loaded! ✨');
+        console.log('✨ Kasbi Beauty — Product Detail Page Loaded with 48 Products! ✨');
     </script>
 
 </body>

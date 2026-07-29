@@ -10,6 +10,154 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     <link rel="stylesheet" href="style.css" />
+
+    <style>
+        /* ===== MAKEUP SPECIFIC STYLES ===== */
+        .category-banner {
+            background: linear-gradient(135deg, #E8D5B7, #F5E6D3);
+            border-radius: 32px;
+            padding: 50px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin: 40px 6%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-banner::before {
+            content: '✦';
+            position: absolute;
+            right: -20px;
+            top: -30px;
+            font-size: 120px;
+            opacity: 0.06;
+            transform: rotate(15deg);
+        }
+
+        .category-banner .tag {
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #8B6914;
+            font-weight: 600;
+            background: rgba(255,255,255,0.3);
+            padding: 6px 18px;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+        }
+
+        .category-banner h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 42px;
+            margin: 8px 0;
+            color: #2d2a24;
+        }
+
+        .category-banner p {
+            color: #5a4a3a;
+            max-width: 400px;
+            font-weight: 300;
+        }
+
+        .category-banner .stats {
+            display: flex;
+            gap: 12px;
+        }
+
+        .category-banner .stats span {
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(4px);
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 13px;
+            color: #5E4074;
+        }
+
+        .product-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .product-link:hover {
+            transform: translateY(-4px);
+        }
+
+        .product-card .badge-bestseller {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: var(--gold-gradient);
+            color: var(--dark);
+            padding: 3px 12px;
+            border-radius: 30px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(212,175,55,0.25);
+            z-index: 1;
+        }
+
+        .product-card .badge-new {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: #2ecc71;
+            color: white;
+            padding: 3px 12px;
+            border-radius: 30px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 1;
+        }
+
+        .product-card .badge-limited {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: #e74c3c;
+            color: white;
+            padding: 3px 12px;
+            border-radius: 30px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .category-banner {
+                padding: 30px 24px;
+                flex-direction: column;
+                text-align: center;
+            }
+            .category-banner p {
+                max-width: 100%;
+            }
+            .category-banner .stats {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .category-banner h2 {
+                font-size: 30px;
+            }
+            .category-banner .stats span {
+                font-size: 11px;
+                padding: 6px 14px;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -57,32 +205,30 @@
         </div>
     </header>
 
-<!-- ===== NAVIGATION ===== -->
-<nav class="navigation">
-    <ul>
-        <li><a href="index.html"></a></li>
-        <li><a href="shop.html">Shop</a></li>
-        <li><a href="brands.html">Brands</a></li>
-        <li><a href="skincare.html">Skincare</a></li>
-        <li><a href="makeup.html" class="active">Makeup</a></li>
-        <li><a href="haircare.html">Hair Care</a></li>
-        <li>
-            <a href="newarrivals.html" class="new-arrivals-link">
-                <span class="new-arrivals-text">New Arrivals</span>
-                <span class="new-badge-animated">✨ NEW</span>
-            </a>
-        </li>
-        <li><a href="bestsellers.html">Best Sellers</a></li>
-        <li>
-            <a href="offers.html" class="offers-link">
-                <span class="offers-text">Offers</span>
-                <span class="offers-badge-animated">🔥 SALE</span>
-            </a>
-        </li>
-       
-    </ul>
-</nav>
-
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navigation">
+        <ul>
+            <li><a href="index.html"></a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="brands.html">Brands</a></li>
+            <li><a href="skincare.html">Skincare</a></li>
+            <li><a href="makeup.html" class="active">Makeup</a></li>
+            <li><a href="haircare.html">Hair Care</a></li>
+            <li>
+                <a href="newarrivals.html" class="new-arrivals-link">
+                    <span class="new-arrivals-text">New Arrivals</span>
+                    <span class="new-badge-animated">✨ NEW</span>
+                </a>
+            </li>
+            <li><a href="bestsellers.html">Best Sellers</a></li>
+            <li>
+                <a href="offers.html" class="offers-link">
+                    <span class="offers-text">Offers</span>
+                    <span class="offers-badge-animated">🔥 SALE</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 
     <!-- ===== SHOP SECTION ===== -->
     <section class="shop-section">
@@ -98,24 +244,31 @@
                 <label><input type="checkbox"> Mascara</label>
                 <label><input type="checkbox"> Concealer</label>
                 <label><input type="checkbox"> Blush</label>
+                <label><input type="checkbox"> Highlighter</label>
+                <label><input type="checkbox"> Bronzer</label>
             </div>
 
             <div class="filter-group">
                 <h4>Price Range</h4>
                 <div class="price-range">
-                    <input type="text" placeholder="Min" value="300">
+                    <input type="text" id="priceMin" placeholder="Min" value="300">
                     <span>—</span>
-                    <input type="text" placeholder="Max" value="5000">
+                    <input type="text" id="priceMax" placeholder="Max" value="5000">
                 </div>
             </div>
 
             <div class="filter-group">
                 <h4>Brands</h4>
-                <label><input type="checkbox"> Maybelline</label>
-                <label><input type="checkbox"> L'Oreal</label>
-                <label><input type="checkbox"> NYX</label>
-                <label><input type="checkbox"> MAC</label>
-                <label><input type="checkbox"> Fenty Beauty</label>
+                <label><input type="checkbox" value="maybelline"> Maybelline</label>
+                <label><input type="checkbox" value="loreal"> L'Oreal</label>
+                <label><input type="checkbox" value="nyx"> NYX</label>
+                <label><input type="checkbox" value="mac"> MAC</label>
+                <label><input type="checkbox" value="fenty"> Fenty Beauty</label>
+                <label><input type="checkbox" value="huda"> Huda Beauty</label>
+                <label><input type="checkbox" value="wetnwild"> wet n wild</label>
+                <label><input type="checkbox" value="lagirl"> L.A. Girl</label>
+                <label><input type="checkbox" value="airspun"> Airspun</label>
+                <label><input type="checkbox" value="otwo"> O.TWO.O</label>
             </div>
 
             <div class="filter-group">
@@ -126,133 +279,27 @@
                 <label><input type="checkbox"> Shimmer</label>
             </div>
 
-            <button class="btn-primary"><i class="fa-solid fa-rotate-right"></i> Apply Filters</button>
+            <button class="btn-primary" id="applyFilters"><i class="fa-solid fa-rotate-right"></i> Apply Filters</button>
         </div>
 
         <!-- Products -->
         <div>
             <div class="shop-toolbar">
-                <span>Showing 1–12 of 48 products</span>
-                <select>
-                    <option>Sort by: Newest</option>
-                    <option>Sort by: Price: Low to High</option>
-                    <option>Sort by: Price: High to Low</option>
-                    <option>Sort by: Best Selling</option>
-                    <option>Sort by: Rating</option>
+                <span id="productCount">Showing 1–12 of 160 products</span>
+                <select id="sortSelect">
+                    <option value="default">Sort by: Default</option>
+                    <option value="price-low">Sort by: Price: Low to High</option>
+                    <option value="price-high">Sort by: Price: High to Low</option>
+                    <option value="rating">Sort by: Rating</option>
                 </select>
             </div>
 
-            <div class="product-grid">
-                <div class="product-card">
-                    <div class="image-wrap">
-                        <span class="discount">-35%</span>
-                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                        <img src="images/product3.png" alt="SuperStay Lipstick">
-                    </div>
-                    <div class="info">
-                        <span class="brand">Maybelline</span>
-                        <h3>SuperStay Lipstick</h3>
-                        <div class="rating">★★★★★ <span>(540)</span></div>
-                        <div class="price">
-                            <span class="current">Rs.1,450</span>
-                            <span class="old">Rs.2,000</span>
-                        </div>
-                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="image-wrap">
-                        <span class="discount">-20%</span>
-                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                        <img src="images/product1.png" alt="Foundation">
-                    </div>
-                    <div class="info">
-                        <span class="brand">L'Oreal</span>
-                        <h3>True Match Foundation</h3>
-                        <div class="rating">★★★★★ <span>(412)</span></div>
-                        <div class="price">
-                            <span class="current">Rs.2,800</span>
-                            <span class="old">Rs.3,500</span>
-                        </div>
-                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="image-wrap">
-                        <span class="discount">-15%</span>
-                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                        <img src="images/product2.png" alt="Eyeshadow Palette">
-                    </div>
-                    <div class="info">
-                        <span class="brand">NYX</span>
-                        <h3>Ultimate Eyeshadow Palette</h3>
-                        <div class="rating">★★★★★ <span>(328)</span></div>
-                        <div class="price">
-                            <span class="current">Rs.3,200</span>
-                            <span class="old">Rs.3,800</span>
-                        </div>
-                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="image-wrap">
-                        <span class="discount">-25%</span>
-                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                        <img src="images/product4.png" alt="Mascara">
-                    </div>
-                    <div class="info">
-                        <span class="brand">Maybelline</span>
-                        <h3>Lash Sensational Mascara</h3>
-                        <div class="rating">★★★★★ <span>(289)</span></div>
-                        <div class="price">
-                            <span class="current">Rs.1,200</span>
-                            <span class="old">Rs.1,600</span>
-                        </div>
-                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="image-wrap">
-                        <span class="discount">-30%</span>
-                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                        <img src="images/product3.png" alt="Lip Gloss">
-                    </div>
-                    <div class="info">
-                        <span class="brand">Fenty Beauty</span>
-                        <h3>Gloss Bomb Lip Gloss</h3>
-                        <div class="rating">★★★★★ <span>(456)</span></div>
-                        <div class="price">
-                            <span class="current">Rs.2,800</span>
-                            <span class="old">Rs.4,000</span>
-                        </div>
-                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="image-wrap">
-                        <span class="discount">-10%</span>
-                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                        <img src="images/product1.png" alt="Concealer">
-                    </div>
-                    <div class="info">
-                        <span class="brand">MAC</span>
-                        <h3>Pro Longwear Concealer</h3>
-                        <div class="rating">★★★★★ <span>(234)</span></div>
-                        <div class="price">
-                            <span class="current">Rs.3,600</span>
-                            <span class="old">Rs.4,000</span>
-                        </div>
-                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                    </div>
-                </div>
+            <div class="product-grid" id="productGrid">
+                <!-- Products loaded dynamically -->
             </div>
 
-            <div class="pagination">
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <a href="#"><i class="fa-solid fa-chevron-right"></i></a>
+            <div class="pagination" id="pagination">
+                <!-- Pagination loaded dynamically -->
             </div>
         </div>
     </section>
@@ -311,8 +358,383 @@
     </footer>
 
     <script>
+        // ===== PRODUCT DATA - 160 PRODUCTS (FULL LIST) =====
+        const allProducts = [
+            // Page 1 - Products 1-12
+            { id: 1, name: 'SuperStay Lipstick', brand: 'Maybelline', price: 1450, oldPrice: 2000, discount: '-35%', rating: 5, ratingCount: 540, image: 'images/product3.png', badge: 'bestseller', category: 'Lipstick' },
+            { id: 2, name: 'True Match Foundation', brand: 'L\'Oreal', price: 2800, oldPrice: 3500, discount: '-20%', rating: 5, ratingCount: 412, image: 'images/product1.png', badge: null, category: 'Foundation' },
+            { id: 3, name: 'Ultimate Eyeshadow Palette', brand: 'NYX', price: 3200, oldPrice: 3800, discount: '-15%', rating: 5, ratingCount: 328, image: 'images/product2.png', badge: null, category: 'Eyeshadow' },
+            { id: 4, name: 'Lash Sensational Mascara', brand: 'Maybelline', price: 1200, oldPrice: 1600, discount: '-25%', rating: 5, ratingCount: 289, image: 'images/product4.png', badge: 'bestseller', category: 'Mascara' },
+            { id: 5, name: 'Gloss Bomb Lip Gloss', brand: 'Fenty Beauty', price: 2800, oldPrice: 4000, discount: '-30%', rating: 5, ratingCount: 456, image: 'images/product3.png', badge: null, category: 'Lipstick' },
+            { id: 6, name: 'Pro Longwear Concealer', brand: 'MAC', price: 3600, oldPrice: 4000, discount: '-10%', rating: 5, ratingCount: 234, image: 'images/product1.png', badge: null, category: 'Concealer' },
+            { id: 7, name: 'Matte Lipstick', brand: 'MAC', price: 3200, oldPrice: 3800, discount: '-15%', rating: 5, ratingCount: 412, image: 'images/MAC.png', badge: 'bestseller', category: 'Lipstick' },
+            { id: 8, name: 'Soft Matte Lip Cream', brand: 'NYX', price: 1650, oldPrice: 2100, discount: '-20%', rating: 4, ratingCount: 156, image: 'images/NYX.png', badge: null, category: 'Lipstick' },
+            { id: 9, name: 'Fit Me Foundation', brand: 'Maybelline', price: 1850, oldPrice: 2200, discount: '-15%', rating: 4, ratingCount: 189, image: 'images/Maybelline.png', badge: 'new', category: 'Foundation' },
+            { id: 10, name: 'Eyeshadow Palette', brand: 'Huda Beauty', price: 4500, oldPrice: 5000, discount: '-10%', rating: 5, ratingCount: 289, image: 'images/Huda-Beauty.png', badge: 'new', category: 'Eyeshadow' },
+            { id: 11, name: 'Fit Me Concealer', brand: 'Maybelline', price: 950, oldPrice: 1200, discount: '-15%', rating: 4, ratingCount: 178, image: 'images/Maybelline.png', badge: null, category: 'Concealer' },
+            { id: 12, name: 'Studio Fix Foundation', brand: 'MAC', price: 2800, oldPrice: 3500, discount: '-20%', rating: 5, ratingCount: 198, image: 'images/MAC.png', badge: null, category: 'Foundation' },
+
+            // Page 2 - Products 13-24
+            { id: 13, name: 'Can\'t Stop Won\'t Stop Foundation', brand: 'NYX', price: 1400, oldPrice: 1700, discount: '-15%', rating: 4, ratingCount: 156, image: 'images/NYX.png', badge: null, category: 'Foundation' },
+            { id: 14, name: 'Liquid Matte Lipstick', brand: 'Huda Beauty', price: 3200, oldPrice: 3800, discount: '-15%', rating: 5, ratingCount: 234, image: 'images/Huda-Beauty.png', badge: null, category: 'Lipstick' },
+            { id: 15, name: 'Give Me Mocha Lipstick', brand: 'wet n wild', price: 850, oldPrice: 990, discount: '-14%', rating: 4, ratingCount: 189, image: 'images/wet-n-wild.png', badge: 'bestseller', category: 'Lipstick' },
+            { id: 16, name: 'Pro Concealer', brand: 'L.A. Girl', price: 1200, oldPrice: 1500, discount: '-20%', rating: 4, ratingCount: 167, image: 'images/LA-Girl.png', badge: null, category: 'Concealer' },
+            { id: 17, name: 'Powder Blush', brand: 'MAC', price: 2100, oldPrice: 2500, discount: '-15%', rating: 5, ratingCount: 178, image: 'images/MAC.png', badge: null, category: 'Blush' },
+            { id: 18, name: 'Highlighter Palette', brand: 'Huda Beauty', price: 2800, oldPrice: 3200, discount: '-10%', rating: 5, ratingCount: 189, image: 'images/Huda-Beauty.png', badge: null, category: 'Highlighter' },
+            { id: 19, name: 'Epic Ink Liner', brand: 'NYX', price: 1250, oldPrice: 1400, discount: '-10%', rating: 4, ratingCount: 167, image: 'images/NYX.png', badge: 'new', category: 'Eyeshadow' },
+            { id: 20, name: 'MegaLast Liquid Lipstick', brand: 'wet n wild', price: 700, oldPrice: 850, discount: '-18%', rating: 4, ratingCount: 156, image: 'images/wet-n-wild.png', badge: null, category: 'Lipstick' },
+            { id: 21, name: 'HD Foundation', brand: 'L.A. Girl', price: 2100, oldPrice: 2500, discount: '-16%', rating: 4, ratingCount: 145, image: 'images/LA-Girl.png', badge: 'new', category: 'Foundation' },
+            { id: 22, name: 'Lash Sensational Sky High Mascara', brand: 'Maybelline', price: 1550, oldPrice: 1800, discount: '-14%', rating: 5, ratingCount: 345, image: 'images/Maybelline.png', badge: 'bestseller', category: 'Mascara' },
+            { id: 23, name: 'Lip Lingerie', brand: 'NYX', price: 950, oldPrice: 1200, discount: '-20%', rating: 4, ratingCount: 178, image: 'images/NYX.png', badge: null, category: 'Lipstick' },
+            { id: 24, name: 'MegaGlo Highlighter', brand: 'wet n wild', price: 800, oldPrice: 950, discount: '-15%', rating: 4, ratingCount: 156, image: 'images/wet-n-wild.png', badge: null, category: 'Highlighter' },
+
+            // Page 3 - Products 25-36
+            { id: 25, name: 'Butter Gloss', brand: 'NYX', price: 800, oldPrice: 1000, discount: '-20%', rating: 4, ratingCount: 234, image: 'images/NYX.png', badge: null, category: 'Lipstick' },
+            { id: 26, name: 'Pro Setting Powder', brand: 'L.A. Girl', price: 1400, oldPrice: 1650, discount: '-15%', rating: 4, ratingCount: 156, image: 'images/LA-Girl.png', badge: null, category: 'Foundation' },
+            { id: 27, name: 'Matte Lipstick Set', brand: 'O.TWO.O', price: 1200, oldPrice: 1500, discount: '-20%', rating: 4, ratingCount: 145, image: 'images/OTWO.png', badge: null, category: 'Lipstick' },
+            { id: 28, name: 'Eyeshadow Palette', brand: 'O.TWO.O', price: 1800, oldPrice: 2200, discount: '-18%', rating: 4, ratingCount: 134, image: 'images/OTWO.png', badge: 'new', category: 'Eyeshadow' },
+            { id: 29, name: 'Loose Face Powder', brand: 'Airspun', price: 1500, oldPrice: 1800, discount: '-16%', rating: 4, ratingCount: 156, image: 'images/Airspun.png', badge: null, category: 'Foundation' },
+            { id: 30, name: 'Translucent Powder', brand: 'Airspun', price: 1800, oldPrice: 2100, discount: '-14%', rating: 4, ratingCount: 145, image: 'images/Airspun.png', badge: 'sale', category: 'Foundation' },
+            { id: 31, name: 'Fit Me Powder', brand: 'Maybelline', price: 1200, oldPrice: 1500, discount: '-20%', rating: 4, ratingCount: 189, image: 'images/Maybelline.png', badge: null, category: 'Foundation' },
+            { id: 32, name: 'Milk Jumbo Eye Pencil', brand: 'NYX', price: 600, oldPrice: 750, discount: '-20%', rating: 4, ratingCount: 234, image: 'images/NYX.png', badge: null, category: 'Eyeshadow' },
+            { id: 33, name: 'Lipglass', brand: 'MAC', price: 1800, oldPrice: 2100, discount: '-14%', rating: 5, ratingCount: 234, image: 'images/MAC.png', badge: null, category: 'Lipstick' },
+            { id: 34, name: 'MegaSlim Skinny Mascara', brand: 'wet n wild', price: 650, oldPrice: 800, discount: '-19%', rating: 4, ratingCount: 167, image: 'images/wet-n-wild.png', badge: null, category: 'Mascara' },
+            { id: 35, name: 'Brow Glue', brand: 'NYX', price: 1000, oldPrice: 1200, discount: '-16%', rating: 4, ratingCount: 189, image: 'images/NYX.png', badge: null, category: 'Eyeshadow' },
+            { id: 36, name: 'High Definition Blush', brand: 'NYX', price: 1100, oldPrice: 1350, discount: '-18%', rating: 4, ratingCount: 156, image: 'images/NYX.png', badge: null, category: 'Blush' },
+
+            // Page 4 - Products 37-48
+            { id: 37, name: 'Pro Filt\'r Foundation', brand: 'Fenty Beauty', price: 4200, oldPrice: 4800, discount: '-12%', rating: 5, ratingCount: 312, image: 'images/product1.png', badge: 'bestseller', category: 'Foundation' },
+            { id: 38, name: 'Nude Lipstick', brand: 'MAC', price: 2800, oldPrice: 3300, discount: '-15%', rating: 5, ratingCount: 198, image: 'images/MAC.png', badge: null, category: 'Lipstick' },
+            { id: 39, name: 'Matte Eyeshadow Palette', brand: 'Huda Beauty', price: 3500, oldPrice: 4000, discount: '-12%', rating: 5, ratingCount: 234, image: 'images/Huda-Beauty.png', badge: null, category: 'Eyeshadow' },
+            { id: 40, name: 'Falsies Mascara', brand: 'Maybelline', price: 1100, oldPrice: 1400, discount: '-20%', rating: 4, ratingCount: 178, image: 'images/Maybelline.png', badge: null, category: 'Mascara' },
+            { id: 41, name: 'Cream Blush', brand: 'Fenty Beauty', price: 2400, oldPrice: 2800, discount: '-14%', rating: 5, ratingCount: 189, image: 'images/product3.png', badge: 'new', category: 'Blush' },
+            { id: 42, name: 'Instant Age Rewind Concealer', brand: 'Maybelline', price: 1300, oldPrice: 1600, discount: '-19%', rating: 4, ratingCount: 234, image: 'images/Maybelline.png', badge: null, category: 'Concealer' },
+            { id: 43, name: 'Lip Liner', brand: 'NYX', price: 700, oldPrice: 850, discount: '-18%', rating: 4, ratingCount: 167, image: 'images/NYX.png', badge: null, category: 'Lipstick' },
+            { id: 44, name: 'Setting Spray', brand: 'MAC', price: 2600, oldPrice: 3000, discount: '-13%', rating: 5, ratingCount: 178, image: 'images/MAC.png', badge: null, category: 'Foundation' },
+            { id: 45, name: 'Sunkissed Bronzer', brand: 'Fenty Beauty', price: 3100, oldPrice: 3600, discount: '-14%', rating: 5, ratingCount: 156, image: 'images/product2.png', badge: 'bestseller', category: 'Bronzer' },
+            { id: 46, name: 'Ink Eyeliner', brand: 'NYX', price: 850, oldPrice: 1000, discount: '-15%', rating: 4, ratingCount: 189, image: 'images/NYX.png', badge: null, category: 'Eyeshadow' },
+            { id: 47, name: 'Soft Touch Highlighter', brand: 'wet n wild', price: 650, oldPrice: 800, discount: '-19%', rating: 4, ratingCount: 145, image: 'images/wet-n-wild.png', badge: null, category: 'Highlighter' },
+            { id: 48, name: 'Glow Foundation', brand: 'L.A. Girl', price: 1900, oldPrice: 2200, discount: '-14%', rating: 4, ratingCount: 156, image: 'images/LA-Girl.png', badge: null, category: 'Foundation' },
+
+            // Page 5 - Products 49-60
+            { id: 49, name: 'Wet Lip Gloss', brand: 'NYX', price: 750, oldPrice: 900, discount: '-17%', rating: 4, ratingCount: 234, image: 'images/NYX.png', badge: 'new', category: 'Lipstick' },
+            { id: 50, name: 'Perfecting Powder', brand: 'Airspun', price: 1400, oldPrice: 1700, discount: '-18%', rating: 4, ratingCount: 145, image: 'images/Airspun.png', badge: null, category: 'Foundation' },
+            { id: 51, name: 'Blush Palette', brand: 'Huda Beauty', price: 3200, oldPrice: 3800, discount: '-15%', rating: 5, ratingCount: 189, image: 'images/Huda-Beauty.png', badge: null, category: 'Blush' },
+            { id: 52, name: 'Mascara Primer', brand: 'Maybelline', price: 900, oldPrice: 1100, discount: '-18%', rating: 4, ratingCount: 156, image: 'images/Maybelline.png', badge: null, category: 'Mascara' },
+            { id: 53, name: 'Liquid Foundation', brand: 'MAC', price: 3200, oldPrice: 3700, discount: '-14%', rating: 5, ratingCount: 167, image: 'images/MAC.png', badge: 'bestseller', category: 'Foundation' },
+            { id: 54, name: 'Matte Blush', brand: 'NYX', price: 950, oldPrice: 1200, discount: '-20%', rating: 4, ratingCount: 178, image: 'images/NYX.png', badge: null, category: 'Blush' },
+            { id: 55, name: 'Brow Pomade', brand: 'NYX', price: 1000, oldPrice: 1250, discount: '-20%', rating: 4, ratingCount: 167, image: 'images/NYX.png', badge: null, category: 'Eyeshadow' },
+            { id: 56, name: 'Metallic Eyeshadow', brand: 'Huda Beauty', price: 2800, oldPrice: 3200, discount: '-12%', rating: 5, ratingCount: 145, image: 'images/Huda-Beauty.png', badge: 'new', category: 'Eyeshadow' },
+            { id: 57, name: 'Lip Oil', brand: 'NYX', price: 850, oldPrice: 1000, discount: '-15%', rating: 4, ratingCount: 189, image: 'images/NYX.png', badge: null, category: 'Lipstick' },
+            { id: 58, name: 'HD Setting Powder', brand: 'L.A. Girl', price: 1500, oldPrice: 1800, discount: '-17%', rating: 4, ratingCount: 156, image: 'images/LA-Girl.png', badge: null, category: 'Foundation' },
+            { id: 59, name: 'Lip Scrub', brand: 'wet n wild', price: 550, oldPrice: 650, discount: '-15%', rating: 4, ratingCount: 134, image: 'images/wet-n-wild.png', badge: null, category: 'Lipstick' },
+            { id: 60, name: 'High Coverage Foundation', brand: 'Fenty Beauty', price: 4600, oldPrice: 5200, discount: '-12%', rating: 5, ratingCount: 234, image: 'images/product1.png', badge: 'bestseller', category: 'Foundation' },
+
+            // Page 6 - Products 61-72
+            { id: 61, name: 'Eyeshadow Base', brand: 'NYX', price: 800, oldPrice: 950, discount: '-16%', rating: 4, ratingCount: 156, image: 'images/NYX.png', badge: null, category: 'Eyeshadow' },
+            { id: 62, name: 'Dewy Foundation', brand: 'L\'Oreal', price: 2600, oldPrice: 3000, discount: '-13%', rating: 5, ratingCount: 178, image: 'images/product2.png', badge: null, category: 'Foundation' },
+            { id: 63, name: 'Matte Setting Spray', brand: 'MAC', price: 2200, oldPrice: 2600, discount: '-15%', rating: 5, ratingCount: 189, image: 'images/MAC.png', badge: null, category: 'Foundation' },
+            { id: 64, name: 'Liquid Highlighter', brand: 'wet n wild', price: 750, oldPrice: 900, discount: '-17%', rating: 4, ratingCount: 145, image: 'images/wet-n-wild.png', badge: null, category: 'Highlighter' },
+            { id: 65, name: 'Concealer Palette', brand: 'L.A. Girl', price: 1800, oldPrice: 2100, discount: '-14%', rating: 4, ratingCount: 156, image: 'images/LA-Girl.png', badge: null, category: 'Concealer' },
+            { id: 66, name: 'Lip Plumper', brand: 'NYX', price: 1100, oldPrice: 1300, discount: '-15%', rating: 4, ratingCount: 167, image: 'images/NYX.png', badge: 'new', category: 'Lipstick' },
+            { id: 67, name: 'Cream Foundation', brand: 'MAC', price: 3000, oldPrice: 3500, discount: '-14%', rating: 5, ratingCount: 178, image: 'images/MAC.png', badge: null, category: 'Foundation' },
+            { id: 68, name: 'Highlighter Stick', brand: 'Fenty Beauty', price: 2600, oldPrice: 3000, discount: '-13%', rating: 5, ratingCount: 189, image: 'images/product3.png', badge: null, category: 'Highlighter' },
+            { id: 69, name: 'Brow Gel', brand: 'NYX', price: 750, oldPrice: 900, discount: '-17%', rating: 4, ratingCount: 156, image: 'images/NYX.png', badge: null, category: 'Eyeshadow' },
+            { id: 70, name: 'Natural Blush', brand: 'wet n wild', price: 600, oldPrice: 750, discount: '-20%', rating: 4, ratingCount: 145, image: 'images/wet-n-wild.png', badge: null, category: 'Blush' },
+            { id: 71, name: 'Perfecting Concealer', brand: 'Maybelline', price: 1100, oldPrice: 1300, discount: '-15%', rating: 4, ratingCount: 167, image: 'images/Maybelline.png', badge: null, category: 'Concealer' },
+            { id: 72, name: 'Shadow Palette', brand: 'NYX', price: 2200, oldPrice: 2600, discount: '-15%', rating: 4, ratingCount: 156, image: 'images/NYX.png', badge: null, category: 'Eyeshadow' },
+
+            // Page 7 - Products 73-84
+            { id: 73, name: 'Lip Satin', brand: 'O.TWO.O', price: 900, oldPrice: 1100, discount: '-18%', rating: 4, ratingCount: 145, image: 'images/OTWO.png', badge: null, category: 'Lipstick' },
+            { id: 74, name: 'Dewy Setting Spray', brand: 'L\'Oreal', price: 1800, oldPrice: 2100, discount: '-14%', rating: 4, ratingCount: 156, image: 'images/product1.png', badge: null, category: 'Foundation' },
+            { id: 75, name: 'Bronzer Palette', brand: 'Huda Beauty', price: 3800, oldPrice: 4300, discount: '-12%', rating: 5, ratingCount: 178, image: 'images/Huda-Beauty.png', badge: 'new', category: 'Bronzer' },
+            { id: 76, name: 'Mascara Lash', brand: 'wet n wild', price: 550, oldPrice: 700, discount: '-20%', rating: 4, ratingCount: 134, image: 'images/wet-n-wild.png', badge: null, category: 'Mascara' },
+            { id: 77, name: 'Brow Pencil', brand: 'NYX', price: 700, oldPrice: 850, discount: '-18%', rating: 4, ratingCount: 156, image: 'images/NYX.png', badge: null, category: 'Eyeshadow' },
+            { id: 78, name: 'Silk Foundation', brand: 'L.A. Girl', price: 1700, oldPrice: 2000, discount: '-15%', rating: 4, ratingCount: 145, image: 'images/LA-Girl.png', badge: null, category: 'Foundation' },
+            { id: 79, name: 'Matte Lip Stain', brand: 'wet n wild', price: 650, oldPrice: 800, discount: '-19%', rating: 4, ratingCount: 167, image: 'images/wet-n-wild.png', badge: null, category: 'Lipstick' },
+            { id: 80, name: 'Finishing Powder', brand: 'Airspun', price: 1600, oldPrice: 1900, discount: '-16%', rating: 4, ratingCount: 156, image: 'images/Airspun.png', badge: null, category: 'Foundation' },
+            { id: 81, name: 'Radiant Blush', brand: 'Fenty Beauty', price: 2300, oldPrice: 2700, discount: '-15%', rating: 5, ratingCount: 178, image: 'images/product2.png', badge: null, category: 'Blush' },
+            { id: 82, name: 'Eyeliner Pen', brand: 'NYX', price: 650, oldPrice: 800, discount: '-19%', rating: 4, ratingCount: 189, image: 'images/NYX.png', badge: null, category: 'Eyeshadow' },
+            { id: 83, name: 'Lip Primer', brand: 'NYX', price: 700, oldPrice: 850, discount: '-18%', rating: 4, ratingCount: 145, image: 'images/NYX.png', badge: null, category: 'Lipstick' },
+            { id: 84, name: 'Glow Powder', brand: 'MAC', price: 2400, oldPrice: 2800, discount: '-14%', rating: 5, ratingCount: 156, image: 'images/MAC.png', badge: null, category: 'Highlighter' },
+
+            // Page 8 - Products 85-96
+            { id: 85, name: 'Pro Eyeshadow', brand: 'Huda Beauty', price: 3000, oldPrice: 3500, discount: '-14%', rating: 5, ratingCount: 178, image: 'images/Huda-Beauty.png', badge: 'bestseller', category: 'Eyeshadow' },
+            { id: 86, name: 'Liquid Blush', brand: 'wet n wild', price: 700, oldPrice: 850, discount: '-18%', rating: 4, ratingCount: 145, image: 'images/wet-n-wild.png', badge: null, category: 'Blush' },
+            { id: 87, name: 'Concealer Stick', brand: 'Maybelline', price: 1000, oldPrice: 1200, discount: '-17%', rating: 4, ratingCount: 156, image: 'images/Maybelline.png', badge: null, category: 'Concealer' },
+            { id: 88, name: 'Mascara Volume', brand: 'L\'Oreal', price: 1400, oldPrice: 1700, discount: '-18%', rating: 4, ratingCount: 167, image: 'images/product4.png', badge: null, category: 'Mascara' },
+            { id: 89, name: 'Highlighter Stick', brand: 'NYX', price: 900, oldPrice: 1100, discount: '-18%', rating: 4, ratingCount: 145, image: 'images/NYX.png', badge: null, category: 'Highlighter' },
+            { id: 90, name: 'Brow Mascara', brand: 'NYX', price: 750, oldPrice: 900, discount: '-17%', rating: 4, ratingCount: 156, image: 'images/NYX.png', badge: null, category: 'Eyeshadow' },
+            { id: 91, name: 'Lip Tint', brand: 'O.TWO.O', price: 650, oldPrice: 800, discount: '-19%', rating: 4, ratingCount: 134, image: 'images/OTWO.png', badge: null, category: 'Lipstick' },
+            { id: 92, name: 'Primer Foundation', brand: 'MAC', price: 2800, oldPrice: 3200, discount: '-12%', rating: 5, ratingCount: 167, image: 'images/MAC.png', badge: null, category: 'Foundation' },
+            { id: 93, name: 'Cream Highlighter', brand: 'Fenty Beauty', price: 2700, oldPrice: 3100, discount: '-13%', rating: 5, ratingCount: 178, image: 'images/product3.png', badge: null, category: 'Highlighter' },
+            { id: 94, name: 'Matte Eyeshadow', brand: 'NYX', price: 1000, oldPrice: 1200, discount: '-17%', rating: 4, ratingCount: 156, image: 'images/NYX.png', badge: null, category: 'Eyeshadow' },
+            { id: 95, name: 'Lip Gloss Set', brand: 'wet n wild', price: 900, oldPrice: 1100, discount: '-18%', rating: 4, ratingCount: 145, image: 'images/wet-n-wild.png', badge: 'new', category: 'Lipstick' },
+            { id: 96, name: 'Mineral Foundation', brand: 'Airspun', price: 1700, oldPrice: 2000, discount: '-15%', rating: 4, ratingCount: 156, image: 'images/Airspun.png', badge: null, category: 'Foundation' },
+
+            // Page 9 - Products 97-108
+            { id: 97, name: 'Shimmer Eyeshadow', brand: 'Huda Beauty', price: 2900, oldPrice: 3300, discount: '-12%', rating: 5, ratingCount: 167, image: 'images/Huda-Beauty.png', badge: null, category: 'Eyeshadow' },
+            { id: 98, name: 'Full Coverage Concealer', brand: 'L.A. Girl', price: 1300, oldPrice: 1600, discount: '-19%', rating: 4, ratingCount: 145, image: 'images/LA-Girl.png', badge: null, category: 'Concealer' },
+            { id: 99, name: 'Mascara Waterproof', brand: 'Maybelline', price: 1300, oldPrice: 1600, discount: '-19%', rating: 4, ratingCount: 156, image: 'images/Maybelline.png', badge: null, category: 'Mascara' },
+            { id: 100, name: 'Liquid Lipstick', brand: 'MAC', price: 2900, oldPrice: 3400, discount: '-15%', rating: 5, ratingCount: 167, image: 'images/MAC.png', badge: 'bestseller', category: 'Lipstick' },
+            { id: 101, name: 'Bronzer Stick', brand: 'Fenty Beauty', price: 2800, oldPrice: 3200, discount: '-12%', rating: 5, ratingCount: 145, image: 'images/product2.png', badge: null, category: 'Bronzer' },
+            { id: 102, name: 'Setting Powder', brand: 'NYX', price: 1200, oldPrice: 1400, discount: '-14%', rating: 4, ratingCount: 156, image: 'images/NYX.png', badge: null, category: 'Foundation' },
+            { id: 103, name: 'Lip Stain', brand: 'wet n wild', price: 550, oldPrice: 650, discount: '-15%', rating: 4, ratingCount: 134, image: 'images/wet-n-wild.png', badge: null, category: 'Lipstick' },
+            { id: 104, name: 'Eyeshadow Stick', brand: 'NYX', price: 650, oldPrice: 800, discount: '-19%', rating: 4, ratingCount: 145, image: 'images/NYX.png', badge: null, category: 'Eyeshadow' },
+            { id: 105, name: 'Blush Stick', brand: 'wet n wild', price: 600, oldPrice: 750, discount: '-20%', rating: 4, ratingCount: 156, image: 'images/wet-n-wild.png', badge: null, category: 'Blush' },
+            { id: 106, name: 'High Coverage Concealer', brand: 'MAC', price: 2400, oldPrice: 2800, discount: '-14%', rating: 5, ratingCount: 167, image: 'images/MAC.png', badge: null, category: 'Concealer' },
+            { id: 107, name: 'Glossy Lip Balm', brand: 'O.TWO.O', price: 750, oldPrice: 900, discount: '-17%', rating: 4, ratingCount: 145, image: 'images/OTWO.png', badge: null, category: 'Lipstick' },
+            { id: 108, name: 'Matte Bronzer', brand: 'Huda Beauty', price: 3400, oldPrice: 3900, discount: '-13%', rating: 5, ratingCount: 156, image: 'images/Huda-Beauty.png', badge: null, category: 'Bronzer' },
+
+            // Page 10 - Products 109-120
+            { id: 109, name: 'Brow Kit', brand: 'NYX', price: 1200, oldPrice: 1400, discount: '-14%', rating: 4, ratingCount: 156, image: 'images/NYX.png', badge: 'new', category: 'Eyeshadow' },
+            { id: 110, name: 'Dewy Blush', brand: 'Fenty Beauty', price: 2200, oldPrice: 2600, discount: '-15%', rating: 5, ratingCount: 167, image: 'images/product1.png', badge: null, category: 'Blush' },
+            { id: 111, name: 'Translucent Setting Powder', brand: 'Airspun', price: 1550, oldPrice: 1800, discount: '-14%', rating: 4, ratingCount: 145, image: 'images/Airspun.png', badge: null, category: 'Foundation' },
+            { id: 112, name: 'Lip Pencil', brand: 'MAC', price: 1600, oldPrice: 1900, discount: '-16%', rating: 5, ratingCount: 156, image: 'images/MAC.png', badge: null, category: 'Lipstick' },
+            { id: 113, name: 'Mascara Curl', brand: 'Maybelline', price: 1000, oldPrice: 1200, discount: '-17%', rating: 4, ratingCount: 167, image: 'images/Maybelline.png', badge: null, category: 'Mascara' },
+            { id: 114, name: 'Highlighter Powder', brand: 'NYX', price: 950, oldPrice: 1150, discount: '-17%', rating: 4, ratingCount: 145, image: 'images/NYX.png', badge: null, category: 'Highlighter' },
+            { id: 115, name: 'Concealer Cream', brand: 'L.A. Girl', price: 1100, oldPrice: 1300, discount: '-15%', rating: 4, ratingCount: 156, image: 'images/LA-Girl.png', badge: null, category: 'Concealer' },
+            { id: 116, name: 'Matte Eyeshadow Pot', brand: 'wet n wild', price: 400, oldPrice: 500, discount: '-20%', rating: 4, ratingCount: 145, image: 'images/wet-n-wild.png', badge: null, category: 'Eyeshadow' },
+            { id: 117, name: 'Foundation Stick', brand: 'Fenty Beauty', price: 4000, oldPrice: 4500, discount: '-11%', rating: 5, ratingCount: 178, image: 'images/product2.png', badge: 'bestseller', category: 'Foundation' },
+            { id: 118, name: 'Brow Pencil Duo', brand: 'NYX', price: 850, oldPrice: 1000, discount: '-15%', rating: 4, ratingCount: 156, image: 'images/NYX.png', badge: null, category: 'Eyeshadow' },
+            { id: 119, name: 'Lip Mask', brand: 'LANEIGE', price: 3200, oldPrice: 3800, discount: '-15%', rating: 5, ratingCount: 189, image: 'images/Laneige.png', badge: null, category: 'Lipstick' },
+            { id: 120, name: 'Glow Setting Spray', brand: 'MAC', price: 2400, oldPrice: 2800, discount: '-14%', rating: 5, ratingCount: 156, image: 'images/MAC.png', badge: null, category: 'Foundation' },
+
+            // Page 11 - Products 121-132
+            { id: 121, name: 'True Match Super-Blendable Foundation', brand: 'L\'Oreal', price: 2900, oldPrice: 3400, discount: '-15%', rating: 5, ratingCount: 234, image: 'images/product1.png', badge: 'bestseller', category: 'Foundation' },
+            { id: 122, name: 'Color Riche Lipstick', brand: 'L\'Oreal', price: 1600, oldPrice: 1900, discount: '-16%', rating: 4, ratingCount: 178, image: 'images/product3.png', badge: null, category: 'Lipstick' },
+            { id: 123, name: 'Voluminous Mascara', brand: 'L\'Oreal', price: 1300, oldPrice: 1600, discount: '-19%', rating: 4, ratingCount: 189, image: 'images/product4.png', badge: null, category: 'Mascara' },
+            { id: 124, name: 'Infallible Pro-Glow Foundation', brand: 'L\'Oreal', price: 2700, oldPrice: 3200, discount: '-16%', rating: 5, ratingCount: 156, image: 'images/product2.png', badge: 'new', category: 'Foundation' },
+            { id: 125, name: 'Brow Stylist Definer', brand: 'L\'Oreal', price: 950, oldPrice: 1150, discount: '-17%', rating: 4, ratingCount: 145, image: 'images/product1.png', badge: null, category: 'Eyeshadow' },
+            { id: 126, name: 'Infallible Matte Foundation', brand: 'L\'Oreal', price: 2600, oldPrice: 3100, discount: '-16%', rating: 5, ratingCount: 167, image: 'images/product2.png', badge: 'bestseller', category: 'Foundation' },
+            { id: 127, name: 'Paradise Extatic Mascara', brand: 'L\'Oreal', price: 1500, oldPrice: 1800, discount: '-17%', rating: 4, ratingCount: 156, image: 'images/product4.png', badge: null, category: 'Mascara' },
+            { id: 128, name: 'Color Riche Shine Lipstick', brand: 'L\'Oreal', price: 1700, oldPrice: 2000, discount: '-15%', rating: 4, ratingCount: 145, image: 'images/product3.png', badge: null, category: 'Lipstick' },
+            { id: 129, name: 'True Match Concealer', brand: 'L\'Oreal', price: 1400, oldPrice: 1700, discount: '-18%', rating: 4, ratingCount: 167, image: 'images/product1.png', badge: null, category: 'Concealer' },
+            { id: 130, name: 'Voluminous Lash Paradise', brand: 'L\'Oreal', price: 1600, oldPrice: 1900, discount: '-16%', rating: 5, ratingCount: 234, image: 'images/product4.png', badge: 'bestseller', category: 'Mascara' },
+            { id: 131, name: 'Infallible 24H Eyeshadow', brand: 'L\'Oreal', price: 1200, oldPrice: 1450, discount: '-17%', rating: 4, ratingCount: 156, image: 'images/product2.png', badge: null, category: 'Eyeshadow' },
+            { id: 132, name: 'Glow Paradise Balm-in-Gloss', brand: 'L\'Oreal', price: 1400, oldPrice: 1650, discount: '-15%', rating: 4, ratingCount: 145, image: 'images/product3.png', badge: 'new', category: 'Lipstick' },
+
+            // Page 12 - Products 133-144
+            { id: 133, name: 'Pro Palette Amplified', brand: 'Huda Beauty', price: 4800, oldPrice: 5500, discount: '-13%', rating: 5, ratingCount: 289, image: 'images/Huda-Beauty.png', badge: 'bestseller', category: 'Eyeshadow' },
+            { id: 134, name: 'Lip Strobe', brand: 'Huda Beauty', price: 2000, oldPrice: 2400, discount: '-17%', rating: 5, ratingCount: 178, image: 'images/Huda-Beauty.png', badge: null, category: 'Lipstick' },
+            { id: 135, name: 'Easy Bake Loose Powder', brand: 'Huda Beauty', price: 3800, oldPrice: 4300, discount: '-12%', rating: 5, ratingCount: 234, image: 'images/Huda-Beauty.png', badge: 'new', category: 'Foundation' },
+            { id: 136, name: 'Faux Filter Foundation', brand: 'Huda Beauty', price: 4200, oldPrice: 4800, discount: '-13%', rating: 5, ratingCount: 198, image: 'images/Huda-Beauty.png', badge: null, category: 'Foundation' },
+            { id: 137, name: 'Life Liner', brand: 'Huda Beauty', price: 1600, oldPrice: 1900, discount: '-16%', rating: 5, ratingCount: 167, image: 'images/Huda-Beauty.png', badge: null, category: 'Eyeshadow' },
+            { id: 138, name: 'Bomb Brows', brand: 'Huda Beauty', price: 2200, oldPrice: 2600, discount: '-15%', rating: 5, ratingCount: 156, image: 'images/Huda-Beauty.png', badge: null, category: 'Eyeshadow' },
+            { id: 139, name: 'Tantour Contour & Bronzer', brand: 'Huda Beauty', price: 3000, oldPrice: 3500, discount: '-14%', rating: 5, ratingCount: 189, image: 'images/Huda-Beauty.png', badge: null, category: 'Bronzer' },
+            { id: 140, name: 'Overachiever Concealer', brand: 'Huda Beauty', price: 2400, oldPrice: 2800, discount: '-14%', rating: 5, ratingCount: 178, image: 'images/Huda-Beauty.png', badge: null, category: 'Concealer' },
+            { id: 141, name: 'Silk Balm', brand: 'Huda Beauty', price: 1800, oldPrice: 2100, discount: '-14%', rating: 5, ratingCount: 156, image: 'images/Huda-Beauty.png', badge: null, category: 'Lipstick' },
+            { id: 142, name: 'Nude Obsessions Palette', brand: 'Huda Beauty', price: 3200, oldPrice: 3700, discount: '-14%', rating: 5, ratingCount: 234, image: 'images/Huda-Beauty.png', badge: 'bestseller', category: 'Eyeshadow' },
+            { id: 143, name: 'Glowish Blush', brand: 'Huda Beauty', price: 2600, oldPrice: 3000, discount: '-13%', rating: 5, ratingCount: 167, image: 'images/Huda-Beauty.png', badge: null, category: 'Blush' },
+            { id: 144, name: 'Double Ended Eye Pencil', brand: 'Huda Beauty', price: 1400, oldPrice: 1650, discount: '-15%', rating: 4, ratingCount: 145, image: 'images/Huda-Beauty.png', badge: null, category: 'Eyeshadow' },
+
+            // Page 13 - Products 145-156
+            { id: 145, name: 'Pro Filt\'r Instant Retouch Primer', brand: 'Fenty Beauty', price: 3200, oldPrice: 3800, discount: '-16%', rating: 5, ratingCount: 289, image: 'images/product1.png', badge: 'bestseller', category: 'Foundation' },
+            { id: 146, name: 'Killawatt Freestyle Highlighter', brand: 'Fenty Beauty', price: 3600, oldPrice: 4200, discount: '-14%', rating: 5, ratingCount: 312, image: 'images/product2.png', badge: null, category: 'Highlighter' },
+            { id: 147, name: 'Stunna Lip Paint', brand: 'Fenty Beauty', price: 2400, oldPrice: 2800, discount: '-14%', rating: 5, ratingCount: 234, image: 'images/product3.png', badge: 'new', category: 'Lipstick' },
+            { id: 148, name: 'Invisimatte Blotting Powder', brand: 'Fenty Beauty', price: 2800, oldPrice: 3300, discount: '-15%', rating: 5, ratingCount: 178, image: 'images/product1.png', badge: null, category: 'Foundation' },
+            { id: 149, name: 'Cheeks Out Freestyle Cream Blush', brand: 'Fenty Beauty', price: 2500, oldPrice: 2900, discount: '-14%', rating: 5, ratingCount: 198, image: 'images/product2.png', badge: null, category: 'Blush' },
+            { id: 150, name: 'Full Frontal Volume Mascara', brand: 'Fenty Beauty', price: 2000, oldPrice: 2400, discount: '-17%', rating: 5, ratingCount: 167, image: 'images/product4.png', badge: null, category: 'Mascara' },
+            { id: 151, name: 'Eaze Drop Blurring Skin Tint', brand: 'Fenty Beauty', price: 3000, oldPrice: 3500, discount: '-14%', rating: 5, ratingCount: 189, image: 'images/product1.png', badge: 'bestseller', category: 'Foundation' },
+            { id: 152, name: 'Gloss Bomb Universal Lip Luminizer', brand: 'Fenty Beauty', price: 2200, oldPrice: 2600, discount: '-15%', rating: 5, ratingCount: 456, image: 'images/product3.png', badge: null, category: 'Lipstick' },
+            { id: 153, name: 'Sun Stalk\'r Instant Warmth Bronzer', brand: 'Fenty Beauty', price: 3200, oldPrice: 3700, discount: '-14%', rating: 5, ratingCount: 234, image: 'images/product2.png', badge: null, category: 'Bronzer' },
+            { id: 154, name: 'Pro Filt\'r Soft Matte Longwear Foundation', brand: 'Fenty Beauty', price: 4000, oldPrice: 4600, discount: '-13%', rating: 5, ratingCount: 345, image: 'images/product1.png', badge: 'bestseller', category: 'Foundation' },
+            { id: 155, name: 'Killawatt Foil Freestyle Highlighter', brand: 'Fenty Beauty', price: 3800, oldPrice: 4300, discount: '-12%', rating: 5, ratingCount: 198, image: 'images/product2.png', badge: 'new', category: 'Highlighter' },
+            { id: 156, name: 'Slip Shine Sheer Shiny Lipstick', brand: 'Fenty Beauty', price: 2100, oldPrice: 2500, discount: '-16%', rating: 5, ratingCount: 156, image: 'images/product3.png', badge: null, category: 'Lipstick' },
+
+            // Page 14 - Products 157-160
+            { id: 157, name: 'Brow Definer', brand: 'Anastasia Beverly Hills', price: 2800, oldPrice: 3200, discount: '-13%', rating: 5, ratingCount: 234, image: 'images/product1.png', badge: 'bestseller', category: 'Eyeshadow' },
+            { id: 158, name: 'Dewy Set Setting Spray', brand: 'Anastasia Beverly Hills', price: 2600, oldPrice: 3000, discount: '-13%', rating: 5, ratingCount: 178, image: 'images/product2.png', badge: null, category: 'Foundation' },
+            { id: 159, name: 'Luminous Foundation', brand: 'Anastasia Beverly Hills', price: 3500, oldPrice: 4000, discount: '-13%', rating: 5, ratingCount: 189, image: 'images/product1.png', badge: 'new', category: 'Foundation' },
+            { id: 160, name: 'Matte Lip Velvet', brand: 'Anastasia Beverly Hills', price: 2200, oldPrice: 2600, discount: '-15%', rating: 5, ratingCount: 167, image: 'images/product3.png', badge: null, category: 'Lipstick' }
+        ];
+
+        // ===== PRODUCTS PER PAGE =====
+        const productsPerPage = 12;
+        const totalPages = Math.ceil(allProducts.length / productsPerPage);
+
+        // ===== RENDER PRODUCTS =====
+        function renderProducts(page) {
+            const start = (page - 1) * productsPerPage;
+            const end = start + productsPerPage;
+            const pageProducts = allProducts.slice(start, end);
+            const grid = document.getElementById('productGrid');
+
+            grid.innerHTML = pageProducts.map(product => {
+                let badgeHTML = '';
+                if (product.badge === 'bestseller') {
+                    badgeHTML = `<span class="badge-bestseller">⭐ Best Seller</span>`;
+                } else if (product.badge === 'new') {
+                    badgeHTML = `<span class="badge-new">✨ New</span>`;
+                } else if (product.badge === 'sale') {
+                    badgeHTML = `<span class="badge-limited">🔥 Sale</span>`;
+                }
+
+                let stars = '';
+                for (let i = 0; i < 5; i++) {
+                    stars += i < product.rating ? '★' : '☆';
+                }
+
+                let oldPriceHTML = product.oldPrice ? `<span class="old">Rs.${product.oldPrice.toLocaleString()}</span>` : '';
+
+                return `
+                    <a href="makeup-detail.html?id=${product.id}" class="product-link">
+                        <div class="product-card" data-id="${product.id}">
+                            <div class="image-wrap">
+                                ${badgeHTML}
+                                <span class="discount">${product.discount}</span>
+                                <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                                <img src="${product.image}" alt="${product.name}">
+                            </div>
+                            <div class="info">
+                                <span class="brand">${product.brand}</span>
+                                <h3>${product.name}</h3>
+                                <div class="rating">${stars} <span>(${product.ratingCount})</span></div>
+                                <div class="price">
+                                    <span class="current">Rs.${product.price.toLocaleString()}</span>
+                                    ${oldPriceHTML}
+                                </div>
+                                <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                            </div>
+                        </div>
+                    </a>
+                `;
+            }).join('');
+
+            // Update product count
+            const totalVisible = Math.min(end, allProducts.length);
+            document.getElementById('productCount').textContent = `Showing ${start + 1}–${totalVisible} of ${allProducts.length} products`;
+
+            // Render pagination
+            renderPagination(page);
+        }
+
+        // ===== RENDER PAGINATION =====
+        function renderPagination(currentPage) {
+            const pagination = document.getElementById('pagination');
+            let html = '';
+
+            if (currentPage > 1) {
+                html += `<a href="#" onclick="changePage(${currentPage - 1}); return false;"><i class="fa-solid fa-chevron-left"></i></a>`;
+            }
+
+            const maxVisible = 5;
+            let startPage = Math.max(1, currentPage - 2);
+            let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+
+            if (endPage - startPage < maxVisible - 1) {
+                startPage = Math.max(1, endPage - maxVisible + 1);
+            }
+
+            if (startPage > 1) {
+                html += `<a href="#" onclick="changePage(1); return false;">1</a>`;
+                if (startPage > 2) {
+                    html += `<span style="padding: 8px 12px; color: #999;">...</span>`;
+                }
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                html += `<a href="#" onclick="changePage(${i}); return false;" class="${i === currentPage ? 'active' : ''}">${i}</a>`;
+            }
+
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    html += `<span style="padding: 8px 12px; color: #999;">...</span>`;
+                }
+                html += `<a href="#" onclick="changePage(${totalPages}); return false;">${totalPages}</a>`;
+            }
+
+            if (currentPage < totalPages) {
+                html += `<a href="#" onclick="changePage(${currentPage + 1}); return false;"><i class="fa-solid fa-chevron-right"></i></a>`;
+            }
+
+            pagination.innerHTML = html;
+        }
+
+        // ===== CHANGE PAGE =====
+        function changePage(page) {
+            renderProducts(page);
+            window.scrollTo({ top: document.querySelector('.shop-toolbar').offsetTop - 20, behavior: 'smooth' });
+        }
+
+        // ===== WISHLIST TOGGLE =====
+        document.querySelectorAll('.wishlist').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const icon = this.querySelector('i');
+                const productCard = this.closest('.product-card');
+                const productName = productCard ? productCard.querySelector('h3')?.textContent || 'Product' : 'Product';
+                
+                icon.classList.toggle('fa-regular');
+                icon.classList.toggle('fa-solid');
+                
+                if (icon.classList.contains('fa-solid')) {
+                    this.style.background = '#5E4074';
+                    this.style.color = 'white';
+                    this.style.borderColor = '#5E4074';
+                    this.style.transform = 'scale(1.2)';
+                    setTimeout(() => { this.style.transform = ''; }, 300);
+                    showToast(`❤️ ${productName} added to Wishlist!`);
+                } else {
+                    this.style.background = 'white';
+                    this.style.color = '#ccc';
+                    this.style.borderColor = '#eee';
+                    showToast(`💔 ${productName} removed from Wishlist`);
+                }
+            });
+        });
+
+        // ===== ADD TO CART ANIMATION =====
+        document.querySelectorAll('.add-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const originalText = this.innerHTML;
+                const productCard = this.closest('.product-card');
+                const productName = productCard ? productCard.querySelector('h3')?.textContent || 'Product' : 'Product';
+                
+                this.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="margin-right:8px;"></i>Adding...';
+                this.style.background = '#5E4074';
+                this.style.color = 'white';
+                this.disabled = true;
+                
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fa-solid fa-check" style="margin-right:8px;"></i>Added!';
+                    this.style.background = '#2ecc71';
+                    this.style.color = 'white';
+                    updateCartBadge();
+                    showToast(`✅ ${productName} added to cart!`);
+                    
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                        this.style.background = '';
+                        this.style.color = '';
+                        this.disabled = false;
+                    }, 2000);
+                }, 800);
+            });
+        });
+
+        // ===== CART BADGE UPDATE =====
+        let cartCount = 3;
+
+        function updateCartBadge() {
+            cartCount++;
+            const badge = document.querySelector('.cart-badge');
+            if (badge) {
+                badge.textContent = cartCount;
+                badge.style.animation = 'none';
+                setTimeout(() => {
+                    badge.style.animation = 'badgePulse 0.5s ease';
+                }, 10);
+            }
+        }
+
         // ===== TOAST NOTIFICATION =====
-        function showSearchToast(message) {
+        function showToast(message) {
             const existingToast = document.querySelector('.toast-notification');
             if (existingToast) {
                 existingToast.remove();
@@ -349,80 +771,6 @@
             }, 3000);
         }
 
-        // ===== WISHLIST TOGGLE =====
-        document.querySelectorAll('.wishlist, .wishlist-deal').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                const icon = this.querySelector('i');
-                const productName = this.closest('.product-card')?.querySelector('h3')?.textContent || 'Product';
-                
-                icon.classList.toggle('fa-regular');
-                icon.classList.toggle('fa-solid');
-                if (icon.classList.contains('fa-solid')) {
-                    this.style.background = '#5E4074';
-                    this.style.color = 'white';
-                    this.style.borderColor = '#5E4074';
-                    this.style.transform = 'scale(1.2)';
-                    setTimeout(() => { this.style.transform = ''; }, 300);
-                    this.classList.add('active');
-                    showSearchToast(`❤️ ${productName} added to Wishlist!`);
-                } else {
-                    this.style.background = '';
-                    this.style.color = '';
-                    this.style.borderColor = '';
-                    this.classList.remove('active');
-                    showSearchToast(`💔 ${productName} removed from Wishlist`);
-                }
-            });
-        });
-
-        // ===== ADD TO CART ANIMATION =====
-        document.querySelectorAll('.add-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                const originalText = this.innerHTML;
-                const productName = this.closest('.product-card')?.querySelector('h3')?.textContent || 'Product';
-                
-                this.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="margin-right:8px;"></i>Adding...';
-                this.style.background = '#5E4074';
-                this.style.color = 'white';
-                this.disabled = true;
-                
-                setTimeout(() => {
-                    this.innerHTML = '<i class="fa-solid fa-check" style="margin-right:8px;"></i>Added!';
-                    this.style.background = '#2ecc71';
-                    this.style.color = 'white';
-                    
-                    // Update cart badge
-                    updateCartBadge();
-                    showSearchToast(`✅ ${productName} added to cart!`);
-                    
-                    setTimeout(() => {
-                        this.innerHTML = originalText;
-                        this.style.background = '';
-                        this.style.color = '';
-                        this.disabled = false;
-                    }, 2000);
-                }, 800);
-            });
-        });
-
-        // ===== CART BADGE UPDATE =====
-        let cartCount = 3;
-
-        function updateCartBadge() {
-            cartCount++;
-            const badge = document.querySelector('.cart-badge');
-            if (badge) {
-                badge.textContent = cartCount;
-                badge.style.animation = 'none';
-                setTimeout(() => {
-                    badge.style.animation = 'badgePulse 0.5s ease';
-                }, 10);
-            }
-        }
-
         // ===== ADD CSS ANIMATIONS =====
         const styleSheet = document.createElement('style');
         styleSheet.textContent = `
@@ -430,18 +778,15 @@
                 0% { transform: translateY(100px); opacity: 0; }
                 100% { transform: translateY(0); opacity: 1; }
             }
-            
             @keyframes slideOutDown {
                 0% { transform: translateY(0); opacity: 1; }
                 100% { transform: translateY(100px); opacity: 0; }
             }
-            
             @keyframes badgePulse {
                 0% { transform: scale(1); }
                 50% { transform: scale(1.4); }
                 100% { transform: scale(1); }
             }
-            
             .cart-badge {
                 display: inline-block;
                 background: #e91e63;
@@ -456,11 +801,9 @@
                 top: -8px;
                 right: -10px;
             }
-            
             .header-icons > div {
                 position: relative;
             }
-            
             .wishlist {
                 transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
                 cursor: pointer;
@@ -479,60 +822,71 @@
                 right: 14px;
                 z-index: 2;
             }
-            
             .wishlist i {
                 pointer-events: none;
             }
-            
             .add-btn {
                 transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
                 cursor: pointer;
             }
-            
             .add-btn:disabled {
                 opacity: 0.7;
                 cursor: not-allowed;
             }
-            
             .product-card .image-wrap {
                 position: relative;
+            }
+            .pagination {
+                display: flex;
+                gap: 8px;
+                justify-content: center;
+                margin-top: 30px;
+                flex-wrap: wrap;
+            }
+            .pagination a {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                min-width: 40px;
+                height: 40px;
+                padding: 0 12px;
+                border-radius: 8px;
+                background: white;
+                border: 1px solid #eee;
+                color: #666;
+                text-decoration: none;
+                transition: all 0.3s ease;
+                font-weight: 500;
+            }
+            .pagination a:hover {
+                background: #5E4074;
+                color: white;
+                border-color: #5E4074;
+            }
+            .pagination a.active {
+                background: #5E4074;
+                color: white;
+                border-color: #5E4074;
+            }
+            .pagination a i {
+                font-size: 12px;
+            }
+            .product-link {
+                text-decoration: none;
+                color: inherit;
+                display: block;
+                transition: transform 0.3s ease;
+            }
+            .product-link:hover {
+                transform: translateY(-4px);
             }
         `;
         document.head.appendChild(styleSheet);
 
-        // ===== SEARCH FUNCTIONALITY =====
-        const searchInput = document.querySelector('.search input');
-        const searchButton = document.querySelector('.search button');
+        // ===== INITIAL LOAD =====
+        renderProducts(1);
 
-        function performSearch() {
-            const searchTerm = searchInput.value.trim();
-            if (searchTerm) {
-                showSearchToast(`🔍 Searching for "${searchTerm}"...`);
-                setTimeout(() => {
-                    window.location.href = `shop.html?search=${encodeURIComponent(searchTerm)}`;
-                }, 800);
-            } else {
-                showSearchToast('⚠️ Please enter a search term');
-            }
-        }
-
-        if (searchButton) {
-            searchButton.addEventListener('click', function(e) {
-                e.preventDefault();
-                performSearch();
-            });
-        }
-
-        if (searchInput) {
-            searchInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    performSearch();
-                }
-            });
-        }
-
-        console.log('💄 Kasbi Beauty — Makeup Page Loaded! 💄');
+        console.log('💄 Kasbi Beauty — Makeup Page Loaded with 160 clickable products! 💄');
     </script>
 
 </body>
