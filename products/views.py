@@ -6,9 +6,7 @@ from django.core.paginator import Paginator
 from .models import Product, Category, Brand, Wishlist
 
 
-def product_list(request):
-    products = Product.objects.filter(is_active=True)
-
+def _product_list_context(request, products, page_title=None):
     query = request.GET.get('q', '').strip()
     if query:
         products = products.filter(Q(name__icontains=query) | Q(description__icontains=query))
@@ -44,7 +42,7 @@ def product_list(request):
     if request.user.is_authenticated:
         wishlist_ids = list(Wishlist.objects.filter(user=request.user).values_list('product_id', flat=True))
 
-    context = {
+    return {
         'page_obj': page_obj,
         'categories': Category.objects.filter(is_active=True),
         'brands': Brand.objects.filter(is_active=True),
@@ -55,8 +53,37 @@ def product_list(request):
         'min_price': min_price or '',
         'max_price': max_price or '',
         'wishlist_ids': wishlist_ids,
+        'page_title': page_title,
     }
-    return render(request, 'products/product_list.html', context)
+
+
+def product_list(request):
+    products = Product.objects.filter(is_active=True)
+    return render(request, 'products/product_list.html', _product_list_context(request, products))
+
+
+def shop_view(request):
+    return product_list(request)
+
+
+def bestsellers_view(request):
+    products = Product.objects.filter(is_active=True).order_by('-popularity')
+    return render(request, 'products/product_list.html', _product_list_context(request, products, page_title='Best Sellers'))
+
+
+def category_products(request, category_slug):
+    products = Product.objects.filter(is_active=True, category__slug=category_slug)
+    return render(request, 'products/product_list.html', _product_list_context(request, products, page_title=category_slug.title()))
+
+
+def brands_view(request):
+    brands = Brand.objects.filter(is_active=True)
+    return render(request, 'products/brands.html', {'brands': brands})
+
+
+def offers_view(request):
+    products = Product.objects.filter(is_active=True, discount_price__isnull=False)
+    return render(request, 'products/product_list.html', _product_list_context(request, products, page_title='Special Offers'))
 
 
 def product_detail(request, slug):
