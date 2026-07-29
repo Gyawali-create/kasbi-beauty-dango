@@ -722,64 +722,32 @@
         </div>
     </header>
 
-    <!-- ===== NAVIGATION ===== -->
-    <nav class="navigation">
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="shop.html">Shop</a></li>
-            <li><a href="brands.html">Brands</a></li>
-            <li><a href="skincare.html">Skincare</a></li>
-            <li><a href="makeup.html">Makeup</a></li>
-            <li><a href="haircare.html">Hair Care</a></li>
-            <li><a href="newarrivals.html">New Arrivals</a></li>
-            <li><a href="bestsellers.html">Best Sellers</a></li>
-            <li><a href="offers.html" class="active">Offers</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
-    </nav>
-
-    <!-- ===== OFFERS HERO ===== -->
-    <section class="offers-hero">
-        <h1>Special Offers</h1>
-        <p>Amazing deals on your favorite beauty products. Save big with exclusive discounts!</p>
-        <div class="breadcrumb">
-            <a href="index.html">Home</a>
-            <span class="sep">/</span>
-            <span class="current">Offers</span>
-        </div>
-    </section>
-
-    <!-- ===== FLASH SALE BANNER ===== -->
-    <div class="flash-banner">
-        <div class="left">
-            <span class="tag">⚡ FLASH SALE</span>
-            <h2>Up to 50% Off</h2>
-            <p>Hurry! These deals won't last long. Shop now and save big!</p>
-        </div>
-        <div class="right">
-            <div class="timer-mini">
-                <div class="item">
-                    <span class="num" id="flashDays">05</span>
-                    <span class="lbl">Days</span>
-                </div>
-                <div class="item">
-                    <span class="num" id="flashHours">18</span>
-                    <span class="lbl">Hours</span>
-                </div>
-                <div class="item">
-                    <span class="num" id="flashMinutes">35</span>
-                    <span class="lbl">Mins</span>
-                </div>
-                <div class="item">
-                    <span class="num" id="flashSeconds">42</span>
-                    <span class="lbl">Secs</span>
-                </div>
-            </div>
-            <a href="#discounted" class="btn-dark">
-                <i class="fa-solid fa-bolt"></i> Shop Now
+   <!-- ===== NAVIGATION ===== -->
+<nav class="navigation">
+    <ul>
+        <li><a href="index.html"></a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="brands.html">Brands</a></li>
+        <li><a href="skincare.html">Skincare</a></li>
+        <li><a href="makeup.html">Makeup</a></li>
+        <li><a href="haircare.html">Hair Care</a></li>
+        <li>
+            <a href="newarrivals.html" class="new-arrivals-link">
+                <span class="new-arrivals-text">New Arrivals</span>
+                <span class="new-badge-animated">✨ NEW</span>
             </a>
-        </div>
-    </div>
+        </li>
+        <li><a href="bestsellers.html">Best Sellers</a></li>
+        <li>
+            <a href="offers.html" class="offers-link">
+                <span class="offers-text">Offers</span>
+                <span class="offers-badge-animated">🔥 SALE</span>
+            </a>
+        </li>
+      
+    </ul>
+</nav>
+
 
     <!-- ===== OFFERS GRID ===== -->
     <section class="offers-grid-section">
@@ -810,6 +778,37 @@
             </div>
         </div>
     </section>
+        <!-- ===== FLASH SALE BANNER ===== -->
+    <div class="flash-banner">
+        <div class="left">
+            <span class="tag">⚡ FLASH SALE</span>
+            <h2>Up to 50% Off</h2>
+            <p>Hurry! These deals won't last long. Shop now and save big!</p>
+        </div>
+        <div class="right">
+            <div class="timer-mini">
+                <div class="item">
+                    <span class="num" id="flashDays">05</span>
+                    <span class="lbl">Days</span>
+                </div>
+                <div class="item">
+                    <span class="num" id="flashHours">18</span>
+                    <span class="lbl">Hours</span>
+                </div>
+                <div class="item">
+                    <span class="num" id="flashMinutes">35</span>
+                    <span class="lbl">Mins</span>
+                </div>
+                <div class="item">
+                    <span class="num" id="flashSeconds">42</span>
+                    <span class="lbl">Secs</span>
+                </div>
+            </div>
+            <a href="#discounted" class="btn-dark">
+                <i class="fa-solid fa-bolt"></i> Shop Now
+            </a>
+        </div>
+    </div>
 
     <!-- ===== DISCOUNTED PRODUCTS ===== -->
     <section class="discounted-products" id="discounted">
@@ -1007,6 +1006,8 @@
             </div>
         </div>
     </section>
+    
+
 
     <!-- ===== FOOTER ===== -->
     <footer class="footer">
