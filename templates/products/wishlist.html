@@ -1,33 +1,106 @@
 {% extends 'base.html' %}
 {% load static %}
+
+{% block title %}Kasbi Beauty — Wishlist{% endblock %}
+
 {% block content %}
-<div class="container py-4">
-  <h2 class="text-kasbi mb-4">My Wishlist</h2>
-  <div class="row g-4">
-    {% for item in items %}
-    <div class="col-6 col-md-3">
-      <div class="card product-card">
-        <a href="{{ item.product.get_absolute_url }}">
-          {% if item.product.thumbnail %}<img src="{{ item.product.thumbnail.url }}" class="card-img-top" alt="{{ item.product.name }}">
-          {% else %}<img src="{% static 'img/logo.png' %}" class="card-img-top p-4" alt="{{ item.product.name }}">{% endif %}
-        </a>
-        <div class="card-body">
-          <h6 class="card-title"><a href="{{ item.product.get_absolute_url }}" class="text-decoration-none text-dark">{{ item.product.name }}</a></h6>
-          <span class="price-new">Rs. {{ item.product.current_price }}</span>
-          <div class="d-flex gap-2 mt-2">
-            <form method="post" action="{% url 'cart:add' item.product.id %}" class="flex-grow-1">
-              {% csrf_token %}
-              <input type="hidden" name="quantity" value="1">
-              <button type="submit" class="btn btn-kasbi btn-sm w-100">Add to Cart</button>
-            </form>
-            <a href="{% url 'products:wishlist_remove' item.product.id %}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-trash"></i></a>
-          </div>
+<!-- ===== PAGE HEADER ===== -->
+    <div class="page-header">
+        <h1>My Wishlist</h1>
+        <p>Your saved favorites — shop them anytime</p>
+        <div class="breadcrumb">
+            <a href="{% url 'core:home' %}">Home</a>
+            <span class="sep">/</span>
+            <span class="current">Wishlist</span>
         </div>
-      </div>
     </div>
-    {% empty %}
-    <p class="text-muted">Your wishlist is empty. <a href="{% url 'products:list' %}">Browse products</a></p>
-    {% endfor %}
-  </div>
-</div>
+
+    <!-- ===== WISHLIST SECTION ===== -->
+    <section style="padding: 40px 6% 80px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 12px;">
+            <span style="color: var(--gray); font-size: 14px;">4 items in your wishlist</span>
+            <button class="btn-secondary btn-sm" style="padding: 10px 24px; font-size: 13px;">
+                <i class="fa-regular fa-heart"></i> Add All to Cart
+            </button>
+        </div>
+
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="image-wrap">
+                    <span class="discount">-25%</span>
+                    <span class="wishlist" style="background: var(--primary); color: white; border-color: var(--primary);">
+                        <i class="fa-solid fa-heart"></i>
+                    </span>
+                    <img src="{% static 'img/product1.png' %}" alt="CeraVe Cleanser">
+                </div>
+                <div class="info">
+                    <span class="brand">CeraVe</span>
+                    <h3>Hydrating Cleanser</h3>
+                    <div class="rating">★★★★★ <span>(325)</span></div>
+                    <div class="price">
+                        <span class="current">Rs.2,650</span>
+                        <span class="old">Rs.3,200</span>
+                    </div>
+                    <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="image-wrap">
+                    <span class="discount">-15%</span>
+                    <span class="wishlist" style="background: var(--primary); color: white; border-color: var(--primary);">
+                        <i class="fa-solid fa-heart"></i>
+                    </span>
+                    <img src="{% static 'img/product2.png' %}" alt="The Ordinary">
+                </div>
+                <div class="info">
+                    <span class="brand">The Ordinary</span>
+                    <h3>Niacinamide 10%</h3>
+                    <div class="rating">★★★★★ <span>(280)</span></div>
+                    <div class="price">
+                        <span class="current">Rs.2,350</span>
+                        <span class="old">Rs.2,850</span>
+                    </div>
+                    <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="image-wrap">
+                    <span class="discount">-35%</span>
+                    <span class="wishlist" style="background: var(--primary); color: white; border-color: var(--primary);">
+                        <i class="fa-solid fa-heart"></i>
+                    </span>
+                    <img src="{% static 'img/product3.png' %}" alt="Maybelline">
+                </div>
+                <div class="info">
+                    <span class="brand">Maybelline</span>
+                    <h3>SuperStay Lipstick</h3>
+                    <div class="rating">★★★★★ <span>(540)</span></div>
+                    <div class="price">
+                        <span class="current">Rs.1,450</span>
+                        <span class="old">Rs.2,000</span>
+                    </div>
+                    <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="image-wrap">
+                    <span class="discount">-20%</span>
+                    <span class="wishlist" style="background: var(--primary); color: white; border-color: var(--primary);">
+                        <i class="fa-solid fa-heart"></i>
+                    </span>
+                    <img src="{% static 'img/product4.png' %}" alt="Cetaphil">
+                </div>
+                <div class="info">
+                    <span class="brand">Cetaphil</span>
+                    <h3>Moisturizing Lotion</h3>
+                    <div class="rating">★★★★★ <span>(198)</span></div>
+                    <div class="price">
+                        <span class="current">Rs.2,850</span>
+                        <span class="old">Rs.3,400</span>
+                    </div>
+                    <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}
