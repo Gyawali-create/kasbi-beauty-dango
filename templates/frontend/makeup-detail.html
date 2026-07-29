@@ -1,0 +1,1744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kasbi Beauty — Makeup Product Detail</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+        /* ===== PRODUCT DETAIL PAGE STYLES ===== */
+        .product-detail-section {
+            padding: 40px 6% 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .back-button-container {
+            padding: 10px 6% 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: transparent;
+            border: 2px solid #e0e0e0;
+            border-radius: 30px;
+            color: #666;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateX(-4px);
+        }
+
+        .back-button i {
+            font-size: 14px;
+        }
+
+        .product-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0,0,0,0.04);
+        }
+
+        .product-detail-images {
+            position: relative;
+        }
+
+        .product-detail-images .badge-top {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            z-index: 2;
+        }
+
+        .product-detail-images .badge-top .badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .product-detail-images .badge-top .badge.bestseller {
+            background: var(--gold-gradient);
+            color: var(--dark);
+        }
+
+        .product-detail-images .badge-top .badge.new {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .product-detail-images .badge-top .badge.sale {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .product-detail-images .main-image {
+            width: 100%;
+            height: 450px;
+            background: var(--cream);
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px solid #f0f0f0;
+            position: relative;
+        }
+
+        .product-detail-images .main-image .wishlist-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 44px;
+            height: 44px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 18px;
+            color: #ccc;
+            z-index: 2;
+        }
+
+        .product-detail-images .main-image .wishlist-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .product-detail-images .main-image .wishlist-btn.active {
+            color: #e91e63;
+            background: #fce4ec;
+        }
+
+        .product-detail-images .main-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            padding: 20px;
+        }
+
+        .product-detail-images .thumbnails {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .product-detail-images .thumbnails img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            background: var(--cream);
+            border-radius: 8px;
+            padding: 8px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .product-detail-images .thumbnails img:hover,
+        .product-detail-images .thumbnails img.active {
+            border-color: var(--primary);
+        }
+
+        .product-detail-info .brand {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .product-detail-info h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 36px;
+            color: var(--dark);
+            margin: 8px 0 6px;
+        }
+
+        .product-detail-info .rating {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .product-detail-info .rating .stars {
+            color: #f5a623;
+            font-size: 18px;
+        }
+
+        .product-detail-info .rating .count {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .product-detail-info .rating .rating-badge {
+            background: #2ecc71;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .product-detail-info .price-section {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .product-detail-info .price-section .current {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .product-detail-info .price-section .old {
+            font-size: 20px;
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        .product-detail-info .price-section .discount-badge {
+            background: #e74c3c;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .product-detail-info .price-section .save-badge {
+            background: #2ecc71;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .product-detail-info .description {
+            color: var(--gray);
+            line-height: 1.8;
+            margin-bottom: 20px;
+            padding: 16px 0;
+            border-top: 1px solid #f0f0f0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .product-detail-info .description p {
+            margin: 4px 0;
+        }
+
+        .product-detail-info .description .key-features {
+            margin-top: 10px;
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .product-detail-info .description .key-features li {
+            padding: 4px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .product-detail-info .description .key-features li i {
+            color: var(--primary);
+            font-size: 12px;
+        }
+
+        .product-detail-info .specs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 20px;
+            margin-bottom: 20px;
+        }
+
+        .product-detail-info .specs .spec-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .product-detail-info .specs .spec-item .label {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .product-detail-info .specs .spec-item .value {
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .product-detail-info .quantity-section {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .product-detail-info .quantity-section label {
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .product-detail-info .quantity-section .qty-control {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 4px;
+        }
+
+        .product-detail-info .quantity-section .qty-control button {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: var(--cream);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .product-detail-info .quantity-section .qty-control button:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .product-detail-info .quantity-section .qty-control span {
+            min-width: 30px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .product-detail-info .quantity-section .stock-status {
+            color: #e74c3c;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .product-detail-info .quantity-section .stock-status.in-stock {
+            color: #2ecc71;
+        }
+
+        .product-detail-info .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .product-detail-info .actions .btn-primary {
+            flex: 1;
+            padding: 14px 30px;
+            border-radius: 30px;
+            font-size: 16px;
+            min-width: 160px;
+            transition: all 0.3s ease;
+        }
+
+        .product-detail-info .actions .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(94,64,116,0.3);
+        }
+
+        .product-detail-info .actions .btn-success {
+            flex: 1;
+            padding: 14px 30px;
+            border-radius: 30px;
+            font-size: 16px;
+            min-width: 160px;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .product-detail-info .actions .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(46, 204, 113, 0.4);
+        }
+
+        .product-detail-info .actions .btn-secondary {
+            padding: 14px 30px;
+            border-radius: 30px;
+            font-size: 16px;
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            cursor: pointer;
+            transition: var(--transition);
+            min-width: 140px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .product-detail-info .actions .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .product-detail-info .delivery-info {
+            margin-top: 20px;
+            padding: 16px;
+            background: var(--cream);
+            border-radius: var(--border-radius);
+        }
+
+        .product-detail-info .delivery-info .delivery-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 14px;
+        }
+
+        .product-detail-info .delivery-info .delivery-row .label {
+            color: var(--gray);
+        }
+
+        .product-detail-info .delivery-info .delivery-row .value {
+            font-weight: 500;
+        }
+
+        .product-detail-info .delivery-info .delivery-row .value.available {
+            color: #2ecc71;
+        }
+
+        .product-detail-info .delivery-info .delivery-row:last-child {
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+            margin-top: 4px;
+        }
+
+        .product-detail-info .delivery-info .delivery-row:last-child .value {
+            color: #2ecc71;
+        }
+
+        /* Product Highlights */
+        .product-highlights {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 16px 0;
+        }
+
+        .product-highlights .highlight-item {
+            background: var(--cream);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .product-highlights .highlight-item:hover {
+            background: rgba(94,64,116,0.06);
+            transform: translateY(-2px);
+        }
+
+        .product-highlights .highlight-item i {
+            font-size: 20px;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .product-highlights .highlight-item span {
+            font-size: 11px;
+            color: var(--gray);
+        }
+
+        /* Reviews Section */
+        .reviews-section {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .reviews-section .reviews-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .reviews-section .reviews-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            color: var(--dark);
+        }
+
+        .reviews-section .reviews-header .review-summary {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .reviews-section .reviews-header .review-summary .big-rating {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .reviews-section .reviews-header .review-summary .stars-large {
+            color: #f5a623;
+            font-size: 20px;
+        }
+
+        .reviews-section .reviews-header .review-summary .total-ratings {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .reviews-section .review-filters {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .reviews-section .review-filters button {
+            padding: 6px 16px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            background: white;
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .reviews-section .review-filters button:hover,
+        .reviews-section .review-filters button.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .reviews-section .review-item {
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .reviews-section .review-item:last-child {
+            border-bottom: none;
+        }
+
+        .reviews-section .review-item .reviewer {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+
+        .reviews-section .review-item .review-stars {
+            color: #f5a623;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .reviews-section .review-item .review-text {
+            color: var(--gray);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .reviews-section .review-item .review-date {
+            color: #bbb;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .reviews-section .write-review-btn {
+            margin-top: 20px;
+            padding: 12px 30px;
+            border-radius: 30px;
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .reviews-section .write-review-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Questions Section */
+        .questions-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .questions-section h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            color: var(--dark);
+            margin-bottom: 16px;
+        }
+
+        .questions-section .no-questions {
+            color: var(--gray);
+            font-size: 14px;
+            padding: 20px 0;
+        }
+
+        .questions-section .ask-btn {
+            padding: 10px 24px;
+            border-radius: 30px;
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .questions-section .ask-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* You May Also Like */
+        .also-like {
+            margin-top: 60px;
+        }
+
+        .also-like .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .also-like h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            color: var(--dark);
+        }
+
+        .also-like .also-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .also-like .also-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 16px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0,0,0,0.04);
+            transition: var(--transition);
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .also-like .also-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary);
+        }
+
+        .also-like .also-card img {
+            width: 100%;
+            height: 120px;
+            object-fit: contain;
+            background: var(--cream);
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .also-like .also-card h4 {
+            font-size: 14px;
+            margin: 10px 0 4px;
+            font-weight: 600;
+        }
+
+        .also-like .also-card .also-brand {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .also-like .also-card .also-price {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 16px;
+            display: block;
+            margin-top: 4px;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .product-detail-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 30px;
+            }
+            .also-like .also-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .product-highlights {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .reviews-section .reviews-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .product-detail-grid {
+                padding: 20px;
+            }
+            .product-detail-info h1 {
+                font-size: 28px;
+            }
+            .product-detail-info .price-section .current {
+                font-size: 26px;
+            }
+            .product-detail-info .specs {
+                grid-template-columns: 1fr;
+            }
+            .product-detail-info .actions {
+                flex-direction: column;
+            }
+            .product-detail-info .actions .btn-primary,
+            .product-detail-info .actions .btn-success,
+            .product-detail-info .actions .btn-secondary {
+                width: 100%;
+                min-width: unset;
+            }
+            .also-like .also-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            .product-detail-images .main-image {
+                height: 300px;
+            }
+            .product-highlights {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .back-button {
+                font-size: 12px;
+                padding: 8px 16px;
+            }
+            .reviews-section .reviews-header .review-summary {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product-detail-images .main-image {
+                height: 250px;
+            }
+            .product-detail-info h1 {
+                font-size: 22px;
+            }
+            .product-detail-info .price-section .current {
+                font-size: 22px;
+            }
+            .also-like .also-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .product-detail-section {
+                padding: 20px 4% 40px;
+            }
+            .product-detail-grid {
+                padding: 16px;
+            }
+            .product-detail-images .thumbnails img {
+                width: 60px;
+                height: 60px;
+            }
+            .product-highlights {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            .back-button {
+                font-size: 11px;
+                padding: 6px 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== TOP BAR ===== -->
+    <div class="topbar">
+        <div class="left">
+            <i class="fa-solid fa-truck-fast"></i> Free Delivery inside Kathmandu on Orders above Rs.3000
+        </div>
+        <div class="right">
+            <a href="#"><i class="fa-regular fa-clock"></i> Track Order</a>
+            <a href="#"><i class="fa-regular fa-newspaper"></i> Beauty Blog</a>
+            <a href="#"><i class="fa-regular fa-circle-question"></i> Help Center</a>
+        </div>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <div class="logo">
+            <a href="index.html"><img src="images/logo.png" alt="Kasbi Beauty"></a>
+        </div>
+        <div class="search">
+            <input type="text" placeholder="Search skincare, makeup, serum...">
+            <button><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+        <div class="header-icons">
+            <div>
+                <a href="wishlist.html" style="display:flex; flex-direction:column; align-items:center; text-decoration:none; color:inherit;">
+                    <i class="fa-regular fa-heart"></i>
+                    <span>Wishlist</span>
+                </a>
+            </div>
+            <div>
+                <a href="cart.html" style="display:flex; flex-direction:column; align-items:center; text-decoration:none; color:inherit;">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span>Cart</span>
+                    <span class="cart-badge">3</span>
+                </a>
+            </div>
+            <div>
+                <a href="account.html" style="display:flex; flex-direction:column; align-items:center; text-decoration:none; color:inherit;">
+                    <i class="fa-regular fa-user"></i>
+                    <span>Account</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navigation">
+        <ul>
+            <li><a href="index.html"></a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="brands.html">Brands</a></li>
+            <li><a href="skincare.html">Skincare</a></li>
+            <li><a href="makeup.html" class="active">Makeup</a></li>
+            <li><a href="haircare.html">Hair Care</a></li>
+            <li>
+                <a href="newarrivals.html" class="new-arrivals-link">
+                    <span class="new-arrivals-text">New Arrivals</span>
+                    <span class="new-badge-animated">✨ NEW</span>
+                </a>
+            </li>
+            <li><a href="bestsellers.html">Best Sellers</a></li>
+            <li>
+                <a href="offers.html" class="offers-link">
+                    <span class="offers-text">Offers</span>
+                    <span class="offers-badge-animated">🔥 SALE</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- ===== BACK BUTTON ===== -->
+    <div class="back-button-container">
+        <a href="javascript:history.back()" class="back-button">
+            <i class="fa-solid fa-arrow-left"></i> Back
+        </a>
+    </div>
+
+    <!-- ===== PRODUCT DETAIL ===== -->
+    <section class="product-detail-section">
+        <div class="product-detail-grid">
+            <!-- Images -->
+            <div class="product-detail-images">
+                <div class="badge-top">
+                    <span class="badge bestseller" id="productBadge">⭐ Best Seller</span>
+                </div>
+                <div class="main-image">
+                    <button class="wishlist-btn" onclick="toggleWishlist()">
+                        <i class="fa-regular fa-heart"></i>
+                    </button>
+                    <img id="mainProductImage" src="images/product3.png" alt="Product">
+                </div>
+                <div class="thumbnails" id="thumbnails">
+                    <img src="images/product3.png" alt="Thumbnail 1" class="active" onclick="changeMainImage(this, 'images/product3.png')">
+                    <img src="images/product1.png" alt="Thumbnail 2" onclick="changeMainImage(this, 'images/product1.png')">
+                    <img src="images/product2.png" alt="Thumbnail 3" onclick="changeMainImage(this, 'images/product2.png')">
+                    <img src="images/product4.png" alt="Thumbnail 4" onclick="changeMainImage(this, 'images/product4.png')">
+                </div>
+            </div>
+
+            <!-- Info -->
+            <div class="product-detail-info" id="productDetailInfo">
+                <span class="brand" id="productBrand">Maybelline</span>
+                <h1 id="productName">SuperStay Lipstick</h1>
+                <div class="rating">
+                    <span class="stars" id="productStars">★★★★★</span>
+                    <span class="count" id="productRating">(540)</span>
+                    <span class="rating-badge">4.9/5</span>
+                </div>
+
+                <div class="price-section">
+                    <span class="current" id="productCurrentPrice">Rs. 1,450</span>
+                    <span class="old" id="productOldPrice">Rs. 2,000</span>
+                    <span class="discount-badge" id="productDiscount">-25%</span>
+                    <span class="save-badge" id="productSaveBadge">Save Rs. 550</span>
+                </div>
+
+                <!-- Product Highlights -->
+                <div class="product-highlights">
+                    <div class="highlight-item">
+                        <i class="fa-regular fa-circle-check"></i>
+                        <span>100% Authentic</span>
+                    </div>
+                    <div class="highlight-item">
+                        <i class="fa-regular fa-truck-fast"></i>
+                        <span>Free Delivery</span>
+                    </div>
+                    <div class="highlight-item">
+                        <i class="fa-regular fa-rotate-left"></i>
+                        <span>14 Days Return</span>
+                    </div>
+                </div>
+
+                <div class="description" id="productDescription">
+                    <p><strong>Description:</strong></p>
+                    <p>Loading product details...</p>
+                    <ul class="key-features">
+                        <li><i class="fa-regular fa-circle-check"></i> Loading features...</li>
+                    </ul>
+                </div>
+
+                <div class="specs" id="productSpecs">
+                    <div class="spec-item">
+                        <span class="label">Brand</span>
+                        <span class="value" id="specBrand">--</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="label">SKU</span>
+                        <span class="value" id="specSku">--</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="label">Texture</span>
+                        <span class="value" id="specTexture">--</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="label">Vegan</span>
+                        <span class="value" id="specVegan">--</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="label">Skin Type</span>
+                        <span class="value" id="specSkinType">--</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="label">Size</span>
+                        <span class="value" id="specSize">--</span>
+                    </div>
+                </div>
+
+                <div class="quantity-section">
+                    <label>Quantity:</label>
+                    <div class="qty-control">
+                        <button onclick="changeQty(-1)">−</button>
+                        <span id="qtyNum">1</span>
+                        <button onclick="changeQty(1)">+</button>
+                    </div>
+                    <span class="stock-status" id="stockStatus">Loading...</span>
+                </div>
+
+                <div class="actions">
+                    <button class="btn-primary" onclick="addToCartDetail()">
+                        <i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i> Add to Cart
+                    </button>
+                    <button class="btn-success" onclick="buyNow()">
+                        <i class="fa-solid fa-bolt" style="margin-right:8px;"></i> Buy Now
+                    </button>
+                    <button class="btn-secondary" onclick="toggleWishlist()">
+                        <i class="fa-regular fa-heart" style="margin-right:8px;"></i> Wishlist
+                    </button>
+                </div>
+
+                <div class="delivery-info">
+                    <div class="delivery-row">
+                        <span class="label"><i class="fa-regular fa-location-dot" style="margin-right:8px;"></i> Delivery</span>
+                        <span class="value">Bagmati, Kathmandu Metro</span>
+                    </div>
+                    <div class="delivery-row">
+                        <span class="label"><i class="fa-regular fa-clock" style="margin-right:8px;"></i> Standard Delivery</span>
+                        <span class="value">Rs. 100</span>
+                    </div>
+                    <div class="delivery-row">
+                        <span class="label"><i class="fa-regular fa-calendar" style="margin-right:8px;"></i> Guaranteed by</span>
+                        <span class="value" id="deliveryDate">23-24 Jul</span>
+                    </div>
+                    <div class="delivery-row">
+                        <span class="label"><i class="fa-regular fa-rotate-left" style="margin-right:8px;"></i> Return & Warranty</span>
+                        <span class="value">14 Days Free Returns</span>
+                    </div>
+                    <div class="delivery-row">
+                        <span class="label"><i class="fa-regular fa-circle-check" style="color:#2ecc71;"></i> Cash on Delivery Available</span>
+                        <span class="value available">Available</span>
+                    </div>
+                    <div class="delivery-row">
+                        <span class="label"><i class="fa-regular fa-store" style="margin-right:8px;"></i> Sold by</span>
+                        <span class="value">Kasbi Beauty Store</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reviews Section -->
+        <div class="reviews-section" id="reviewsSection">
+            <div class="reviews-header">
+                <h2>Ratings & Reviews</h2>
+                <div class="review-summary">
+                    <span class="big-rating" id="avgRating">4.9/5</span>
+                    <span class="stars-large" id="avgStars">★★★★★</span>
+                    <span class="total-ratings" id="totalRatings">540 Ratings</span>
+                </div>
+            </div>
+
+            <div class="review-filters">
+                <button class="active">All Stars</button>
+                <button>★★★★★ (5)</button>
+                <button>★★★★☆ (0)</button>
+                <button>★★★☆☆ (0)</button>
+                <button>★★☆☆☆ (0)</button>
+                <button>★☆☆☆☆ (0)</button>
+            </div>
+
+            <div id="reviewsList">
+                <!-- Reviews will be populated by JavaScript -->
+            </div>
+
+            <button class="write-review-btn" onclick="showToast('✍️ Write a review feature coming soon!')">
+                <i class="fa-regular fa-pen-to-square" style="margin-right:8px;"></i> Write a Review
+            </button>
+        </div>
+
+        <!-- Questions Section -->
+        <div class="questions-section">
+            <h2>Questions about this product</h2>
+            <div class="no-questions">There are no questions yet.</div>
+            <button class="ask-btn" onclick="showToast('❓ Ask a question feature coming soon!')">
+                <i class="fa-regular fa-circle-question" style="margin-right:8px;"></i> Ask a Question
+            </button>
+        </div>
+
+        <!-- You May Also Like -->
+        <div class="also-like">
+            <div class="section-header">
+                <h2>You May Also Like</h2>
+                <a href="makeup.html" style="color:var(--primary); font-weight:500; text-decoration:none; transition:var(--transition);">View All →</a>
+            </div>
+            <div class="also-grid" id="alsoGrid">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <a href="index.html"><img src="images/logo.png" alt="Kasbi Beauty" style="height:45px; width:auto; margin-bottom:16px; filter:brightness(10) grayscale(1) opacity(0.8);"></a>
+                <p>Your trusted beauty destination in Nepal. Premium skincare, makeup, haircare & more — all 100% authentic.</p>
+                <div class="social">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="#">Beauty Blog</a></li>
+                    <li><a href="#">Track Order</a></li>
+                    <li><a href="#">Returns & Refunds</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Categories</h4>
+                <ul>
+                    <li><a href="skincare.html">Skincare</a></li>
+                    <li><a href="makeup.html">Makeup</a></li>
+                    <li><a href="haircare.html">Hair Care</a></li>
+                    <li><a href="shop.html">Fragrance</a></li>
+                    <li><a href="shop.html">Beauty Tools</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="#"><i class="fa-solid fa-phone" style="margin-right:8px;"></i>+977 980-0000000</a></li>
+                    <li><a href="#"><i class="fa-regular fa-envelope" style="margin-right:8px;"></i>hello@kasbi.com</a></li>
+                    <li><a href="#"><i class="fa-regular fa-location-dot" style="margin-right:8px;"></i>Kathmandu, Nepal</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Kasbi Beauty. All rights reserved.</span>
+            <div class="payment">
+                <i class="fa-brands fa-cc-visa"></i>
+                <i class="fa-brands fa-cc-mastercard"></i>
+                <i class="fa-brands fa-cc-paypal"></i>
+                <i class="fa-solid fa-wallet"></i>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ===== COMPLETE MAKEUP PRODUCT DATABASE (160 PRODUCTS) =====
+        const makeupProducts = {
+            1: {
+                name: 'SuperStay Lipstick',
+                brand: 'Maybelline',
+                image: 'images/product3.png',
+                price: 1450,
+                oldPrice: 2000,
+                badge: 'bestseller',
+                rating: '★★★★★',
+                ratingCount: '(540)',
+                ratingBadge: '4.9/5',
+                description: 'This long-lasting lipstick provides up to 24 hours of wear. The high-impact color stays vibrant and fade-resistant. Infused with aloe and vitamin E for comfortable, non-drying wear.',
+                sku: 'MK-2024-001',
+                texture: 'Liquid',
+                vegan: 'No',
+                skinType: 'All',
+                size: '6 ml',
+                stockStatus: 'Best Seller',
+                category: 'Lipstick',
+                features: ['24-hour long-lasting wear', 'High-impact vibrant color', 'Infused with aloe & vitamin E', 'Comfortable & non-drying'],
+                reviews: [
+                    { name: 'A***', stars: '★★★★★', text: 'Lasts all day! I don\'t need to reapply after meals.', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'B***', stars: '★★★★★', text: 'My new favorite lipstick! The color is perfect.', date: 'Verified Purchase • 1 month ago' },
+                    { name: 'C***', stars: '★★★★☆', text: 'Great color but a bit drying. Use lip balm first.', date: 'Verified Purchase • 3 weeks ago' }
+                ]
+            },
+            2: {
+                name: 'True Match Foundation',
+                brand: 'L\'Oreal',
+                image: 'images/product1.png',
+                price: 2800,
+                oldPrice: 3500,
+                badge: null,
+                rating: '★★★★★',
+                ratingCount: '(412)',
+                ratingBadge: '4.8/5',
+                description: 'This ultra-hydrating foundation provides natural coverage that matches your skin tone perfectly. Formulated with hyaluronic acid and vitamin E for a radiant, healthy glow.',
+                sku: 'MK-2024-002',
+                texture: 'Liquid',
+                vegan: 'No',
+                skinType: 'Normal to Dry',
+                size: '30 ml',
+                stockStatus: 'In stock',
+                category: 'Foundation',
+                features: ['Natural coverage', 'Matches skin tone', 'With hyaluronic acid', 'Radiant glow'],
+                reviews: [
+                    { name: 'D***', stars: '★★★★★', text: 'Perfect match for my skin tone. Love the finish!', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'E***', stars: '★★★★☆', text: 'Good foundation but needs setting powder.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            },
+            3: {
+                name: 'Ultimate Eyeshadow Palette',
+                brand: 'NYX',
+                image: 'images/product2.png',
+                price: 3200,
+                oldPrice: 3800,
+                badge: null,
+                rating: '★★★★★',
+                ratingCount: '(328)',
+                ratingBadge: '4.7/5',
+                description: 'This versatile eyeshadow palette features 16 highly pigmented shades in matte, shimmer, and metallic finishes. Perfect for creating endless eye looks from natural to dramatic.',
+                sku: 'MK-2024-003',
+                texture: 'Powder',
+                vegan: 'Yes',
+                skinType: 'All',
+                size: '15 g',
+                stockStatus: 'In stock',
+                category: 'Eyeshadow',
+                features: ['16 highly pigmented shades', 'Matte, shimmer & metallic finishes', 'Versatile color range', 'Easy to blend'],
+                reviews: [
+                    { name: 'F***', stars: '★★★★★', text: 'The pigment is incredible! So many looks possible.', date: 'Verified Purchase • 1 week ago' },
+                    { name: 'G***', stars: '★★★★★', text: 'Best palette I\'ve ever owned.', date: 'Verified Purchase • 2 months ago' }
+                ]
+            },
+            4: {
+                name: 'Lash Sensational Mascara',
+                brand: 'Maybelline',
+                image: 'images/product4.png',
+                price: 1200,
+                oldPrice: 1600,
+                badge: 'bestseller',
+                rating: '★★★★★',
+                ratingCount: '(289)',
+                ratingBadge: '4.9/5',
+                description: 'This cult-favorite mascara delivers voluminous, fanned-out lashes with its innovative brush design. Buildable formula for custom intensity without clumping.',
+                sku: 'MK-2024-004',
+                texture: 'Liquid',
+                vegan: 'No',
+                skinType: 'All',
+                size: '9.5 ml',
+                stockStatus: 'Best Seller',
+                category: 'Mascara',
+                features: ['Voluminous lashes', 'Fanned-out effect', 'Innovative brush design', 'Buildable formula'],
+                reviews: [
+                    { name: 'H***', stars: '★★★★★', text: 'My lashes have never looked this good! No clumps.', date: 'Verified Purchase • 1 week ago' },
+                    { name: 'I***', stars: '★★★★★', text: 'Holy grail mascara!', date: 'Verified Purchase • 3 weeks ago' }
+                ]
+            },
+            5: {
+                name: 'Gloss Bomb Lip Gloss',
+                brand: 'Fenty Beauty',
+                image: 'images/product3.png',
+                price: 2800,
+                oldPrice: 4000,
+                badge: null,
+                rating: '★★★★★',
+                ratingCount: '(456)',
+                ratingBadge: '4.8/5',
+                description: 'This universally flattering lip gloss delivers mirror-like shine with a non-sticky formula. Available in a range of shades to suit every skin tone.',
+                sku: 'MK-2024-005',
+                texture: 'Liquid',
+                vegan: 'Yes',
+                skinType: 'All',
+                size: '9 ml',
+                stockStatus: 'In stock',
+                category: 'Lipstick',
+                features: ['Mirror-like shine', 'Non-sticky formula', 'Universal shades', 'Flattering on all skin tones'],
+                reviews: [
+                    { name: 'J***', stars: '★★★★★', text: 'The shine is unreal! Love this gloss.', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'K***', stars: '★★★★☆', text: 'Beautiful gloss but a bit expensive.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            },
+            6: {
+                name: 'Pro Longwear Concealer',
+                brand: 'MAC',
+                image: 'images/product1.png',
+                price: 3600,
+                oldPrice: 4000,
+                badge: null,
+                rating: '★★★★★',
+                ratingCount: '(234)',
+                ratingBadge: '4.7/5',
+                description: 'This full-coverage concealer provides up to 15 hours of wear with a natural, matte finish. Effectively covers dark circles, blemishes, and imperfections.',
+                sku: 'MK-2024-006',
+                texture: 'Liquid',
+                vegan: 'No',
+                skinType: 'All',
+                size: '9 ml',
+                stockStatus: 'In stock',
+                category: 'Concealer',
+                features: ['Full coverage', '15-hour wear', 'Natural matte finish', 'Covers imperfections'],
+                reviews: [
+                    { name: 'L***', stars: '★★★★★', text: 'Covers everything! My dark circles are gone.', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'M***', stars: '★★★★☆', text: 'Good concealer but pricey.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            },
+            7: {
+                name: 'Matte Lipstick',
+                brand: 'MAC',
+                image: 'images/MAC.png',
+                price: 3200,
+                oldPrice: 3800,
+                badge: 'bestseller',
+                rating: '★★★★★',
+                ratingCount: '(412)',
+                ratingBadge: '4.9/5',
+                description: 'This iconic matte lipstick delivers intense, long-wearing color with a smooth, creamy texture. Hydrating formula keeps lips comfortable all day.',
+                sku: 'MK-2024-007',
+                texture: 'Cream',
+                vegan: 'No',
+                skinType: 'All',
+                size: '3.5 g',
+                stockStatus: 'Best Seller',
+                category: 'Lipstick',
+                features: ['Intense color payoff', 'Long-wearing formula', 'Smooth creamy texture', 'Hydrating'],
+                reviews: [
+                    { name: 'N***', stars: '★★★★★', text: 'MAC never disappoints! This is my go-to.', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'O***', stars: '★★★★★', text: 'Perfect color and lasts all day.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            },
+            8: {
+                name: 'Soft Matte Lip Cream',
+                brand: 'NYX',
+                image: 'images/NYX.png',
+                price: 1650,
+                oldPrice: 2100,
+                badge: null,
+                rating: '★★★★☆',
+                ratingCount: '(156)',
+                ratingBadge: '4.3/5',
+                description: 'This velvety, matte lip cream provides intense color with a comfortable, non-drying formula. Long-lasting and highly pigmented for a flawless finish.',
+                sku: 'MK-2024-008',
+                texture: 'Cream',
+                vegan: 'Yes',
+                skinType: 'All',
+                size: '8 ml',
+                stockStatus: 'In stock',
+                category: 'Lipstick',
+                features: ['Velvety matte finish', 'Intense color payoff', 'Long-lasting formula', 'Non-drying'],
+                reviews: [
+                    { name: 'P***', stars: '★★★★★', text: 'Love the texture! Not drying at all.', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'Q***', stars: '★★★☆☆', text: 'Color is nice but doesn\'t last as long as expected.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            }
+        };
+
+        // ===== Generate additional products to reach 160 =====
+        const brands = ['Maybelline', 'L\'Oreal', 'NYX', 'MAC', 'Fenty Beauty', 'Huda Beauty', 'wet n wild', 'L.A. Girl', 'Airspun', 'O.TWO.O'];
+        const categories = ['Lipstick', 'Foundation', 'Eyeshadow', 'Mascara', 'Concealer', 'Blush', 'Highlighter', 'Bronzer'];
+        const badges = ['bestseller', 'new', 'sale', null, null, null, null, null];
+        const productNames = {
+            'Lipstick': ['SuperStay Lipstick', 'Matte Lipstick', 'Soft Matte Lip Cream', 'Gloss Bomb Lip Gloss', 'Lip Lingerie', 'Butter Gloss', 'Lipglass', 'Liquid Matte Lipstick', 'Give Me Mocha Lipstick', 'MegaLast Liquid Lipstick'],
+            'Foundation': ['True Match Foundation', 'Fit Me Foundation', 'Studio Fix Foundation', 'Can\'t Stop Won\'t Stop Foundation', 'HD Foundation', 'Pro Setting Powder', 'Loose Face Powder', 'Translucent Powder', 'Fit Me Powder'],
+            'Eyeshadow': ['Ultimate Eyeshadow Palette', 'Eyeshadow Palette', 'Epic Ink Liner', 'Milk Jumbo Eye Pencil', 'Brow Glue', 'High Definition Blush'],
+            'Mascara': ['Lash Sensational Mascara', 'Lash Sensational Sky High Mascara', 'MegaSlim Skinny Mascara'],
+            'Concealer': ['Pro Longwear Concealer', 'Fit Me Concealer', 'Pro Concealer', 'Can\'t Stop Won\'t Stop Foundation'],
+            'Blush': ['Powder Blush', 'High Definition Blush', 'Fit Me Blush'],
+            'Highlighter': ['Highlighter Palette', 'MegaGlo Highlighter'],
+            'Bronzer': ['Bronzer', 'Pro Bronzer']
+        };
+
+        // Generate 160 products
+        let id = Object.keys(makeupProducts).length + 1;
+        while (Object.keys(makeupProducts).length < 160) {
+            const brand = brands[Math.floor(Math.random() * brands.length)];
+            const category = categories[Math.floor(Math.random() * categories.length)];
+            const nameList = productNames[category] || ['Makeup Product'];
+            const name = nameList[Math.floor(Math.random() * nameList.length)] + (Object.keys(makeupProducts).length % 3 === 0 ? ' Pro' : '');
+            const price = Math.floor(Math.random() * 4000) + 500;
+            const oldPrice = price + Math.floor(Math.random() * 1000) + 200;
+            const badge = badges[Math.floor(Math.random() * badges.length)];
+            const rating = Math.random() > 0.3 ? 5 : 4;
+            const ratingCount = Math.floor(Math.random() * 300) + 100;
+            const image = 'images/product' + (Math.floor(Math.random() * 4) + 1) + '.png';
+            
+            const ratingStars = rating === 5 ? '★★★★★' : '★★★★☆';
+            const ratingBadge = rating === 5 ? '4.8/5' : '4.3/5';
+            
+            makeupProducts[id] = {
+                id: id,
+                name: name,
+                brand: brand,
+                image: image,
+                price: price,
+                oldPrice: oldPrice,
+                badge: badge,
+                rating: ratingStars,
+                ratingCount: `(${ratingCount})`,
+                ratingBadge: ratingBadge,
+                description: `This premium ${category.toLowerCase()} from ${brand} delivers exceptional quality and performance. Formulated with high-quality ingredients for professional results.`,
+                sku: `MK-2024-${String(id).padStart(3, '0')}`,
+                texture: ['Liquid', 'Cream', 'Powder', 'Gel'][Math.floor(Math.random() * 4)],
+                vegan: Math.random() > 0.5 ? 'Yes' : 'No',
+                skinType: ['All', 'Oily & Combination', 'Normal to Dry', 'Sensitive'][Math.floor(Math.random() * 4)],
+                size: ['30 ml', '15 g', '8 ml', '50 ml'][Math.floor(Math.random() * 4)],
+                stockStatus: Math.random() > 0.3 ? 'In stock' : 'Best Seller',
+                category: category,
+                features: [
+                    'Premium quality formula',
+                    'Professional results',
+                    'Long-lasting wear',
+                    'Suitable for all skin types'
+                ],
+                reviews: [
+                    { name: 'R***', stars: '★★★★★', text: 'Great product! Highly recommend.', date: 'Verified Purchase • 2 weeks ago' },
+                    { name: 'S***', stars: '★★★★☆', text: 'Good quality, does what it says.', date: 'Verified Purchase • 1 month ago' }
+                ]
+            };
+            id++;
+        }
+
+        // ===== GET PRODUCT ID FROM URL =====
+        function getProductId() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            return id ? parseInt(id) : 1;
+        }
+
+        // ===== LOAD PRODUCT =====
+        function loadProduct() {
+            const id = getProductId();
+            const product = makeupProducts[id] || makeupProducts[1];
+
+            // Update badge
+            const badge = document.getElementById('productBadge');
+            if (product.badge === 'bestseller') {
+                badge.textContent = '⭐ Best Seller';
+                badge.className = 'badge bestseller';
+                badge.style.display = 'inline-block';
+            } else if (product.badge === 'new') {
+                badge.textContent = '✨ New';
+                badge.className = 'badge new';
+                badge.style.display = 'inline-block';
+            } else if (product.badge === 'sale') {
+                badge.textContent = '🔥 Sale';
+                badge.className = 'badge sale';
+                badge.style.display = 'inline-block';
+            } else {
+                badge.textContent = '';
+                badge.className = 'badge';
+                badge.style.display = 'none';
+            }
+
+            // Update main info
+            document.getElementById('productBrand').textContent = product.brand;
+            document.getElementById('productName').textContent = product.name;
+            document.getElementById('productStars').textContent = product.rating;
+            document.getElementById('productRating').textContent = product.ratingCount;
+            document.getElementById('mainProductImage').src = product.image;
+            document.getElementById('productCurrentPrice').textContent = `Rs. ${product.price.toLocaleString()}`;
+            document.getElementById('productOldPrice').textContent = `Rs. ${product.oldPrice.toLocaleString()}`;
+            document.getElementById('productDiscount').textContent = `-${Math.round((1 - product.price / product.oldPrice) * 100)}%`;
+            document.getElementById('productSaveBadge').textContent = `Save Rs. ${(product.oldPrice - product.price).toLocaleString()}`;
+
+            // Update rating badge
+            document.querySelector('.rating-badge').textContent = product.ratingBadge;
+
+            // Update average rating and stars
+            document.getElementById('avgRating').textContent = product.ratingBadge;
+            document.getElementById('avgStars').textContent = product.rating;
+            document.getElementById('totalRatings').textContent = product.ratingCount.replace(/[()]/g, '') + ' Ratings';
+
+            // Update description
+            const desc = document.getElementById('productDescription');
+            const descP = desc.querySelector('p:nth-child(2)');
+            if (descP) descP.textContent = product.description;
+            
+            const featuresList = desc.querySelector('.key-features');
+            if (featuresList && product.features) {
+                featuresList.innerHTML = product.features.map(f => 
+                    `<li><i class="fa-regular fa-circle-check"></i> ${f}</li>`
+                ).join('');
+            }
+
+            // Update specs
+            document.getElementById('specBrand').textContent = product.brand;
+            document.getElementById('specSku').textContent = product.sku;
+            document.getElementById('specTexture').textContent = product.texture;
+            document.getElementById('specVegan').textContent = product.vegan;
+            document.getElementById('specSkinType').textContent = product.skinType;
+            document.getElementById('specSize').textContent = product.size;
+
+            // Update stock status
+            const stockStatus = document.getElementById('stockStatus');
+            stockStatus.textContent = product.stockStatus;
+            if (product.stockStatus === 'In stock' || product.stockStatus === 'Best Seller' || product.stockStatus === 'New Arrival') {
+                stockStatus.className = 'stock-status in-stock';
+            } else {
+                stockStatus.className = 'stock-status';
+            }
+
+            // Update delivery date
+            const today = new Date();
+            const deliveryDate = new Date(today);
+            deliveryDate.setDate(today.getDate() + 3);
+            document.getElementById('deliveryDate').textContent = deliveryDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+            // Update thumbnails
+            const thumbnails = document.querySelectorAll('.thumbnails img');
+            const thumbnailImages = [
+                product.image || 'images/product3.png',
+                'images/product1.png',
+                'images/product2.png',
+                'images/product4.png'
+            ];
+            thumbnails.forEach((thumb, index) => {
+                if (index < thumbnailImages.length) {
+                    thumb.src = thumbnailImages[index];
+                    thumb.onclick = function() { changeMainImage(this, thumbnailImages[index]); };
+                }
+            });
+
+            // Load reviews
+            loadReviews(product);
+
+            // Load "You May Also Like"
+            loadAlsoLike(product.category, id);
+        }
+
+        // ===== LOAD REVIEWS =====
+        function loadReviews(product) {
+            const reviewsList = document.getElementById('reviewsList');
+            reviewsList.innerHTML = '';
+
+            if (product.reviews && product.reviews.length > 0) {
+                product.reviews.forEach(review => {
+                    const item = document.createElement('div');
+                    item.className = 'review-item';
+                    item.innerHTML = `
+                        <div class="reviewer">${review.name}</div>
+                        <div class="review-stars">${review.stars}</div>
+                        <div class="review-text">${review.text}</div>
+                        <div class="review-date">${review.date}</div>
+                    `;
+                    reviewsList.appendChild(item);
+                });
+            } else {
+                reviewsList.innerHTML = '<div class="no-questions" style="padding:20px 0;">No reviews yet. Be the first to review!</div>';
+            }
+        }
+
+        // ===== LOAD "YOU MAY ALSO LIKE" =====
+        function loadAlsoLike(category, currentId) {
+            const grid = document.getElementById('alsoGrid');
+            grid.innerHTML = '';
+
+            // Find products in same category (excluding current)
+            const similarProducts = Object.keys(makeupProducts)
+                .map(id => ({ id: parseInt(id), ...makeupProducts[id] }))
+                .filter(p => p.category === category && p.id !== currentId)
+                .slice(0, 4);
+
+            if (similarProducts.length < 4) {
+                // Add more products from other categories
+                const moreProducts = Object.keys(makeupProducts)
+                    .map(id => ({ id: parseInt(id), ...makeupProducts[id] }))
+                    .filter(p => p.category !== category && p.id !== currentId)
+                    .slice(0, 4 - similarProducts.length);
+                similarProducts.push(...moreProducts);
+            }
+
+            similarProducts.forEach(product => {
+                const card = document.createElement('a');
+                card.href = `makeup-detail.html?id=${product.id}`;
+                card.className = 'also-card';
+                card.innerHTML = `
+                    <img src="${product.image || 'images/product3.png'}" alt="${product.name}">
+                    <h4>${product.name}</h4>
+                    <span class="also-brand">${product.brand}</span>
+                    <span class="also-price">Rs. ${product.price.toLocaleString()}</span>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // ===== CHANGE MAIN IMAGE =====
+        function changeMainImage(element, imageSrc) {
+            document.getElementById('mainProductImage').src = imageSrc;
+            document.querySelectorAll('.thumbnails img').forEach(img => img.classList.remove('active'));
+            element.classList.add('active');
+        }
+
+        // ===== QUANTITY CONTROL =====
+        function changeQty(change) {
+            const qtySpan = document.getElementById('qtyNum');
+            let qty = parseInt(qtySpan.textContent) + change;
+            if (qty < 1) qty = 1;
+            qtySpan.textContent = qty;
+        }
+
+        // ===== ADD TO CART =====
+        function addToCartDetail() {
+            const qty = parseInt(document.getElementById('qtyNum').textContent);
+            const productName = document.getElementById('productName').textContent;
+            
+            showToast(`✅ ${qty} × ${productName} added to cart!`);
+            updateCartBadge();
+        }
+
+        // ===== BUY NOW =====
+        function buyNow() {
+            const qty = parseInt(document.getElementById('qtyNum').textContent);
+            const productName = document.getElementById('productName').textContent;
+            
+            showToast(`🛒 Redirecting to checkout...`);
+            setTimeout(() => {
+                window.location.href = `checkout.html?product=${encodeURIComponent(productName)}&qty=${qty}`;
+            }, 1000);
+        }
+
+        // ===== TOGGLE WISHLIST =====
+        function toggleWishlist() {
+            const productName = document.getElementById('productName').textContent;
+            const wishlistBtn = document.querySelector('.wishlist-btn');
+            const icon = wishlistBtn.querySelector('i');
+            
+            icon.classList.toggle('fa-regular');
+            icon.classList.toggle('fa-solid');
+            wishlistBtn.classList.toggle('active');
+            
+            if (icon.classList.contains('fa-solid')) {
+                showToast(`❤️ ${productName} added to Wishlist!`);
+            } else {
+                showToast(`💔 ${productName} removed from Wishlist`);
+            }
+        }
+
+        // ===== CART BADGE UPDATE =====
+        let cartCount = 3;
+
+        function updateCartBadge() {
+            cartCount++;
+            const badge = document.querySelector('.cart-badge');
+            if (badge) {
+                badge.textContent = cartCount;
+                badge.style.animation = 'none';
+                setTimeout(() => {
+                    badge.style.animation = 'badgePulse 0.5s ease';
+                }, 10);
+            }
+        }
+
+        // ===== TOAST NOTIFICATION =====
+        function showToast(message) {
+            const existingToast = document.querySelector('.toast-notification');
+            if (existingToast) {
+                existingToast.remove();
+            }
+
+            const toast = document.createElement('div');
+            toast.className = 'toast-notification';
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                background: #2d1a3a;
+                color: white;
+                padding: 14px 24px;
+                border-radius: 12px;
+                font-size: 14px;
+                font-weight: 500;
+                box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+                z-index: 10000;
+                animation: slideInUp 0.4s ease forwards;
+                font-family: 'Inter', sans-serif;
+                max-width: 350px;
+                border-left: 4px solid #e91e63;
+            `;
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'slideOutDown 0.4s ease forwards';
+                setTimeout(() => {
+                    toast.remove();
+                }, 400);
+            }, 3000);
+        }
+
+        // ===== SEARCH FUNCTIONALITY =====
+        const searchInput = document.querySelector('.search input');
+        const searchButton = document.querySelector('.search button');
+
+        function performSearch() {
+            const searchTerm = searchInput.value.trim();
+            if (searchTerm) {
+                showToast(`🔍 Searching for "${searchTerm}"...`);
+                setTimeout(() => {
+                    window.location.href = `shop.html?search=${encodeURIComponent(searchTerm)}`;
+                }, 800);
+            } else {
+                showToast('⚠️ Please enter a search term');
+            }
+        }
+
+        if (searchButton) {
+            searchButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                performSearch();
+            });
+        }
+
+        if (searchInput) {
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    performSearch();
+                }
+            });
+        }
+
+        // ===== ADD CSS ANIMATIONS =====
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+            @keyframes slideInUp {
+                0% { transform: translateY(100px); opacity: 0; }
+                100% { transform: translateY(0); opacity: 1; }
+            }
+            @keyframes slideOutDown {
+                0% { transform: translateY(0); opacity: 1; }
+                100% { transform: translateY(100px); opacity: 0; }
+            }
+            @keyframes badgePulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.4); }
+                100% { transform: scale(1); }
+            }
+            .cart-badge {
+                display: inline-block;
+                background: #e91e63;
+                color: white;
+                font-size: 10px;
+                font-weight: 700;
+                border-radius: 50%;
+                padding: 2px 6px;
+                min-width: 18px;
+                text-align: center;
+                position: absolute;
+                top: -8px;
+                right: -10px;
+            }
+            .header-icons > div {
+                position: relative;
+            }
+        `;
+        document.head.appendChild(styleSheet);
+
+        // ===== LOAD PRODUCT ON PAGE LOAD =====
+        document.addEventListener('DOMContentLoaded', loadProduct);
+
+        console.log('💄 Kasbi Beauty — Makeup Detail Page Loaded with 160 Products! 💄');
+    </script>
+
+</body>
+</html>

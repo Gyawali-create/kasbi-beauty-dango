@@ -133,6 +133,45 @@
             letter-spacing: 0.5px;
         }
 
+        .product-card .badge-organic {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: #27ae60;
+            color: white;
+            padding: 3px 12px;
+            border-radius: 30px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .product-card .badge-limited {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: #e74c3c;
+            color: white;
+            padding: 3px 12px;
+            border-radius: 30px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .product-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .product-link:hover {
+            transform: translateY(-4px);
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .category-banner {
@@ -201,8 +240,10 @@
                 </a>
             </div>
             <div>
-                <i class="fa-regular fa-user"></i>
-                <span>Account</span>
+                <a href="account.html" style="display:flex; flex-direction:column; align-items:center; text-decoration:none; color:inherit;">
+                    <i class="fa-regular fa-user"></i>
+                    <span>Account</span>
+                </a>
             </div>
         </div>
     </header>
@@ -210,43 +251,27 @@
     <!-- ===== NAVIGATION ===== -->
     <nav class="navigation">
         <ul>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html"></a></li>
             <li><a href="shop.html">Shop</a></li>
             <li><a href="brands.html">Brands</a></li>
             <li><a href="skincare.html" class="active">Skincare</a></li>
             <li><a href="makeup.html">Makeup</a></li>
             <li><a href="haircare.html">Hair Care</a></li>
-            <li><a href="newarrivals.html">New Arrivals</a></li>
+            <li>
+                <a href="newarrivals.html" class="new-arrivals-link">
+                    <span class="new-arrivals-text">New Arrivals</span>
+                    <span class="new-badge-animated">✨ NEW</span>
+                </a>
+            </li>
             <li><a href="bestsellers.html">Best Sellers</a></li>
-            <li><a href="offers.html">Offers</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li>
+                <a href="offers.html" class="offers-link">
+                    <span class="offers-text">Offers</span>
+                    <span class="offers-badge-animated">🔥 SALE</span>
+                </a>
+            </li>
         </ul>
     </nav>
-
-    <!-- ===== PAGE HEADER ===== -->
-    <div class="page-header">
-        <h1>Skincare</h1>
-        <p>Discover the perfect routine for your skin</p>
-        <div class="breadcrumb">
-            <a href="index.html">Home</a>
-            <span class="sep">/</span>
-            <span class="current">Skincare</span>
-        </div>
-    </div>
-
-    <!-- ===== CATEGORY BANNER ===== -->
-    <div class="category-banner">
-        <div>
-            <span class="tag"><i class="fa-regular fa-star" style="margin-right:6px;"></i> PREMIUM SKINCARE</span>
-            <h2>Glow from Within</h2>
-            <p>Curated skincare essentials for every skin type — cleansers, serums, moisturizers & more from trusted brands.</p>
-        </div>
-        <div class="stats">
-            <span><i class="fa-regular fa-face-smile" style="margin-right:6px;"></i> 120+ Products</span>
-            <span><i class="fa-regular fa-building" style="margin-right:6px;"></i> 15+ Brands</span>
-            <span><i class="fa-regular fa-star" style="margin-right:6px;"></i> 4.8 Avg Rating</span>
-        </div>
-    </div>
 
     <!-- ===== SHOP SECTION ===== -->
     <section class="shop-section">
@@ -306,6 +331,11 @@
                 <label><input type="checkbox"> Garnier</label>
                 <label><input type="checkbox"> Innisfree</label>
                 <label><input type="checkbox"> La Roche-Posay</label>
+                <label><input type="checkbox"> COSRX</label>
+                <label><input type="checkbox"> Laneige</label>
+                <label><input type="checkbox"> Simple</label>
+                <label><input type="checkbox"> Plum</label>
+                <label><input type="checkbox"> Mamaearth</label>
             </div>
 
             <div class="filter-group">
@@ -321,215 +351,21 @@
         <!-- Products -->
         <div>
             <div class="shop-toolbar">
-                <span>Showing 1–12 of 120 products</span>
-                <select>
-                    <option>Sort by: Best Selling</option>
-                    <option>Sort by: Newest</option>
-                    <option>Sort by: Price: Low to High</option>
-                    <option>Sort by: Price: High to Low</option>
-                    <option>Sort by: Rating</option>
+                <span id="productCount">Showing 1–12 of 120 products</span>
+                <select id="sortSelect">
+                    <option value="default">Sort by: Default</option>
+                    <option value="price-low">Sort by: Price: Low to High</option>
+                    <option value="price-high">Sort by: Price: High to Low</option>
+                    <option value="rating">Sort by: Rating</option>
                 </select>
             </div>
 
-            <div class="product-grid">
-                <!-- Product 1 -->
-                <div class="product-card">
-                    <div class="image-wrap">
-                        <span class="badge-bestseller">⭐ Best Seller</span>
-                        <span class="discount">-25%</span>
-                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                        <img src="images/product1.png" alt="CeraVe Hydrating Cleanser">
-                    </div>
-                    <div class="info">
-                        <span class="brand">CeraVe</span>
-                        <h3>Hydrating Cleanser</h3>
-                        <div class="rating">★★★★★ <span>(325)</span></div>
-                        <div class="price">
-                            <span class="current">Rs.2,650</span>
-                            <span class="old">Rs.3,200</span>
-                        </div>
-                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                    </div>
-                </div>
-
-                <!-- Product 2 -->
-                <div class="product-card">
-                    <div class="image-wrap">
-                        <span class="badge-new">✨ New</span>
-                        <span class="discount">-15%</span>
-                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                        <img src="images/product2.png" alt="The Ordinary Niacinamide">
-                    </div>
-                    <div class="info">
-                        <span class="brand">The Ordinary</span>
-                        <h3>Niacinamide 10% + Zinc</h3>
-                        <div class="rating">★★★★★ <span>(280)</span></div>
-                        <div class="price">
-                            <span class="current">Rs.2,350</span>
-                            <span class="old">Rs.2,850</span>
-                        </div>
-                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                    </div>
-                </div>
-
-                <!-- Product 3 -->
-                <div class="product-card">
-                    <div class="image-wrap">
-                        <span class="badge-bestseller">⭐ Best Seller</span>
-                        <span class="discount">-20%</span>
-                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                        <img src="images/product4.png" alt="Cetaphil Moisturizing Lotion">
-                    </div>
-                    <div class="info">
-                        <span class="brand">Cetaphil</span>
-                        <h3>Moisturizing Lotion</h3>
-                        <div class="rating">★★★★★ <span>(198)</span></div>
-                        <div class="price">
-                            <span class="current">Rs.2,850</span>
-                            <span class="old">Rs.3,400</span>
-                        </div>
-                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                    </div>
-                </div>
-
-                <!-- Product 4 -->
-                <div class="product-card">
-                    <div class="image-wrap">
-                        <span class="badge-new">✨ New</span>
-                        <span class="discount">-30%</span>
-                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                        <img src="images/product1.png" alt="Vitamin C Serum">
-                    </div>
-                    <div class="info">
-                        <span class="brand">L'Oreal</span>
-                        <h3>Vitamin C Brightening Serum</h3>
-                        <div class="rating">★★★★★ <span>(412)</span></div>
-                        <div class="price">
-                            <span class="current">Rs.3,200</span>
-                            <span class="old">Rs.4,500</span>
-                        </div>
-                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                    </div>
-                </div>
-
-                <!-- Product 5 -->
-                <div class="product-card">
-                    <div class="image-wrap">
-                        <span class="badge-bestseller">⭐ Best Seller</span>
-                        <span class="discount">-10%</span>
-                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                        <img src="images/product2.png" alt="Micellar Water">
-                    </div>
-                    <div class="info">
-                        <span class="brand">Garnier</span>
-                        <h3>Micellar Cleansing Water</h3>
-                        <div class="rating">★★★★★ <span>(267)</span></div>
-                        <div class="price">
-                            <span class="current">Rs.1,800</span>
-                            <span class="old">Rs.2,000</span>
-                        </div>
-                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                    </div>
-                </div>
-
-                <!-- Product 6 -->
-                <div class="product-card">
-                    <div class="image-wrap">
-                        <span class="discount">-25%</span>
-                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                        <img src="images/product3.png" alt="Sunscreen">
-                    </div>
-                    <div class="info">
-                        <span class="brand">La Roche-Posay</span>
-                        <h3>Anthelios Sunscreen SPF 50</h3>
-                        <div class="rating">★★★★★ <span>(234)</span></div>
-                        <div class="price">
-                            <span class="current">Rs.3,600</span>
-                            <span class="old">Rs.4,800</span>
-                        </div>
-                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                    </div>
-                </div>
-
-                <!-- Product 7 -->
-                <div class="product-card">
-                    <div class="image-wrap">
-                        <span class="badge-new">✨ New</span>
-                        <span class="discount">-15%</span>
-                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                        <img src="images/product4.png" alt="Face Mask">
-                    </div>
-                    <div class="info">
-                        <span class="brand">Innisfree</span>
-                        <h3>Volcanic Clay Face Mask</h3>
-                        <div class="rating">★★★★★ <span>(189)</span></div>
-                        <div class="price">
-                            <span class="current">Rs.2,100</span>
-                            <span class="old">Rs.2,500</span>
-                        </div>
-                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                    </div>
-                </div>
-
-                <!-- Product 8 -->
-                <div class="product-card">
-                    <div class="image-wrap">
-                        <span class="badge-bestseller">⭐ Best Seller</span>
-                        <span class="discount">-20%</span>
-                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                        <img src="images/product1.png" alt="Eye Cream">
-                    </div>
-                    <div class="info">
-                        <span class="brand">CeraVe</span>
-                        <h3>Eye Repair Cream</h3>
-                        <div class="rating">★★★★★ <span>(156)</span></div>
-                        <div class="price">
-                            <span class="current">Rs.2,400</span>
-                            <span class="old">Rs.3,000</span>
-                        </div>
-                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                    </div>
-                </div>
+            <div class="product-grid" id="productGrid">
+                <!-- Products will be loaded dynamically -->
             </div>
 
-            <div class="pagination">
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <a href="#">5</a>
-                <a href="#"><i class="fa-solid fa-chevron-right"></i></a>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== SKINCARE TIPS ===== -->
-    <section style="padding: 40px 6% 60px;">
-        <div class="section-title scroll-reveal">
-            <span class="sub">SKINCARE TIPS</span>
-            <h2>Glow <span class="highlight">Guide</span></h2>
-        </div>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
-            <div style="background: var(--white); padding: 28px; border-radius: var(--border-radius); box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04);">
-                <div style="width: 50px; height: 50px; background: rgba(94,64,116,0.06); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: var(--primary); margin-bottom: 14px;">
-                    <i class="fa-regular fa-face-smile"></i>
-                </div>
-                <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 6px;">Know Your Skin Type</h4>
-                <p style="color: var(--gray); font-size: 14px; line-height: 1.7;">Identify whether you have dry, oily, combination, or sensitive skin to choose the right products.</p>
-            </div>
-            <div style="background: var(--white); padding: 28px; border-radius: var(--border-radius); box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04);">
-                <div style="width: 50px; height: 50px; background: rgba(94,64,116,0.06); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: var(--primary); margin-bottom: 14px;">
-                    <i class="fa-regular fa-sun"></i>
-                </div>
-                <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 6px;">Always Use Sunscreen</h4>
-                <p style="color: var(--gray); font-size: 14px; line-height: 1.7;">Protect your skin from harmful UV rays with SPF 30+ daily, even on cloudy days.</p>
-            </div>
-            <div style="background: var(--white); padding: 28px; border-radius: var(--border-radius); box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04);">
-                <div style="width: 50px; height: 50px; background: rgba(94,64,116,0.06); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: var(--primary); margin-bottom: 14px;">
-                    <i class="fa-regular fa-droplet"></i>
-                </div>
-                <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 6px;">Hydrate Inside & Out</h4>
-                <p style="color: var(--gray); font-size: 14px; line-height: 1.7;">Drink plenty of water and use hydrating products like hyaluronic acid for plump, glowing skin.</p>
+            <div class="pagination" id="pagination">
+                <!-- Pagination will be loaded dynamically -->
             </div>
         </div>
     </section>
@@ -587,242 +423,490 @@
         </div>
     </footer>
 
-   <script>
-    // ===== SCROLL REVEAL =====
-    const scrollReveal = () => {
-        const elements = document.querySelectorAll('.scroll-reveal');
-        const windowHeight = window.innerHeight;
-        
-        elements.forEach(el => {
-            const rect = el.getBoundingClientRect();
-            if (rect.top < windowHeight - 100) {
-                el.classList.add('visible');
+    <script>
+        // ===== PRODUCT DATA - 120 SKINCARE PRODUCTS (FULL LIST) =====
+        const allProducts = [
+            // Page 1 - Products 1-12
+            { id: 1, name: 'Hydrating Cleanser', brand: 'CeraVe', price: 2650, oldPrice: 3200, discount: '-25%', rating: 5, ratingCount: 325, image: 'images/product1.png', badge: 'bestseller', category: 'Cleansers' },
+            { id: 2, name: 'Niacinamide 10% + Zinc', brand: 'The Ordinary', price: 2350, oldPrice: 2850, discount: '-15%', rating: 5, ratingCount: 280, image: 'images/product2.png', badge: 'new', category: 'Serums' },
+            { id: 3, name: 'Moisturizing Lotion', brand: 'Cetaphil', price: 2850, oldPrice: 3400, discount: '-20%', rating: 5, ratingCount: 198, image: 'images/product4.png', badge: 'bestseller', category: 'Moisturizers' },
+            { id: 4, name: 'Vitamin C Brightening Serum', brand: 'L\'Oreal', price: 3200, oldPrice: 4500, discount: '-30%', rating: 5, ratingCount: 412, image: 'images/product1.png', badge: 'new', category: 'Serums' },
+            { id: 5, name: 'Micellar Cleansing Water', brand: 'Garnier', price: 1800, oldPrice: 2000, discount: '-10%', rating: 5, ratingCount: 267, image: 'images/product2.png', badge: 'bestseller', category: 'Cleansers' },
+            { id: 6, name: 'Anthelios Sunscreen SPF 50', brand: 'La Roche-Posay', price: 3600, oldPrice: 4800, discount: '-25%', rating: 5, ratingCount: 234, image: 'images/product3.png', badge: null, category: 'Sunscreen' },
+            { id: 7, name: 'Volcanic Clay Face Mask', brand: 'Innisfree', price: 2100, oldPrice: 2500, discount: '-15%', rating: 5, ratingCount: 189, image: 'images/product4.png', badge: 'new', category: 'Face Masks' },
+            { id: 8, name: 'Eye Repair Cream', brand: 'CeraVe', price: 2400, oldPrice: 3000, discount: '-20%', rating: 5, ratingCount: 156, image: 'images/product1.png', badge: 'bestseller', category: 'Eye Creams' },
+            { id: 9, name: 'Advanced Snail 96 Mucin', brand: 'COSRX', price: 2150, oldPrice: 2800, discount: '-23%', rating: 5, ratingCount: 363, image: 'images/product1.png', badge: 'bestseller', category: 'Serums' },
+            { id: 10, name: 'Low pH Good Morning Gel', brand: 'COSRX', price: 1485, oldPrice: 1650, discount: '-10%', rating: 5, ratingCount: 289, image: 'images/product2.png', badge: null, category: 'Cleansers' },
+            { id: 11, name: 'Niacinamide 15% Serum', brand: 'COSRX', price: 2565, oldPrice: 2850, discount: '-10%', rating: 5, ratingCount: 412, image: 'images/product3.png', badge: 'new', category: 'Serums' },
+            { id: 12, name: 'Hyaluronic Acid Cream', brand: 'COSRX', price: 2880, oldPrice: 3200, discount: '-10%', rating: 5, ratingCount: 234, image: 'images/product4.png', badge: null, category: 'Moisturizers' },
+
+            // Page 2 - Products 13-24
+            { id: 13, name: 'Refreshing Face Wash', brand: 'Simple', price: 1200, oldPrice: 1400, discount: '-15%', rating: 4, ratingCount: 178, image: 'images/Simple.png', badge: null, category: 'Cleansers' },
+            { id: 14, name: 'Green Tea Face Wash', brand: 'Plum', price: 850, oldPrice: 1100, discount: '-20%', rating: 4, ratingCount: 156, image: 'images/Plum.jpeg', badge: null, category: 'Cleansers' },
+            { id: 15, name: 'Vitamin C Face Serum', brand: 'Mamaearth', price: 950, oldPrice: 1200, discount: '-15%', rating: 4, ratingCount: 134, image: 'images/Mamaearth.png', badge: null, category: 'Serums' },
+            { id: 16, name: 'Hyaluronic Acid 2%', brand: 'The Ordinary', price: 1800, oldPrice: 2000, discount: '-10%', rating: 5, ratingCount: 198, image: 'images/The-ordinary.png', badge: null, category: 'Serums' },
+            { id: 17, name: 'Gentle Face Wash', brand: 'Cetaphil', price: 1650, oldPrice: 1950, discount: '-15%', rating: 5, ratingCount: 189, image: 'images/Cetaphil.png', badge: null, category: 'Cleansers' },
+            { id: 18, name: 'Lip Sleeping Mask', brand: 'Laneige', price: 3800, oldPrice: 4200, discount: '-10%', rating: 5, ratingCount: 267, image: 'images/Laneige.png', badge: 'bestseller', category: 'Moisturizers' },
+            { id: 19, name: 'AHA/BHA Clarifying Toner', brand: 'COSRX', price: 1950, oldPrice: 2300, discount: '-15%', rating: 5, ratingCount: 312, image: 'images/product2.png', badge: 'bestseller', category: 'Toners' },
+            { id: 20, name: 'Daily Moisturizing Cream', brand: 'CeraVe', price: 2200, oldPrice: 2800, discount: '-20%', rating: 5, ratingCount: 278, image: 'images/CeraVE.png', badge: null, category: 'Moisturizers' },
+            { id: 21, name: 'Hydrating Moisturizer', brand: 'La Roche-Posay', price: 2800, oldPrice: 3300, discount: '-15%', rating: 5, ratingCount: 198, image: 'images/La-Roche-Posay.png', badge: null, category: 'Moisturizers' },
+            { id: 22, name: 'Retinol 0.5% Serum', brand: 'The Ordinary', price: 1500, oldPrice: 1700, discount: '-10%', rating: 5, ratingCount: 223, image: 'images/The-ordinary.png', badge: null, category: 'Serums' },
+            { id: 23, name: 'Advanced Snail Peptide Eye Cream', brand: 'COSRX', price: 2200, oldPrice: 2500, discount: '-10%', rating: 5, ratingCount: 167, image: 'images/product1.png', badge: 'new', category: 'Eye Creams' },
+            { id: 24, name: 'Water Bank Moisture Cream', brand: 'Laneige', price: 2900, oldPrice: 3600, discount: '-20%', rating: 5, ratingCount: 198, image: 'images/Laneige.png', badge: 'bestseller', category: 'Moisturizers' },
+
+            // Page 3 - Products 25-36
+            { id: 25, name: 'Vitamin C Moisturizer', brand: 'Mamaearth', price: 850, oldPrice: 1100, discount: '-15%', rating: 4, ratingCount: 145, image: 'images/Mamaearth.png', badge: null, category: 'Moisturizers' },
+            { id: 26, name: 'Hydrating Light Moisturizer', brand: 'Simple', price: 900, oldPrice: 1000, discount: '-10%', rating: 4, ratingCount: 167, image: 'images/Simple.png', badge: null, category: 'Moisturizers' },
+            { id: 27, name: 'Green Tea Toner', brand: 'Innisfree', price: 1850, oldPrice: 2200, discount: '-15%', rating: 5, ratingCount: 178, image: 'images/Innisfree.jpeg', badge: null, category: 'Toners' },
+            { id: 28, name: 'Green Tea Serum', brand: 'Innisfree', price: 2200, oldPrice: 2600, discount: '-15%', rating: 5, ratingCount: 189, image: 'images/Innisfree.jpeg', badge: 'bestseller', category: 'Serums' },
+            { id: 29, name: 'Retinol Cream', brand: 'CeraVe', price: 2500, oldPrice: 3000, discount: '-15%', rating: 5, ratingCount: 167, image: 'images/CeraVE.png', badge: 'new', category: 'Moisturizers' },
+            { id: 30, name: 'Cicaplast Baume B5', brand: 'La Roche-Posay', price: 1500, oldPrice: 1800, discount: '-15%', rating: 5, ratingCount: 145, image: 'images/La-Roche-Posay.png', badge: null, category: 'Moisturizers' },
+            { id: 31, name: 'Salicylic Acid Cleanser', brand: 'COSRX', price: 1650, oldPrice: 1900, discount: '-13%', rating: 5, ratingCount: 198, image: 'images/product2.png', badge: null, category: 'Cleansers' },
+            { id: 32, name: 'Vitamin C Eye Cream', brand: 'Plum', price: 900, oldPrice: 1100, discount: '-18%', rating: 4, ratingCount: 145, image: 'images/Plum.jpeg', badge: null, category: 'Eye Creams' },
+            { id: 33, name: 'Niacinamide Moisturizer', brand: 'Mamaearth', price: 950, oldPrice: 1200, discount: '-20%', rating: 4, ratingCount: 134, image: 'images/Mamaearth.png', badge: null, category: 'Moisturizers' },
+            { id: 34, name: 'Hyaluronic Acid Serum', brand: 'Simple', price: 1500, oldPrice: 1700, discount: '-10%', rating: 4, ratingCount: 156, image: 'images/Simple.png', badge: null, category: 'Serums' },
+            { id: 35, name: 'Water Sleeping Mask', brand: 'Laneige', price: 3200, oldPrice: 3800, discount: '-15%', rating: 5, ratingCount: 234, image: 'images/Laneige.png', badge: 'bestseller', category: 'Face Masks' },
+            { id: 36, name: 'BHA Blackhead Power Liquid', brand: 'COSRX', price: 1850, oldPrice: 2200, discount: '-15%', rating: 5, ratingCount: 278, image: 'images/product1.png', badge: null, category: 'Toners' },
+
+            // Page 4 - Products 37-48
+            { id: 37, name: 'Toleriane Cleanser', brand: 'La Roche-Posay', price: 2000, oldPrice: 2400, discount: '-15%', rating: 5, ratingCount: 167, image: 'images/La-Roche-Posay.png', badge: null, category: 'Cleansers' },
+            { id: 38, name: 'Sheer Mineral Sunscreen', brand: 'Cetaphil', price: 2800, oldPrice: 3200, discount: '-12%', rating: 5, ratingCount: 156, image: 'images/Cetaphil.png', badge: null, category: 'Sunscreen' },
+            { id: 39, name: 'Aloe Face Mask', brand: 'Innisfree', price: 1800, oldPrice: 2100, discount: '-14%', rating: 5, ratingCount: 178, image: 'images/Innisfree.jpeg', badge: null, category: 'Face Masks' },
+            { id: 40, name: 'Snail 92 All In One Cream', brand: 'COSRX', price: 1950, oldPrice: 2300, discount: '-15%', rating: 5, ratingCount: 234, image: 'images/product4.png', badge: 'bestseller', category: 'Moisturizers' },
+            { id: 41, name: 'Ultra-Light Moisturizing Lotion', brand: 'CeraVe', price: 2100, oldPrice: 2500, discount: '-16%', rating: 5, ratingCount: 189, image: 'images/CeraVE.png', badge: null, category: 'Moisturizers' },
+            { id: 42, name: 'Green Tea Cleanser', brand: 'Innisfree', price: 1600, oldPrice: 1900, discount: '-15%', rating: 5, ratingCount: 156, image: 'images/Innisfree.jpeg', badge: null, category: 'Cleansers' },
+            { id: 43, name: 'Retinol Eye Cream', brand: 'Mamaearth', price: 1100, oldPrice: 1350, discount: '-18%', rating: 4, ratingCount: 134, image: 'images/Mamaearth.png', badge: null, category: 'Eye Creams' },
+            { id: 44, name: 'Cream Skin Toner', brand: 'Laneige', price: 2200, oldPrice: 2600, discount: '-15%', rating: 5, ratingCount: 189, image: 'images/Laneige.png', badge: 'new', category: 'Toners' },
+            { id: 45, name: 'Propolis Serum', brand: 'COSRX', price: 2100, oldPrice: 2400, discount: '-12%', rating: 5, ratingCount: 198, image: 'images/product1.png', badge: null, category: 'Serums' },
+            { id: 46, name: 'Effaclar Duo Cream', brand: 'La Roche-Posay', price: 2900, oldPrice: 3400, discount: '-15%', rating: 5, ratingCount: 167, image: 'images/La-Roche-Posay.png', badge: null, category: 'Moisturizers' },
+            { id: 47, name: 'Gentle Skin Cleanser', brand: 'Cetaphil', price: 1550, oldPrice: 1850, discount: '-16%', rating: 5, ratingCount: 189, image: 'images/Cetaphil.png', badge: null, category: 'Cleansers' },
+            { id: 48, name: 'Green Tea Face Scrub', brand: 'Innisfree', price: 1400, oldPrice: 1650, discount: '-15%', rating: 4, ratingCount: 145, image: 'images/Innisfree.jpeg', badge: null, category: 'Exfoliators' },
+
+            // Page 5 - Products 49-60
+            { id: 49, name: 'Vitamin C 23 Serum', brand: 'COSRX', price: 2300, oldPrice: 2600, discount: '-11%', rating: 5, ratingCount: 178, image: 'images/product3.png', badge: 'new', category: 'Serums' },
+            { id: 50, name: 'Skin Renewing Night Cream', brand: 'CeraVe', price: 2800, oldPrice: 3200, discount: '-12%', rating: 5, ratingCount: 156, image: 'images/CeraVE.png', badge: null, category: 'Moisturizers' },
+            { id: 51, name: 'Jeju Orchid Cream', brand: 'Innisfree', price: 3500, oldPrice: 4000, discount: '-12%', rating: 5, ratingCount: 167, image: 'images/Innisfree.jpeg', badge: 'bestseller', category: 'Moisturizers' },
+            { id: 52, name: 'Niacinamide Face Wash', brand: 'Plum', price: 900, oldPrice: 1100, discount: '-18%', rating: 4, ratingCount: 145, image: 'images/Plum.jpeg', badge: null, category: 'Cleansers' },
+            { id: 53, name: 'Glow Serum', brand: 'Laneige', price: 2700, oldPrice: 3100, discount: '-13%', rating: 5, ratingCount: 189, image: 'images/Laneige.png', badge: null, category: 'Serums' },
+            { id: 54, name: 'Peptide Serum', brand: 'COSRX', price: 2400, oldPrice: 2700, discount: '-11%', rating: 5, ratingCount: 156, image: 'images/product4.png', badge: null, category: 'Serums' },
+            { id: 55, name: 'Redermic R Retinol Cream', brand: 'La Roche-Posay', price: 3800, oldPrice: 4300, discount: '-12%', rating: 5, ratingCount: 145, image: 'images/La-Roche-Posay.png', badge: 'new', category: 'Moisturizers' },
+            { id: 56, name: 'Rich Hydrating Cream', brand: 'Cetaphil', price: 2500, oldPrice: 2900, discount: '-14%', rating: 5, ratingCount: 156, image: 'images/Cetaphil.png', badge: null, category: 'Moisturizers' },
+            { id: 57, name: 'Volcanic Pore Cleanser', brand: 'Innisfree', price: 1700, oldPrice: 2000, discount: '-15%', rating: 5, ratingCount: 167, image: 'images/Innisfree.jpeg', badge: null, category: 'Cleansers' },
+            { id: 58, name: 'Ceramide Cream', brand: 'COSRX', price: 2100, oldPrice: 2400, discount: '-12%', rating: 5, ratingCount: 178, image: 'images/product1.png', badge: null, category: 'Moisturizers' },
+            { id: 59, name: 'Resurfacing Retinol Serum', brand: 'CeraVe', price: 2600, oldPrice: 3000, discount: '-13%', rating: 5, ratingCount: 167, image: 'images/CeraVE.png', badge: 'new', category: 'Serums' },
+            { id: 60, name: 'Jeju Orchid Eye Cream', brand: 'Innisfree', price: 2800, oldPrice: 3200, discount: '-12%', rating: 5, ratingCount: 145, image: 'images/Innisfree.jpeg', badge: null, category: 'Eye Creams' },
+
+            // Page 6 - Products 61-72
+            { id: 61, name: 'Retinol Serum', brand: 'Plum', price: 1200, oldPrice: 1450, discount: '-17%', rating: 4, ratingCount: 134, image: 'images/Plum.jpeg', badge: null, category: 'Serums' },
+            { id: 62, name: 'Radian C Cream', brand: 'Laneige', price: 2900, oldPrice: 3300, discount: '-12%', rating: 5, ratingCount: 178, image: 'images/Laneige.png', badge: null, category: 'Moisturizers' },
+            { id: 63, name: 'Galactomyces Toner', brand: 'COSRX', price: 1900, oldPrice: 2200, discount: '-13%', rating: 5, ratingCount: 189, image: 'images/product2.png', badge: null, category: 'Toners' },
+            { id: 64, name: 'Anthelios Invisible Fluid', brand: 'La Roche-Posay', price: 3200, oldPrice: 3700, discount: '-13%', rating: 5, ratingCount: 156, image: 'images/La-Roche-Posay.png', badge: null, category: 'Sunscreen' },
+            { id: 65, name: 'Daily Facial Moisturizer', brand: 'Cetaphil', price: 1850, oldPrice: 2150, discount: '-14%', rating: 5, ratingCount: 167, image: 'images/Cetaphil.png', badge: null, category: 'Moisturizers' },
+            { id: 66, name: 'Peach Hand Cream', brand: 'Innisfree', price: 800, oldPrice: 950, discount: '-15%', rating: 4, ratingCount: 145, image: 'images/Innisfree.jpeg', badge: null, category: 'Moisturizers' },
+            { id: 67, name: 'Sunscreen SPF 50', brand: 'COSRX', price: 1850, oldPrice: 2100, discount: '-10%', rating: 5, ratingCount: 167, image: 'images/product3.png', badge: 'new', category: 'Sunscreen' },
+            { id: 68, name: 'Vitamin C Serum', brand: 'CeraVe', price: 2700, oldPrice: 3100, discount: '-13%', rating: 5, ratingCount: 145, image: 'images/CeraVE.png', badge: null, category: 'Serums' },
+            { id: 69, name: 'Green Tea Moisturizer', brand: 'Innisfree', price: 1900, oldPrice: 2200, discount: '-13%', rating: 5, ratingCount: 178, image: 'images/Innisfree.jpeg', badge: null, category: 'Moisturizers' },
+            { id: 70, name: 'Vitamin C Face Wash', brand: 'Plum', price: 850, oldPrice: 1000, discount: '-15%', rating: 4, ratingCount: 134, image: 'images/Plum.jpeg', badge: null, category: 'Cleansers' },
+            { id: 71, name: 'Centella Blemish Cream', brand: 'COSRX', price: 2000, oldPrice: 2300, discount: '-13%', rating: 5, ratingCount: 178, image: 'images/product2.png', badge: null, category: 'Moisturizers' },
+            { id: 72, name: 'Cicaplast Hand Cream', brand: 'La Roche-Posay', price: 1200, oldPrice: 1450, discount: '-17%', rating: 4, ratingCount: 145, image: 'images/La-Roche-Posay.png', badge: null, category: 'Moisturizers' },
+
+            // Page 7 - Products 73-84
+            { id: 73, name: 'Healthy Radiance Moisturizing Cream', brand: 'Cetaphil', price: 2600, oldPrice: 3000, discount: '-13%', rating: 5, ratingCount: 156, image: 'images/Cetaphil.png', badge: 'new', category: 'Moisturizers' },
+            { id: 74, name: 'Lip Balm', brand: 'Innisfree', price: 600, oldPrice: 750, discount: '-20%', rating: 4, ratingCount: 189, image: 'images/Innisfree.jpeg', badge: null, category: 'Moisturizers' },
+            { id: 75, name: 'Pimple Patch', brand: 'COSRX', price: 800, oldPrice: 950, discount: '-15%', rating: 5, ratingCount: 234, image: 'images/product1.png', badge: 'bestseller', category: 'Face Masks' },
+            { id: 76, name: 'Hydrating Hyaluronic Acid Serum', brand: 'CeraVe', price: 2300, oldPrice: 2600, discount: '-11%', rating: 5, ratingCount: 167, image: 'images/CeraVE.png', badge: null, category: 'Serums' },
+            { id: 77, name: 'Sheet Mask', brand: 'Innisfree', price: 500, oldPrice: 650, discount: '-23%', rating: 4, ratingCount: 234, image: 'images/Innisfree.jpeg', badge: null, category: 'Face Masks' },
+            { id: 78, name: 'Hyaluronic Acid Eye Cream', brand: 'Plum', price: 950, oldPrice: 1150, discount: '-17%', rating: 4, ratingCount: 145, image: 'images/Plum.jpeg', badge: null, category: 'Eye Creams' },
+            { id: 79, name: 'Face Mask', brand: 'Laneige', price: 2500, oldPrice: 2900, discount: '-14%', rating: 5, ratingCount: 178, image: 'images/Laneige.png', badge: null, category: 'Face Masks' },
+            { id: 80, name: 'Micellar Water', brand: 'Garnier', price: 1800, oldPrice: 2000, discount: '-10%', rating: 5, ratingCount: 267, image: 'images/garnier.png', badge: null, category: 'Cleansers' },
+            { id: 81, name: 'Eye Repair Cream', brand: 'CeraVe', price: 1950, oldPrice: 2200, discount: '-10%', rating: 5, ratingCount: 145, image: 'images/CeraVE.png', badge: null, category: 'Eye Creams' },
+            { id: 82, name: 'Hyaluronic Acid Serum', brand: 'La Roche-Posay', price: 4200, oldPrice: 4700, discount: '-10%', rating: 5, ratingCount: 189, image: 'images/La-Roche-Posay.png', badge: 'new', category: 'Serums' },
+            { id: 83, name: 'Green Tea Moisturizer', brand: 'Plum', price: 750, oldPrice: 950, discount: '-20%', rating: 4, ratingCount: 134, image: 'images/Plum.jpeg', badge: null, category: 'Moisturizers' },
+            { id: 84, name: 'Aloe Soothing Sunscreen SPF 50', brand: 'COSRX', price: 1850, oldPrice: 2100, discount: '-10%', rating: 5, ratingCount: 156, image: 'images/product3.png', badge: 'new', category: 'Sunscreen' },
+
+            // Page 8 - Products 85-96 (additional)
+            { id: 85, name: 'Pure Vitamin C Serum', brand: 'The Ordinary', price: 2100, oldPrice: 2500, discount: '-16%', rating: 5, ratingCount: 198, image: 'images/The-ordinary.png', badge: null, category: 'Serums' },
+            { id: 86, name: 'Cicaplast Gel B5', brand: 'La Roche-Posay', price: 1600, oldPrice: 1850, discount: '-14%', rating: 5, ratingCount: 145, image: 'images/La-Roche-Posay.png', badge: null, category: 'Moisturizers' },
+            { id: 87, name: 'Rice Water Bright Cleanser', brand: 'COSRX', price: 1750, oldPrice: 2000, discount: '-12%', rating: 5, ratingCount: 167, image: 'images/product2.png', badge: null, category: 'Cleansers' },
+            { id: 88, name: 'Hydrating Sleep Mask', brand: 'Laneige', price: 3000, oldPrice: 3500, discount: '-14%', rating: 5, ratingCount: 178, image: 'images/Laneige.png', badge: 'bestseller', category: 'Face Masks' },
+            { id: 89, name: 'Retinol 1% Serum', brand: 'The Ordinary', price: 1900, oldPrice: 2200, discount: '-14%', rating: 5, ratingCount: 189, image: 'images/The-ordinary.png', badge: null, category: 'Serums' },
+            { id: 90, name: 'Hyaluronic Eye Cream', brand: 'Cetaphil', price: 2200, oldPrice: 2500, discount: '-12%', rating: 5, ratingCount: 156, image: 'images/Cetaphil.png', badge: null, category: 'Eye Creams' },
+            { id: 91, name: 'Green Tea Seed Serum', brand: 'Innisfree', price: 2400, oldPrice: 2800, discount: '-14%', rating: 5, ratingCount: 167, image: 'images/Innisfree.jpeg', badge: 'new', category: 'Serums' },
+            { id: 92, name: 'Effaclar Purifying Foaming Gel', brand: 'La Roche-Posay', price: 2200, oldPrice: 2600, discount: '-15%', rating: 5, ratingCount: 145, image: 'images/La-Roche-Posay.png', badge: null, category: 'Cleansers' },
+            { id: 93, name: 'Niacinamide 5% + HA', brand: 'The Ordinary', price: 1700, oldPrice: 1950, discount: '-13%', rating: 5, ratingCount: 178, image: 'images/The-ordinary.png', badge: null, category: 'Serums' },
+            { id: 94, name: 'Lip Mask', brand: 'Laneige', price: 3200, oldPrice: 3700, discount: '-14%', rating: 5, ratingCount: 189, image: 'images/Laneige.png', badge: 'bestseller', category: 'Moisturizers' },
+            { id: 95, name: 'Daily Acne Cleanser', brand: 'COSRX', price: 1850, oldPrice: 2100, discount: '-12%', rating: 5, ratingCount: 156, image: 'images/product1.png', badge: 'new', category: 'Cleansers' },
+            { id: 96, name: 'Glow Face Mask', brand: 'Innisfree', price: 900, oldPrice: 1100, discount: '-18%', rating: 4, ratingCount: 134, image: 'images/Innisfree.jpeg', badge: null, category: 'Face Masks' },
+
+            // Page 9 - Products 97-108
+            { id: 97, name: 'B5 Moisturizer', brand: 'La Roche-Posay', price: 2700, oldPrice: 3100, discount: '-13%', rating: 5, ratingCount: 167, image: 'images/La-Roche-Posay.png', badge: null, category: 'Moisturizers' },
+            { id: 98, name: 'Ceramide Eye Cream', brand: 'CeraVe', price: 2300, oldPrice: 2600, discount: '-12%', rating: 5, ratingCount: 145, image: 'images/CeraVE.png', badge: null, category: 'Eye Creams' },
+            { id: 99, name: 'Vitamin C 15% Serum', brand: 'COSRX', price: 2500, oldPrice: 2900, discount: '-14%', rating: 5, ratingCount: 178, image: 'images/product3.png', badge: null, category: 'Serums' },
+            { id: 100, name: 'Rice Cream Cleanser', brand: 'Cetaphil', price: 1650, oldPrice: 1900, discount: '-13%', rating: 5, ratingCount: 156, image: 'images/Cetaphil.png', badge: null, category: 'Cleansers' },
+            { id: 101, name: 'Green Tea Fresh Cleanser', brand: 'Innisfree', price: 1500, oldPrice: 1750, discount: '-14%', rating: 5, ratingCount: 167, image: 'images/Innisfree.jpeg', badge: null, category: 'Cleansers' },
+            { id: 102, name: 'Ultra Repair Cream', brand: 'La Roche-Posay', price: 3300, oldPrice: 3800, discount: '-13%', rating: 5, ratingCount: 145, image: 'images/La-Roche-Posay.png', badge: 'bestseller', category: 'Moisturizers' },
+            { id: 103, name: 'Propolis Synergy Toner', brand: 'COSRX', price: 1950, oldPrice: 2200, discount: '-11%', rating: 5, ratingCount: 178, image: 'images/product2.png', badge: null, category: 'Toners' },
+            { id: 104, name: 'Brightening Vitamin C Cream', brand: 'Plum', price: 1100, oldPrice: 1350, discount: '-18%', rating: 4, ratingCount: 134, image: 'images/Plum.jpeg', badge: null, category: 'Moisturizers' },
+            { id: 105, name: 'Sunscreen SPF 30', brand: 'Cetaphil', price: 2300, oldPrice: 2600, discount: '-12%', rating: 5, ratingCount: 156, image: 'images/Cetaphil.png', badge: null, category: 'Sunscreen' },
+            { id: 106, name: 'Skin Barrier Cream', brand: 'CeraVe', price: 2600, oldPrice: 3000, discount: '-13%', rating: 5, ratingCount: 167, image: 'images/CeraVE.png', badge: 'new', category: 'Moisturizers' },
+            { id: 107, name: 'Snail Cream Moisturizer', brand: 'COSRX', price: 2200, oldPrice: 2500, discount: '-12%', rating: 5, ratingCount: 189, image: 'images/product4.png', badge: null, category: 'Moisturizers' },
+            { id: 108, name: 'Facial Wash', brand: 'Simple', price: 850, oldPrice: 1000, discount: '-15%', rating: 4, ratingCount: 145, image: 'images/Simple.png', badge: null, category: 'Cleansers' },
+
+            // Page 10 - Products 109-120
+            { id: 109, name: 'Advanced Sunscreen SPF 50', brand: 'La Roche-Posay', price: 3500, oldPrice: 4000, discount: '-12%', rating: 5, ratingCount: 167, image: 'images/La-Roche-Posay.png', badge: 'bestseller', category: 'Sunscreen' },
+            { id: 110, name: 'Hyaluronic Cream', brand: 'The Ordinary', price: 1900, oldPrice: 2200, discount: '-14%', rating: 5, ratingCount: 156, image: 'images/The-ordinary.png', badge: null, category: 'Moisturizers' },
+            { id: 111, name: 'Water Cream', brand: 'Laneige', price: 2800, oldPrice: 3200, discount: '-12%', rating: 5, ratingCount: 178, image: 'images/Laneige.png', badge: null, category: 'Moisturizers' },
+            { id: 112, name: 'Green Tea Cleanser', brand: 'Plum', price: 750, oldPrice: 900, discount: '-17%', rating: 4, ratingCount: 134, image: 'images/Plum.jpeg', badge: null, category: 'Cleansers' },
+            { id: 113, name: 'Vitamin C Cleanser', brand: 'Mamaearth', price: 900, oldPrice: 1100, discount: '-18%', rating: 4, ratingCount: 145, image: 'images/Mamaearth.png', badge: null, category: 'Cleansers' },
+            { id: 114, name: 'Cica Serum', brand: 'COSRX', price: 2100, oldPrice: 2400, discount: '-12%', rating: 5, ratingCount: 167, image: 'images/product1.png', badge: null, category: 'Serums' },
+            { id: 115, name: 'Retinol Eye Serum', brand: 'The Ordinary', price: 1600, oldPrice: 1850, discount: '-14%', rating: 5, ratingCount: 145, image: 'images/The-ordinary.png', badge: null, category: 'Eye Creams' },
+            { id: 116, name: 'Fresh Sunscreen SPF 50', brand: 'Innisfree', price: 1950, oldPrice: 2200, discount: '-11%', rating: 5, ratingCount: 156, image: 'images/Innisfree.jpeg', badge: null, category: 'Sunscreen' },
+            { id: 117, name: 'BHA Skin Toner', brand: 'COSRX', price: 1750, oldPrice: 2000, discount: '-12%', rating: 5, ratingCount: 178, image: 'images/product2.png', badge: null, category: 'Toners' },
+            { id: 118, name: 'Niacinamide Face Cream', brand: 'Cetaphil', price: 2400, oldPrice: 2800, discount: '-14%', rating: 5, ratingCount: 167, image: 'images/Cetaphil.png', badge: null, category: 'Moisturizers' },
+            { id: 119, name: 'Skin Renewing Serum', brand: 'CeraVe', price: 2900, oldPrice: 3300, discount: '-12%', rating: 5, ratingCount: 145, image: 'images/CeraVE.png', badge: 'new', category: 'Serums' },
+            { id: 120, name: 'Orchid Eye Cream', brand: 'Innisfree', price: 2600, oldPrice: 3000, discount: '-13%', rating: 5, ratingCount: 156, image: 'images/Innisfree.jpeg', badge: null, category: 'Eye Creams' }
+        ];
+
+        // ===== PRODUCTS PER PAGE =====
+        const productsPerPage = 12;
+        const totalPages = Math.ceil(allProducts.length / productsPerPage);
+
+        // ===== RENDER PRODUCTS =====
+        function renderProducts(page) {
+            const start = (page - 1) * productsPerPage;
+            const end = start + productsPerPage;
+            const pageProducts = allProducts.slice(start, end);
+            const grid = document.getElementById('productGrid');
+
+            grid.innerHTML = pageProducts.map(product => {
+                let badgeHTML = '';
+                if (product.badge === 'bestseller') {
+                    badgeHTML = `<span class="badge-bestseller">⭐ Best Seller</span>`;
+                } else if (product.badge === 'new') {
+                    badgeHTML = `<span class="badge-new">✨ New</span>`;
+                }
+
+                let stars = '';
+                for (let i = 0; i < 5; i++) {
+                    stars += i < product.rating ? '★' : '☆';
+                }
+
+                let oldPriceHTML = product.oldPrice ? `<span class="old">Rs.${product.oldPrice.toLocaleString()}</span>` : '';
+
+                return `
+                    <a href="skincare-detail.html?id=${product.id}" class="product-link">
+                        <div class="product-card" data-id="${product.id}">
+                            <div class="image-wrap">
+                                ${badgeHTML}
+                                <span class="discount">${product.discount}</span>
+                                <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                                <img src="${product.image}" alt="${product.name}">
+                            </div>
+                            <div class="info">
+                                <span class="brand">${product.brand}</span>
+                                <h3>${product.name}</h3>
+                                <div class="rating">${stars} <span>(${product.ratingCount})</span></div>
+                                <div class="price">
+                                    <span class="current">Rs.${product.price.toLocaleString()}</span>
+                                    ${oldPriceHTML}
+                                </div>
+                                <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                            </div>
+                        </div>
+                    </a>
+                `;
+            }).join('');
+
+            // Update product count
+            const totalVisible = Math.min(end, allProducts.length);
+            document.getElementById('productCount').textContent = `Showing ${start + 1}–${totalVisible} of ${allProducts.length} products`;
+
+            // Render pagination
+            renderPagination(page);
+        }
+
+        // ===== RENDER PAGINATION =====
+        function renderPagination(currentPage) {
+            const pagination = document.getElementById('pagination');
+            let html = '';
+
+            // Previous button
+            if (currentPage > 1) {
+                html += `<a href="#" onclick="changePage(${currentPage - 1}); return false;"><i class="fa-solid fa-chevron-left"></i></a>`;
             }
+
+            // Page numbers
+            const maxVisible = 5;
+            let startPage = Math.max(1, currentPage - 2);
+            let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+
+            if (endPage - startPage < maxVisible - 1) {
+                startPage = Math.max(1, endPage - maxVisible + 1);
+            }
+
+            if (startPage > 1) {
+                html += `<a href="#" onclick="changePage(1); return false;">1</a>`;
+                if (startPage > 2) {
+                    html += `<span style="padding: 8px 12px; color: #999;">...</span>`;
+                }
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                html += `<a href="#" onclick="changePage(${i}); return false;" class="${i === currentPage ? 'active' : ''}">${i}</a>`;
+            }
+
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    html += `<span style="padding: 8px 12px; color: #999;">...</span>`;
+                }
+                html += `<a href="#" onclick="changePage(${totalPages}); return false;">${totalPages}</a>`;
+            }
+
+            // Next button
+            if (currentPage < totalPages) {
+                html += `<a href="#" onclick="changePage(${currentPage + 1}); return false;"><i class="fa-solid fa-chevron-right"></i></a>`;
+            }
+
+            pagination.innerHTML = html;
+        }
+
+        // ===== CHANGE PAGE =====
+        function changePage(page) {
+            renderProducts(page);
+            window.scrollTo({ top: document.querySelector('.shop-toolbar').offsetTop - 20, behavior: 'smooth' });
+        }
+
+        // ===== WISHLIST TOGGLE =====
+        document.querySelectorAll('.wishlist').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const icon = this.querySelector('i');
+                const productCard = this.closest('.product-card');
+                const productName = productCard ? productCard.querySelector('h3')?.textContent || 'Product' : 'Product';
+                
+                icon.classList.toggle('fa-regular');
+                icon.classList.toggle('fa-solid');
+                
+                if (icon.classList.contains('fa-solid')) {
+                    this.style.background = '#5E4074';
+                    this.style.color = 'white';
+                    this.style.borderColor = '#5E4074';
+                    this.style.transform = 'scale(1.2)';
+                    setTimeout(() => { this.style.transform = ''; }, 300);
+                    showToast(`❤️ ${productName} added to Wishlist!`);
+                } else {
+                    this.style.background = 'white';
+                    this.style.color = '#ccc';
+                    this.style.borderColor = '#eee';
+                    showToast(`💔 ${productName} removed from Wishlist`);
+                }
+            });
         });
-    };
 
-    window.addEventListener('scroll', scrollReveal);
-    window.addEventListener('load', scrollReveal);
-
-    // ===== WISHLIST TOGGLE =====
-    document.querySelectorAll('.wishlist').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            const icon = this.querySelector('i');
-            const productCard = this.closest('.product-card');
-            const productName = productCard ? productCard.querySelector('h3')?.textContent || 'Product' : 'Product';
-            
-            // Toggle heart icon
-            icon.classList.toggle('fa-regular');
-            icon.classList.toggle('fa-solid');
-            
-            if (icon.classList.contains('fa-solid')) {
-                // Added to wishlist
+        // ===== ADD TO CART ANIMATION =====
+        document.querySelectorAll('.add-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const originalText = this.innerHTML;
+                const productCard = this.closest('.product-card');
+                const productName = productCard ? productCard.querySelector('h3')?.textContent || 'Product' : 'Product';
+                
+                this.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="margin-right:8px;"></i>Adding...';
                 this.style.background = '#5E4074';
                 this.style.color = 'white';
-                this.style.borderColor = '#5E4074';
-                this.style.transform = 'scale(1.2)';
-                setTimeout(() => { this.style.transform = ''; }, 300);
-                showToast(`❤️ ${productName} added to Wishlist!`);
-            } else {
-                // Removed from wishlist
-                this.style.background = 'white';
-                this.style.color = '#ccc';
-                this.style.borderColor = '#eee';
-                showToast(`💔 ${productName} removed from Wishlist`);
-            }
-        });
-    });
-
-    // ===== ADD TO CART ANIMATION =====
-    document.querySelectorAll('.add-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const originalText = this.innerHTML;
-            const productCard = this.closest('.product-card');
-            const productName = productCard ? productCard.querySelector('h3')?.textContent || 'Product' : 'Product';
-            
-            // Show loading state
-            this.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="margin-right:8px;"></i>Adding...';
-            this.style.background = '#5E4074';
-            this.style.color = 'white';
-            this.disabled = true;
-            
-            setTimeout(() => {
-                // Show success state
-                this.innerHTML = '<i class="fa-solid fa-check" style="margin-right:8px;"></i>Added!';
-                this.style.background = '#2ecc71';
-                this.style.color = 'white';
-                
-                // Update cart badge
-                updateCartBadge();
-                showToast(`✅ ${productName} added to cart!`);
+                this.disabled = true;
                 
                 setTimeout(() => {
-                    // Reset button
-                    this.innerHTML = originalText;
-                    this.style.background = '';
-                    this.style.color = '';
-                    this.disabled = false;
-                }, 2000);
-            }, 800);
+                    this.innerHTML = '<i class="fa-solid fa-check" style="margin-right:8px;"></i>Added!';
+                    this.style.background = '#2ecc71';
+                    this.style.color = 'white';
+                    updateCartBadge();
+                    showToast(`✅ ${productName} added to cart!`);
+                    
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                        this.style.background = '';
+                        this.style.color = '';
+                        this.disabled = false;
+                    }, 2000);
+                }, 800);
+            });
         });
-    });
 
-    // ===== CART BADGE UPDATE =====
-    let cartCount = 3;
+        // ===== CART BADGE UPDATE =====
+        let cartCount = 3;
 
-    function updateCartBadge() {
-        cartCount++;
-        const badge = document.querySelector('.cart-badge');
-        if (badge) {
-            badge.textContent = cartCount;
-            badge.style.animation = 'none';
+        function updateCartBadge() {
+            cartCount++;
+            const badge = document.querySelector('.cart-badge');
+            if (badge) {
+                badge.textContent = cartCount;
+                badge.style.animation = 'none';
+                setTimeout(() => {
+                    badge.style.animation = 'badgePulse 0.5s ease';
+                }, 10);
+            }
+        }
+
+        // ===== TOAST NOTIFICATION =====
+        function showToast(message) {
+            const existingToast = document.querySelector('.toast-notification');
+            if (existingToast) {
+                existingToast.remove();
+            }
+
+            const toast = document.createElement('div');
+            toast.className = 'toast-notification';
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                background: #2d1a3a;
+                color: white;
+                padding: 14px 24px;
+                border-radius: 12px;
+                font-size: 14px;
+                font-weight: 500;
+                box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+                z-index: 10000;
+                animation: slideInUp 0.4s ease forwards;
+                font-family: 'Inter', sans-serif;
+                max-width: 350px;
+                border-left: 4px solid #e91e63;
+            `;
+
+            document.body.appendChild(toast);
+
             setTimeout(() => {
-                badge.style.animation = 'badgePulse 0.5s ease';
-            }, 10);
-        }
-    }
-
-    // ===== TOAST NOTIFICATION =====
-    function showToast(message) {
-        // Remove existing toast
-        const existingToast = document.querySelector('.toast-notification');
-        if (existingToast) {
-            existingToast.remove();
+                toast.style.animation = 'slideOutDown 0.4s ease forwards';
+                setTimeout(() => {
+                    toast.remove();
+                }, 400);
+            }, 3000);
         }
 
-        const toast = document.createElement('div');
-        toast.className = 'toast-notification';
-        toast.textContent = message;
-        toast.style.cssText = `
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #2d1a3a;
-            color: white;
-            padding: 14px 24px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 500;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-            z-index: 10000;
-            animation: slideInUp 0.4s ease forwards;
-            font-family: 'Inter', sans-serif;
-            max-width: 350px;
-            border-left: 4px solid #e91e63;
+        // ===== ADD CSS ANIMATIONS =====
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+            @keyframes slideInUp {
+                0% { transform: translateY(100px); opacity: 0; }
+                100% { transform: translateY(0); opacity: 1; }
+            }
+            @keyframes slideOutDown {
+                0% { transform: translateY(0); opacity: 1; }
+                100% { transform: translateY(100px); opacity: 0; }
+            }
+            @keyframes badgePulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.4); }
+                100% { transform: scale(1); }
+            }
+            .cart-badge {
+                display: inline-block;
+                background: #e91e63;
+                color: white;
+                font-size: 10px;
+                font-weight: 700;
+                border-radius: 50%;
+                padding: 2px 6px;
+                min-width: 18px;
+                text-align: center;
+                position: absolute;
+                top: -8px;
+                right: -10px;
+            }
+            .header-icons > div {
+                position: relative;
+            }
+            .wishlist {
+                transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 36px;
+                height: 36px;
+                background: white;
+                border-radius: 50%;
+                border: 1px solid #eee;
+                color: #ccc;
+                font-size: 14px;
+                position: absolute;
+                top: 14px;
+                right: 14px;
+                z-index: 2;
+            }
+            .wishlist i {
+                pointer-events: none;
+            }
+            .add-btn {
+                transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+                cursor: pointer;
+            }
+            .add-btn:disabled {
+                opacity: 0.7;
+                cursor: not-allowed;
+            }
+            .product-card .image-wrap {
+                position: relative;
+            }
+            .pagination {
+                display: flex;
+                gap: 8px;
+                justify-content: center;
+                margin-top: 30px;
+                flex-wrap: wrap;
+            }
+            .pagination a {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                min-width: 40px;
+                height: 40px;
+                padding: 0 12px;
+                border-radius: 8px;
+                background: white;
+                border: 1px solid #eee;
+                color: #666;
+                text-decoration: none;
+                transition: all 0.3s ease;
+                font-weight: 500;
+            }
+            .pagination a:hover {
+                background: #5E4074;
+                color: white;
+                border-color: #5E4074;
+            }
+            .pagination a.active {
+                background: #5E4074;
+                color: white;
+                border-color: #5E4074;
+            }
+            .pagination a i {
+                font-size: 12px;
+            }
+            .product-link {
+                text-decoration: none;
+                color: inherit;
+                display: block;
+                transition: transform 0.3s ease;
+            }
+            .product-link:hover {
+                transform: translateY(-4px);
+            }
         `;
+        document.head.appendChild(styleSheet);
 
-        document.body.appendChild(toast);
+        // ===== INITIAL LOAD =====
+        renderProducts(1);
 
-        // Auto remove after 3 seconds
-        setTimeout(() => {
-            toast.style.animation = 'slideOutDown 0.4s ease forwards';
-            setTimeout(() => {
-                toast.remove();
-            }, 400);
-        }, 3000);
-    }
-
-    // ===== ADD CSS ANIMATIONS =====
-    const styleSheet = document.createElement('style');
-    styleSheet.textContent = `
-        @keyframes slideInUp {
-            0% { transform: translateY(100px); opacity: 0; }
-            100% { transform: translateY(0); opacity: 1; }
-        }
-        
-        @keyframes slideOutDown {
-            0% { transform: translateY(0); opacity: 1; }
-            100% { transform: translateY(100px); opacity: 0; }
-        }
-        
-        @keyframes badgePulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.4); }
-            100% { transform: scale(1); }
-        }
-        
-        .cart-badge {
-            display: inline-block;
-            background: #e91e63;
-            color: white;
-            font-size: 10px;
-            font-weight: 700;
-            border-radius: 50%;
-            padding: 2px 6px;
-            min-width: 18px;
-            text-align: center;
-            position: absolute;
-            top: -8px;
-            right: -10px;
-        }
-        
-        .header-icons > div {
-            position: relative;
-        }
-        
-        .wishlist {
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 36px;
-            height: 36px;
-            background: white;
-            border-radius: 50%;
-            border: 1px solid #eee;
-            color: #ccc;
-            font-size: 14px;
-            position: absolute;
-            top: 14px;
-            right: 14px;
-            z-index: 2;
-        }
-        
-        .wishlist i {
-            pointer-events: none;
-        }
-        
-        .add-btn {
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            cursor: pointer;
-        }
-        
-        .add-btn:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-        
-        .product-card .image-wrap {
-            position: relative;
-        }
-    `;
-    document.head.appendChild(styleSheet);
-
-    // ===== PRICE RANGE INPUT STYLING =====
-    const priceInputs = document.querySelectorAll('.price-range input');
-    priceInputs.forEach(input => {
-        input.addEventListener('input', function() {
-            this.value = this.value.replace(/[^0-9]/g, '');
-        });
-    });
-
-    // ===== FILTER BUTTONS (if exists) =====
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            filterBtns.forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-        });
-    });
-
-    console.log('🛒 Kasbi Beauty — Shop Page Loaded!');
-</script>
+        console.log('🧴 Kasbi Beauty — Skincare Page Loaded with 120 products! 🧴');
+    </script>
 
 </body>
 </html>

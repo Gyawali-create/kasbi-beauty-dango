@@ -57,32 +57,31 @@
         </div>
     </header>
 
-    <!-- ===== NAVIGATION ===== -->
-    <nav class="navigation">
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="shop.html" class="active">Shop</a></li>
-            <li><a href="brands.html">Brands</a></li>
-            <li><a href="shop.html?category=skincare">Skincare</a></li>
-            <li><a href="shop.html?category=makeup">Makeup</a></li>
-            <li><a href="shop.html?category=haircare">Hair Care</a></li>
-            <li><a href="shop.html?sort=new">New Arrivals</a></li>
-            <li><a href="shop.html?sort=bestseller">Best Sellers</a></li>
-            <li><a href="shop.html?sort=offer">Offers</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
-    </nav>
-
-    <!-- ===== PAGE HEADER ===== -->
-    <div class="page-header">
-        <h1>Shop All Beauty</h1>
-        <p>Discover premium skincare, makeup, haircare & more</p>
-        <div class="breadcrumb">
-            <a href="index.html">Home</a>
-            <span class="sep">/</span>
-            <span class="current">Shop</span>
-        </div>
-    </div>
+<!-- ===== NAVIGATION ===== -->
+<nav class="navigation">
+    <ul>
+        <li><a href="index.html"></a></li>
+        <li><a href="shop.html" class="active">Shop</a></li>
+        <li><a href="brands.html">Brands</a></li>
+        <li><a href="skincare.html">Skincare</a></li>
+        <li><a href="makeup.html">Makeup</a></li>
+        <li><a href="haircare.html">Hair Care</a></li>
+        <li>
+            <a href="newarrivals.html" class="new-arrivals-link">
+                <span class="new-arrivals-text">New Arrivals</span>
+                <span class="new-badge-animated">✨ NEW</span>
+            </a>
+        </li>
+        <li><a href="bestsellers.html">Best Sellers</a></li>
+        <li>
+            <a href="offers.html" class="offers-link">
+                <span class="offers-text">Offers</span>
+                <span class="offers-badge-animated">🔥 SALE</span>
+            </a>
+        </li>
+        <li><a href="contact.html">Contact</a></li>
+    </ul>
+</nav>
 
     <!-- ===== SHOP SECTION ===== -->
     <section class="shop-section">
@@ -93,11 +92,13 @@
             <div class="filter-group">
                 <h4>Categories</h4>
                 <label><input type="checkbox" value="skincare" checked> Skincare</label>
-                <label><input type="checkbox" value="makeup"> Makeup</label>
-                <label><input type="checkbox" value="haircare"> Hair Care</label>
+                <label><input type="checkbox" value="makeup" > Makeup</label>
+                <label><input type="checkbox" value="haircare" > Hair Care</label>
                 <label><input type="checkbox" value="fragrance"> Fragrance</label>
                 <label><input type="checkbox" value="bath"> Bath & Body</label>
                 <label><input type="checkbox" value="tools"> Beauty Tools</label>
+                <label><input type="checkbox" value="korean"> Korean Beauty</label>
+                <label><input type="checkbox" value="babycare"> Babycare</label>
             </div>
 
             <div class="filter-group">
@@ -117,6 +118,16 @@
                 <label><input type="checkbox" value="cetaphil"> Cetaphil</label>
                 <label><input type="checkbox" value="loreal"> L'Oreal</label>
                 <label><input type="checkbox" value="garnier"> Garnier</label>
+                <label><input type="checkbox" value="cosrx"> COSRX</label>
+                <label><input type="checkbox" value="innisfree"> Innisfree</label>
+                <label><input type="checkbox" value="nyx"> NYX</label>
+                <label><input type="checkbox" value="mac"> MAC</label>
+                <label><input type="checkbox" value="hudabeauty"> Huda Beauty</label>
+                <label><input type="checkbox" value="laneige"> Laneige</label>
+                <label><input type="checkbox" value="la-roche-posay"> La Roche-Posay</label>
+                <label><input type="checkbox" value="simple"> Simple</label>
+                <label><input type="checkbox" value="plum"> Plum</label>
+                <label><input type="checkbox" value="mamaearth"> Mamaearth</label>
             </div>
 
             <div class="filter-group">
@@ -134,7 +145,7 @@
         <!-- Products -->
         <div>
             <div class="shop-toolbar">
-                <span id="productCount">Showing 1–6 of 6 products</span>
+                <span id="productCount">Showing 1–12 of 48 products</span>
                 <select id="sortSelect">
                     <option value="default">Sort by: Default</option>
                     <option value="price-low">Sort by: Price: Low to High</option>
@@ -144,127 +155,1050 @@
             </div>
 
             <div class="product-grid" id="productGrid">
-                <!-- Product 1 - Skincare -->
-                <div class="product-card" data-category="skincare" data-brand="cerave" data-price="2650" data-rating="5">
-                    <div class="image-wrap">
-                        <span class="discount">-25%</span>
-                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                        <img src="images/CeraVE.png" alt="CeraVe Cleanser">
-                    </div>
-                    <div class="info">
-                        <span class="brand">CeraVe</span>
-                        <h3>Hydrating Cleanser</h3>
-                        <div class="rating">★★★★★ <span>(325)</span></div>
-                        <div class="price">
-                            <span class="current">Rs.2,650</span>
-                            <span class="old">Rs.3,200</span>
+                <!-- ===== PAGE 1 - Products 1-12 ===== -->
+                
+                <!-- Product 1 -->
+                <a href="product-detail.html?id=1" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="cerave" data-price="2650" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="badge-bestseller">⭐ Best Seller</span>
+                            <span class="discount">-25%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/CeraVE.png" alt="CeraVe Cleanser">
                         </div>
-                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        <div class="info">
+                            <span class="brand">CeraVe</span>
+                            <h3>Hydrating Cleanser</h3>
+                            <div class="rating">★★★★★ <span>(325)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.2,650</span>
+                                <span class="old">Rs.3,200</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
                     </div>
-                </div>
+                </a>
 
-                <!-- Product 2 - Skincare -->
-                <div class="product-card" data-category="skincare" data-brand="theordinary" data-price="2350" data-rating="5">
-                    <div class="image-wrap">
-                        <span class="discount">-15%</span>
-                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                        <img src="images/The-ordinary.png" alt="The Ordinary">
-                    </div>
-                    <div class="info">
-                        <span class="brand">The Ordinary</span>
-                        <h3>Niacinamide 10%</h3>
-                        <div class="rating">★★★★★ <span>(280)</span></div>
-                        <div class="price">
-                            <span class="current">Rs.2,350</span>
-                            <span class="old">Rs.2,850</span>
+                <!-- Product 2 -->
+                <a href="product-detail.html?id=2" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="theordinary" data-price="2350" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="badge-bestseller">⭐ Best Seller</span>
+                            <span class="discount">-15%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/The-ordinary.png" alt="The Ordinary">
                         </div>
-                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        <div class="info">
+                            <span class="brand">The Ordinary</span>
+                            <h3>Niacinamide 10%</h3>
+                            <div class="rating">★★★★★ <span>(280)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.2,350</span>
+                                <span class="old">Rs.2,850</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
                     </div>
-                </div>
+                </a>
 
-                <!-- Product 3 - Makeup -->
-                <div class="product-card" data-category="makeup" data-brand="maybelline" data-price="1450" data-rating="5">
-                    <div class="image-wrap">
-                        <span class="discount">-35%</span>
-                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                        <img src="images/Maybelline.png" alt="Maybelline">
-                    </div>
-                    <div class="info">
-                        <span class="brand">Maybelline</span>
-                        <h3>SuperStay Lipstick</h3>
-                        <div class="rating">★★★★★ <span>(540)</span></div>
-                        <div class="price">
-                            <span class="current">Rs.1,450</span>
-                            <span class="old">Rs.2,000</span>
+                <!-- Product 3 -->
+                <a href="product-detail.html?id=3" class="product-link">
+                    <div class="product-card" data-category="makeup" data-brand="maybelline" data-price="1450" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="badge-bestseller">⭐ Best Seller</span>
+                            <span class="discount">-35%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/Maybelline.png" alt="Maybelline">
                         </div>
-                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        <div class="info">
+                            <span class="brand">Maybelline</span>
+                            <h3>SuperStay Lipstick</h3>
+                            <div class="rating">★★★★★ <span>(540)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.1,450</span>
+                                <span class="old">Rs.2,000</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
                     </div>
-                </div>
+                </a>
 
-                <!-- Product 4 - Skincare -->
-                <div class="product-card" data-category="skincare" data-brand="cetaphil" data-price="2850" data-rating="5">
-                    <div class="image-wrap">
-                        <span class="discount">-20%</span>
-                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                        <img src="images/Cetaphil.png" alt="Cetaphil">
-                    </div>
-                    <div class="info">
-                        <span class="brand">Cetaphil</span>
-                        <h3>Moisturizing Lotion</h3>
-                        <div class="rating">★★★★★ <span>(198)</span></div>
-                        <div class="price">
-                            <span class="current">Rs.2,850</span>
-                            <span class="old">Rs.3,400</span>
+                <!-- Product 4 -->
+                <a href="product-detail.html?id=4" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="cetaphil" data-price="2850" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="discount">-20%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/Cetaphil.png" alt="Cetaphil">
                         </div>
-                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        <div class="info">
+                            <span class="brand">Cetaphil</span>
+                            <h3>Moisturizing Lotion</h3>
+                            <div class="rating">★★★★★ <span>(198)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.2,850</span>
+                                <span class="old">Rs.3,400</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
                     </div>
-                </div>
+                </a>
 
-                <!-- Product 5 - Skincare -->
-                <div class="product-card" data-category="skincare" data-brand="loreal" data-price="3200" data-rating="5">
-                    <div class="image-wrap">
-                        <span class="discount">-30%</span>
-                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                        <img src="images/L'Oreal.png" alt="Product">
-                    </div>
-                    <div class="info">
-                        <span class="brand">L'Oreal</span>
-                        <h3>Revitalift Serum</h3>
-                        <div class="rating">★★★★★ <span>(412)</span></div>
-                        <div class="price">
-                            <span class="current">Rs.3,200</span>
-                            <span class="old">Rs.4,500</span>
+                <!-- Product 5 -->
+                <a href="product-detail.html?id=5" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="loreal" data-price="3200" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="badge-new">✨ New</span>
+                            <span class="discount">-30%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/L'Oreal.png" alt="Product">
                         </div>
-                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        <div class="info">
+                            <span class="brand">L'Oreal</span>
+                            <h3>Revitalift Serum</h3>
+                            <div class="rating">★★★★★ <span>(412)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.3,200</span>
+                                <span class="old">Rs.4,500</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
                     </div>
-                </div>
+                </a>
 
-                <!-- Product 6 - Haircare -->
-                <div class="product-card" data-category="haircare" data-brand="garnier" data-price="1800" data-rating="5">
-                    <div class="image-wrap">
-                        <span class="discount">-10%</span>
-                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                        <img src="images/garnier.png" alt="Product">
-                    </div>
-                    <div class="info">
-                        <span class="brand">Garnier</span>
-                        <h3>Micellar Water</h3>
-                        <div class="rating">★★★★★ <span>(267)</span></div>
-                        <div class="price">
-                            <span class="current">Rs.1,800</span>
-                            <span class="old">Rs.2,000</span>
+                <!-- Product 6 -->
+                <a href="product-detail.html?id=6" class="product-link">
+                    <div class="product-card" data-category="haircare" data-brand="garnier" data-price="1800" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="discount">-10%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/garnier.png" alt="Product">
                         </div>
-                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        <div class="info">
+                            <span class="brand">Garnier</span>
+                            <h3>Micellar Water</h3>
+                            <div class="rating">★★★★★ <span>(267)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.1,800</span>
+                                <span class="old">Rs.2,000</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
                     </div>
-                </div>
+                </a>
+
+                <!-- Product 7 -->
+                <a href="product-detail.html?id=7" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="cosrx" data-price="2150" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="badge-bestseller">⭐ Best Seller</span>
+                            <span class="discount">-23%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/product1.png" alt="COSRX Snail Essence">
+                        </div>
+                        <div class="info">
+                            <span class="brand">COSRX</span>
+                            <h3>Advanced Snail 96 Mucin</h3>
+                            <div class="rating">★★★★★ <span>(363)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.2,150</span>
+                                <span class="old">Rs.2,800</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 8 -->
+                <a href="product-detail.html?id=8" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="cosrx" data-price="1485" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="discount">-10%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/product2.png" alt="COSRX Cleanser">
+                        </div>
+                        <div class="info">
+                            <span class="brand">COSRX</span>
+                            <h3>Low pH Good Morning Gel</h3>
+                            <div class="rating">★★★★★ <span>(289)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.1,485</span>
+                                <span class="old">Rs.1,650</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 9 -->
+                <a href="product-detail.html?id=9" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="cosrx" data-price="2565" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="badge-new">✨ New</span>
+                            <span class="discount">-10%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/product3.png" alt="COSRX Serum">
+                        </div>
+                        <div class="info">
+                            <span class="brand">COSRX</span>
+                            <h3>Niacinamide 15% Serum</h3>
+                            <div class="rating">★★★★★ <span>(412)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.2,565</span>
+                                <span class="old">Rs.2,850</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 10 -->
+                <a href="product-detail.html?id=10" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="cosrx" data-price="2880" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="discount">-10%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/product4.png" alt="COSRX Cream">
+                        </div>
+                        <div class="info">
+                            <span class="brand">COSRX</span>
+                            <h3>Hyaluronic Acid Cream</h3>
+                            <div class="rating">★★★★★ <span>(234)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.2,880</span>
+                                <span class="old">Rs.3,200</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 11 -->
+                <a href="product-detail.html?id=11" class="product-link">
+                    <div class="product-card" data-category="makeup" data-brand="nyx" data-price="1650" data-rating="4">
+                        <div class="image-wrap">
+                            <span class="discount">-20%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/NYX.png" alt="NYX Lipstick">
+                        </div>
+                        <div class="info">
+                            <span class="brand">NYX</span>
+                            <h3>Soft Matte Lip Cream</h3>
+                            <div class="rating">★★★★☆ <span>(156)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.1,650</span>
+                                <span class="old">Rs.2,100</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 12 -->
+                <a href="product-detail.html?id=12" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="simple" data-price="1200" data-rating="4">
+                        <div class="image-wrap">
+                            <span class="discount">-15%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/Simple.png" alt="Simple Face Wash">
+                        </div>
+                        <div class="info">
+                            <span class="brand">Simple</span>
+                            <h3>Refreshing Face Wash</h3>
+                            <div class="rating">★★★★☆ <span>(178)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.1,200</span>
+                                <span class="old">Rs.1,400</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- ===== PAGE 2 - Products 13-24 ===== -->
+
+                <!-- Product 13 -->
+                <a href="product-detail.html?id=13" class="product-link">
+                    <div class="product-card" data-category="makeup" data-brand="mac" data-price="3200" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="badge-bestseller">⭐ Best Seller</span>
+                            <span class="discount">-15%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/MAC.png" alt="MAC Lipstick">
+                        </div>
+                        <div class="info">
+                            <span class="brand">MAC</span>
+                            <h3>Matte Lipstick</h3>
+                            <div class="rating">★★★★★ <span>(412)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.3,200</span>
+                                <span class="old">Rs.3,800</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 14 -->
+                <a href="product-detail.html?id=14" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="la-roche-posay" data-price="3600" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="badge-new">✨ New</span>
+                            <span class="discount">-25%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/La-Roche-Posay.png" alt="La Roche-Posay Sunscreen">
+                        </div>
+                        <div class="info">
+                            <span class="brand">La Roche-Posay</span>
+                            <h3>Anthelios Sunscreen SPF 50</h3>
+                            <div class="rating">★★★★★ <span>(234)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.3,600</span>
+                                <span class="old">Rs.4,800</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 15 -->
+                <a href="product-detail.html?id=15" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="innisfree" data-price="2100" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="badge-bestseller">⭐ Best Seller</span>
+                            <span class="discount">-15%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/Innisfree.jpeg" alt="Innisfree Mask">
+                        </div>
+                        <div class="info">
+                            <span class="brand">Innisfree</span>
+                            <h3>Volcanic Clay Face Mask</h3>
+                            <div class="rating">★★★★★ <span>(189)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.2,100</span>
+                                <span class="old">Rs.2,500</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 16 -->
+                <a href="product-detail.html?id=16" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="plum" data-price="850" data-rating="4">
+                        <div class="image-wrap">
+                            <span class="discount">-20%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/Plum.jpeg" alt="Plum Face Wash">
+                        </div>
+                        <div class="info">
+                            <span class="brand">Plum</span>
+                            <h3>Green Tea Face Wash</h3>
+                            <div class="rating">★★★★☆ <span>(156)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.850</span>
+                                <span class="old">Rs.1,100</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 17 -->
+                <a href="product-detail.html?id=17" class="product-link">
+                    <div class="product-card" data-category="makeup" data-brand="hudabeauty" data-price="4500" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="badge-new">✨ New</span>
+                            <span class="discount">-10%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/Huda-Beauty.png" alt="Huda Beauty Palette">
+                        </div>
+                        <div class="info">
+                            <span class="brand">Huda Beauty</span>
+                            <h3>Eyeshadow Palette</h3>
+                            <div class="rating">★★★★★ <span>(289)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.4,500</span>
+                                <span class="old">Rs.5,000</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 18 -->
+                <a href="product-detail.html?id=18" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="mamaearth" data-price="950" data-rating="4">
+                        <div class="image-wrap">
+                            <span class="discount">-15%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/Mamaearth.png" alt="Mamaearth Face Serum">
+                        </div>
+                        <div class="info">
+                            <span class="brand">Mamaearth</span>
+                            <h3>Vitamin C Face Serum</h3>
+                            <div class="rating">★★★★☆ <span>(134)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.950</span>
+                                <span class="old">Rs.1,200</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 19 -->
+                <a href="product-detail.html?id=19" class="product-link">
+                    <div class="product-card" data-category="haircare" data-brand="loreal" data-price="2200" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="badge-bestseller">⭐ Best Seller</span>
+                            <span class="discount">-25%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/L'Oreal.png" alt="L'Oreal Shampoo">
+                        </div>
+                        <div class="info">
+                            <span class="brand">L'Oreal</span>
+                            <h3>Total Repair 5 Shampoo</h3>
+                            <div class="rating">★★★★★ <span>(234)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.2,200</span>
+                                <span class="old">Rs.2,800</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 20 -->
+                <a href="product-detail.html?id=20" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="cetaphil" data-price="2400" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="discount">-20%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/Cetaphil.png" alt="Cetaphil Eye Cream">
+                        </div>
+                        <div class="info">
+                            <span class="brand">Cetaphil</span>
+                            <h3>Eye Repair Cream</h3>
+                            <div class="rating">★★★★★ <span>(156)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.2,400</span>
+                                <span class="old">Rs.3,000</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 21 -->
+                <a href="product-detail.html?id=21" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="theordinary" data-price="1800" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="discount">-10%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/The-ordinary.png" alt="The Ordinary Hyaluronic Acid">
+                        </div>
+                        <div class="info">
+                            <span class="brand">The Ordinary</span>
+                            <h3>Hyaluronic Acid 2%</h3>
+                            <div class="rating">★★★★★ <span>(198)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.1,800</span>
+                                <span class="old">Rs.2,000</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 22 -->
+                <a href="product-detail.html?id=22" class="product-link">
+                    <div class="product-card" data-category="makeup" data-brand="maybelline" data-price="1850" data-rating="4">
+                        <div class="image-wrap">
+                            <span class="badge-new">✨ New</span>
+                            <span class="discount">-15%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/Maybelline.png" alt="Maybelline Foundation">
+                        </div>
+                        <div class="info">
+                            <span class="brand">Maybelline</span>
+                            <h3>Fit Me Foundation</h3>
+                            <div class="rating">★★★★☆ <span>(189)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.1,850</span>
+                                <span class="old">Rs.2,200</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 23 -->
+                <a href="product-detail.html?id=23" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="laneige" data-price="3800" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="badge-bestseller">⭐ Best Seller</span>
+                            <span class="discount">-10%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/Laneige.png" alt="Laneige Lip Mask">
+                        </div>
+                        <div class="info">
+                            <span class="brand">Laneige</span>
+                            <h3>Lip Sleeping Mask</h3>
+                            <div class="rating">★★★★★ <span>(267)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.3,800</span>
+                                <span class="old">Rs.4,200</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 24 -->
+                <a href="product-detail.html?id=24" class="product-link">
+                    <div class="product-card" data-category="makeup" data-brand="mac" data-price="2800" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="discount">-20%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/MAC.png" alt="MAC Foundation">
+                        </div>
+                        <div class="info">
+                            <span class="brand">MAC</span>
+                            <h3>Studio Fix Foundation</h3>
+                            <div class="rating">★★★★★ <span>(198)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.2,800</span>
+                                <span class="old">Rs.3,500</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- ===== PAGE 3 - Products 25-36 ===== -->
+
+                <!-- Product 25 -->
+                <a href="product-detail.html?id=25" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="cosrx" data-price="1950" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="badge-bestseller">⭐ Best Seller</span>
+                            <span class="discount">-15%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/product2.png" alt="COSRX Toner">
+                        </div>
+                        <div class="info">
+                            <span class="brand">COSRX</span>
+                            <h3>AHA/BHA Clarifying Toner</h3>
+                            <div class="rating">★★★★★ <span>(312)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.1,950</span>
+                                <span class="old">Rs.2,300</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 26 -->
+                <a href="product-detail.html?id=26" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="cerave" data-price="2200" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="discount">-20%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/CeraVE.png" alt="CeraVe Moisturizer">
+                        </div>
+                        <div class="info">
+                            <span class="brand">CeraVe</span>
+                            <h3>Daily Moisturizing Cream</h3>
+                            <div class="rating">★★★★★ <span>(278)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.2,200</span>
+                                <span class="old">Rs.2,800</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 27 -->
+                <a href="product-detail.html?id=27" class="product-link">
+                    <div class="product-card" data-category="makeup" data-brand="nyx" data-price="1250" data-rating="4">
+                        <div class="image-wrap">
+                            <span class="badge-new">✨ New</span>
+                            <span class="discount">-10%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/NYX.png" alt="NYX Eyeliner">
+                        </div>
+                        <div class="info">
+                            <span class="brand">NYX</span>
+                            <h3>Epic Ink Liner</h3>
+                            <div class="rating">★★★★☆ <span>(167)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.1,250</span>
+                                <span class="old">Rs.1,400</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 28 -->
+                <a href="product-detail.html?id=28" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="la-roche-posay" data-price="2800" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="discount">-15%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/La-Roche-Posay.png" alt="La Roche-Posay Moisturizer">
+                        </div>
+                        <div class="info">
+                            <span class="brand">La Roche-Posay</span>
+                            <h3>Hydrating Moisturizer</h3>
+                            <div class="rating">★★★★★ <span>(198)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.2,800</span>
+                                <span class="old">Rs.3,300</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 29 -->
+                <a href="product-detail.html?id=29" class="product-link">
+                    <div class="product-card" data-category="haircare" data-brand="garnier" data-price="950" data-rating="4">
+                        <div class="image-wrap">
+                            <span class="discount">-10%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/garnier.png" alt="Garnier Hair Mask">
+                        </div>
+                        <div class="info">
+                            <span class="brand">Garnier</span>
+                            <h3>Hair Mask Banana</h3>
+                            <div class="rating">★★★★☆ <span>(145)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.950</span>
+                                <span class="old">Rs.1,100</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 30 -->
+                <a href="product-detail.html?id=30" class="product-link">
+                    <div class="product-card" data-category="makeup" data-brand="maybelline" data-price="1550" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="badge-bestseller">⭐ Best Seller</span>
+                            <span class="discount">-25%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/Maybelline.png" alt="Maybelline Mascara">
+                        </div>
+                        <div class="info">
+                            <span class="brand">Maybelline</span>
+                            <h3>Lash Sensational Mascara</h3>
+                            <div class="rating">★★★★★ <span>(456)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.1,550</span>
+                                <span class="old">Rs.2,100</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 31 -->
+                <a href="product-detail.html?id=31" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="theordinary" data-price="1500" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="discount">-10%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/The-ordinary.png" alt="The Ordinary Retinol">
+                        </div>
+                        <div class="info">
+                            <span class="brand">The Ordinary</span>
+                            <h3>Retinol 0.5% Serum</h3>
+                            <div class="rating">★★★★★ <span>(223)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.1,500</span>
+                                <span class="old">Rs.1,700</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 32 -->
+                <a href="product-detail.html?id=32" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="cetaphil" data-price="1650" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="discount">-15%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/Cetaphil.png" alt="Cetaphil Face Wash">
+                        </div>
+                        <div class="info">
+                            <span class="brand">Cetaphil</span>
+                            <h3>Gentle Face Wash</h3>
+                            <div class="rating">★★★★★ <span>(189)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.1,650</span>
+                                <span class="old">Rs.1,950</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 33 -->
+                <a href="product-detail.html?id=33" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="cosrx" data-price="2200" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="badge-new">✨ New</span>
+                            <span class="discount">-10%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/product1.png" alt="COSRX Eye Cream">
+                        </div>
+                        <div class="info">
+                            <span class="brand">COSRX</span>
+                            <h3>Advanced Snail Peptide Eye Cream</h3>
+                            <div class="rating">★★★★★ <span>(167)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.2,200</span>
+                                <span class="old">Rs.2,500</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 34 -->
+                <a href="product-detail.html?id=34" class="product-link">
+                    <div class="product-card" data-category="makeup" data-brand="hudabeauty" data-price="3200" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="discount">-15%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/Huda-Beauty.png" alt="Huda Beauty Lipstick">
+                        </div>
+                        <div class="info">
+                            <span class="brand">Huda Beauty</span>
+                            <h3>Liquid Matte Lipstick</h3>
+                            <div class="rating">★★★★★ <span>(234)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.3,200</span>
+                                <span class="old">Rs.3,800</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 35 -->
+                <a href="product-detail.html?id=35" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="laneige" data-price="2900" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="badge-bestseller">⭐ Best Seller</span>
+                            <span class="discount">-20%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/Laneige.png" alt="Laneige Water Bank">
+                        </div>
+                        <div class="info">
+                            <span class="brand">Laneige</span>
+                            <h3>Water Bank Moisture Cream</h3>
+                            <div class="rating">★★★★★ <span>(198)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.2,900</span>
+                                <span class="old">Rs.3,600</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 36 -->
+                <a href="product-detail.html?id=36" class="product-link">
+                    <div class="product-card" data-category="makeup" data-brand="mac" data-price="2100" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="discount">-15%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/MAC.png" alt="MAC Blush">
+                        </div>
+                        <div class="info">
+                            <span class="brand">MAC</span>
+                            <h3>Powder Blush</h3>
+                            <div class="rating">★★★★★ <span>(178)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.2,100</span>
+                                <span class="old">Rs.2,500</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- ===== PAGE 4 - Products 37-48 ===== -->
+
+                <!-- Product 37 -->
+                <a href="product-detail.html?id=37" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="cerave" data-price="1950" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="discount">-10%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/CeraVE.png" alt="CeraVe Eye Cream">
+                        </div>
+                        <div class="info">
+                            <span class="brand">CeraVe</span>
+                            <h3>Eye Repair Cream</h3>
+                            <div class="rating">★★★★★ <span>(145)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.1,950</span>
+                                <span class="old">Rs.2,200</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 38 -->
+                <a href="product-detail.html?id=38" class="product-link">
+                    <div class="product-card" data-category="makeup" data-brand="nyx" data-price="1400" data-rating="4">
+                        <div class="image-wrap">
+                            <span class="discount">-15%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/NYX.png" alt="NYX Foundation">
+                        </div>
+                        <div class="info">
+                            <span class="brand">NYX</span>
+                            <h3>Can't Stop Won't Stop Foundation</h3>
+                            <div class="rating">★★★★☆ <span>(156)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.1,400</span>
+                                <span class="old">Rs.1,700</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 39 -->
+                <a href="product-detail.html?id=39" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="la-roche-posay" data-price="4200" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="badge-new">✨ New</span>
+                            <span class="discount">-10%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/La-Roche-Posay.png" alt="La Roche-Posay Serum">
+                        </div>
+                        <div class="info">
+                            <span class="brand">La Roche-Posay</span>
+                            <h3>Hyaluronic Acid Serum</h3>
+                            <div class="rating">★★★★★ <span>(189)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.4,200</span>
+                                <span class="old">Rs.4,700</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 40 -->
+                <a href="product-detail.html?id=40" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="innisfree" data-price="1850" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="discount">-15%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/Innisfree.jpeg" alt="Innisfree Toner">
+                        </div>
+                        <div class="info">
+                            <span class="brand">Innisfree</span>
+                            <h3>Green Tea Toner</h3>
+                            <div class="rating">★★★★★ <span>(178)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.1,850</span>
+                                <span class="old">Rs.2,200</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 41 -->
+                <a href="product-detail.html?id=41" class="product-link">
+                    <div class="product-card" data-category="haircare" data-brand="loreal" data-price="1850" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="badge-bestseller">⭐ Best Seller</span>
+                            <span class="discount">-20%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/L'Oreal.png" alt="L'Oreal Conditioner">
+                        </div>
+                        <div class="info">
+                            <span class="brand">L'Oreal</span>
+                            <h3>Total Repair 5 Conditioner</h3>
+                            <div class="rating">★★★★★ <span>(234)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.1,850</span>
+                                <span class="old">Rs.2,300</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 42 -->
+                <a href="product-detail.html?id=42" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="theordinary" data-price="1400" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="discount">-10%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/The-ordinary.png" alt="The Ordinary Vitamin C">
+                        </div>
+                        <div class="info">
+                            <span class="brand">The Ordinary</span>
+                            <h3>Vitamin C Serum</h3>
+                            <div class="rating">★★★★★ <span>(234)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.1,400</span>
+                                <span class="old">Rs.1,600</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 43 -->
+                <a href="product-detail.html?id=43" class="product-link">
+                    <div class="product-card" data-category="makeup" data-brand="maybelline" data-price="950" data-rating="4">
+                        <div class="image-wrap">
+                            <span class="discount">-15%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/Maybelline.png" alt="Maybelline Concealer">
+                        </div>
+                        <div class="info">
+                            <span class="brand">Maybelline</span>
+                            <h3>Fit Me Concealer</h3>
+                            <div class="rating">★★★★☆ <span>(178)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.950</span>
+                                <span class="old">Rs.1,200</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 44 -->
+                <a href="product-detail.html?id=44" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="cosrx" data-price="1850" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="badge-new">✨ New</span>
+                            <span class="discount">-10%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/product3.png" alt="COSRX Sunscreen">
+                        </div>
+                        <div class="info">
+                            <span class="brand">COSRX</span>
+                            <h3>Aloe Soothing Sunscreen SPF 50</h3>
+                            <div class="rating">★★★★★ <span>(156)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.1,850</span>
+                                <span class="old">Rs.2,100</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 45 -->
+                <a href="product-detail.html?id=45" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="plum" data-price="750" data-rating="4">
+                        <div class="image-wrap">
+                            <span class="discount">-20%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/Plum.jpeg" alt="Plum Moisturizer">
+                        </div>
+                        <div class="info">
+                            <span class="brand">Plum</span>
+                            <h3>Green Tea Moisturizer</h3>
+                            <div class="rating">★★★★☆ <span>(134)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.750</span>
+                                <span class="old">Rs.950</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 46 -->
+                <a href="product-detail.html?id=46" class="product-link">
+                    <div class="product-card" data-category="makeup" data-brand="hudabeauty" data-price="2800" data-rating="5">
+                        <div class="image-wrap">
+                            <span class="discount">-10%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/Huda-Beauty.png" alt="Huda Beauty Highlighter">
+                        </div>
+                        <div class="info">
+                            <span class="brand">Huda Beauty</span>
+                            <h3>Highlighter Palette</h3>
+                            <div class="rating">★★★★★ <span>(189)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.2,800</span>
+                                <span class="old">Rs.3,200</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 47 -->
+                <a href="product-detail.html?id=47" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="mamaearth" data-price="850" data-rating="4">
+                        <div class="image-wrap">
+                            <span class="discount">-15%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/Mamaearth.png" alt="Mamaearth Moisturizer">
+                        </div>
+                        <div class="info">
+                            <span class="brand">Mamaearth</span>
+                            <h3>Vitamin C Moisturizer</h3>
+                            <div class="rating">★★★★☆ <span>(145)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.850</span>
+                                <span class="old">Rs.1,100</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Product 48 -->
+                <a href="product-detail.html?id=48" class="product-link">
+                    <div class="product-card" data-category="skincare" data-brand="simple" data-price="900" data-rating="4">
+                        <div class="image-wrap">
+                            <span class="discount">-10%</span>
+                            <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                            <img src="images/Simple.png" alt="Simple Moisturizer">
+                        </div>
+                        <div class="info">
+                            <span class="brand">Simple</span>
+                            <h3>Hydrating Light Moisturizer</h3>
+                            <div class="rating">★★★★☆ <span>(167)</span></div>
+                            <div class="price">
+                                <span class="current">Rs.900</span>
+                                <span class="old">Rs.1,000</span>
+                            </div>
+                            <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </div>
+                    </div>
+                </a>
             </div>
 
             <div class="pagination">
                 <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <a href="#"><i class="fa-solid fa-chevron-right"></i></a>
+                <a href="#" onclick="showPage(2)">2</a>
+                <a href="#" onclick="showPage(3)">3</a>
+                <a href="#" onclick="showPage(4)">4</a>
+                <a href="#" onclick="showPage(2)"><i class="fa-solid fa-chevron-right"></i></a>
             </div>
         </div>
     </section>
@@ -323,6 +1257,47 @@
     </footer>
 
     <script>
+        // Add CSS for product-link
+        const style = document.createElement('style');
+        style.textContent = `
+            .product-link {
+                text-decoration: none;
+                color: inherit;
+                display: block;
+                transition: transform 0.3s ease;
+            }
+            .product-link:hover {
+                transform: translateY(-4px);
+            }
+            .product-link .badge-bestseller {
+                position: absolute;
+                top: 14px;
+                left: 14px;
+                background: var(--gold-gradient);
+                color: var(--dark);
+                padding: 3px 12px;
+                border-radius: 30px;
+                font-size: 10px;
+                font-weight: 700;
+                text-transform: uppercase;
+                z-index: 1;
+            }
+            .product-link .badge-new {
+                position: absolute;
+                top: 14px;
+                left: 14px;
+                background: #2ecc71;
+                color: white;
+                padding: 3px 12px;
+                border-radius: 30px;
+                font-size: 10px;
+                font-weight: 700;
+                text-transform: uppercase;
+                z-index: 1;
+            }
+        `;
+        document.head.appendChild(style);
+
         // ===== SCROLL REVEAL =====
         const scrollReveal = () => {
             const elements = document.querySelectorAll('.scroll-reveal');
@@ -341,10 +1316,9 @@
 
         // ===== FILTER FUNCTIONALITY =====
         const productGrid = document.getElementById('productGrid');
-        const products = document.querySelectorAll('.product-card');
+        const productCards = document.querySelectorAll('.product-card');
         const productCount = document.getElementById('productCount');
         
-        // Get all filter elements
         const categoryCheckboxes = document.querySelectorAll('.filter-group:first-child input[type="checkbox"]');
         const brandCheckboxes = document.querySelectorAll('.filter-group:nth-child(3) input[type="checkbox"]');
         const ratingRadios = document.querySelectorAll('input[name="rating"]');
@@ -354,38 +1328,54 @@
         const clearBtn = document.getElementById('clearFilters');
         const sortSelect = document.getElementById('sortSelect');
 
+        let currentPage = 1;
+        const productsPerPage = 12;
+        const totalProducts = productCards.length;
+        const totalPages = Math.ceil(totalProducts / productsPerPage);
+
+        function showPage(page) {
+            currentPage = page;
+            const start = (page - 1) * productsPerPage;
+            const end = start + productsPerPage;
+
+            const productLinks = document.querySelectorAll('.product-link');
+            productLinks.forEach((link, index) => {
+                if (index >= start && index < end) {
+                    link.style.display = 'block';
+                } else {
+                    link.style.display = 'none';
+                }
+            });
+
+            const paginationLinks = document.querySelectorAll('.pagination a');
+            paginationLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.textContent == page) {
+                    link.classList.add('active');
+                }
+            });
+
+            const visibleCount = Math.min(end, totalProducts) - start;
+            productCount.textContent = `Showing ${start + 1}–${Math.min(end, totalProducts)} of ${totalProducts} products`;
+            document.querySelector('.shop-toolbar').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
         function filterProducts() {
-            // Get selected categories
             const selectedCategories = [];
-            categoryCheckboxes.forEach(cb => {
-                if (cb.checked) {
-                    selectedCategories.push(cb.value);
-                }
-            });
+            categoryCheckboxes.forEach(cb => { if (cb.checked) selectedCategories.push(cb.value); });
 
-            // Get selected brands
             const selectedBrands = [];
-            brandCheckboxes.forEach(cb => {
-                if (cb.checked) {
-                    selectedBrands.push(cb.value);
-                }
-            });
+            brandCheckboxes.forEach(cb => { if (cb.checked) selectedBrands.push(cb.value); });
 
-            // Get selected rating
             let selectedRating = 'all';
-            ratingRadios.forEach(radio => {
-                if (radio.checked) {
-                    selectedRating = radio.value;
-                }
-            });
+            ratingRadios.forEach(radio => { if (radio.checked) selectedRating = radio.value; });
 
-            // Get price range
             const minPrice = parseInt(priceMin.value) || 0;
             const maxPrice = parseInt(priceMax.value) || Infinity;
 
             let visibleCount = 0;
 
-            products.forEach(product => {
+            productCards.forEach(product => {
                 const category = product.dataset.category;
                 const brand = product.dataset.brand;
                 const price = parseInt(product.dataset.price);
@@ -393,38 +1383,20 @@
 
                 let show = true;
 
-                // Category filter
-                if (selectedCategories.length > 0 && !selectedCategories.includes(category)) {
-                    show = false;
-                }
+                if (selectedCategories.length > 0 && !selectedCategories.includes(category)) show = false;
+                if (selectedBrands.length > 0 && !selectedBrands.includes(brand)) show = false;
+                if (selectedRating !== 'all' && rating < parseInt(selectedRating)) show = false;
+                if (price < minPrice || price > maxPrice) show = false;
 
-                // Brand filter
-                if (selectedBrands.length > 0 && !selectedBrands.includes(brand)) {
-                    show = false;
-                }
-
-                // Rating filter
-                if (selectedRating !== 'all' && rating < parseInt(selectedRating)) {
-                    show = false;
-                }
-
-                // Price filter
-                if (price < minPrice || price > maxPrice) {
-                    show = false;
-                }
-
+                const link = product.closest('.product-link');
                 if (show) {
-                    product.style.display = 'block';
+                    link.style.display = 'block';
                     visibleCount++;
                 } else {
-                    product.style.display = 'none';
+                    link.style.display = 'none';
                 }
             });
 
-            // Update product count
-            productCount.textContent = `Showing 1–${visibleCount} of ${visibleCount} products`;
-
-            // Show message if no products found
             const noResults = document.querySelector('.no-results');
             if (visibleCount === 0) {
                 if (!noResults) {
@@ -434,16 +1406,17 @@
                     msg.innerHTML = '<i class="fa-regular fa-face-frown" style="font-size:40px; display:block; margin-bottom:16px;"></i> No products found matching your filters.';
                     productGrid.appendChild(msg);
                 }
+                productCount.textContent = `Showing 0 products`;
             } else {
-                if (noResults) {
-                    noResults.remove();
-                }
+                if (noResults) noResults.remove();
+                currentPage = 1;
+                showPage(1);
             }
         }
 
         function sortProducts() {
             const sortValue = sortSelect.value;
-            const productArray = Array.from(products);
+            const productArray = Array.from(productCards);
             
             productArray.sort((a, b) => {
                 const priceA = parseInt(a.dataset.price);
@@ -451,64 +1424,36 @@
                 const ratingA = parseInt(a.dataset.rating);
                 const ratingB = parseInt(b.dataset.rating);
 
-                if (sortValue === 'price-low') {
-                    return priceA - priceB;
-                } else if (sortValue === 'price-high') {
-                    return priceB - priceA;
-                } else if (sortValue === 'rating') {
-                    return ratingB - ratingA;
-                }
+                if (sortValue === 'price-low') return priceA - priceB;
+                if (sortValue === 'price-high') return priceB - priceA;
+                if (sortValue === 'rating') return ratingB - ratingA;
                 return 0;
             });
 
             productArray.forEach(product => {
-                productGrid.appendChild(product);
+                const link = product.closest('.product-link');
+                productGrid.appendChild(link);
             });
+            
+            currentPage = 1;
+            showPage(1);
         }
 
-        // Apply filters
-        applyBtn.addEventListener('click', function() {
-            filterProducts();
-            sortProducts();
-        });
+        applyBtn.addEventListener('click', function() { filterProducts(); sortProducts(); });
 
-        // Clear filters
         clearBtn.addEventListener('click', function() {
-            // Uncheck all category checkboxes
-            categoryCheckboxes.forEach(cb => {
-                cb.checked = true;
-            });
-            
-            // Uncheck all brand checkboxes
-            brandCheckboxes.forEach(cb => {
-                cb.checked = false;
-            });
-            
-            // Reset rating to "All"
-            ratingRadios.forEach(radio => {
-                if (radio.value === 'all') {
-                    radio.checked = true;
-                }
-            });
-            
-            // Reset price
+            categoryCheckboxes.forEach(cb => cb.checked = true);
+            brandCheckboxes.forEach(cb => cb.checked = false);
+            ratingRadios.forEach(radio => { if (radio.value === 'all') radio.checked = true; });
             priceMin.value = '500';
             priceMax.value = '5000';
-            
-            // Reset sort
             sortSelect.value = 'default';
-            
-            // Apply filters
             filterProducts();
             sortProducts();
         });
 
-        // Sort on change
-        sortSelect.addEventListener('change', function() {
-            sortProducts();
-        });
+        sortSelect.addEventListener('change', function() { sortProducts(); });
 
-        // Price range input validation
         [priceMin, priceMax].forEach(input => {
             input.addEventListener('input', function() {
                 this.value = this.value.replace(/[^0-9]/g, '');
@@ -520,10 +1465,8 @@
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                
                 const icon = this.querySelector('i');
-                const productCard = this.closest('.product-card');
-                const productName = productCard ? productCard.querySelector('h3')?.textContent || 'Product' : 'Product';
+                const productName = this.closest('.product-card').querySelector('h3').textContent;
                 
                 icon.classList.toggle('fa-regular');
                 icon.classList.toggle('fa-solid');
@@ -548,10 +1491,9 @@
         document.querySelectorAll('.add-btn').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
-                
+                e.stopPropagation();
                 const originalText = this.innerHTML;
-                const productCard = this.closest('.product-card');
-                const productName = productCard ? productCard.querySelector('h3')?.textContent || 'Product' : 'Product';
+                const productName = this.closest('.product-card').querySelector('h3').textContent;
                 
                 this.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="margin-right:8px;"></i>Adding...';
                 this.style.background = '#5E4074';
@@ -562,7 +1504,6 @@
                     this.innerHTML = '<i class="fa-solid fa-check" style="margin-right:8px;"></i>Added!';
                     this.style.background = '#2ecc71';
                     this.style.color = 'white';
-                    
                     updateCartBadge();
                     showToast(`✅ ${productName} added to cart!`);
                     
@@ -576,9 +1517,7 @@
             });
         });
 
-        // ===== CART BADGE UPDATE =====
         let cartCount = 3;
-
         function updateCartBadge() {
             cartCount++;
             const badge = document.querySelector('.cart-badge');
@@ -591,12 +1530,9 @@
             }
         }
 
-        // ===== TOAST NOTIFICATION =====
         function showToast(message) {
             const existingToast = document.querySelector('.toast-notification');
-            if (existingToast) {
-                existingToast.remove();
-            }
+            if (existingToast) existingToast.remove();
 
             const toast = document.createElement('div');
             toast.className = 'toast-notification';
@@ -623,9 +1559,7 @@
 
             setTimeout(() => {
                 toast.style.animation = 'slideOutDown 0.4s ease forwards';
-                setTimeout(() => {
-                    toast.remove();
-                }, 400);
+                setTimeout(() => { toast.remove(); }, 400);
             }, 3000);
         }
 
@@ -636,18 +1570,15 @@
                 0% { transform: translateY(100px); opacity: 0; }
                 100% { transform: translateY(0); opacity: 1; }
             }
-            
             @keyframes slideOutDown {
                 0% { transform: translateY(0); opacity: 1; }
                 100% { transform: translateY(100px); opacity: 0; }
             }
-            
             @keyframes badgePulse {
                 0% { transform: scale(1); }
                 50% { transform: scale(1.4); }
                 100% { transform: scale(1); }
             }
-            
             .cart-badge {
                 display: inline-block;
                 background: #e91e63;
@@ -662,66 +1593,28 @@
                 top: -8px;
                 right: -10px;
             }
-            
-            .header-icons > div {
-                position: relative;
-            }
-            
-            .wishlist {
-                transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 36px;
-                height: 36px;
-                background: white;
-                border-radius: 50%;
-                border: 1px solid #eee;
-                color: #ccc;
-                font-size: 14px;
-                position: absolute;
-                top: 14px;
-                right: 14px;
-                z-index: 2;
-            }
-            
-            .wishlist i {
-                pointer-events: none;
-            }
-            
-            .add-btn {
-                transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-                cursor: pointer;
-            }
-            
-            .add-btn:disabled {
-                opacity: 0.7;
-                cursor: not-allowed;
-            }
-            
-            .product-card .image-wrap {
-                position: relative;
-            }
-            
-            .btn-secondary {
-                background: transparent;
+            .header-icons > div { position: relative; }
+            .pagination a {
+                display: inline-block;
+                padding: 8px 16px;
+                margin: 0 4px;
+                border-radius: 8px;
                 color: #666;
-                border: 2px solid #ddd;
-                padding: 12px 24px;
-                border-radius: 30px;
-                font-size: 14px;
-                font-weight: 600;
-                cursor: pointer;
+                text-decoration: none;
                 transition: all 0.3s ease;
-                font-family: 'Inter', sans-serif;
+                border: 1px solid #eee;
+                cursor: pointer;
             }
-            
-            .btn-secondary:hover {
+            .pagination a:hover {
+                background: #5E4074;
+                color: white;
                 border-color: #5E4074;
-                color: #5E4074;
             }
-            
+            .pagination a.active {
+                background: #5E4074;
+                color: white;
+                border-color: #5E4074;
+            }
             .no-results {
                 text-align: center;
                 padding: 60px 20px;
@@ -732,8 +1625,9 @@
         `;
         document.head.appendChild(styleSheet);
 
-        // ===== INITIAL FILTER =====
+        // ===== INITIAL LOAD =====
         filterProducts();
+        sortProducts();
 
         console.log('🛒 Kasbi Beauty — Shop Page Loaded!');
     </script>
