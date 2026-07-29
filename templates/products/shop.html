@@ -1,0 +1,620 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Kasbi Beauty — Shop{% endblock %}
+
+{% block content %}
+<!-- ===== PAGE HEADER ===== -->
+    <div class="page-header">
+        <h1>Shop All Beauty</h1>
+        <p>Discover premium skincare, makeup, haircare & more</p>
+        <div class="breadcrumb">
+            <a href="{% url 'core:home' %}">Home</a>
+            <span class="sep">/</span>
+            <span class="current">Shop</span>
+        </div>
+    </div>
+
+    <!-- ===== SHOP SECTION ===== -->
+    <section class="shop-section">
+        <!-- Filters -->
+        <div class="filter-sidebar">
+            <h3><i class="fa-solid fa-sliders" style="margin-right:10px;"></i>Filters</h3>
+
+            <div class="filter-group">
+                <h4>Categories</h4>
+                <label><input type="checkbox" value="skincare" checked> Skincare</label>
+                <label><input type="checkbox" value="makeup"> Makeup</label>
+                <label><input type="checkbox" value="haircare"> Hair Care</label>
+                <label><input type="checkbox" value="fragrance"> Fragrance</label>
+                <label><input type="checkbox" value="bath"> Bath & Body</label>
+                <label><input type="checkbox" value="tools"> Beauty Tools</label>
+            </div>
+
+            <div class="filter-group">
+                <h4>Price Range</h4>
+                <div class="price-range">
+                    <input type="text" id="priceMin" placeholder="Min" value="500">
+                    <span>—</span>
+                    <input type="text" id="priceMax" placeholder="Max" value="5000">
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <h4>Brands</h4>
+                <label><input type="checkbox" value="cerave"> CeraVe</label>
+                <label><input type="checkbox" value="theordinary"> The Ordinary</label>
+                <label><input type="checkbox" value="maybelline"> Maybelline</label>
+                <label><input type="checkbox" value="cetaphil"> Cetaphil</label>
+                <label><input type="checkbox" value="loreal"> L'Oreal</label>
+                <label><input type="checkbox" value="garnier"> Garnier</label>
+            </div>
+
+            <div class="filter-group">
+                <h4>Rating</h4>
+                <label><input type="radio" name="rating" value="5"> ★★★★★ &amp; up</label>
+                <label><input type="radio" name="rating" value="4"> ★★★★☆ &amp; up</label>
+                <label><input type="radio" name="rating" value="3"> ★★★☆☆ &amp; up</label>
+                <label><input type="radio" name="rating" value="all" checked> All Ratings</label>
+            </div>
+
+            <button class="btn-primary" id="applyFilters"><i class="fa-solid fa-rotate-right"></i> Apply Filters</button>
+            <button class="btn-secondary" id="clearFilters" style="margin-top:10px; width:100%;"><i class="fa-solid fa-times"></i> Clear Filters</button>
+        </div>
+
+        <!-- Products -->
+        <div>
+            <div class="shop-toolbar">
+                <span id="productCount">Showing 1–6 of 6 products</span>
+                <select id="sortSelect">
+                    <option value="default">Sort by: Default</option>
+                    <option value="price-low">Sort by: Price: Low to High</option>
+                    <option value="price-high">Sort by: Price: High to Low</option>
+                    <option value="rating">Sort by: Rating</option>
+                </select>
+            </div>
+
+            <div class="product-grid" id="productGrid">
+                <!-- Product 1 - Skincare -->
+                <div class="product-card" data-category="skincare" data-brand="cerave" data-price="2650" data-rating="5">
+                    <div class="image-wrap">
+                        <span class="discount">-25%</span>
+                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
+                        <img src="{% static 'img/CeraVE.png' %}" alt="CeraVe Cleanser">
+                    </div>
+                    <div class="info">
+                        <span class="brand">CeraVe</span>
+                        <h3>Hydrating Cleanser</h3>
+                        <div class="rating">★★★★★ <span>(325)</span></div>
+                        <div class="price">
+                            <span class="current">Rs.2,650</span>
+                            <span class="old">Rs.3,200</span>
+                        </div>
+                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                    </div>
+                </div>
+
+                <!-- Product 2 - Skincare -->
+                <div class="product-card" data-category="skincare" data-brand="theordinary" data-price="2350" data-rating="5">
+                    <div class="image-wrap">
+                        <span class="discount">-15%</span>
+                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
+                        <img src="{% static 'img/The-ordinary.png' %}" alt="The Ordinary">
+                    </div>
+                    <div class="info">
+                        <span class="brand">The Ordinary</span>
+                        <h3>Niacinamide 10%</h3>
+                        <div class="rating">★★★★★ <span>(280)</span></div>
+                        <div class="price">
+                            <span class="current">Rs.2,350</span>
+                            <span class="old">Rs.2,850</span>
+                        </div>
+                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                    </div>
+                </div>
+
+                <!-- Product 3 - Makeup -->
+                <div class="product-card" data-category="makeup" data-brand="maybelline" data-price="1450" data-rating="5">
+                    <div class="image-wrap">
+                        <span class="discount">-35%</span>
+                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
+                        <img src="{% static 'img/Maybelline.png' %}" alt="Maybelline">
+                    </div>
+                    <div class="info">
+                        <span class="brand">Maybelline</span>
+                        <h3>SuperStay Lipstick</h3>
+                        <div class="rating">★★★★★ <span>(540)</span></div>
+                        <div class="price">
+                            <span class="current">Rs.1,450</span>
+                            <span class="old">Rs.2,000</span>
+                        </div>
+                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                    </div>
+                </div>
+
+                <!-- Product 4 - Skincare -->
+                <div class="product-card" data-category="skincare" data-brand="cetaphil" data-price="2850" data-rating="5">
+                    <div class="image-wrap">
+                        <span class="discount">-20%</span>
+                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
+                        <img src="{% static 'img/Cetaphil.png' %}" alt="Cetaphil">
+                    </div>
+                    <div class="info">
+                        <span class="brand">Cetaphil</span>
+                        <h3>Moisturizing Lotion</h3>
+                        <div class="rating">★★★★★ <span>(198)</span></div>
+                        <div class="price">
+                            <span class="current">Rs.2,850</span>
+                            <span class="old">Rs.3,400</span>
+                        </div>
+                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                    </div>
+                </div>
+
+                <!-- Product 5 - Skincare -->
+                <div class="product-card" data-category="skincare" data-brand="loreal" data-price="3200" data-rating="5">
+                    <div class="image-wrap">
+                        <span class="discount">-30%</span>
+                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
+                        <img src="{% static 'img/L'Oreal.png' %}" alt="Product">
+                    </div>
+                    <div class="info">
+                        <span class="brand">L'Oreal</span>
+                        <h3>Revitalift Serum</h3>
+                        <div class="rating">★★★★★ <span>(412)</span></div>
+                        <div class="price">
+                            <span class="current">Rs.3,200</span>
+                            <span class="old">Rs.4,500</span>
+                        </div>
+                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                    </div>
+                </div>
+
+                <!-- Product 6 - Haircare -->
+                <div class="product-card" data-category="haircare" data-brand="garnier" data-price="1800" data-rating="5">
+                    <div class="image-wrap">
+                        <span class="discount">-10%</span>
+                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
+                        <img src="{% static 'img/garnier.png' %}" alt="Product">
+                    </div>
+                    <div class="info">
+                        <span class="brand">Garnier</span>
+                        <h3>Micellar Water</h3>
+                        <div class="rating">★★★★★ <span>(267)</span></div>
+                        <div class="price">
+                            <span class="current">Rs.1,800</span>
+                            <span class="old">Rs.2,000</span>
+                        </div>
+                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pagination">
+                <a href="#" class="active">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#"><i class="fa-solid fa-chevron-right"></i></a>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+        // ===== SCROLL REVEAL =====
+        const scrollReveal = () => {
+            const elements = document.querySelectorAll('.scroll-reveal');
+            const windowHeight = window.innerHeight;
+            
+            elements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < windowHeight - 100) {
+                    el.classList.add('visible');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', scrollReveal);
+        window.addEventListener('load', scrollReveal);
+
+        // ===== FILTER FUNCTIONALITY =====
+        const productGrid = document.getElementById('productGrid');
+        const products = document.querySelectorAll('.product-card');
+        const productCount = document.getElementById('productCount');
+        
+        // Get all filter elements
+        const categoryCheckboxes = document.querySelectorAll('.filter-group:first-child input[type="checkbox"]');
+        const brandCheckboxes = document.querySelectorAll('.filter-group:nth-child(3) input[type="checkbox"]');
+        const ratingRadios = document.querySelectorAll('input[name="rating"]');
+        const priceMin = document.getElementById('priceMin');
+        const priceMax = document.getElementById('priceMax');
+        const applyBtn = document.getElementById('applyFilters');
+        const clearBtn = document.getElementById('clearFilters');
+        const sortSelect = document.getElementById('sortSelect');
+
+        function filterProducts() {
+            // Get selected categories
+            const selectedCategories = [];
+            categoryCheckboxes.forEach(cb => {
+                if (cb.checked) {
+                    selectedCategories.push(cb.value);
+                }
+            });
+
+            // Get selected brands
+            const selectedBrands = [];
+            brandCheckboxes.forEach(cb => {
+                if (cb.checked) {
+                    selectedBrands.push(cb.value);
+                }
+            });
+
+            // Get selected rating
+            let selectedRating = 'all';
+            ratingRadios.forEach(radio => {
+                if (radio.checked) {
+                    selectedRating = radio.value;
+                }
+            });
+
+            // Get price range
+            const minPrice = parseInt(priceMin.value) || 0;
+            const maxPrice = parseInt(priceMax.value) || Infinity;
+
+            let visibleCount = 0;
+
+            products.forEach(product => {
+                const category = product.dataset.category;
+                const brand = product.dataset.brand;
+                const price = parseInt(product.dataset.price);
+                const rating = parseInt(product.dataset.rating);
+
+                let show = true;
+
+                // Category filter
+                if (selectedCategories.length > 0 && !selectedCategories.includes(category)) {
+                    show = false;
+                }
+
+                // Brand filter
+                if (selectedBrands.length > 0 && !selectedBrands.includes(brand)) {
+                    show = false;
+                }
+
+                // Rating filter
+                if (selectedRating !== 'all' && rating < parseInt(selectedRating)) {
+                    show = false;
+                }
+
+                // Price filter
+                if (price < minPrice || price > maxPrice) {
+                    show = false;
+                }
+
+                if (show) {
+                    product.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+
+            // Update product count
+            productCount.textContent = `Showing 1–${visibleCount} of ${visibleCount} products`;
+
+            // Show message if no products found
+            const noResults = document.querySelector('.no-results');
+            if (visibleCount === 0) {
+                if (!noResults) {
+                    const msg = document.createElement('div');
+                    msg.className = 'no-results';
+                    msg.style.cssText = 'text-align:center; padding:60px 20px; color:#999; font-size:16px; grid-column: 1 / -1;';
+                    msg.innerHTML = '<i class="fa-regular fa-face-frown" style="font-size:40px; display:block; margin-bottom:16px;"></i> No products found matching your filters.';
+                    productGrid.appendChild(msg);
+                }
+            } else {
+                if (noResults) {
+                    noResults.remove();
+                }
+            }
+        }
+
+        function sortProducts() {
+            const sortValue = sortSelect.value;
+            const productArray = Array.from(products);
+            
+            productArray.sort((a, b) => {
+                const priceA = parseInt(a.dataset.price);
+                const priceB = parseInt(b.dataset.price);
+                const ratingA = parseInt(a.dataset.rating);
+                const ratingB = parseInt(b.dataset.rating);
+
+                if (sortValue === 'price-low') {
+                    return priceA - priceB;
+                } else if (sortValue === 'price-high') {
+                    return priceB - priceA;
+                } else if (sortValue === 'rating') {
+                    return ratingB - ratingA;
+                }
+                return 0;
+            });
+
+            productArray.forEach(product => {
+                productGrid.appendChild(product);
+            });
+        }
+
+        // Apply filters
+        applyBtn.addEventListener('click', function() {
+            filterProducts();
+            sortProducts();
+        });
+
+        // Clear filters
+        clearBtn.addEventListener('click', function() {
+            // Uncheck all category checkboxes
+            categoryCheckboxes.forEach(cb => {
+                cb.checked = true;
+            });
+            
+            // Uncheck all brand checkboxes
+            brandCheckboxes.forEach(cb => {
+                cb.checked = false;
+            });
+            
+            // Reset rating to "All"
+            ratingRadios.forEach(radio => {
+                if (radio.value === 'all') {
+                    radio.checked = true;
+                }
+            });
+            
+            // Reset price
+            priceMin.value = '500';
+            priceMax.value = '5000';
+            
+            // Reset sort
+            sortSelect.value = 'default';
+            
+            // Apply filters
+            filterProducts();
+            sortProducts();
+        });
+
+        // Sort on change
+        sortSelect.addEventListener('change', function() {
+            sortProducts();
+        });
+
+        // Price range input validation
+        [priceMin, priceMax].forEach(input => {
+            input.addEventListener('input', function() {
+                this.value = this.value.replace(/[^0-9]/g, '');
+            });
+        });
+
+        // ===== WISHLIST TOGGLE =====
+        document.querySelectorAll('.wishlist').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const icon = this.querySelector('i');
+                const productCard = this.closest('.product-card');
+                const productName = productCard ? productCard.querySelector('h3')?.textContent || 'Product' : 'Product';
+                
+                icon.classList.toggle('fa-regular');
+                icon.classList.toggle('fa-solid');
+                
+                if (icon.classList.contains('fa-solid')) {
+                    this.style.background = '#5E4074';
+                    this.style.color = 'white';
+                    this.style.borderColor = '#5E4074';
+                    this.style.transform = 'scale(1.2)';
+                    setTimeout(() => { this.style.transform = ''; }, 300);
+                    showToast(`❤️ ${productName} added to Wishlist!`);
+                } else {
+                    this.style.background = 'white';
+                    this.style.color = '#ccc';
+                    this.style.borderColor = '#eee';
+                    showToast(`💔 ${productName} removed from Wishlist`);
+                }
+            });
+        });
+
+        // ===== ADD TO CART ANIMATION =====
+        document.querySelectorAll('.add-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const originalText = this.innerHTML;
+                const productCard = this.closest('.product-card');
+                const productName = productCard ? productCard.querySelector('h3')?.textContent || 'Product' : 'Product';
+                
+                this.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="margin-right:8px;"></i>Adding...';
+                this.style.background = '#5E4074';
+                this.style.color = 'white';
+                this.disabled = true;
+                
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fa-solid fa-check" style="margin-right:8px;"></i>Added!';
+                    this.style.background = '#2ecc71';
+                    this.style.color = 'white';
+                    
+                    updateCartBadge();
+                    showToast(`✅ ${productName} added to cart!`);
+                    
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                        this.style.background = '';
+                        this.style.color = '';
+                        this.disabled = false;
+                    }, 2000);
+                }, 800);
+            });
+        });
+
+        // ===== CART BADGE UPDATE =====
+        let cartCount = 3;
+
+        function updateCartBadge() {
+            cartCount++;
+            const badge = document.querySelector('.cart-badge');
+            if (badge) {
+                badge.textContent = cartCount;
+                badge.style.animation = 'none';
+                setTimeout(() => {
+                    badge.style.animation = 'badgePulse 0.5s ease';
+                }, 10);
+            }
+        }
+
+        // ===== TOAST NOTIFICATION =====
+        function showToast(message) {
+            const existingToast = document.querySelector('.toast-notification');
+            if (existingToast) {
+                existingToast.remove();
+            }
+
+            const toast = document.createElement('div');
+            toast.className = 'toast-notification';
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                background: #2d1a3a;
+                color: white;
+                padding: 14px 24px;
+                border-radius: 12px;
+                font-size: 14px;
+                font-weight: 500;
+                box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+                z-index: 10000;
+                animation: slideInUp 0.4s ease forwards;
+                font-family: 'Inter', sans-serif;
+                max-width: 350px;
+                border-left: 4px solid #e91e63;
+            `;
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'slideOutDown 0.4s ease forwards';
+                setTimeout(() => {
+                    toast.remove();
+                }, 400);
+            }, 3000);
+        }
+
+        // ===== ADD CSS ANIMATIONS =====
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+            @keyframes slideInUp {
+                0% { transform: translateY(100px); opacity: 0; }
+                100% { transform: translateY(0); opacity: 1; }
+            }
+            
+            @keyframes slideOutDown {
+                0% { transform: translateY(0); opacity: 1; }
+                100% { transform: translateY(100px); opacity: 0; }
+            }
+            
+            @keyframes badgePulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.4); }
+                100% { transform: scale(1); }
+            }
+            
+            .cart-badge {
+                display: inline-block;
+                background: #e91e63;
+                color: white;
+                font-size: 10px;
+                font-weight: 700;
+                border-radius: 50%;
+                padding: 2px 6px;
+                min-width: 18px;
+                text-align: center;
+                position: absolute;
+                top: -8px;
+                right: -10px;
+            }
+            
+            .header-icons > div {
+                position: relative;
+            }
+            
+            .wishlist {
+                transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 36px;
+                height: 36px;
+                background: white;
+                border-radius: 50%;
+                border: 1px solid #eee;
+                color: #ccc;
+                font-size: 14px;
+                position: absolute;
+                top: 14px;
+                right: 14px;
+                z-index: 2;
+            }
+            
+            .wishlist i {
+                pointer-events: none;
+            }
+            
+            .add-btn {
+                transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+                cursor: pointer;
+            }
+            
+            .add-btn:disabled {
+                opacity: 0.7;
+                cursor: not-allowed;
+            }
+            
+            .product-card .image-wrap {
+                position: relative;
+            }
+            
+            .btn-secondary {
+                background: transparent;
+                color: #666;
+                border: 2px solid #ddd;
+                padding: 12px 24px;
+                border-radius: 30px;
+                font-size: 14px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                font-family: 'Inter', sans-serif;
+            }
+            
+            .btn-secondary:hover {
+                border-color: #5E4074;
+                color: #5E4074;
+            }
+            
+            .no-results {
+                text-align: center;
+                padding: 60px 20px;
+                color: #999;
+                font-size: 16px;
+                grid-column: 1 / -1;
+            }
+        `;
+        document.head.appendChild(styleSheet);
+
+        // ===== INITIAL FILTER =====
+        filterProducts();
+
+        console.log('🛒 Kasbi Beauty — Shop Page Loaded!');
+    </script>
+{% endblock %}

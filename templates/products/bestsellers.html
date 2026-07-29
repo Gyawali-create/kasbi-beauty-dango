@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Kasbi Beauty — Best Sellers{% endblock %}
+
+{% block content %}
+<!-- ===== PAGE HEADER ===== -->
+    <div class="page-header">
+        <h1>Best Sellers</h1>
+        <p>Everyone's favourites — the most loved products</p>
+        <div class="breadcrumb">
+            <a href="{% url 'core:home' %}">Home</a>
+            <span class="sep">/</span>
+            <span class="current">Best Sellers</span>
+        </div>
+    </div>
+
+    <!-- ===== BEST SELLERS BANNER ===== -->
+    <div style="margin: 40px 6%;">
+        <div style="background: linear-gradient(135deg, #5E4074, #8B69A4); border-radius: 32px; padding: 50px 60px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 30px; color: white;">
+            <div>
+                <span style="font-size: 12px; letter-spacing: 2px; opacity: 0.8; font-weight: 300;">CUSTOMER FAVORITES</span>
+                <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 42px; margin: 8px 0; font-weight: 700;">Top Rated & Most Loved</h2>
+                <p style="opacity: 0.8; max-width: 400px; font-weight: 300;">These are the products our customers can't stop raving about!</p>
+            </div>
+            <div style="display: flex; gap: 12px;">
+                <span style="background: rgba(255,255,255,0.2); padding: 8px 20px; border-radius: 40px; font-weight: 500; font-size: 13px;">⭐ 4.8+ Average Rating</span>
+                <span style="background: rgba(255,255,255,0.2); padding: 8px 20px; border-radius: 40px; font-weight: 500; font-size: 13px;">🔥 20+ Products</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SHOP SECTION ===== -->
+    <section class="shop-section">
+        <!-- Filters -->
+        <div class="filter-sidebar">
+            <h3><i class="fa-solid fa-sliders" style="margin-right:10px;"></i>Filters</h3>
+
+            <div class="filter-group">
+                <h4>Categories</h4>
+                <label><input type="checkbox" checked> Skincare</label>
+                <label><input type="checkbox"> Makeup</label>
+                <label><input type="checkbox"> Hair Care</label>
+                <label><input type="checkbox"> Fragrance</label>
+                <label><input type="checkbox"> Beauty Tools</label>
+            </div>
+
+            <div class="filter-group">
+                <h4>Price Range</h4>
+                <div class="price-range">
+                    <input type="text" placeholder="Min" value="500">
+                    <span>—</span>
+                    <input type="text" placeholder="Max" value="5000">
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <h4>Rating</h4>
+                <label><input type="radio" name="rating" checked> ★★★★★ &amp; up</label>
+                <label><input type="radio" name="rating"> ★★★★☆ &amp; up</label>
+                <label><input type="radio" name="rating"> ★★★☆☆ &amp; up</label>
+            </div>
+
+            <button class="btn-primary"><i class="fa-solid fa-rotate-right"></i> Apply Filters</button>
+        </div>
+
+        <!-- Products -->
+        <div>
+            <div class="shop-toolbar">
+                <span>Showing 1–12 of 24 products</span>
+                <select>
+                    <option>Sort by: Best Selling</option>
+                    <option>Sort by: Newest</option>
+                    <option>Sort by: Price: Low to High</option>
+                    <option>Sort by: Price: High to Low</option>
+                    <option>Sort by: Rating</option>
+                </select>
+            </div>
+
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="image-wrap">
+                        <span class="discount">-25%</span>
+                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
+                        <img src="{% static 'img/product1.png' %}" alt="CeraVe Cleanser">
+                    </div>
+                    <div class="info">
+                        <span class="brand">CeraVe</span>
+                        <h3>Hydrating Cleanser</h3>
+                        <div class="rating">★★★★★ <span>(325)</span></div>
+                        <div class="price">
+                            <span class="current">Rs.2,650</span>
+                            <span class="old">Rs.3,200</span>
+                        </div>
+                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-wrap">
+                        <span class="discount">-15%</span>
+                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
+                        <img src="{% static 'img/product2.png' %}" alt="The Ordinary">
+                    </div>
+                    <div class="info">
+                        <span class="brand">The Ordinary</span>
+                        <h3>Niacinamide 10%</h3>
+                        <div class="rating">★★★★★ <span>(280)</span></div>
+                        <div class="price">
+                            <span class="current">Rs.2,350</span>
+                            <span class="old">Rs.2,850</span>
+                        </div>
+                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-wrap">
+                        <span class="discount">-35%</span>
+                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
+                        <img src="{% static 'img/product3.png' %}" alt="Maybelline">
+                    </div>
+                    <div class="info">
+                        <span class="brand">Maybelline</span>
+                        <h3>SuperStay Lipstick</h3>
+                        <div class="rating">★★★★★ <span>(540)</span></div>
+                        <div class="price">
+                            <span class="current">Rs.1,450</span>
+                            <span class="old">Rs.2,000</span>
+                        </div>
+                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-wrap">
+                        <span class="discount">-20%</span>
+                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
+                        <img src="{% static 'img/product4.png' %}" alt="Cetaphil">
+                    </div>
+                    <div class="info">
+                        <span class="brand">Cetaphil</span>
+                        <h3>Moisturizing Lotion</h3>
+                        <div class="rating">★★★★★ <span>(198)</span></div>
+                        <div class="price">
+                            <span class="current">Rs.2,850</span>
+                            <span class="old">Rs.3,400</span>
+                        </div>
+                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-wrap">
+                        <span class="discount">-30%</span>
+                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
+                        <img src="{% static 'img/product1.png' %}" alt="Product">
+                    </div>
+                    <div class="info">
+                        <span class="brand">L'Oreal</span>
+                        <h3>Revitalift Serum</h3>
+                        <div class="rating">★★★★★ <span>(412)</span></div>
+                        <div class="price">
+                            <span class="current">Rs.3,200</span>
+                            <span class="old">Rs.4,500</span>
+                        </div>
+                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="image-wrap">
+                        <span class="discount">-10%</span>
+                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
+                        <img src="{% static 'img/product2.png' %}" alt="Product">
+                    </div>
+                    <div class="info">
+                        <span class="brand">Garnier</span>
+                        <h3>Micellar Water</h3>
+                        <div class="rating">★★★★★ <span>(267)</span></div>
+                        <div class="price">
+                            <span class="current">Rs.1,800</span>
+                            <span class="old">Rs.2,000</span>
+                        </div>
+                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pagination">
+                <a href="#" class="active">1</a>
+                <a href="#">2</a>
+                <a href="#"><i class="fa-solid fa-chevron-right"></i></a>
+            </div>
+        </div>
+    </section>
+{% endblock %}
