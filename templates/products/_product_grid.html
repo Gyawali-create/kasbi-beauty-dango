@@ -1,0 +1,165 @@
+{% load static %}
+{# Shared product grid + filter sidebar used by shop, category, bestsellers, newarrivals pages #}
+{# Expects: page_obj, categories, brands, sort, query, selected_category, selected_brand, min_price, max_price, wishlist_ids #}
+
+<!-- ===== SHOP SECTION ===== -->
+<section class="shop-section">
+
+    <!-- FILTER SIDEBAR -->
+    <div class="filter-sidebar">
+        <h3><i class="fa-solid fa-sliders" style="margin-right:10px;"></i>Filters</h3>
+
+        <form method="get" id="ff">
+            {% if query %}<input type="hidden" name="q" value="{{ query }}">{% endif %}
+
+            <div class="filter-group">
+                <h4>Categories</h4>
+                {% for cat in categories %}
+                <label>
+                    <input type="checkbox" name="category" value="{{ cat.slug }}"
+                        {% if cat.slug == selected_category %}checked{% endif %}
+                        onchange="document.getElementById('ff').submit()">
+                    {{ cat.name }}
+                </label>
+                {% endfor %}
+            </div>
+
+            <div class="filter-group">
+                <h4>Price Range</h4>
+                <div class="price-range">
+                    <input type="number" name="min_price" id="priceMin" placeholder="Min" value="{{ min_price }}">
+                    <span>—</span>
+                    <input type="number" name="max_price" id="priceMax" placeholder="Max" value="{{ max_price }}">
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <h4>Brands</h4>
+                {% for brand in brands %}
+                <label>
+                    <input type="checkbox" name="brand" value="{{ brand.slug }}"
+                        {% if brand.slug == selected_brand %}checked{% endif %}
+                        onchange="document.getElementById('ff').submit()">
+                    {{ brand.name }}
+                </label>
+                {% endfor %}
+            </div>
+
+            <div class="filter-group">
+                <h4>Rating</h4>
+                <label><input type="radio" name="sort" value="popularity" {% if sort == 'popularity' %}checked{% endif %} onchange="document.getElementById('ff').submit()"> ★★★★★ &amp; up</label>
+                <label><input type="radio" name="sort" value="newest" {% if sort == 'newest' or not sort %}checked{% endif %} onchange="document.getElementById('ff').submit()"> All Ratings</label>
+            </div>
+
+            <button type="submit" class="btn-primary" style="width:100%;justify-content:center;">
+                <i class="fa-solid fa-rotate-right"></i> Apply Filters
+            </button>
+            <a href="{{ request.path }}" class="btn-secondary" style="width:100%;text-align:center;margin-top:10px;display:block;padding:11px;">
+                <i class="fa-solid fa-times"></i> Clear Filters
+            </a>
+        </form>
+    </div>
+
+    <!-- PRODUCTS GRID -->
+    <div>
+        <div class="shop-toolbar">
+            <span id="productCount">
+                Showing {{ page_obj.start_index }}–{{ page_obj.end_index }} of {{ page_obj.paginator.count }} products
+            </span>
+            <form method="get" id="sf">
+                {% if query %}<input type="hidden" name="q" value="{{ query }}">{% endif %}
+                {% if selected_category %}<input type="hidden" name="category" value="{{ selected_category }}">{% endif %}
+                {% if selected_brand %}<input type="hidden" name="brand" value="{{ selected_brand }}">{% endif %}
+                {% if min_price %}<input type="hidden" name="min_price" value="{{ min_price }}">{% endif %}
+                {% if max_price %}<input type="hidden" name="max_price" value="{{ max_price }}">{% endif %}
+                <select id="sortSelect" name="sort" onchange="document.getElementById('sf').submit()">
+                    <option value="newest"     {% if sort == 'newest'     %}selected{% endif %}>Sort by: Default</option>
+                    <option value="price_low"  {% if sort == 'price_low'  %}selected{% endif %}>Sort by: Price: Low to High</option>
+                    <option value="price_high" {% if sort == 'price_high' %}selected{% endif %}>Sort by: Price: High to Low</option>
+                    <option value="popularity" {% if sort == 'popularity' %}selected{% endif %}>Sort by: Rating</option>
+                </select>
+            </form>
+        </div>
+
+        <div class="product-grid" id="productGrid">
+            {% for p in page_obj %}
+            <a href="{{ p.get_absolute_url }}" class="product-link">
+                <div class="product-card" data-category="{{ p.category.slug|default:'' }}" data-price="{{ p.current_price }}" data-rating="5">
+                    <div class="image-wrap">
+                        {% if p.is_featured %}
+                        <span class="badge-bestseller">⭐ Best Seller</span>
+                        {% endif %}
+                        {% if p.discount_price %}
+                        <span class="discount">Sale</span>
+                        {% endif %}
+                        <span class="wishlist" onclick="event.preventDefault();event.stopPropagation();wl(this,{{ p.id }})">
+                            <i class="{% if p.id in wishlist_ids %}fa-solid{% else %}fa-regular{% endif %} fa-heart"></i>
+                        </span>
+                        <img src="{% if p.thumbnail %}{{ p.thumbnail.url }}{% else %}{% static 'img/hero.png' %}{% endif %}" alt="{{ p.name }}">
+                    </div>
+                    <div class="info">
+                        <span class="brand">{{ p.brand|default:"" }}</span>
+                        <h3>{{ p.name }}</h3>
+                        <div class="rating">★★★★★ <span>({{ p.popularity|default:0 }})</span></div>
+                        <div class="price">
+                            <span class="current">Rs.{{ p.current_price }}</span>
+                            {% if p.discount_price %}<span class="old">Rs.{{ p.price }}</span>{% endif %}
+                        </div>
+                        {% if user.is_authenticated and p.in_stock %}
+                        <form method="post" action="{% url 'cart:add' p.id %}" onclick="event.stopPropagation();" style="margin:0;">
+                            {% csrf_token %}
+                            <input type="hidden" name="quantity" value="1">
+                            <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                            <button type="submit" class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </form>
+                        {% elif not p.in_stock %}
+                        <button class="add-btn" disabled style="opacity:0.5;cursor:not-allowed;">Out of Stock</button>
+                        {% else %}
+                        <a href="{% url 'accounts:login' %}?next={{ request.get_full_path }}" class="add-btn" style="display:block;text-align:center;text-decoration:none;" onclick="event.stopPropagation();">Login to Buy</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </a>
+            {% empty %}
+            <div style="grid-column:1/-1;text-align:center;padding:80px 20px;color:var(--gray);">
+                <i class="fa-regular fa-face-frown" style="font-size:48px;display:block;margin-bottom:16px;color:#ddd;"></i>
+                <h3 style="font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--dark);margin-bottom:8px;">No products found</h3>
+                <p>Try adjusting your filters or <a href="{{ request.path }}" style="color:var(--primary);">clear filters</a>.</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if page_obj.paginator.num_pages > 1 %}
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}&q={{ query }}&sort={{ sort }}&category={{ selected_category }}&brand={{ selected_brand }}"><i class="fa-solid fa-chevron-left"></i></a>
+            {% endif %}
+            {% for num in page_obj.paginator.page_range %}
+                {% if num == page_obj.number %}<span class="active">{{ num }}</span>
+                {% elif num|add:"-2" <= page_obj.number and num|add:"2" >= page_obj.number %}
+                <a href="?page={{ num }}&q={{ query }}&sort={{ sort }}&category={{ selected_category }}&brand={{ selected_brand }}">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}&q={{ query }}&sort={{ sort }}&category={{ selected_category }}&brand={{ selected_brand }}"><i class="fa-solid fa-chevron-right"></i></a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+
+</section>
+
+<script>
+function wl(el, id) {
+    {% if user.is_authenticated %}
+    const icon = el.querySelector('i');
+    const w = icon.classList.contains('fa-solid');
+    fetch(w ? `/products/wishlist/remove/${id}/` : `/products/wishlist/add/${id}/`, {credentials:'same-origin'})
+    .then(()=>{
+        icon.classList.toggle('fa-solid',!w); icon.classList.toggle('fa-regular',w);
+        el.style.background=w?'':'#5E4074'; el.style.color=w?'':'white'; el.style.borderColor=w?'':'#5E4074';
+        showToast(w?'💔 Removed from Wishlist':'❤️ Added to Wishlist!');
+    }).catch(()=>{window.location.href=w?`/products/wishlist/remove/${id}/`:`/products/wishlist/add/${id}/`;});
+    {% else %}window.location.href="{% url 'accounts:login' %}";{% endif %}
+}
+</script>

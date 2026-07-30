@@ -16,6 +16,16 @@ class Cart(models.Model):
         return sum(item.subtotal for item in self.items.all())
 
     @property
+    def shipping(self):
+        if self.total >= 3000:
+            return 0
+        return 150
+
+    @property
+    def grand_total(self):
+        return self.total + self.shipping
+
+    @property
     def item_count(self):
         return sum(item.quantity for item in self.items.all())
 

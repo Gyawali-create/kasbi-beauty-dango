@@ -1,10 +1,18 @@
-{% extends 'base.html' %}
+﻿<!DOCTYPE html>
 {% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kasbi Beauty — Offers</title>
 
-{% block title %}Kasbi Beauty — Offers{% endblock %}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 
-{% block extra_head %}
-<style>
+    <style>
         /* ===== OFFERS PAGE SPECIFIC STYLES ===== */
         
         /* Hero Banner */
@@ -668,51 +676,79 @@
             }
         }
     </style>
-{% endblock %}
+</head>
+<body>
 
-{% block content %}
-<!-- ===== OFFERS HERO ===== -->
-    <section class="offers-hero">
-        <h1>Special Offers</h1>
-        <p>Amazing deals on your favorite beauty products. Save big with exclusive discounts!</p>
-        <div class="breadcrumb">
-            <a href="{% url 'core:home' %}">Home</a>
-            <span class="sep">/</span>
-            <span class="current">Offers</span>
-        </div>
-    </section>
-
-    <!-- ===== FLASH SALE BANNER ===== -->
-    <div class="flash-banner">
+    <!-- ===== TOP BAR ===== -->
+    <div class="topbar">
         <div class="left">
-            <span class="tag">⚡ FLASH SALE</span>
-            <h2>Up to 50% Off</h2>
-            <p>Hurry! These deals won't last long. Shop now and save big!</p>
+            <i class="fa-solid fa-truck-fast"></i> Free Delivery inside Kathmandu on Orders above Rs.3000
         </div>
         <div class="right">
-            <div class="timer-mini">
-                <div class="item">
-                    <span class="num" id="flashDays">05</span>
-                    <span class="lbl">Days</span>
-                </div>
-                <div class="item">
-                    <span class="num" id="flashHours">18</span>
-                    <span class="lbl">Hours</span>
-                </div>
-                <div class="item">
-                    <span class="num" id="flashMinutes">35</span>
-                    <span class="lbl">Mins</span>
-                </div>
-                <div class="item">
-                    <span class="num" id="flashSeconds">42</span>
-                    <span class="lbl">Secs</span>
-                </div>
-            </div>
-            <a href="#discounted" class="btn-dark">
-                <i class="fa-solid fa-bolt"></i> Shop Now
-            </a>
+            <a href="#"><i class="fa-regular fa-clock"></i> Track Order</a>
+            <a href="#"><i class="fa-regular fa-newspaper"></i> Beauty Blog</a>
+            <a href="#"><i class="fa-regular fa-circle-question"></i> Help Center</a>
         </div>
     </div>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <div class="logo">
+            <a href="{% url 'core:home' %}"><img src="{% static 'img/logo3.png' %}" alt="Kasbi Beauty"></a>
+        </div>
+        <div class="search">
+            <input type="text" placeholder="Search skincare, makeup, serum...">
+            <button><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+        <div class="header-icons">
+            <div>
+                <a href="{% url 'products:wishlist' %}" style="display:flex; flex-direction:column; align-items:center; text-decoration:none; color:inherit;">
+                    <i class="fa-regular fa-heart"></i>
+                    <span>Wishlist</span>
+                </a>
+            </div>
+            <div>
+                <a href="{% url 'cart:detail' %}" style="display:flex; flex-direction:column; align-items:center; text-decoration:none; color:inherit;">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span>Cart</span>
+                    {% if cart_count > 0 %}<span class="cart-badge">{{ cart_count }}</span>{% endif %}
+                </a>
+            </div>
+            <div>
+                <a href="{% url 'accounts:profile' %}" style="display:flex; flex-direction:column; align-items:center; text-decoration:none; color:inherit;">
+                    <i class="fa-regular fa-user"></i>
+                    <span>Account</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+   <!-- ===== NAVIGATION ===== -->
+<nav class="navigation">
+    <ul>
+        <li><a href="{% url 'core:home' %}"></a></li>
+        <li><a href="{% url 'products:shop' %}">Shop</a></li>
+        <li><a href="{% url 'products:brands' %}">Brands</a></li>
+        <li><a href="{% url 'products:skincare' %}">Skincare</a></li>
+        <li><a href="{% url 'products:makeup' %}">Makeup</a></li>
+        <li><a href="{% url 'products:haircare' %}">Hair Care</a></li>
+        <li>
+            <a href="{% url 'products:new_arrivals' %}" class="new-arrivals-link">
+                <span class="new-arrivals-text">New Arrivals</span>
+                <span class="new-badge-animated">✨ NEW</span>
+            </a>
+        </li>
+        <li><a href="{% url 'products:bestsellers' %}">Best Sellers</a></li>
+        <li>
+            <a href="{% url 'products:offers' %}" class="offers-link">
+                <span class="offers-text">Offers</span>
+                <span class="offers-badge-animated">🔥 SALE</span>
+            </a>
+        </li>
+      
+    </ul>
+</nav>
+
 
     <!-- ===== OFFERS GRID ===== -->
     <section class="offers-grid-section">
@@ -743,6 +779,37 @@
             </div>
         </div>
     </section>
+        <!-- ===== FLASH SALE BANNER ===== -->
+    <div class="flash-banner">
+        <div class="left">
+            <span class="tag">⚡ FLASH SALE</span>
+            <h2>Up to 50% Off</h2>
+            <p>Hurry! These deals won't last long. Shop now and save big!</p>
+        </div>
+        <div class="right">
+            <div class="timer-mini">
+                <div class="item">
+                    <span class="num" id="flashDays">05</span>
+                    <span class="lbl">Days</span>
+                </div>
+                <div class="item">
+                    <span class="num" id="flashHours">18</span>
+                    <span class="lbl">Hours</span>
+                </div>
+                <div class="item">
+                    <span class="num" id="flashMinutes">35</span>
+                    <span class="lbl">Mins</span>
+                </div>
+                <div class="item">
+                    <span class="num" id="flashSeconds">42</span>
+                    <span class="lbl">Secs</span>
+                </div>
+            </div>
+            <a href="#discounted" class="btn-dark">
+                <i class="fa-solid fa-bolt"></i> Shop Now
+            </a>
+        </div>
+    </div>
 
     <!-- ===== DISCOUNTED PRODUCTS ===== -->
     <section class="discounted-products" id="discounted">
@@ -940,10 +1007,63 @@
             </div>
         </div>
     </section>
-{% endblock %}
+    
 
-{% block extra_js %}
-<script>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <a href="{% url 'core:home' %}"><img src="{% static 'img/logo.png' %}" alt="Kasbi Beauty" style="height:45px; width:auto; margin-bottom:16px; filter:brightness(10) grayscale(1) opacity(0.8);"></a>
+                <p>Your trusted beauty destination in Nepal. Premium skincare, makeup, haircare & more — all 100% authentic.</p>
+                <div class="social">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="{% url 'core:about' %}">About Us</a></li>
+                    <li><a href="{% url 'core:contact' %}">Contact Us</a></li>
+                    <li><a href="#">Beauty Blog</a></li>
+                    <li><a href="#">Track Order</a></li>
+                    <li><a href="#">Returns & Refunds</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Categories</h4>
+                <ul>
+                    <li><a href="{% url 'products:skincare' %}">Skincare</a></li>
+                    <li><a href="{% url 'products:makeup' %}">Makeup</a></li>
+                    <li><a href="{% url 'products:haircare' %}">Hair Care</a></li>
+                    <li><a href="{% url 'products:shop' %}?category=fragrance">Fragrance</a></li>
+                    <li><a href="{% url 'products:shop' %}?category=tools">Beauty Tools</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="#"><i class="fa-solid fa-phone" style="margin-right:8px;"></i>+977 980-0000000</a></li>
+                    <li><a href="#"><i class="fa-regular fa-envelope" style="margin-right:8px;"></i>hello@kasbi.com</a></li>
+                    <li><a href="#"><i class="fa-regular fa-location-dot" style="margin-right:8px;"></i>Kathmandu, Nepal</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Kasbi Beauty. All rights reserved.</span>
+            <div class="payment">
+                <i class="fa-brands fa-cc-visa"></i>
+                <i class="fa-brands fa-cc-mastercard"></i>
+                <i class="fa-brands fa-cc-paypal"></i>
+                <i class="fa-solid fa-wallet"></i>
+            </div>
+        </div>
+    </footer>
+
+    <script>
         // ===== FLASH SALE TIMER =====
         function startFlashTimer() {
             const days = document.getElementById('flashDays');
@@ -1027,4 +1147,6 @@
 
         console.log('🎉 Kasbi Beauty — Special Offers Page 🎉');
     </script>
-{% endblock %}
+
+</body>
+</html>

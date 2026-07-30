@@ -1,106 +1,61 @@
 {% extends 'base.html' %}
 {% load static %}
-
-{% block title %}Kasbi Beauty — Wishlist{% endblock %}
+{% block title %}My Wishlist — Kasbi Beauty{% endblock %}
 
 {% block content %}
-<!-- ===== PAGE HEADER ===== -->
-    <div class="page-header">
-        <h1>My Wishlist</h1>
-        <p>Your saved favorites — shop them anytime</p>
-        <div class="breadcrumb">
-            <a href="{% url 'core:home' %}">Home</a>
-            <span class="sep">/</span>
-            <span class="current">Wishlist</span>
+<div style="background:var(--cream);padding:30px 6%;text-align:center;">
+  <h1 style="font-family:'Cormorant Garamond',serif;font-size:38px;color:var(--dark);">My Wishlist</h1>
+  <p style="color:var(--gray);">Your saved favorites — shop them anytime</p>
+  <div style="font-size:13px;color:var(--gray);">
+    <a href="{% url 'core:home' %}" style="color:var(--primary);">Home</a> / Wishlist
+  </div>
+</div>
+
+<section style="padding:40px 6% 80px;">
+  {% if items %}
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;flex-wrap:wrap;gap:12px;">
+    <span style="color:var(--gray);font-size:14px;">{{ items.count }} item{{ items.count|pluralize }} in your wishlist</span>
+  </div>
+  <div class="product-grid">
+    {% for item in items %}
+    <div class="product-card">
+      <div class="image-wrap">
+        {% if item.product.discount_price %}<span class="discount">Sale</span>{% endif %}
+        <a href="{% url 'products:wishlist_remove' item.product.id %}" class="wishlist" style="background:var(--primary);color:white;border-color:var(--primary);">
+          <i class="fa-solid fa-heart"></i>
+        </a>
+        <a href="{{ item.product.get_absolute_url }}">
+          <img src="{% if item.product.thumbnail %}{{ item.product.thumbnail.url }}{% else %}{% static 'img/hero.png' %}{% endif %}" alt="{{ item.product.name }}">
+        </a>
+      </div>
+      <div class="info">
+        <span class="brand">{{ item.product.brand|default:"" }}</span>
+        <h3><a href="{{ item.product.get_absolute_url }}" style="color:inherit;text-decoration:none;">{{ item.product.name }}</a></h3>
+        <div class="price">
+          <span class="current">Rs.{{ item.product.current_price }}</span>
+          {% if item.product.discount_price %}<span class="old">Rs.{{ item.product.price }}</span>{% endif %}
         </div>
+        {% if item.product.in_stock %}
+        <form method="post" action="{% url 'cart:add' item.product.id %}" style="margin:0;">
+          {% csrf_token %}<input type="hidden" name="quantity" value="1"><input type="hidden" name="next" value="{{ request.path }}">
+          <button type="submit" class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+        </form>
+        {% else %}
+        <button class="add-btn" disabled style="opacity:0.5;cursor:not-allowed;">Out of Stock</button>
+        {% endif %}
+      </div>
     </div>
-
-    <!-- ===== WISHLIST SECTION ===== -->
-    <section style="padding: 40px 6% 80px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 12px;">
-            <span style="color: var(--gray); font-size: 14px;">4 items in your wishlist</span>
-            <button class="btn-secondary btn-sm" style="padding: 10px 24px; font-size: 13px;">
-                <i class="fa-regular fa-heart"></i> Add All to Cart
-            </button>
-        </div>
-
-        <div class="product-grid">
-            <div class="product-card">
-                <div class="image-wrap">
-                    <span class="discount">-25%</span>
-                    <span class="wishlist" style="background: var(--primary); color: white; border-color: var(--primary);">
-                        <i class="fa-solid fa-heart"></i>
-                    </span>
-                    <img src="{% static 'img/product1.png' %}" alt="CeraVe Cleanser">
-                </div>
-                <div class="info">
-                    <span class="brand">CeraVe</span>
-                    <h3>Hydrating Cleanser</h3>
-                    <div class="rating">★★★★★ <span>(325)</span></div>
-                    <div class="price">
-                        <span class="current">Rs.2,650</span>
-                        <span class="old">Rs.3,200</span>
-                    </div>
-                    <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="image-wrap">
-                    <span class="discount">-15%</span>
-                    <span class="wishlist" style="background: var(--primary); color: white; border-color: var(--primary);">
-                        <i class="fa-solid fa-heart"></i>
-                    </span>
-                    <img src="{% static 'img/product2.png' %}" alt="The Ordinary">
-                </div>
-                <div class="info">
-                    <span class="brand">The Ordinary</span>
-                    <h3>Niacinamide 10%</h3>
-                    <div class="rating">★★★★★ <span>(280)</span></div>
-                    <div class="price">
-                        <span class="current">Rs.2,350</span>
-                        <span class="old">Rs.2,850</span>
-                    </div>
-                    <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="image-wrap">
-                    <span class="discount">-35%</span>
-                    <span class="wishlist" style="background: var(--primary); color: white; border-color: var(--primary);">
-                        <i class="fa-solid fa-heart"></i>
-                    </span>
-                    <img src="{% static 'img/product3.png' %}" alt="Maybelline">
-                </div>
-                <div class="info">
-                    <span class="brand">Maybelline</span>
-                    <h3>SuperStay Lipstick</h3>
-                    <div class="rating">★★★★★ <span>(540)</span></div>
-                    <div class="price">
-                        <span class="current">Rs.1,450</span>
-                        <span class="old">Rs.2,000</span>
-                    </div>
-                    <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="image-wrap">
-                    <span class="discount">-20%</span>
-                    <span class="wishlist" style="background: var(--primary); color: white; border-color: var(--primary);">
-                        <i class="fa-solid fa-heart"></i>
-                    </span>
-                    <img src="{% static 'img/product4.png' %}" alt="Cetaphil">
-                </div>
-                <div class="info">
-                    <span class="brand">Cetaphil</span>
-                    <h3>Moisturizing Lotion</h3>
-                    <div class="rating">★★★★★ <span>(198)</span></div>
-                    <div class="price">
-                        <span class="current">Rs.2,850</span>
-                        <span class="old">Rs.3,400</span>
-                    </div>
-                    <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                </div>
-            </div>
-        </div>
-    </section>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div style="text-align:center;padding:80px 20px;">
+    <i class="fa-regular fa-heart" style="font-size:64px;color:#ddd;display:block;margin-bottom:20px;"></i>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--dark);margin-bottom:10px;">Your Wishlist is Empty</h2>
+    <p style="color:var(--gray);margin-bottom:24px;">Save your favorite products to buy them later.</p>
+    <a href="{% url 'products:shop' %}" class="btn-primary" style="display:inline-flex;">
+      <i class="fa-solid fa-shop" style="margin-right:8px;"></i> Start Shopping
+    </a>
+  </div>
+  {% endif %}
+</section>
 {% endblock %}
