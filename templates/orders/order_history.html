@@ -1,27 +1,55 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block title %}My Orders — Kasbi Beauty{% endblock %}
+
+{% block extra_head %}
+<style>
+.orders-section{padding:50px 6% 80px;max-width:960px;margin:0 auto;}
+.order-card{background:var(--white);border-radius:var(--border-radius);padding:24px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.04);margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;transition:var(--transition);}
+.order-card:hover{box-shadow:var(--shadow-hover);}
+.order-meta{display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
+.status-badge{padding:5px 14px;border-radius:30px;font-size:12px;font-weight:600;text-transform:uppercase;}
+.status-pending{background:#fff3cd;color:#856404;}
+.status-processing{background:#cce5ff;color:#004085;}
+.status-shipped{background:#d1ecf1;color:#0c5460;}
+.status-delivered{background:#d4edda;color:#155724;}
+.status-cancelled{background:#f8d7da;color:#721c24;}
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="container py-4">
-  <h2 class="text-kasbi mb-4">My Orders</h2>
-  {% if orders %}
-  <div class="table-responsive">
-    <table class="table bg-white rounded align-middle">
-      <thead><tr><th>Order #</th><th>Date</th><th>Total</th><th>Status</th><th>Payment</th><th></th></tr></thead>
-      <tbody>
-        {% for order in orders %}
-        <tr>
-          <td>{{ order.order_number }}</td>
-          <td>{{ order.created_at|date:"M d, Y" }}</td>
-          <td>Rs. {{ order.total }}</td>
-          <td><span class="badge bg-secondary">{{ order.get_status_display }}</span></td>
-          <td>{% if order.is_paid %}<span class="badge bg-success">Paid</span>{% else %}<span class="badge bg-warning text-dark">Unpaid</span>{% endif %}</td>
-          <td><a href="{% url 'orders:detail' order.order_number %}" class="btn btn-sm btn-outline-kasbi">Track / View</a></td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-  {% else %}
-  <p class="text-muted">You haven't placed any orders yet. <a href="{% url 'products:list' %}">Start shopping</a></p>
-  {% endif %}
+<div style="background:var(--cream);padding:30px 6%;text-align:center;">
+  <h1 style="font-family:'Cormorant Garamond',serif;font-size:38px;color:var(--dark);">My Orders</h1>
+  <p style="color:var(--gray);">Track and manage all your Kasbi Beauty orders</p>
 </div>
+
+<section class="orders-section">
+  {% if orders %}
+  {% for order in orders %}
+  <div class="order-card">
+    <div>
+      <div style="font-weight:700;font-size:15px;color:var(--dark);margin-bottom:4px;">#{{ order.order_number }}</div>
+      <div style="font-size:13px;color:var(--gray);">{{ order.created_at|date:"F d, Y" }} · {{ order.items.count }} item{{ order.items.count|pluralize }}</div>
+    </div>
+    <div class="order-meta">
+      <span style="font-size:18px;font-weight:700;color:var(--primary);">Rs. {{ order.total }}</span>
+      <span class="status-badge status-{{ order.status }}">{{ order.get_status_display }}</span>
+      {% if order.is_paid %}
+      <span style="background:#d4edda;color:#155724;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;">✓ Paid</span>
+      {% else %}
+      <span style="background:#fff3cd;color:#856404;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;">Unpaid</span>
+      {% endif %}
+      <a href="{% url 'orders:detail' order.order_number %}" style="background:var(--primary);color:white;padding:8px 20px;border-radius:20px;font-size:13px;font-weight:600;text-decoration:none;transition:var(--transition);">View Order</a>
+    </div>
+  </div>
+  {% endfor %}
+  {% else %}
+  <div style="text-align:center;padding:80px 20px;">
+    <i class="fa-regular fa-bag-shopping" style="font-size:60px;color:#ddd;display:block;margin-bottom:20px;"></i>
+    <h3 style="font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--dark);margin-bottom:10px;">No orders yet</h3>
+    <p style="color:var(--gray);margin-bottom:24px;">Start shopping to place your first order!</p>
+    <a href="{% url 'products:shop' %}" class="btn-primary" style="display:inline-flex;"><i class="fa-solid fa-shop" style="margin-right:8px;"></i>Shop Now</a>
+  </div>
+  {% endif %}
+</section>
 {% endblock %}

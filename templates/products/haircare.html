@@ -1,34 +1,236 @@
-{% extends 'base.html' %}
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kasbi Beauty — Hair Care</title>
 
-{% block title %}Kasbi Beauty — Hair Care{% endblock %}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 
-{% block content %}
-<!-- ===== PAGE HEADER ===== -->
-    <div class="page-header">
-        <h1>Hair Care</h1>
-        <p>Nourish, style, and protect your hair</p>
-        <div class="breadcrumb">
-            <a href="{% url 'core:home' %}">Home</a>
-            <span class="sep">/</span>
-            <span class="current">Hair Care</span>
+    <style>
+        /* ===== HAIR CARE SPECIFIC STYLES ===== */
+        .category-banner {
+            background: linear-gradient(135deg, #D4E8D4, #E8F0E0);
+            border-radius: 32px;
+            padding: 50px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin: 40px 6%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-banner::before {
+            content: '✦';
+            position: absolute;
+            right: -20px;
+            top: -30px;
+            font-size: 120px;
+            opacity: 0.06;
+            transform: rotate(15deg);
+        }
+
+        .category-banner .tag {
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #2d6b55;
+            font-weight: 600;
+            background: rgba(255,255,255,0.3);
+            padding: 6px 18px;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+        }
+
+        .category-banner h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 42px;
+            margin: 8px 0;
+            color: #1a3a2a;
+        }
+
+        .category-banner p {
+            color: #3a5a4a;
+            max-width: 400px;
+            font-weight: 300;
+        }
+
+        .category-banner .stats {
+            display: flex;
+            gap: 12px;
+        }
+
+        .category-banner .stats span {
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(4px);
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 13px;
+            color: #5E4074;
+        }
+
+        .product-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .product-link:hover {
+            transform: translateY(-4px);
+        }
+
+        .product-card .badge-bestseller {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: var(--gold-gradient);
+            color: var(--dark);
+            padding: 3px 12px;
+            border-radius: 30px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(212,175,55,0.25);
+            z-index: 1;
+        }
+
+        .product-card .badge-new {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: #2ecc71;
+            color: white;
+            padding: 3px 12px;
+            border-radius: 30px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 1;
+        }
+
+        .product-card .badge-limited {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: #e74c3c;
+            color: white;
+            padding: 3px 12px;
+            border-radius: 30px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .category-banner {
+                padding: 30px 24px;
+                flex-direction: column;
+                text-align: center;
+            }
+            .category-banner p {
+                max-width: 100%;
+            }
+            .category-banner .stats {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .category-banner h2 {
+                font-size: 30px;
+            }
+            .category-banner .stats span {
+                font-size: 11px;
+                padding: 6px 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== TOP BAR ===== -->
+    <div class="topbar">
+        <div class="left">
+            <i class="fa-solid fa-truck-fast"></i> Free Delivery inside Kathmandu on Orders above Rs.3000
+        </div>
+        <div class="right">
+            <a href="#"><i class="fa-regular fa-clock"></i> Track Order</a>
+            <a href="#"><i class="fa-regular fa-newspaper"></i> Beauty Blog</a>
+            <a href="#"><i class="fa-regular fa-circle-question"></i> Help Center</a>
         </div>
     </div>
 
-    <!-- ===== CATEGORY BANNER ===== -->
-    <div style="margin: 40px 6%;">
-        <div style="background: linear-gradient(135deg, #D4E8D4, #E8F0E0); border-radius: 32px; padding: 50px 60px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 30px;">
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <div class="logo">
+            <a href="{% url 'core:home' %}"><img src="{% static 'img/logo3.png' %}" alt="Kasbi Beauty"></a>
+        </div>
+        <div class="search">
+            <input type="text" placeholder="Search skincare, makeup, serum...">
+            <button><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+        <div class="header-icons">
             <div>
-                <span style="font-size: 12px; letter-spacing: 2px; color: #2d6b55; font-weight: 600;">PREMIUM COLLECTION</span>
-                <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 42px; margin: 8px 0; color: #1a3a2a;">Healthy Hair Starts Here</h2>
-                <p style="color: #3a5a4a; max-width: 400px; font-weight: 300;">Shampoos, conditioners, serums, and masks for every hair type.</p>
+                <a href="{% url 'products:wishlist' %}" style="display:flex; flex-direction:column; align-items:center; text-decoration:none; color:inherit;">
+                    <i class="fa-regular fa-heart"></i>
+                    <span>Wishlist</span>
+                </a>
             </div>
-            <div style="display: flex; gap: 12px;">
-                <span style="background: white; padding: 8px 20px; border-radius: 40px; font-weight: 600; font-size: 13px; color: #5E4074;">60+ Products</span>
-                <span style="background: rgba(255,255,255,0.4); padding: 8px 20px; border-radius: 40px; font-weight: 500; font-size: 13px; color: #5E4074;">12+ Brands</span>
+            <div>
+                <a href="{% url 'cart:detail' %}" style="display:flex; flex-direction:column; align-items:center; text-decoration:none; color:inherit;">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span>Cart</span>
+                    {% if cart_count > 0 %}<span class="cart-badge">{{ cart_count }}</span>{% else %}<span class="cart-badge">0</span>{% endif %}
+                </a>
+            </div>
+            <div>
+                <a href="{% if user.is_authenticated %}{% url 'accounts:profile' %}{% else %}{% url 'accounts:login' %}{% endif %}" style="display:flex; flex-direction:column; align-items:center; text-decoration:none; color:inherit;">
+                    <i class="fa-regular fa-user"></i>
+                    <span>Account</span>
+                </a>
             </div>
         </div>
-    </div>
+    </header>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navigation">
+        <ul>
+            <li><a href="{% url 'core:home' %}"></a></li>
+            <li><a href="{% url 'products:shop' %}">Shop</a></li>
+            <li><a href="{% url 'products:brands' %}">Brands</a></li>
+            <li><a href="{% url 'products:skincare' %}">Skincare</a></li>
+            <li><a href="{% url 'products:makeup' %}">Makeup</a></li>
+            <li><a href="{% url 'products:haircare' %}" class="active">Hair Care</a></li>
+            <li>
+                <a href="{% url 'products:new_arrivals' %}" class="new-arrivals-link">
+                    <span class="new-arrivals-text">New Arrivals</span>
+                    <span class="new-badge-animated">✨ NEW</span>
+                </a>
+            </li>
+            <li><a href="{% url 'products:bestsellers' %}">Best Sellers</a></li>
+            <li>
+                <a href="{% url 'products:offers' %}" class="offers-link">
+                    <span class="offers-text">Offers</span>
+                    <span class="offers-badge-animated">🔥 SALE</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
 
     <!-- ===== SHOP SECTION ===== -->
     <section class="shop-section">
@@ -58,149 +260,550 @@
             <div class="filter-group">
                 <h4>Price Range</h4>
                 <div class="price-range">
-                    <input type="text" placeholder="Min" value="500">
+                    <input type="text" id="priceMin" placeholder="Min" value="500">
                     <span>—</span>
-                    <input type="text" placeholder="Max" value="4000">
+                    <input type="text" id="priceMax" placeholder="Max" value="4000">
                 </div>
             </div>
 
             <div class="filter-group">
                 <h4>Brands</h4>
-                <label><input type="checkbox"> L'Oreal</label>
-                <label><input type="checkbox"> Garnier</label>
-                <label><input type="checkbox"> TRESemmé</label>
-                <label><input type="checkbox"> OGX</label>
-                <label><input type="checkbox"> Moroccanoil</label>
+                <label><input type="checkbox" value="loreal"> L'Oreal</label>
+                <label><input type="checkbox" value="garnier"> Garnier</label>
+                <label><input type="checkbox" value="tresemme"> TRESemmé</label>
+                <label><input type="checkbox" value="ogx"> OGX</label>
+                <label><input type="checkbox" value="moroccanoil"> Moroccanoil</label>
+                <label><input type="checkbox" value="kerastase"> Kérastase</label>
+                <label><input type="checkbox" value="aveda"> Aveda</label>
             </div>
 
-            <button class="btn-primary"><i class="fa-solid fa-rotate-right"></i> Apply Filters</button>
+            <button class="btn-primary" id="applyFilters"><i class="fa-solid fa-rotate-right"></i> Apply Filters</button>
         </div>
 
         <!-- Products -->
         <div>
             <div class="shop-toolbar">
-                <span>Showing 1–12 of 60 products</span>
-                <select>
-                    <option>Sort by: Newest</option>
-                    <option>Sort by: Price: Low to High</option>
-                    <option>Sort by: Price: High to Low</option>
-                    <option>Sort by: Best Selling</option>
-                    <option>Sort by: Rating</option>
+                <span id="productCount">Showing 1–12 of 90 products</span>
+                <select id="sortSelect">
+                    <option value="default">Sort by: Default</option>
+                    <option value="price-low">Sort by: Price: Low to High</option>
+                    <option value="price-high">Sort by: Price: High to Low</option>
+                    <option value="rating">Sort by: Rating</option>
                 </select>
             </div>
 
-            <div class="product-grid">
-                <div class="product-card">
-                    <div class="image-wrap">
-                        <span class="discount">-20%</span>
-                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                        <img src="{% static 'img/product4.png' %}" alt="Shampoo">
-                    </div>
-                    <div class="info">
-                        <span class="brand">L'Oreal</span>
-                        <h3>Expert Repair Shampoo</h3>
-                        <div class="rating">★★★★★ <span>(412)</span></div>
-                        <div class="price">
-                            <span class="current">Rs.1,800</span>
-                            <span class="old">Rs.2,250</span>
-                        </div>
-                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="image-wrap">
-                        <span class="discount">-15%</span>
-                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                        <img src="{% static 'img/product1.png' %}" alt="Conditioner">
-                    </div>
-                    <div class="info">
-                        <span class="brand">Garnier</span>
-                        <h3>Ultimate Blends Conditioner</h3>
-                        <div class="rating">★★★★★ <span>(328)</span></div>
-                        <div class="price">
-                            <span class="current">Rs.1,500</span>
-                            <span class="old">Rs.1,800</span>
-                        </div>
-                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="image-wrap">
-                        <span class="discount">-30%</span>
-                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                        <img src="{% static 'img/product2.png' %}" alt="Hair Mask">
-                    </div>
-                    <div class="info">
-                        <span class="brand">Moroccanoil</span>
-                        <h3>Intensive Hair Mask</h3>
-                        <div class="rating">★★★★★ <span>(289)</span></div>
-                        <div class="price">
-                            <span class="current">Rs.3,500</span>
-                            <span class="old">Rs.5,000</span>
-                        </div>
-                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="image-wrap">
-                        <span class="discount">-10%</span>
-                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                        <img src="{% static 'img/product3.png' %}" alt="Hair Serum">
-                    </div>
-                    <div class="info">
-                        <span class="brand">OGX</span>
-                        <h3>Argan Oil Hair Serum</h3>
-                        <div class="rating">★★★★★ <span>(234)</span></div>
-                        <div class="price">
-                            <span class="current">Rs.2,200</span>
-                            <span class="old">Rs.2,500</span>
-                        </div>
-                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="image-wrap">
-                        <span class="discount">-25%</span>
-                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                        <img src="{% static 'img/product4.png' %}" alt="Hair Oil">
-                    </div>
-                    <div class="info">
-                        <span class="brand">L'Oreal</span>
-                        <h3>Hair Oil Serum</h3>
-                        <div class="rating">★★★★★ <span>(198)</span></div>
-                        <div class="price">
-                            <span class="current">Rs.1,600</span>
-                            <span class="old">Rs.2,100</span>
-                        </div>
-                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="image-wrap">
-                        <span class="discount">-5%</span>
-                        <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                        <img src="{% static 'img/product1.png' %}" alt="Styling">
-                    </div>
-                    <div class="info">
-                        <span class="brand">TRESemmé</span>
-                        <h3>Heat Protectant Spray</h3>
-                        <div class="rating">★★★★★ <span>(167)</span></div>
-                        <div class="price">
-                            <span class="current">Rs.1,200</span>
-                            <span class="old">Rs.1,300</span>
-                        </div>
-                        <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                    </div>
-                </div>
+            <div class="product-grid" id="productGrid">
+                <!-- Products loaded dynamically -->
             </div>
 
-            <div class="pagination">
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <a href="#"><i class="fa-solid fa-chevron-right"></i></a>
+            <div class="pagination" id="pagination">
+                <!-- Pagination loaded dynamically -->
             </div>
         </div>
     </section>
-{% endblock %}
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <a href="{% url 'core:home' %}"><img src="{% static 'img/logo3.png' %}" alt="Kasbi Beauty" style="height:45px; width:auto; margin-bottom:16px; filter:brightness(10) grayscale(1) opacity(0.8);"></a>
+                <p>Your trusted beauty destination in Nepal. Premium skincare, makeup, haircare & more — all 100% authentic.</p>
+                <div class="social">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="{% url 'core:about' %}">About Us</a></li>
+                    <li><a href="{% url 'core:contact' %}">Contact Us</a></li>
+                    <li><a href="#">Beauty Blog</a></li>
+                    <li><a href="#">Track Order</a></li>
+                    <li><a href="#">Returns & Refunds</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Categories</h4>
+                <ul>
+                    <li><a href="{% url 'products:skincare' %}">Skincare</a></li>
+                    <li><a href="{% url 'products:makeup' %}">Makeup</a></li>
+                    <li><a href="{% url 'products:haircare' %}">Hair Care</a></li>
+                    <li><a href="{% url 'products:shop' %}">Fragrance</a></li>
+                    <li><a href="{% url 'products:shop' %}">Beauty Tools</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="#"><i class="fa-solid fa-phone" style="margin-right:8px;"></i>+977 980-0000000</a></li>
+                    <li><a href="#"><i class="fa-regular fa-envelope" style="margin-right:8px;"></i>hello@kasbi.com</a></li>
+                    <li><a href="#"><i class="fa-regular fa-location-dot" style="margin-right:8px;"></i>Kathmandu, Nepal</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Kasbi Beauty. All rights reserved.</span>
+            <div class="payment">
+                <i class="fa-brands fa-cc-visa"></i>
+                <i class="fa-brands fa-cc-mastercard"></i>
+                <i class="fa-brands fa-cc-paypal"></i>
+                <i class="fa-solid fa-wallet"></i>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ===== PRODUCT DATA - 90 PRODUCTS (FULL LIST) =====
+        const allProducts = [
+            // Page 1 - Products 1-12
+            { id: 1, name: 'Expert Repair Shampoo', brand: 'L\'Oreal', price: 1800, oldPrice: 2250, discount: '-20%', rating: 5, ratingCount: 412, image: '{% static "img/product4.png" %}', badge: 'bestseller', category: 'Shampoo' },
+            { id: 2, name: 'Ultimate Blends Conditioner', brand: 'Garnier', price: 1500, oldPrice: 1800, discount: '-15%', rating: 5, ratingCount: 328, image: '{% static "img/product1.png" %}', badge: null, category: 'Conditioner' },
+            { id: 3, name: 'Intensive Hair Mask', brand: 'Moroccanoil', price: 3500, oldPrice: 5000, discount: '-30%', rating: 5, ratingCount: 289, image: '{% static "img/product2.png" %}', badge: 'bestseller', category: 'Hair Mask' },
+            { id: 4, name: 'Argan Oil Hair Serum', brand: 'OGX', price: 2200, oldPrice: 2500, discount: '-10%', rating: 5, ratingCount: 234, image: '{% static "img/product3.png" %}', badge: null, category: 'Hair Serum' },
+            { id: 5, name: 'Hair Oil Serum', brand: 'L\'Oreal', price: 1600, oldPrice: 2100, discount: '-25%', rating: 5, ratingCount: 198, image: '{% static "img/product4.png" %}', badge: null, category: 'Hair Oil' },
+            { id: 6, name: 'Heat Protectant Spray', brand: 'TRESemmé', price: 1200, oldPrice: 1300, discount: '-5%', rating: 5, ratingCount: 167, image: '{% static "img/product1.png" %}', badge: null, category: 'Styling Products' },
+            { id: 7, name: 'Total Repair 5 Shampoo', brand: 'L\'Oreal', price: 2200, oldPrice: 2800, discount: '-25%', rating: 5, ratingCount: 234, image: '{% static "img/L\'Oreal.png" %}', badge: 'bestseller', category: 'Shampoo' },
+            { id: 8, name: 'Total Repair 5 Conditioner', brand: 'L\'Oreal', price: 1850, oldPrice: 2300, discount: '-20%', rating: 5, ratingCount: 234, image: '{% static "img/L\'Oreal.png" %}', badge: null, category: 'Conditioner' },
+            { id: 9, name: 'Micellar Water', brand: 'Garnier', price: 1800, oldPrice: 2000, discount: '-10%', rating: 5, ratingCount: 267, image: '{% static "img/garnier.png" %}', badge: null, category: 'Styling Products' },
+            { id: 10, name: 'Hair Mask Banana', brand: 'Garnier', price: 950, oldPrice: 1100, discount: '-10%', rating: 4, ratingCount: 145, image: '{% static "img/garnier.png" %}', badge: null, category: 'Hair Mask' },
+            { id: 11, name: 'Elvive Shampoo', brand: 'L\'Oreal', price: 1400, oldPrice: 1700, discount: '-18%', rating: 5, ratingCount: 189, image: '{% static "img/L\'Oreal.png" %}', badge: null, category: 'Shampoo' },
+            { id: 12, name: 'Elvive Conditioner', brand: 'L\'Oreal', price: 1400, oldPrice: 1700, discount: '-18%', rating: 5, ratingCount: 178, image: '{% static "img/L\'Oreal.png" %}', badge: null, category: 'Conditioner' },
+
+            // Page 2 - Products 13-24
+            { id: 13, name: 'Keratin Smooth Shampoo', brand: 'TRESemmé', price: 1300, oldPrice: 1600, discount: '-19%', rating: 4, ratingCount: 156, image: '{% static "img/product1.png" %}', badge: null, category: 'Shampoo' },
+            { id: 14, name: 'Keratin Smooth Conditioner', brand: 'TRESemmé', price: 1300, oldPrice: 1600, discount: '-19%', rating: 4, ratingCount: 145, image: '{% static "img/product2.png" %}', badge: null, category: 'Conditioner' },
+            { id: 15, name: 'Moroccanoil Treatment', brand: 'Moroccanoil', price: 4500, oldPrice: 5500, discount: '-18%', rating: 5, ratingCount: 234, image: '{% static "img/product3.png" %}', badge: 'bestseller', category: 'Hair Oil' },
+            { id: 16, name: 'Argan Oil Shampoo', brand: 'OGX', price: 1800, oldPrice: 2100, discount: '-14%', rating: 4, ratingCount: 167, image: '{% static "img/product4.png" %}', badge: null, category: 'Shampoo' },
+            { id: 17, name: 'Argan Oil Conditioner', brand: 'OGX', price: 1800, oldPrice: 2100, discount: '-14%', rating: 4, ratingCount: 156, image: '{% static "img/product1.png" %}', badge: null, category: 'Conditioner' },
+            { id: 18, name: 'Coconut Oil Shampoo', brand: 'OGX', price: 1700, oldPrice: 2000, discount: '-15%', rating: 4, ratingCount: 189, image: '{% static "img/product2.png" %}', badge: null, category: 'Shampoo' },
+            { id: 19, name: 'Coconut Oil Conditioner', brand: 'OGX', price: 1700, oldPrice: 2000, discount: '-15%', rating: 4, ratingCount: 178, image: '{% static "img/product3.png" %}', badge: null, category: 'Conditioner' },
+            { id: 20, name: 'Fructis Sleek & Shine Shampoo', brand: 'Garnier', price: 1200, oldPrice: 1450, discount: '-17%', rating: 4, ratingCount: 156, image: '{% static "img/garnier.png" %}', badge: null, category: 'Shampoo' },
+            { id: 21, name: 'Fructis Sleek & Shine Conditioner', brand: 'Garnier', price: 1200, oldPrice: 1450, discount: '-17%', rating: 4, ratingCount: 145, image: '{% static "img/garnier.png" %}', badge: null, category: 'Conditioner' },
+            { id: 22, name: 'Hair Serum Argan Oil', brand: 'L\'Oreal', price: 1900, oldPrice: 2300, discount: '-17%', rating: 5, ratingCount: 198, image: '{% static "img/L\'Oreal.png" %}', badge: 'new', category: 'Hair Serum' },
+            { id: 23, name: 'Hair Mask Coconut', brand: 'Garnier', price: 850, oldPrice: 1000, discount: '-15%', rating: 4, ratingCount: 134, image: '{% static "img/garnier.png" %}', badge: null, category: 'Hair Mask' },
+            { id: 24, name: 'Hair Mask Avocado', brand: 'Garnier', price: 900, oldPrice: 1050, discount: '-14%', rating: 4, ratingCount: 145, image: '{% static "img/garnier.png" %}', badge: null, category: 'Hair Mask' },
+
+            // Page 3 - Products 25-36
+            { id: 25, name: 'Kérastase Resistance Shampoo', brand: 'Kérastase', price: 3800, oldPrice: 4500, discount: '-15%', rating: 5, ratingCount: 178, image: '{% static "img/product4.png" %}', badge: 'bestseller', category: 'Shampoo' },
+            { id: 26, name: 'Kérastase Resistance Conditioner', brand: 'Kérastase', price: 3800, oldPrice: 4500, discount: '-15%', rating: 5, ratingCount: 167, image: '{% static "img/product1.png" %}', badge: null, category: 'Conditioner' },
+            { id: 27, name: 'Aveda Rosemary Mint Shampoo', brand: 'Aveda', price: 3200, oldPrice: 3800, discount: '-16%', rating: 5, ratingCount: 156, image: '{% static "img/product2.png" %}', badge: null, category: 'Shampoo' },
+            { id: 28, name: 'Aveda Rosemary Mint Conditioner', brand: 'Aveda', price: 3200, oldPrice: 3800, discount: '-16%', rating: 5, ratingCount: 145, image: '{% static "img/product3.png" %}', badge: null, category: 'Conditioner' },
+            { id: 29, name: 'Moroccanoil Moisture Repair Shampoo', brand: 'Moroccanoil', price: 3600, oldPrice: 4200, discount: '-14%', rating: 5, ratingCount: 189, image: '{% static "img/product4.png" %}', badge: 'new', category: 'Shampoo' },
+            { id: 30, name: 'Moroccanoil Moisture Repair Conditioner', brand: 'Moroccanoil', price: 3600, oldPrice: 4200, discount: '-14%', rating: 5, ratingCount: 178, image: '{% static "img/product1.png" %}', badge: null, category: 'Conditioner' },
+            { id: 31, name: 'OGX Biotin Shampoo', brand: 'OGX', price: 1650, oldPrice: 1900, discount: '-13%', rating: 4, ratingCount: 156, image: '{% static "img/product2.png" %}', badge: null, category: 'Shampoo' },
+            { id: 32, name: 'OGX Biotin Conditioner', brand: 'OGX', price: 1650, oldPrice: 1900, discount: '-13%', rating: 4, ratingCount: 145, image: '{% static "img/product3.png" %}', badge: null, category: 'Conditioner' },
+            { id: 33, name: 'TRESemmé Flawless Curls Shampoo', brand: 'TRESemmé', price: 1100, oldPrice: 1350, discount: '-18%', rating: 4, ratingCount: 134, image: '{% static "img/product4.png" %}', badge: null, category: 'Shampoo' },
+            { id: 34, name: 'TRESemmé Flawless Curls Conditioner', brand: 'TRESemmé', price: 1100, oldPrice: 1350, discount: '-18%', rating: 4, ratingCount: 123, image: '{% static "img/product1.png" %}', badge: null, category: 'Conditioner' },
+            { id: 35, name: 'L\'Oreal Professional Shampoo', brand: 'L\'Oreal', price: 2600, oldPrice: 3100, discount: '-16%', rating: 5, ratingCount: 167, image: '{% static "img/L\'Oreal.png" %}', badge: 'bestseller', category: 'Shampoo' },
+            { id: 36, name: 'L\'Oreal Professional Conditioner', brand: 'L\'Oreal', price: 2600, oldPrice: 3100, discount: '-16%', rating: 5, ratingCount: 156, image: '{% static "img/L\'Oreal.png" %}', badge: null, category: 'Conditioner' },
+
+            // Page 4 - Products 37-48
+            { id: 37, name: 'Hair Mask Shea Butter', brand: 'Garnier', price: 800, oldPrice: 950, discount: '-16%', rating: 4, ratingCount: 145, image: '{% static "img/garnier.png" %}', badge: null, category: 'Hair Mask' },
+            { id: 38, name: 'Hair Mask Argan Oil', brand: 'OGX', price: 2200, oldPrice: 2600, discount: '-15%', rating: 4, ratingCount: 156, image: '{% static "img/product2.png" %}', badge: null, category: 'Hair Mask' },
+            { id: 39, name: 'Kérastase Nutritive Shampoo', brand: 'Kérastase', price: 3600, oldPrice: 4200, discount: '-14%', rating: 5, ratingCount: 178, image: '{% static "img/product3.png" %}', badge: 'new', category: 'Shampoo' },
+            { id: 40, name: 'Kérastase Nutritive Conditioner', brand: 'Kérastase', price: 3600, oldPrice: 4200, discount: '-14%', rating: 5, ratingCount: 167, image: '{% static "img/product4.png" %}', badge: null, category: 'Conditioner' },
+            { id: 41, name: 'Aveda Damage Remedy Shampoo', brand: 'Aveda', price: 3400, oldPrice: 4000, discount: '-15%', rating: 5, ratingCount: 156, image: '{% static "img/product1.png" %}', badge: null, category: 'Shampoo' },
+            { id: 42, name: 'Aveda Damage Remedy Conditioner', brand: 'Aveda', price: 3400, oldPrice: 4000, discount: '-15%', rating: 5, ratingCount: 145, image: '{% static "img/product2.png" %}', badge: null, category: 'Conditioner' },
+            { id: 43, name: 'Moroccanoil Smoothing Shampoo', brand: 'Moroccanoil', price: 3400, oldPrice: 4000, discount: '-15%', rating: 5, ratingCount: 189, image: '{% static "img/product3.png" %}', badge: null, category: 'Shampoo' },
+            { id: 44, name: 'Moroccanoil Smoothing Conditioner', brand: 'Moroccanoil', price: 3400, oldPrice: 4000, discount: '-15%', rating: 5, ratingCount: 178, image: '{% static "img/product4.png" %}', badge: null, category: 'Conditioner' },
+            { id: 45, name: 'Hair Oil Coconut', brand: 'OGX', price: 1500, oldPrice: 1800, discount: '-17%', rating: 4, ratingCount: 156, image: '{% static "img/product1.png" %}', badge: null, category: 'Hair Oil' },
+            { id: 46, name: 'Hair Oil Argan', brand: 'Moroccanoil', price: 4200, oldPrice: 5000, discount: '-16%', rating: 5, ratingCount: 234, image: '{% static "img/product2.png" %}', badge: 'bestseller', category: 'Hair Oil' },
+            { id: 47, name: 'Frizz Control Serum', brand: 'TRESemmé', price: 1100, oldPrice: 1300, discount: '-15%', rating: 4, ratingCount: 145, image: '{% static "img/product3.png" %}', badge: null, category: 'Hair Serum' },
+            { id: 48, name: 'Smoothing Hair Cream', brand: 'L\'Oreal', price: 1500, oldPrice: 1800, discount: '-17%', rating: 4, ratingCount: 156, image: '{% static "img/L\'Oreal.png" %}', badge: null, category: 'Styling Products' },
+
+            // Page 5 - Products 49-60
+            { id: 49, name: 'Volume Boosting Shampoo', brand: 'TRESemmé', price: 1200, oldPrice: 1450, discount: '-17%', rating: 4, ratingCount: 134, image: '{% static "img/product4.png" %}', badge: null, category: 'Shampoo' },
+            { id: 50, name: 'Volume Boosting Conditioner', brand: 'TRESemmé', price: 1200, oldPrice: 1450, discount: '-17%', rating: 4, ratingCount: 123, image: '{% static "img/product1.png" %}', badge: null, category: 'Conditioner' },
+            { id: 51, name: 'Kérastase Genesis Shampoo', brand: 'Kérastase', price: 3900, oldPrice: 4600, discount: '-15%', rating: 5, ratingCount: 178, image: '{% static "img/product2.png" %}', badge: 'new', category: 'Shampoo' },
+            { id: 52, name: 'Kérastase Genesis Conditioner', brand: 'Kérastase', price: 3900, oldPrice: 4600, discount: '-15%', rating: 5, ratingCount: 167, image: '{% static "img/product3.png" %}', badge: null, category: 'Conditioner' },
+            { id: 53, name: 'Aveda Invati Shampoo', brand: 'Aveda', price: 3800, oldPrice: 4500, discount: '-16%', rating: 5, ratingCount: 156, image: '{% static "img/product4.png" %}', badge: 'bestseller', category: 'Shampoo' },
+            { id: 54, name: 'Aveda Invati Conditioner', brand: 'Aveda', price: 3800, oldPrice: 4500, discount: '-16%', rating: 5, ratingCount: 145, image: '{% static "img/product1.png" %}', badge: null, category: 'Conditioner' },
+            { id: 55, name: 'Garnier Fructis Strength Shampoo', brand: 'Garnier', price: 1100, oldPrice: 1300, discount: '-15%', rating: 4, ratingCount: 134, image: '{% static "img/garnier.png" %}', badge: null, category: 'Shampoo' },
+            { id: 56, name: 'Garnier Fructis Strength Conditioner', brand: 'Garnier', price: 1100, oldPrice: 1300, discount: '-15%', rating: 4, ratingCount: 123, image: '{% static "img/garnier.png" %}', badge: null, category: 'Conditioner' },
+            { id: 57, name: 'Hair Mask Aloe Vera', brand: 'Garnier', price: 750, oldPrice: 900, discount: '-17%', rating: 4, ratingCount: 145, image: '{% static "img/garnier.png" %}', badge: null, category: 'Hair Mask' },
+            { id: 58, name: 'Hair Mask Olive Oil', brand: 'OGX', price: 1900, oldPrice: 2300, discount: '-17%', rating: 4, ratingCount: 156, image: '{% static "img/product2.png" %}', badge: null, category: 'Hair Mask' },
+            { id: 59, name: 'Styling Gel', brand: 'L\'Oreal', price: 1300, oldPrice: 1600, discount: '-19%', rating: 4, ratingCount: 145, image: '{% static "img/L\'Oreal.png" %}', badge: null, category: 'Styling Products' },
+            { id: 60, name: 'Hair Mousse', brand: 'TRESemmé', price: 1000, oldPrice: 1200, discount: '-17%', rating: 4, ratingCount: 134, image: '{% static "img/product3.png" %}', badge: null, category: 'Styling Products' },
+
+            // Page 6 - Products 61-72
+            { id: 61, name: 'Color Protect Shampoo', brand: 'L\'Oreal', price: 2100, oldPrice: 2500, discount: '-16%', rating: 5, ratingCount: 156, image: '{% static "img/L\'Oreal.png" %}', badge: null, category: 'Shampoo' },
+            { id: 62, name: 'Color Protect Conditioner', brand: 'L\'Oreal', price: 2100, oldPrice: 2500, discount: '-16%', rating: 5, ratingCount: 145, image: '{% static "img/L\'Oreal.png" %}', badge: null, category: 'Conditioner' },
+            { id: 63, name: 'Keratin Repair Serum', brand: 'TRESemmé', price: 1400, oldPrice: 1700, discount: '-18%', rating: 4, ratingCount: 156, image: '{% static "img/product4.png" %}', badge: null, category: 'Hair Serum' },
+            { id: 64, name: 'Moroccanoil Curl Shampoo', brand: 'Moroccanoil', price: 3500, oldPrice: 4200, discount: '-17%', rating: 5, ratingCount: 167, image: '{% static "img/product1.png" %}', badge: 'new', category: 'Shampoo' },
+            { id: 65, name: 'Moroccanoil Curl Conditioner', brand: 'Moroccanoil', price: 3500, oldPrice: 4200, discount: '-17%', rating: 5, ratingCount: 156, image: '{% static "img/product2.png" %}', badge: null, category: 'Conditioner' },
+            { id: 66, name: 'Kérastase Discipline Shampoo', brand: 'Kérastase', price: 3700, oldPrice: 4400, discount: '-16%', rating: 5, ratingCount: 178, image: '{% static "img/product3.png" %}', badge: null, category: 'Shampoo' },
+            { id: 67, name: 'Kérastase Discipline Conditioner', brand: 'Kérastase', price: 3700, oldPrice: 4400, discount: '-16%', rating: 5, ratingCount: 167, image: '{% static "img/product4.png" %}', badge: null, category: 'Conditioner' },
+            { id: 68, name: 'Aveda Pure Abundance Shampoo', brand: 'Aveda', price: 3100, oldPrice: 3700, discount: '-16%', rating: 5, ratingCount: 145, image: '{% static "img/product1.png" %}', badge: null, category: 'Shampoo' },
+            { id: 69, name: 'Aveda Pure Abundance Conditioner', brand: 'Aveda', price: 3100, oldPrice: 3700, discount: '-16%', rating: 5, ratingCount: 134, image: '{% static "img/product2.png" %}', badge: null, category: 'Conditioner' },
+            { id: 70, name: 'Hair Dry Shampoo', brand: 'Garnier', price: 850, oldPrice: 1000, discount: '-15%', rating: 4, ratingCount: 156, image: '{% static "img/garnier.png" %}', badge: null, category: 'Styling Products' },
+            { id: 71, name: 'Hair Spray', brand: 'L\'Oreal', price: 1100, oldPrice: 1300, discount: '-15%', rating: 4, ratingCount: 145, image: '{% static "img/L\'Oreal.png" %}', badge: null, category: 'Styling Products' },
+            { id: 72, name: 'Hair Gloss', brand: 'OGX', price: 1600, oldPrice: 1900, discount: '-16%', rating: 4, ratingCount: 134, image: '{% static "img/product3.png" %}', badge: null, category: 'Styling Products' },
+
+            // Page 7 - Products 73-84
+            { id: 73, name: 'Repairing Hair Mask', brand: 'Kérastase', price: 4200, oldPrice: 5000, discount: '-16%', rating: 5, ratingCount: 189, image: '{% static "img/product4.png" %}', badge: 'bestseller', category: 'Hair Mask' },
+            { id: 74, name: 'Hair Mask Honey', brand: 'Garnier', price: 780, oldPrice: 930, discount: '-16%', rating: 4, ratingCount: 145, image: '{% static "img/garnier.png" %}', badge: null, category: 'Hair Mask' },
+            { id: 75, name: 'Moroccanoil Treatment Light', brand: 'Moroccanoil', price: 4200, oldPrice: 5000, discount: '-16%', rating: 5, ratingCount: 198, image: '{% static "img/product1.png" %}', badge: null, category: 'Hair Oil' },
+            { id: 76, name: 'Smoothing Serum', brand: 'L\'Oreal', price: 1700, oldPrice: 2000, discount: '-15%', rating: 4, ratingCount: 156, image: '{% static "img/L\'Oreal.png" %}', badge: null, category: 'Hair Serum' },
+            { id: 77, name: 'Frizz Control Cream', brand: 'TRESemmé', price: 1000, oldPrice: 1200, discount: '-17%', rating: 4, ratingCount: 145, image: '{% static "img/product2.png" %}', badge: null, category: 'Styling Products' },
+            { id: 78, name: 'Aveda Thickening Shampoo', brand: 'Aveda', price: 3300, oldPrice: 3900, discount: '-15%', rating: 5, ratingCount: 156, image: '{% static "img/product3.png" %}', badge: 'new', category: 'Shampoo' },
+            { id: 79, name: 'Aveda Thickening Conditioner', brand: 'Aveda', price: 3300, oldPrice: 3900, discount: '-15%', rating: 5, ratingCount: 145, image: '{% static "img/product4.png" %}', badge: null, category: 'Conditioner' },
+            { id: 80, name: 'Kérastase Elixir Oil', brand: 'Kérastase', price: 4800, oldPrice: 5700, discount: '-16%', rating: 5, ratingCount: 234, image: '{% static "img/product1.png" %}', badge: 'bestseller', category: 'Hair Oil' },
+            { id: 81, name: 'Hair Mask Protein', brand: 'OGX', price: 2000, oldPrice: 2400, discount: '-17%', rating: 4, ratingCount: 156, image: '{% static "img/product2.png" %}', badge: null, category: 'Hair Mask' },
+            { id: 82, name: 'Shine Serum', brand: 'L\'Oreal', price: 1500, oldPrice: 1800, discount: '-17%', rating: 4, ratingCount: 145, image: '{% static "img/L\'Oreal.png" %}', badge: null, category: 'Hair Serum' },
+            { id: 83, name: 'Root Lifting Spray', brand: 'TRESemmé', price: 950, oldPrice: 1150, discount: '-17%', rating: 4, ratingCount: 134, image: '{% static "img/product3.png" %}', badge: null, category: 'Styling Products' },
+            { id: 84, name: 'Texturizing Spray', brand: 'Garnier', price: 900, oldPrice: 1100, discount: '-18%', rating: 4, ratingCount: 145, image: '{% static "img/garnier.png" %}', badge: null, category: 'Styling Products' },
+
+            // Page 8 - Products 85-90
+            { id: 85, name: 'Moisture Shampoo', brand: 'OGX', price: 1600, oldPrice: 1900, discount: '-16%', rating: 4, ratingCount: 156, image: '{% static "img/product4.png" %}', badge: null, category: 'Shampoo' },
+            { id: 86, name: 'Moisture Conditioner', brand: 'OGX', price: 1600, oldPrice: 1900, discount: '-16%', rating: 4, ratingCount: 145, image: '{% static "img/product1.png" %}', badge: null, category: 'Conditioner' },
+            { id: 87, name: 'Aveda Botanical Shampoo', brand: 'Aveda', price: 3000, oldPrice: 3600, discount: '-17%', rating: 5, ratingCount: 156, image: '{% static "img/product2.png" %}', badge: null, category: 'Shampoo' },
+            { id: 88, name: 'Aveda Botanical Conditioner', brand: 'Aveda', price: 3000, oldPrice: 3600, discount: '-17%', rating: 5, ratingCount: 145, image: '{% static "img/product3.png" %}', badge: null, category: 'Conditioner' },
+            { id: 89, name: 'Hair Mask Keratin', brand: 'TRESemmé', price: 1300, oldPrice: 1600, discount: '-19%', rating: 4, ratingCount: 134, image: '{% static "img/product4.png" %}', badge: null, category: 'Hair Mask' },
+            { id: 90, name: 'Heat Protection Serum', brand: 'L\'Oreal', price: 1400, oldPrice: 1700, discount: '-18%', rating: 4, ratingCount: 156, image: '{% static "img/L\'Oreal.png" %}', badge: null, category: 'Hair Serum' }
+        ];
+
+        // ===== PRODUCTS PER PAGE =====
+        const productsPerPage = 12;
+        const totalPages = Math.ceil(allProducts.length / productsPerPage);
+
+        // ===== RENDER PRODUCTS =====
+        function renderProducts(page) {
+            const start = (page - 1) * productsPerPage;
+            const end = start + productsPerPage;
+            const pageProducts = allProducts.slice(start, end);
+            const grid = document.getElementById('productGrid');
+
+            grid.innerHTML = pageProducts.map(product => {
+                let badgeHTML = '';
+                if (product.badge === 'bestseller') {
+                    badgeHTML = `<span class="badge-bestseller">⭐ Best Seller</span>`;
+                } else if (product.badge === 'new') {
+                    badgeHTML = `<span class="badge-new">✨ New</span>`;
+                } else if (product.badge === 'sale') {
+                    badgeHTML = `<span class="badge-limited">🔥 Sale</span>`;
+                }
+
+                let stars = '';
+                for (let i = 0; i < 5; i++) {
+                    stars += i < product.rating ? '★' : '☆';
+                }
+
+                let oldPriceHTML = product.oldPrice ? `<span class="old">Rs.${product.oldPrice.toLocaleString()}</span>` : '';
+
+                return `
+                    <a href="product-detail.html?id=${product.id}" class="product-link">
+                        <div class="product-card" data-id="${product.id}">
+                            <div class="image-wrap">
+                                ${badgeHTML}
+                                <span class="discount">${product.discount}</span>
+                                <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                                <img src="${product.image}" alt="${product.name}">
+                            </div>
+                            <div class="info">
+                                <span class="brand">${product.brand}</span>
+                                <h3>${product.name}</h3>
+                                <div class="rating">${stars} <span>(${product.ratingCount})</span></div>
+                                <div class="price">
+                                    <span class="current">Rs.${product.price.toLocaleString()}</span>
+                                    ${oldPriceHTML}
+                                </div>
+                                <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                            </div>
+                        </div>
+                    </a>
+                `;
+            }).join('');
+
+            // Update product count
+            const totalVisible = Math.min(end, allProducts.length);
+            document.getElementById('productCount').textContent = `Showing ${start + 1}–${totalVisible} of ${allProducts.length} products`;
+
+            // Render pagination
+            renderPagination(page);
+        }
+
+        // ===== RENDER PAGINATION =====
+        function renderPagination(currentPage) {
+            const pagination = document.getElementById('pagination');
+            let html = '';
+
+            if (currentPage > 1) {
+                html += `<a href="#" onclick="changePage(${currentPage - 1}); return false;"><i class="fa-solid fa-chevron-left"></i></a>`;
+            }
+
+            const maxVisible = 5;
+            let startPage = Math.max(1, currentPage - 2);
+            let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+
+            if (endPage - startPage < maxVisible - 1) {
+                startPage = Math.max(1, endPage - maxVisible + 1);
+            }
+
+            if (startPage > 1) {
+                html += `<a href="#" onclick="changePage(1); return false;">1</a>`;
+                if (startPage > 2) {
+                    html += `<span style="padding: 8px 12px; color: #999;">...</span>`;
+                }
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                html += `<a href="#" onclick="changePage(${i}); return false;" class="${i === currentPage ? 'active' : ''}">${i}</a>`;
+            }
+
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    html += `<span style="padding: 8px 12px; color: #999;">...</span>`;
+                }
+                html += `<a href="#" onclick="changePage(${totalPages}); return false;">${totalPages}</a>`;
+            }
+
+            if (currentPage < totalPages) {
+                html += `<a href="#" onclick="changePage(${currentPage + 1}); return false;"><i class="fa-solid fa-chevron-right"></i></a>`;
+            }
+
+            pagination.innerHTML = html;
+        }
+
+        // ===== CHANGE PAGE =====
+        function changePage(page) {
+            renderProducts(page);
+            window.scrollTo({ top: document.querySelector('.shop-toolbar').offsetTop - 20, behavior: 'smooth' });
+        }
+
+        // ===== WISHLIST TOGGLE =====
+        document.querySelectorAll('.wishlist').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const icon = this.querySelector('i');
+                const productCard = this.closest('.product-card');
+                const productName = productCard ? productCard.querySelector('h3')?.textContent || 'Product' : 'Product';
+                
+                icon.classList.toggle('fa-regular');
+                icon.classList.toggle('fa-solid');
+                
+                if (icon.classList.contains('fa-solid')) {
+                    this.style.background = '#5E4074';
+                    this.style.color = 'white';
+                    this.style.borderColor = '#5E4074';
+                    this.style.transform = 'scale(1.2)';
+                    setTimeout(() => { this.style.transform = ''; }, 300);
+                    showToast(`❤️ ${productName} added to Wishlist!`);
+                } else {
+                    this.style.background = 'white';
+                    this.style.color = '#ccc';
+                    this.style.borderColor = '#eee';
+                    showToast(`💔 ${productName} removed from Wishlist`);
+                }
+            });
+        });
+
+        // ===== ADD TO CART ANIMATION =====
+        document.querySelectorAll('.add-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const originalText = this.innerHTML;
+                const productCard = this.closest('.product-card');
+                const productName = productCard ? productCard.querySelector('h3')?.textContent || 'Product' : 'Product';
+                
+                this.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="margin-right:8px;"></i>Adding...';
+                this.style.background = '#5E4074';
+                this.style.color = 'white';
+                this.disabled = true;
+                
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fa-solid fa-check" style="margin-right:8px;"></i>Added!';
+                    this.style.background = '#2ecc71';
+                    this.style.color = 'white';
+                    updateCartBadge();
+                    showToast(`✅ ${productName} added to cart!`);
+                    
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                        this.style.background = '';
+                        this.style.color = '';
+                        this.disabled = false;
+                    }, 2000);
+                }, 800);
+            });
+        });
+
+        // ===== CART BADGE UPDATE =====
+        let cartCount = 3;
+
+        function updateCartBadge() {
+            cartCount++;
+            const badge = document.querySelector('.cart-badge');
+            if (badge) {
+                badge.textContent = cartCount;
+                badge.style.animation = 'none';
+                setTimeout(() => {
+                    badge.style.animation = 'badgePulse 0.5s ease';
+                }, 10);
+            }
+        }
+
+        // ===== TOAST NOTIFICATION =====
+        function showToast(message) {
+            const existingToast = document.querySelector('.toast-notification');
+            if (existingToast) {
+                existingToast.remove();
+            }
+
+            const toast = document.createElement('div');
+            toast.className = 'toast-notification';
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                background: #2d1a3a;
+                color: white;
+                padding: 14px 24px;
+                border-radius: 12px;
+                font-size: 14px;
+                font-weight: 500;
+                box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+                z-index: 10000;
+                animation: slideInUp 0.4s ease forwards;
+                font-family: 'Inter', sans-serif;
+                max-width: 350px;
+                border-left: 4px solid #e91e63;
+            `;
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'slideOutDown 0.4s ease forwards';
+                setTimeout(() => {
+                    toast.remove();
+                }, 400);
+            }, 3000);
+        }
+
+        // ===== ADD CSS ANIMATIONS =====
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+            @keyframes slideInUp {
+                0% { transform: translateY(100px); opacity: 0; }
+                100% { transform: translateY(0); opacity: 1; }
+            }
+            @keyframes slideOutDown {
+                0% { transform: translateY(0); opacity: 1; }
+                100% { transform: translateY(100px); opacity: 0; }
+            }
+            @keyframes badgePulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.4); }
+                100% { transform: scale(1); }
+            }
+            .cart-badge {
+                display: inline-block;
+                background: #e91e63;
+                color: white;
+                font-size: 10px;
+                font-weight: 700;
+                border-radius: 50%;
+                padding: 2px 6px;
+                min-width: 18px;
+                text-align: center;
+                position: absolute;
+                top: -8px;
+                right: -10px;
+            }
+            .header-icons > div {
+                position: relative;
+            }
+            .wishlist {
+                transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 36px;
+                height: 36px;
+                background: white;
+                border-radius: 50%;
+                border: 1px solid #eee;
+                color: #ccc;
+                font-size: 14px;
+                position: absolute;
+                top: 14px;
+                right: 14px;
+                z-index: 2;
+            }
+            .wishlist i {
+                pointer-events: none;
+            }
+            .add-btn {
+                transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+                cursor: pointer;
+            }
+            .add-btn:disabled {
+                opacity: 0.7;
+                cursor: not-allowed;
+            }
+            .product-card .image-wrap {
+                position: relative;
+            }
+            .pagination {
+                display: flex;
+                gap: 8px;
+                justify-content: center;
+                margin-top: 30px;
+                flex-wrap: wrap;
+            }
+            .pagination a {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                min-width: 40px;
+                height: 40px;
+                padding: 0 12px;
+                border-radius: 8px;
+                background: white;
+                border: 1px solid #eee;
+                color: #666;
+                text-decoration: none;
+                transition: all 0.3s ease;
+                font-weight: 500;
+            }
+            .pagination a:hover {
+                background: #5E4074;
+                color: white;
+                border-color: #5E4074;
+            }
+            .pagination a.active {
+                background: #5E4074;
+                color: white;
+                border-color: #5E4074;
+            }
+            .pagination a i {
+                font-size: 12px;
+            }
+            .product-link {
+                text-decoration: none;
+                color: inherit;
+                display: block;
+                transition: transform 0.3s ease;
+            }
+            .product-link:hover {
+                transform: translateY(-4px);
+            }
+        `;
+        document.head.appendChild(styleSheet);
+
+        // ===== INITIAL LOAD =====
+        renderProducts(1);
+
+        console.log('💇‍♀️ Kasbi Beauty — Hair Care Page Loaded with 90 products! 💇‍♀️');
+    </script>
+
+</body>
+</html>

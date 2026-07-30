@@ -1,62 +1,50 @@
 {% extends 'base.html' %}
 {% load static %}
-
-{% block title %}Kasbi Beauty — Contact Us{% endblock %}
+{% block title %}Contact Us — Kasbi Beauty{% endblock %}
 
 {% block content %}
-<!-- ===== PAGE HEADER ===== -->
-<div class="page-header">
-    <h1>Contact Us</h1>
-    <p>We'd love to hear from you</p>
-    <div class="breadcrumb">
-        <a href="{% url 'core:home' %}">Home</a>
-        <span class="sep">/</span>
-        <span class="current">Contact</span>
-    </div>
+<div class="page-header" style="background:var(--cream);padding:30px 6%;text-align:center;">
+  <h1 style="font-family:'Cormorant Garamond',serif;font-size:38px;color:var(--dark);">Contact Us</h1>
+  <p style="color:var(--gray);">We'd love to hear from you</p>
+  <div class="breadcrumb" style="font-size:13px;color:var(--gray);">
+    <a href="{% url 'core:home' %}" style="color:var(--primary);">Home</a> / Contact
+  </div>
 </div>
 
-<!-- ===== CONTACT SECTION ===== -->
 <section class="contact-section">
-    <div class="contact-grid">
-        
-        <!-- Left: Form -->
-        <div class="contact-form">
-            <h3>Send a Message</h3>
-            <p>Have a question about products, orders, or anything else? We're here to help!</p>
-            
-            <form action="#" method="POST">
-                {% csrf_token %}
-                <input type="text" name="name" placeholder="Your Name" required>
-                <input type="email" name="email" placeholder="Your Email" required>
-                <input type="text" name="subject" placeholder="Subject" required>
-                <textarea name="message" placeholder="Your Message" required></textarea>
-                <button type="submit" class="btn-primary">
-                    <i class="fa-regular fa-paper-plane"></i> Send Message
-                </button>
-            </form>
-        </div>
+  <div class="contact-grid">
+    <div class="contact-form">
+      <h3>Send a Message</h3>
+      <p>Have a question about products, orders, or anything else? We're here to help!</p>
 
-        <!-- Right: Info Cards -->
-        <div class="contact-info">
-            <div class="card">
-                <i class="fa-solid fa-location-dot"></i>
-                <h4>Visit Us</h4>
-                <p>Kathmandu, Nepal</p>
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-phone"></i>
-                <h4>Call Us</h4>
-                <p>+977 980-0000000</p>
-                <p style="font-size:13px; color:#888; margin-top:4px;">Mon – Sat, 10am – 7pm</p>
-            </div>
-            <div class="card">
-                <i class="fa-regular fa-envelope"></i>
-                <h4>Email Us</h4>
-                <p>hello@kasbi.com</p>
-                <p style="font-size:13px; color:#888; margin-top:4px;">We reply within 24 hours</p>
-            </div>
-        </div>
+      {% if messages %}
+      {% for message in messages %}
+      <div style="background:{% if 'error' in message.tags %}#fdecea;border-color:#f5c6cb;color:#721c24{% else %}#d4edda;border-color:#c3e6cb;color:#155724{% endif %};border:1px solid;padding:12px 16px;border-radius:10px;font-size:14px;margin-bottom:18px;">
+        {{ message }}
+      </div>
+      {% endfor %}
+      {% endif %}
 
+      <form action="" method="POST" novalidate>
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="Your Name" value="{{ form.name.value|default:'' }}" required>
+        {% if form.name.errors %}<p style="color:#e74c3c;font-size:12px;margin:-8px 0 8px;">{{ form.name.errors|striptags }}</p>{% endif %}
+        <input type="email" name="email" placeholder="Your Email" value="{{ form.email.value|default:'' }}" required>
+        {% if form.email.errors %}<p style="color:#e74c3c;font-size:12px;margin:-8px 0 8px;">{{ form.email.errors|striptags }}</p>{% endif %}
+        <input type="text" name="subject" placeholder="Subject" value="{{ form.subject.value|default:'' }}">
+        <textarea name="message" placeholder="Your Message" required>{{ form.message.value|default:'' }}</textarea>
+        {% if form.message.errors %}<p style="color:#e74c3c;font-size:12px;margin:-8px 0 8px;">{{ form.message.errors|striptags }}</p>{% endif %}
+        <button type="submit" class="btn-primary">
+          <i class="fa-regular fa-paper-plane"></i> Send Message
+        </button>
+      </form>
     </div>
+
+    <div class="contact-info">
+      <div class="card"><i class="fa-solid fa-location-dot"></i><h4>Visit Us</h4><p>Kathmandu, Nepal</p></div>
+      <div class="card"><i class="fa-solid fa-phone"></i><h4>Call Us</h4><p>+977 980-0000000</p><p style="font-size:13px;color:#888;margin-top:4px;">Mon–Sat, 10am–7pm</p></div>
+      <div class="card"><i class="fa-regular fa-envelope"></i><h4>Email Us</h4><p>hello@kasbi.com</p><p style="font-size:13px;color:#888;margin-top:4px;">We reply within 24 hours</p></div>
+    </div>
+  </div>
 </section>
 {% endblock %}

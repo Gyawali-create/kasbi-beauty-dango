@@ -1,124 +1,26 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %}{% if page_title %}{{ page_title }} — {% endif %}Kasbi Beauty{% endblock %}
+
+{% block extra_head %}
+<style>
+.product-link{text-decoration:none;color:inherit;display:block;transition:transform .3s ease;}
+.product-link:hover{transform:translateY(-4px);}
+.product-card .badge-bestseller{position:absolute;top:14px;left:14px;background:var(--gold-gradient);color:var(--dark);padding:3px 12px;border-radius:30px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;box-shadow:0 4px 15px rgba(212,175,55,.25);z-index:1;}
+.product-card .badge-new{position:absolute;top:14px;left:14px;background:#2ecc71;color:white;padding:3px 12px;border-radius:30px;font-size:10px;font-weight:700;text-transform:uppercase;z-index:1;}
+.pagination{display:flex;justify-content:center;gap:8px;margin-top:40px;flex-wrap:wrap;}
+.pagination a,.pagination span{width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:12px;border:1px solid #ddd;color:var(--gray);font-weight:500;transition:var(--transition);text-decoration:none;}
+.pagination a:hover{border-color:var(--primary);color:var(--primary);}
+.pagination .active{background:var(--primary);color:white;border-color:var(--primary);}
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="container py-4">
-  <div class="row">
-    <div class="col-lg-3 mb-4">
-      <div class="card p-3 stat-card">
-        <h6 class="mb-3">Filter Products</h6>
-        <form method="get">
-          {% if query %}<input type="hidden" name="q" value="{{ query }}">{% endif %}
-          <div class="mb-3">
-            <label class="form-label small fw-bold">Category</label>
-            <select name="category" class="form-select form-select-sm" onchange="this.form.submit()">
-              <option value="">All Categories</option>
-              {% for c in categories %}
-                <option value="{{ c.slug }}" {% if c.slug == selected_category %}selected{% endif %}>{{ c.name }}</option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="mb-3">
-            <label class="form-label small fw-bold">Brand</label>
-            <select name="brand" class="form-select form-select-sm" onchange="this.form.submit()">
-              <option value="">All Brands</option>
-              {% for b in brands %}
-                <option value="{{ b.slug }}" {% if b.slug == selected_brand %}selected{% endif %}>{{ b.name }}</option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="mb-3">
-            <label class="form-label small fw-bold">Price Range (Rs.)</label>
-            <div class="d-flex gap-2">
-              <input type="number" name="min_price" class="form-control form-control-sm" placeholder="Min" value="{{ min_price }}">
-              <input type="number" name="max_price" class="form-control form-control-sm" placeholder="Max" value="{{ max_price }}">
-            </div>
-          </div>
-          <input type="hidden" name="sort" value="{{ sort }}">
-          <button type="submit" class="btn btn-kasbi btn-sm w-100">Apply Filters</button>
-          <a href="{% url 'products:list' %}" class="btn btn-outline-secondary btn-sm w-100 mt-2">Clear</a>
-        </form>
-      </div>
-    </div>
-
-    <div class="col-lg-9">
-      <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
-        <h5 class="mb-0">{% if query %}Results for "{{ query }}"{% else %}All Products{% endif %} <span class="text-muted small">({{ page_obj.paginator.count }})</span></h5>
-        <form method="get" class="d-flex align-items-center gap-2">
-          {% if query %}<input type="hidden" name="q" value="{{ query }}">{% endif %}
-          {% if selected_category %}<input type="hidden" name="category" value="{{ selected_category }}">{% endif %}
-          {% if selected_brand %}<input type="hidden" name="brand" value="{{ selected_brand }}">{% endif %}
-          <label class="small text-muted mb-0">Sort:</label>
-          <select name="sort" class="form-select form-select-sm" style="width: auto;" onchange="this.form.submit()">
-            <option value="newest" {% if sort == 'newest' %}selected{% endif %}>Newest Arrivals</option>
-            <option value="price_low" {% if sort == 'price_low' %}selected{% endif %}>Price: Low to High</option>
-            <option value="price_high" {% if sort == 'price_high' %}selected{% endif %}>Price: High to Low</option>
-            <option value="popularity" {% if sort == 'popularity' %}selected{% endif %}>Popularity</option>
-          </select>
-        </form>
-      </div>
-
-      <div class="row g-4">
-        {% for p in page_obj %}
-        <div class="col-6 col-md-4">
-          <div class="card product-card">
-            <a href="{{ p.get_absolute_url }}">
-              {% if p.thumbnail %}
-                <img src="{{ p.thumbnail.url }}" class="card-img-top" alt="{{ p.name }}">
-              {% else %}
-                <img src="{% static 'img/logo.png' %}" class="card-img-top p-4" alt="{{ p.name }}">
-              {% endif %}
-            </a>
-            <div class="card-body">
-              <h6 class="card-title"><a href="{{ p.get_absolute_url }}" class="text-decoration-none text-dark">{{ p.name }}</a></h6>
-              <p class="mb-2">
-                {% if p.discount_price %}
-                  <span class="price-old">Rs. {{ p.price }}</span>
-                  <span class="price-new">Rs. {{ p.discount_price }}</span>
-                {% else %}
-                  <span class="price-new">Rs. {{ p.price }}</span>
-                {% endif %}
-              </p>
-              <div class="d-flex gap-2">
-                {% if user.is_authenticated %}
-                <form method="post" action="{% url 'cart:add' p.id %}" class="flex-grow-1">
-                  {% csrf_token %}
-                  <input type="hidden" name="quantity" value="1">
-                  <input type="hidden" name="next" value="{{ request.get_full_path }}">
-                  <button type="submit" class="btn btn-kasbi btn-sm w-100" {% if not p.in_stock %}disabled{% endif %}>
-                    {% if p.in_stock %}Add to Cart{% else %}Out of Stock{% endif %}
-                  </button>
-                </form>
-                {% if p.id in wishlist_ids %}
-                  <a href="{% url 'products:wishlist_remove' p.id %}" class="btn btn-outline-kasbi btn-sm"><i class="bi bi-heart-fill"></i></a>
-                {% else %}
-                  <a href="{% url 'products:wishlist_add' p.id %}" class="btn btn-outline-kasbi btn-sm"><i class="bi bi-heart"></i></a>
-                {% endif %}
-                {% else %}
-                <a href="{% url 'accounts:login' %}" class="btn btn-kasbi btn-sm w-100">Login to buy</a>
-                {% endif %}
-              </div>
-            </div>
-          </div>
-        </div>
-        {% empty %}
-        <p class="text-muted">No products match your filters.</p>
-        {% endfor %}
-      </div>
-
-      {% if page_obj.paginator.num_pages > 1 %}
-      <nav class="mt-4">
-        <ul class="pagination justify-content-center">
-          {% if page_obj.has_previous %}
-            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&q={{ query }}&sort={{ sort }}">Previous</a></li>
-          {% endif %}
-          <li class="page-item disabled"><span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span></li>
-          {% if page_obj.has_next %}
-            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&q={{ query }}&sort={{ sort }}">Next</a></li>
-          {% endif %}
-        </ul>
-      </nav>
-      {% endif %}
-    </div>
-  </div>
+{% if page_title %}
+<div style="background:var(--cream);padding:30px 6%;text-align:center;">
+    <h1 style="font-family:'Cormorant Garamond',serif;font-size:38px;color:var(--dark);margin-bottom:6px;">{{ page_title }}</h1>
+    <p style="color:var(--gray);font-size:15px;">{{ page_obj.paginator.count }} products found</p>
 </div>
+{% endif %}
+{% include 'products/_product_grid.html' %}
 {% endblock %}

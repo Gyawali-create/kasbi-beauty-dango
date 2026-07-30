@@ -1,31 +1,42 @@
 {% extends 'base.html' %}
 {% load static %}
-
-{% block title %}Kasbi Beauty — About{% endblock %}
+{% block title %}About Us — Kasbi Beauty{% endblock %}
 
 {% block content %}
-<!-- ===== PAGE HEADER ===== -->
-    <div class="page-header">
-        <h1>About Kasbi Beauty</h1>
-        <p>Your trusted beauty destination in Nepal</p>
-        <div class="breadcrumb">
-            <a href="{% url 'core:home' %}">Home</a>
-            <span class="sep">/</span>
-            <span class="current">About</span>
-        </div>
-    </div>
+<div style="background:var(--cream);padding:30px 6%;text-align:center;">
+  <h1 style="font-family:'Cormorant Garamond',serif;font-size:38px;color:var(--dark);">About Kasbi Beauty</h1>
+  <p style="color:var(--gray);">Your trusted beauty destination in Nepal</p>
+  <div style="font-size:13px;color:var(--gray);">
+    <a href="{% url 'core:home' %}" style="color:var(--primary);">Home</a> / About
+  </div>
+</div>
 
-    <!-- ===== ABOUT SECTION ===== -->
-    <section class="about-section">
-        <div class="about-grid">
-            <div>
-                <h2>Your Beauty. <span style="color:var(--primary);">Your Kasbi.</span></h2>
-                <p>Kasbi Beauty was born from a simple belief: everyone deserves access to premium beauty products that make them feel confident and radiant. We're Nepal's trusted destination for authentic Korean skincare, luxury makeup, and premium haircare.</p>
-                <p>We carefully curate every product in our collection, partnering with world-renowned brands to bring you the best of global beauty. From CeraVe to The Ordinary, Maybelline to L'Oreal — we've got you covered.</p>
-                <p>Our mission is to make beauty accessible, authentic, and enjoyable for everyone across Nepal. With fast delivery, secure payments, and dedicated support, we're here to help you glow with confidence.</p>
-                <a href="{% url 'core:contact' %}" class="btn-primary" style="margin-top:10px;"><i class="fa-regular fa-message"></i> Get in Touch</a>
-            </div>
-            <img src="{% static 'img/hero.png' %}" alt="About Kasbi Beauty" style="border-radius:var(--border-radius); box-shadow:var(--shadow-hover);">
-        </div>
-    </section>
+<section class="about-section">
+  <div class="about-grid">
+    <div>
+      <h2>Your Beauty. <span style="color:var(--primary);">Your Kasbi.</span></h2>
+      {% if site_settings.about_text %}
+      <p>{{ site_settings.about_text }}</p>
+      {% else %}
+      <p>Kasbi Beauty was born from a simple belief: everyone deserves access to premium beauty products that make them feel confident and radiant. We're Nepal's trusted destination for authentic Korean skincare, luxury makeup, and premium haircare.</p>
+      <p>We carefully curate every product in our collection, partnering with world-renowned brands to bring you the best of global beauty. From CeraVe to The Ordinary, Maybelline to L'Oreal — we've got you covered.</p>
+      <p>Our mission is to make beauty accessible, authentic, and enjoyable for everyone across Nepal. With fast delivery, secure payments, and dedicated support, we're here to help you glow with confidence.</p>
+      {% endif %}
+      {% if site_settings.mission %}
+      <p style="margin-top:16px;"><strong>Our Mission:</strong> {{ site_settings.mission }}</p>
+      {% endif %}
+      <a href="{% url 'core:contact' %}" class="btn-primary" style="margin-top:20px;display:inline-flex;">
+        <i class="fa-regular fa-message"></i> Get in Touch
+      </a>
+    </div>
+    <img src="{% static 'img/hero.png' %}" alt="About Kasbi Beauty" style="border-radius:var(--border-radius);box-shadow:var(--shadow-hover);">
+  </div>
+</section>
+
+<section class="features" style="margin-top:0;">
+  <div class="feature scroll-reveal"><div class="icon"><i class="fa-solid fa-truck-fast"></i></div><h3>Nationwide Delivery</h3><p>Fast shipping all over Nepal</p></div>
+  <div class="feature scroll-reveal"><div class="icon"><i class="fa-solid fa-medal"></i></div><h3>100% Authentic</h3><p>Guaranteed original products</p></div>
+  <div class="feature scroll-reveal"><div class="icon"><i class="fa-solid fa-credit-card"></i></div><h3>Secure Payment</h3><p>eSewa • Khalti • COD • Cards</p></div>
+  <div class="feature scroll-reveal"><div class="icon"><i class="fa-solid fa-headset"></i></div><h3>24/7 Support</h3><p>Dedicated beauty experts</p></div>
+</section>
 {% endblock %}
