@@ -1,37 +1,154 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block title %}Contact Us — {{ site.site_name }}{% endblock %}
+
 {% block content %}
-<div class="container py-5">
-  <h1 class="text-kasbi mb-4">Contact Us</h1>
-  <div class="row">
-    <div class="col-md-7">
-      <form method="post">
-        {% csrf_token %}
-        <div class="mb-3">
-          <label class="form-label">Name</label>
-          {{ form.name }}
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Email</label>
-          {{ form.email }}
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Subject</label>
-          {{ form.subject }}
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Message</label>
-          {{ form.message }}
-        </div>
-        <button type="submit" class="btn btn-kasbi">Send Message</button>
-      </form>
-    </div>
-    <div class="col-md-5">
-      <div class="card p-4 stat-card">
-        <h6>Get in touch</h6>
-        <p class="mb-1"><i class="bi bi-envelope"></i> {{ site_settings.email }}</p>
-        {% if site_settings.phone %}<p class="mb-0"><i class="bi bi-telephone"></i> {{ site_settings.phone }}</p>{% endif %}
-      </div>
-    </div>
+
+<!-- ===== PAGE HEADER ===== -->
+<div style="background:var(--cream);padding:40px 6%;text-align:center;border-bottom:1px solid rgba(0,0,0,0.05);">
+  <h1 style="font-family:'Cormorant Garamond',serif;font-size:42px;color:var(--dark);margin-bottom:8px;">Contact Us</h1>
+  <p style="color:var(--gray);font-size:15px;">We'd love to hear from you</p>
+  <div style="font-size:13px;color:var(--gray);margin-top:8px;">
+    <a href="{% url 'core:home' %}" style="color:var(--primary);">Home</a> / Contact
   </div>
 </div>
+
+<!-- ===== CONTACT SECTION ===== -->
+<section class="contact-section">
+  <div class="contact-grid">
+
+    <!-- ===== CONTACT FORM ===== -->
+    <div class="contact-form">
+      <h3>Send a Message</h3>
+      <p style="color:var(--gray);font-size:14px;margin-bottom:24px;">
+        Have a question about products, orders, or anything else? We're here to help — we reply within 24 hours.
+      </p>
+
+      <form method="POST" novalidate>
+        {% csrf_token %}
+
+        <div style="margin-bottom:16px;">
+          <input
+            type="text"
+            name="name"
+            placeholder="Your Full Name *"
+            value="{{ form.name.value|default:'' }}"
+            required
+            style="width:100%;padding:13px 16px;border:1px solid {% if form.name.errors %}#e74c3c{% else %}#e0e0e0{% endif %};border-radius:12px;font-size:14px;font-family:inherit;outline:none;transition:border-color .2s;box-sizing:border-box;"
+            onfocus="this.style.borderColor='var(--primary)'"
+            onblur="this.style.borderColor='#e0e0e0'"
+          >
+          {% if form.name.errors %}
+          <p style="color:#e74c3c;font-size:12px;margin:5px 0 0 4px;">{{ form.name.errors|striptags }}</p>
+          {% endif %}
+        </div>
+
+        <div style="margin-bottom:16px;">
+          <input
+            type="email"
+            name="email"
+            placeholder="Your Email Address *"
+            value="{{ form.email.value|default:'' }}"
+            required
+            style="width:100%;padding:13px 16px;border:1px solid {% if form.email.errors %}#e74c3c{% else %}#e0e0e0{% endif %};border-radius:12px;font-size:14px;font-family:inherit;outline:none;transition:border-color .2s;box-sizing:border-box;"
+            onfocus="this.style.borderColor='var(--primary)'"
+            onblur="this.style.borderColor='#e0e0e0'"
+          >
+          {% if form.email.errors %}
+          <p style="color:#e74c3c;font-size:12px;margin:5px 0 0 4px;">{{ form.email.errors|striptags }}</p>
+          {% endif %}
+        </div>
+
+        <div style="margin-bottom:16px;">
+          <input
+            type="text"
+            name="subject"
+            placeholder="Subject (optional)"
+            value="{{ form.subject.value|default:'' }}"
+            style="width:100%;padding:13px 16px;border:1px solid #e0e0e0;border-radius:12px;font-size:14px;font-family:inherit;outline:none;transition:border-color .2s;box-sizing:border-box;"
+            onfocus="this.style.borderColor='var(--primary)'"
+            onblur="this.style.borderColor='#e0e0e0'"
+          >
+        </div>
+
+        <div style="margin-bottom:20px;">
+          <textarea
+            name="message"
+            placeholder="Your Message *"
+            required
+            rows="5"
+            style="width:100%;padding:13px 16px;border:1px solid {% if form.message.errors %}#e74c3c{% else %}#e0e0e0{% endif %};border-radius:12px;font-size:14px;font-family:inherit;outline:none;transition:border-color .2s;resize:vertical;box-sizing:border-box;"
+            onfocus="this.style.borderColor='var(--primary)'"
+            onblur="this.style.borderColor='#e0e0e0'"
+          >{{ form.message.value|default:'' }}</textarea>
+          {% if form.message.errors %}
+          <p style="color:#e74c3c;font-size:12px;margin:5px 0 0 4px;">{{ form.message.errors|striptags }}</p>
+          {% endif %}
+        </div>
+
+        <button type="submit" class="btn-primary" style="width:100%;justify-content:center;padding:14px;">
+          <i class="fa-regular fa-paper-plane"></i> Send Message
+        </button>
+      </form>
+    </div>
+
+    <!-- ===== CONTACT INFO (from SiteSettings) ===== -->
+    <div class="contact-info">
+      {% if site.address %}
+      <div class="card">
+        <i class="fa-solid fa-location-dot"></i>
+        <h4>Visit Us</h4>
+        <p>{{ site.address }}</p>
+      </div>
+      {% endif %}
+
+      {% if site.phone %}
+      <div class="card">
+        <i class="fa-solid fa-phone"></i>
+        <h4>Call Us</h4>
+        <p><a href="tel:{{ site.phone }}" style="color:inherit;text-decoration:none;">{{ site.phone }}</a></p>
+        <p style="font-size:13px;color:#888;margin-top:4px;">Mon–Sat, 10am–7pm</p>
+      </div>
+      {% endif %}
+
+      {% if site.email %}
+      <div class="card">
+        <i class="fa-regular fa-envelope"></i>
+        <h4>Email Us</h4>
+        <p><a href="mailto:{{ site.email }}" style="color:inherit;text-decoration:none;">{{ site.email }}</a></p>
+        <p style="font-size:13px;color:#888;margin-top:4px;">We reply within 24 hours</p>
+      </div>
+      {% endif %}
+
+      <!-- fallback if no settings saved yet -->
+      {% if not site.address and not site.phone and not site.email %}
+      <div class="card">
+        <i class="fa-solid fa-location-dot"></i>
+        <h4>Visit Us</h4>
+        <p>Kathmandu, Nepal</p>
+      </div>
+      <div class="card">
+        <i class="fa-regular fa-envelope"></i>
+        <h4>Email Us</h4>
+        <p>support@kasbibeauty.com</p>
+        <p style="font-size:13px;color:#888;margin-top:4px;">We reply within 24 hours</p>
+      </div>
+      {% endif %}
+
+      <!-- Social links -->
+      <div class="card" style="background:var(--cream);">
+        <i class="fa-solid fa-share-nodes"></i>
+        <h4>Follow Us</h4>
+        <div style="display:flex;gap:12px;margin-top:10px;">
+          <a href="#" style="width:38px;height:38px;background:var(--primary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:14px;"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" style="width:38px;height:38px;background:#e1306c;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:14px;"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" style="width:38px;height:38px;background:#ff0000;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:14px;"><i class="fa-brands fa-youtube"></i></a>
+          <a href="#" style="width:38px;height:38px;background:#000000;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:14px;"><i class="fa-brands fa-tiktok"></i></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 {% endblock %}

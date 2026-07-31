@@ -1,39 +1,170 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block title %}Checkout — Kasbi Beauty{% endblock %}
+
+{% block extra_head %}
+<style>
+.page-header-inner{background:var(--cream);padding:30px 6%;text-align:center;}
+.page-header-inner h1{font-family:'Cormorant Garamond',serif;font-size:38px;color:var(--dark);}
+.page-header-inner .breadcrumb{font-size:13px;color:var(--gray);}
+.page-header-inner .breadcrumb a{color:var(--primary);}
+.checkout-section{padding:40px 6% 80px;max-width:1100px;margin:0 auto;}
+.checkout-grid{display:grid;grid-template-columns:3fr 2fr;gap:30px;}
+.checkout-card{background:var(--white);border-radius:var(--border-radius);padding:32px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.04);margin-bottom:20px;}
+.checkout-card h4{font-size:16px;font-weight:700;color:var(--dark);margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--cream);}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-field{margin-bottom:4px;}
+.form-field.full{grid-column:1/-1;}
+.form-field label{display:block;font-size:13px;font-weight:600;color:var(--dark);margin-bottom:6px;}
+.form-field input,.form-field select{width:100%;padding:11px 15px;border:1px solid #e0e0e0;border-radius:10px;font-size:14px;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s;box-sizing:border-box;}
+.form-field input:focus,.form-field select:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(94,64,116,0.08);}
+.field-error{color:#e74c3c;font-size:12px;margin-top:3px;}
+.order-sidebar{position:sticky;top:90px;}
+.order-card{background:var(--white);border-radius:var(--border-radius);padding:28px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.04);}
+.order-card h4{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--dark);margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--cream);}
+.order-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--cream);align-items:center;}
+.order-item:last-of-type{border-bottom:none;}
+.order-item img{width:52px;height:52px;object-fit:contain;background:var(--cream);border-radius:8px;padding:6px;}
+.order-item-info{flex:1;}
+.order-item-info h5{font-size:13px;color:var(--dark);margin:0 0 3px;}
+.order-item-info span{font-size:12px;color:var(--gray);}
+.order-item-price{font-size:14px;font-weight:600;color:var(--primary);}
+.summary-row{display:flex;justify-content:space-between;padding:8px 0;font-size:14px;color:var(--gray);}
+.summary-row.total{font-size:18px;font-weight:700;color:var(--dark);border-top:2px solid var(--cream);padding-top:12px;margin-top:8px;}
+.summary-row.total span:last-child{color:var(--primary);}
+.place-btn{width:100%;background:var(--primary);color:white;border:none;padding:14px;border-radius:30px;font-size:15px;font-weight:600;cursor:pointer;margin-top:18px;font-family:'Inter',sans-serif;transition:var(--transition);}
+.place-btn:hover{background:#4a2f5e;transform:translateY(-2px);box-shadow:0 8px 24px rgba(94,64,116,0.3);}
+@media(max-width:900px){.checkout-grid{grid-template-columns:1fr;}.order-sidebar{position:static;}.form-grid{grid-template-columns:1fr;}}
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="container py-4">
-  <h2 class="text-kasbi mb-4">Checkout</h2>
-  <div class="row g-4">
-    <div class="col-md-7">
-      <div class="card p-4 stat-card">
-        <form method="post">
-          {% csrf_token %}
-          {% for field in form %}
-          <div class="mb-3">
-            <label class="form-label">{{ field.label }}</label>
-            {{ field }}
-            {% if field.errors %}<div class="text-danger small">{{ field.errors|striptags }}</div>{% endif %}
-          </div>
-          {% endfor %}
-          <button type="submit" class="btn btn-kasbi w-100">Place Order</button>
-        </form>
-      </div>
-    </div>
-    <div class="col-md-5">
-      <div class="card p-4 stat-card">
-        <h6 class="mb-3">Order Summary</h6>
-        {% for item in cart.items.all %}
-        <div class="d-flex justify-content-between small mb-2">
-          <span>{{ item.product.name }} &times; {{ item.quantity }}</span>
-          <span>Rs. {{ item.subtotal }}</span>
-        </div>
-        {% endfor %}
-        <hr>
-        <div class="d-flex justify-content-between fw-bold">
-          <span>Total</span>
-          <span>Rs. {{ cart.total }}</span>
-        </div>
-      </div>
-    </div>
+<div class="page-header-inner">
+  <h1>Checkout</h1>
+  <div class="breadcrumb">
+    <a href="{% url 'core:home' %}">Home</a> / <a href="{% url 'cart:detail' %}">Cart</a> / Checkout
   </div>
 </div>
+
+<section class="checkout-section">
+  <form method="post">
+    {% csrf_token %}
+    <div class="checkout-grid">
+      <div>
+        <div class="checkout-card">
+          <h4><i class="fa-solid fa-location-dot" style="color:var(--primary);margin-right:8px;"></i>Shipping Information</h4>
+          <div class="form-grid">
+            <div class="form-field full">
+              <label>Full Name <span style="color:#e74c3c;">*</span></label>
+              {{ form.full_name }}
+              {% if form.full_name.errors %}<p class="field-error">{{ form.full_name.errors|striptags }}</p>{% endif %}
+            </div>
+            <div class="form-field">
+              <label>Phone Number <span style="color:#e74c3c;">*</span></label>
+              {{ form.phone }}
+              {% if form.phone.errors %}<p class="field-error">{{ form.phone.errors|striptags }}</p>{% endif %}
+            </div>
+            <div class="form-field">
+              <label>City</label>
+              {{ form.city }}
+            </div>
+            <div class="form-field full">
+              <label>Address</label>
+              {{ form.address_line }}
+            </div>
+            <div class="form-field">
+              <label>Postal Code</label>
+              {{ form.postal_code }}
+            </div>
+            <div class="form-field">
+              <label>Country</label>
+              {{ form.country }}
+            </div>
+          </div>
+        </div>
+
+        <div class="checkout-card">
+          <h4><i class="fa-solid fa-credit-card" style="color:var(--primary);margin-right:8px;"></i>Payment Method</h4>
+          <div class="form-field">
+            {{ form.payment_method }}
+            {% if form.payment_method.errors %}<p class="field-error">{{ form.payment_method.errors|striptags }}</p>{% endif %}
+          </div>
+          <!-- eSewa badge -->
+          <div id="esewaBadge" style="display:none;margin-top:14px;background:#f0faf0;border:1px solid #c3e6c3;border-radius:12px;padding:14px 18px;display:flex;align-items:center;gap:12px;">
+            <div style="width:36px;height:36px;background:linear-gradient(135deg,#60BB46,#3a9922);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span style="color:white;font-size:16px;font-weight:900;">e</span>
+            </div>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:#2a7a1a;">Pay via eSewa</div>
+              <div style="font-size:12px;color:#555;">You'll be redirected to eSewa to complete payment securely.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="checkout-card">
+          <h4><i class="fa-solid fa-ticket" style="color:var(--primary);margin-right:8px;"></i>Coupon Code</h4>
+          <div class="form-field">
+            {{ form.coupon_code }}
+            {% if form.coupon_code.errors %}<p class="field-error">{{ form.coupon_code.errors|striptags }}</p>{% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="order-sidebar">
+        <div class="order-card">
+          <h4>Order Summary</h4>
+          {% for item in cart.items.all %}
+          <div class="order-item">
+            <img src="{% if item.product.thumbnail %}{{ item.product.thumbnail.url }}{% else %}{% static 'img/hero.png' %}{% endif %}" alt="{{ item.product.name }}">
+            <div class="order-item-info">
+              <h5>{{ item.product.name }}</h5>
+              <span>Qty: {{ item.quantity }}</span>
+            </div>
+            <div class="order-item-price">Rs. {{ item.subtotal }}</div>
+          </div>
+          {% endfor %}
+          <div class="summary-row"><span>Subtotal</span><span>Rs. {{ cart.total }}</span></div>
+          <div class="summary-row"><span>Shipping</span><span>{% if cart.shipping == 0 %}Free{% else %}Rs. {{ cart.shipping }}{% endif %}</span></div>
+          <div class="summary-row total"><span>Total</span><span>Rs. {{ cart.grand_total }}</span></div>
+          <button type="submit" class="place-btn" id="placeBtn">
+            <i class="fa-solid fa-bag-shopping" style="margin-right:8px;"></i>Place Order
+          </button>
+          <div style="text-align:center;margin-top:12px;">
+            <a href="{% url 'cart:detail' %}" style="font-size:13px;color:var(--primary);text-decoration:none;">
+              <i class="fa-solid fa-arrow-left"></i> Back to Cart
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+const paySelect = document.querySelector('[name="payment_method"]');
+const esewaBadge = document.getElementById('esewaBadge');
+const placeBtn = document.getElementById('placeBtn');
+
+function updatePayUI() {
+  const val = paySelect ? paySelect.value : '';
+  if (esewaBadge) {
+    esewaBadge.style.display = val === 'esewa' ? 'flex' : 'none';
+  }
+  if (placeBtn) {
+    if (val === 'esewa') {
+      placeBtn.innerHTML = '<span style="background:#60BB46;width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;margin-right:8px;">e</span>Pay with eSewa';
+      placeBtn.style.background = '#60BB46';
+    } else {
+      placeBtn.innerHTML = '<i class="fa-solid fa-bag-shopping" style="margin-right:8px;"></i>Place Order';
+      placeBtn.style.background = '';
+    }
+  }
+}
+if (paySelect) {
+  paySelect.addEventListener('change', updatePayUI);
+  updatePayUI();
+}
+</script>
 {% endblock %}

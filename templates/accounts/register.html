@@ -1,21 +1,60 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block title %}Create Account — Kasbi Beauty{% endblock %}
+
 {% block content %}
-<div class="container py-5" style="max-width: 520px;">
-  <h2 class="text-kasbi mb-4 text-center">Create your account</h2>
-  <div class="card p-4 stat-card">
+<div style="min-height:70vh;display:flex;align-items:center;justify-content:center;padding:60px 6%;background:var(--cream);">
+  <div style="background:var(--white);border-radius:var(--border-radius);padding:48px 40px;max-width:520px;width:100%;box-shadow:0 20px 60px rgba(94,64,116,0.12);">
+    <div style="text-align:center;margin-bottom:24px;">
+      <img src="{% static 'img/logo.png' %}" alt="Kasbi Beauty" style="height:50px;width:auto;">
+    </div>
+    <h2 style="text-align:center;font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;color:var(--dark);margin-bottom:6px;">Join Kasbi Beauty</h2>
+    <p style="text-align:center;color:var(--gray);font-size:14px;margin-bottom:28px;">Create your account and start shopping</p>
+
     <form method="post">
       {% csrf_token %}
-      {% for field in form %}
-        <div class="mb-3">
-          <label class="form-label">{{ field.label }}</label>
-          {{ field }}
-          {% if field.errors %}<div class="text-danger small">{{ field.errors|striptags }}</div>{% endif %}
-          {% if field.help_text %}<div class="form-text">{{ field.help_text }}</div>{% endif %}
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div>
+          <label style="display:block;font-size:13px;font-weight:600;color:var(--dark);margin-bottom:6px;">First Name</label>
+          <input type="text" name="first_name" value="{{ form.first_name.value|default:'' }}" placeholder="Jane" style="width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:12px;font-size:14px;font-family:'Inter',sans-serif;outline:none;box-sizing:border-box;">
+          {% if form.first_name.errors %}<p style="color:#e74c3c;font-size:12px;margin-top:3px;">{{ form.first_name.errors|striptags }}</p>{% endif %}
         </div>
-      {% endfor %}
-      <button type="submit" class="btn btn-kasbi w-100">Sign up</button>
+        <div>
+          <label style="display:block;font-size:13px;font-weight:600;color:var(--dark);margin-bottom:6px;">Last Name</label>
+          <input type="text" name="last_name" value="{{ form.last_name.value|default:'' }}" placeholder="Doe" style="width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:12px;font-size:14px;font-family:'Inter',sans-serif;outline:none;box-sizing:border-box;">
+        </div>
+      </div>
+      <div style="margin-top:16px;">
+        <label style="display:block;font-size:13px;font-weight:600;color:var(--dark);margin-bottom:6px;">Username <span style="color:#e74c3c;">*</span></label>
+        <input type="text" name="username" value="{{ form.username.value|default:'' }}" required autofocus placeholder="Choose a username" style="width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:12px;font-size:14px;font-family:'Inter',sans-serif;outline:none;box-sizing:border-box;">
+        {% if form.username.errors %}<p style="color:#e74c3c;font-size:12px;margin-top:3px;">{{ form.username.errors|striptags }}</p>{% endif %}
+      </div>
+      <div style="margin-top:16px;">
+        <label style="display:block;font-size:13px;font-weight:600;color:var(--dark);margin-bottom:6px;">Email Address <span style="color:#e74c3c;">*</span></label>
+        <input type="email" name="email" value="{{ form.email.value|default:'' }}" required placeholder="you@example.com" style="width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:12px;font-size:14px;font-family:'Inter',sans-serif;outline:none;box-sizing:border-box;">
+        {% if form.email.errors %}<p style="color:#e74c3c;font-size:12px;margin-top:3px;">{{ form.email.errors|striptags }}</p>{% endif %}
+      </div>
+      <div style="margin-top:16px;">
+        <label style="display:block;font-size:13px;font-weight:600;color:var(--dark);margin-bottom:6px;">Password <span style="color:#e74c3c;">*</span></label>
+        <input type="password" name="password1" required placeholder="Create a strong password" style="width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:12px;font-size:14px;font-family:'Inter',sans-serif;outline:none;box-sizing:border-box;">
+        {% if form.password1.errors %}<p style="color:#e74c3c;font-size:12px;margin-top:3px;">{{ form.password1.errors|striptags }}</p>{% endif %}
+      </div>
+      <div style="margin-top:16px;margin-bottom:20px;">
+        <label style="display:block;font-size:13px;font-weight:600;color:var(--dark);margin-bottom:6px;">Confirm Password <span style="color:#e74c3c;">*</span></label>
+        <input type="password" name="password2" required placeholder="Repeat your password" style="width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:12px;font-size:14px;font-family:'Inter',sans-serif;outline:none;box-sizing:border-box;">
+        {% if form.password2.errors %}<p style="color:#e74c3c;font-size:12px;margin-top:3px;">{{ form.password2.errors|striptags }}</p>{% endif %}
+      </div>
+      {% if form.non_field_errors %}
+      <div style="background:#fdecea;border:1px solid #f5c6cb;color:#721c24;padding:10px 16px;border-radius:10px;font-size:13px;margin-bottom:16px;">{{ form.non_field_errors|striptags }}</div>
+      {% endif %}
+      <button type="submit" style="width:100%;padding:14px;background:var(--primary);color:white;border:none;border-radius:30px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;">
+        <i class="fa-solid fa-user-plus" style="margin-right:8px;"></i>Create Account
+      </button>
     </form>
-    <p class="text-center mt-3 mb-0">Already have an account? <a href="{% url 'accounts:login' %}">Log in</a></p>
+
+    <p style="text-align:center;margin-top:20px;font-size:14px;color:var(--gray);">
+      Already have an account? <a href="{% url 'accounts:login' %}" style="color:var(--primary);font-weight:600;">Sign in</a>
+    </p>
   </div>
 </div>
 {% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}New Arrivals — Kasbi Beauty{% endblock %}
+
+{% block pre_content %}
+<div class="page-header-inner" style="background:linear-gradient(135deg,#e8f5e9,#f1f8e9);padding:40px 6%;text-align:center;border-bottom:1px solid rgba(0,0,0,0.04);">
+    <span style="font-size:12px;letter-spacing:2px;color:#2e7d32;font-weight:600;background:rgba(255,255,255,0.5);padding:6px 18px;border-radius:40px;display:inline-block;margin-bottom:12px;">✨ JUST IN</span>
+    <h1 style="font-family:'Cormorant Garamond',serif;font-size:42px;color:var(--dark);margin-bottom:8px;">New Arrivals</h1>
+    <p style="color:var(--gray);max-width:500px;margin:0 auto;">The freshest additions to our collection — be the first to discover them.</p>
+</div>
+{% endblock %}
+
+{% block content %}
+{% include 'products/_product_grid.html' %}
+{% endblock %}

@@ -1,0 +1,2124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kasbi Beauty — Search Results</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <!-- No external style.css: this page is self-contained so it never depends on a file
+         that may or may not exist elsewhere in the project. -->
+
+    <style>
+        /* ===== BASE STYLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #5E4074;
+            --primary-light: #7A5A94;
+            --primary-dark: #3D2A4E;
+            --primary-gradient: linear-gradient(135deg, #5E4074, #7A5A94);
+            --gold: #D4AF37;
+            --gold-light: #E8C84A;
+            --gold-gradient: linear-gradient(135deg, #D4AF37, #E8C84A);
+            --cream: #F8F5F0;
+            --cream-dark: #EDE8E0;
+            --dark: #1A1A2E;
+            --gray: #666;
+            --light-gray: #999;
+            --white: #FFFFFF;
+            --shadow: 0 8px 30px rgba(0,0,0,0.08);
+            --shadow-hover: 0 20px 60px rgba(94,64,116,0.15);
+            --border-radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--cream);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* ===== TOP BAR ===== */
+        .topbar {
+            background: var(--primary-dark);
+            color: rgba(255,255,255,0.8);
+            padding: 8px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .topbar .left i {
+            margin-right: 8px;
+            color: var(--gold);
+        }
+
+        .topbar .right {
+            display: flex;
+            gap: 20px;
+        }
+
+        .topbar .right a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 12px;
+        }
+
+        .topbar .right a:hover {
+            color: white;
+        }
+
+        .topbar .right a i {
+            margin-right: 5px;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f8f5ee;
+            padding: 26px 3%;
+            box-shadow: none;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo img {
+            height: 95px;
+            width: auto;
+            display: block;
+        }
+        .search {
+            flex: 1;
+            max-width: 850px;
+            margin: 0 50px;
+            height: 54px;
+            border: 2px solid #6b4b8d;
+            border-radius: 40px;
+            overflow: hidden;
+            background: #fff;
+            display: flex;
+        }
+
+        .search:focus-within {
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(94,64,116,0.08);
+        }
+
+        .search input {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .search button {
+            padding: 12px 24px;
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 16px;
+        }
+
+        .search button:hover {
+            background: var(--primary-dark);
+        }
+        .header-icons {
+            display: flex;
+            gap: 24px;
+        }
+        .header-icons a {
+            font-size: 14px;
+            color: #222;
+            font-weight: 500;
+        }
+
+        .header-icons > div {
+            position: relative;
+            text-align: center;
+        }
+
+        .header-icons > div a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--dark);
+            font-size: 11px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .header-icons > div a:hover {
+            color: var(--primary);
+        }
+
+        .header-icons > div a i {
+            font-size: 20px;
+            margin-bottom: 2px;
+        }
+        .cart-badge {
+            top: -6px;
+            right: 8px;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 10px;
+            background: #ff2b6d;
+            border-radius: 50%;
+            position: absolute;
+            color: white;
+            font-weight: 700;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .navigation {
+            background: var(--white);
+            border-top: 1px solid #f0f0f0;
+            border-bottom: 1px solid #f0f0f0;
+            padding: 0 6%;
+            position: sticky;
+            top: 0;
+            z-index: 99;
+        }
+
+        .navigation ul {
+            display: flex;
+            list-style: none;
+            gap: 0;
+            overflow-x: auto;
+            padding: 0;
+            margin: 0;
+        }
+
+        .navigation ul li {
+            padding: 12px 20px;
+            white-space: nowrap;
+        }
+
+        .navigation ul li a {
+            text-decoration: none;
+            color: var(--gray);
+            font-size: 14px;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .navigation ul li a:hover {
+            color: var(--primary);
+        }
+
+        .navigation ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--primary-gradient);
+            transition: var(--transition);
+        }
+
+        .navigation ul li a:hover::after {
+            width: 100%;
+        }
+
+        .navigation ul li a.active {
+            color: var(--primary);
+        }
+
+        .navigation ul li a.active::after {
+            width: 100%;
+        }
+
+        .new-arrivals-link .new-badge-animated {
+            background: var(--gold-gradient);
+            color: var(--dark);
+            font-size: 9px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 30px;
+            animation: pulse 2s infinite;
+        }
+
+        .offers-link .offers-badge-animated {
+            background: #e74c3c;
+            color: white;
+            font-size: 9px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 30px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* ===== SEARCH RESULTS SECTION ===== */
+        .search-results-section {
+            padding: 40px 6% 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* ===== LAYOUT: SIDEBAR + RESULTS ===== */
+        .search-layout {
+            display: flex;
+            gap: 32px;
+            align-items: flex-start;
+        }
+
+        /* ===== FILTER SIDEBAR ===== */
+        .filter-sidebar {
+            flex: 0 0 260px;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 24px 20px;
+            position: sticky;
+            top: 20px;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+
+        .filter-sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .filter-sidebar::-webkit-scrollbar-track {
+            background: #f0f0f0;
+            border-radius: 10px;
+        }
+        .filter-sidebar::-webkit-scrollbar-thumb {
+            background: var(--primary-light);
+            border-radius: 10px;
+        }
+
+        .filter-sidebar .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .filter-sidebar .filter-header h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .filter-sidebar .filter-header a {
+            font-size: 12px;
+            color: var(--primary);
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .filter-sidebar .filter-header a:hover {
+            text-decoration: underline;
+        }
+
+        .active-chip-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .active-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--cream);
+            border: 1px solid var(--primary-light);
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .active-chip i {
+            font-size: 10px;
+        }
+
+        .filter-group {
+            margin-bottom: 24px;
+        }
+
+        .filter-group .group-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .filter-group .group-title i {
+            color: var(--light-gray);
+            font-size: 12px;
+            transition: transform 0.2s ease;
+        }
+
+        .filter-group.collapsed .filter-options,
+        .filter-group.collapsed .price-range {
+            display: none;
+        }
+
+        .filter-group.collapsed .group-title i {
+            transform: rotate(-90deg);
+        }
+
+        .filter-group .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .filter-group .filter-options label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--gray);
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 4px 0;
+        }
+
+        .filter-group .filter-options label:hover {
+            color: var(--dark);
+        }
+
+        .filter-group .filter-options label input[type="checkbox"],
+        .filter-group .filter-options label input[type="radio"] {
+            accent-color: var(--primary);
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .filter-group .filter-options label .count {
+            margin-left: auto;
+            font-size: 12px;
+            color: var(--light-gray);
+        }
+
+        .filter-group .filter-options label.zero-count {
+            opacity: 0.4;
+        }
+
+        /* Price range */
+        .price-range {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-top: 4px;
+        }
+
+        .price-range input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 13px;
+            outline: none;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            background: var(--cream);
+        }
+
+        .price-range input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(94,64,116,0.08);
+        }
+
+        .price-range .price-sep {
+            color: var(--light-gray);
+            font-size: 14px;
+        }
+
+        .price-range button {
+            padding: 8px 16px;
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            white-space: nowrap;
+        }
+
+        .price-range button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(94,64,116,0.25);
+        }
+
+        /* Rating stars in filter */
+        .filter-stars {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #f39c12;
+            font-size: 14px;
+        }
+
+        .filter-stars span {
+            color: var(--gray);
+            font-size: 12px;
+            margin-left: 4px;
+        }
+
+        /* View less / more */
+        .view-toggle {
+            font-size: 13px;
+            color: var(--primary);
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 6px;
+            display: inline-block;
+        }
+
+        .view-toggle:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== RESULTS AREA ===== */
+        .results-area {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .search-header {
+            margin-bottom: 30px;
+        }
+
+        .search-header h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 36px;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .search-header .search-info {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .search-header .search-info strong {
+            color: var(--dark);
+        }
+
+        .search-box-large {
+            display: flex;
+            gap: 12px;
+            margin: 20px 0 30px;
+            max-width: 700px;
+        }
+
+        .search-box-large input {
+            flex: 1;
+            padding: 14px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 30px;
+            font-size: 16px;
+            outline: none;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            background: var(--white);
+        }
+
+        .search-box-large input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(94,64,116,0.08);
+        }
+
+        .search-box-large button {
+            padding: 14px 32px;
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            white-space: nowrap;
+        }
+
+        .search-box-large button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(94,64,116,0.3);
+        }
+
+        .search-filters {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 16px 0;
+            border-top: 1px solid #f0f0f0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .search-filters .filter-label {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            margin-right: 8px;
+        }
+
+        .search-filters .filter-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 16px;
+            background: var(--cream);
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid transparent;
+            color: var(--gray);
+        }
+
+        .search-filters .filter-tag:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .search-filters .filter-tag.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .sort-select {
+            margin-left: auto;
+            padding: 8px 14px;
+            border: 1px solid #e0e0e0;
+            border-radius: 20px;
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+            color: var(--dark);
+            background: var(--white);
+            cursor: pointer;
+            outline: none;
+        }
+
+        .sort-select:focus {
+            border-color: var(--primary);
+        }
+
+        /* ===== PRODUCT CARDS ===== */
+        .search-results {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .search-results .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--gray);
+        }
+
+        .search-results .no-results i {
+            font-size: 60px;
+            display: block;
+            margin-bottom: 16px;
+            color: #ddd;
+        }
+
+        .search-results .no-results h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .search-results .no-results p {
+            margin-bottom: 20px;
+        }
+
+        .search-results .no-results .suggestions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .search-results .no-results .suggestions a {
+            padding: 8px 20px;
+            background: var(--cream);
+            border-radius: 20px;
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 500;
+            transition: var(--transition);
+            font-size: 14px;
+        }
+
+        .search-results .no-results .suggestions a:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .product-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .product-link:hover {
+            transform: translateY(-4px);
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .product-card:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .product-card .image-wrap {
+            position: relative;
+            padding-top: 100%;
+            background: var(--cream);
+            overflow: hidden;
+        }
+
+        .product-card .image-wrap img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .product-card:hover .image-wrap img {
+            transform: scale(1.05);
+        }
+
+        .product-card .badge-bestseller {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: var(--gold-gradient);
+            color: var(--dark);
+            padding: 3px 12px;
+            border-radius: 30px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(212,175,55,0.25);
+            z-index: 1;
+        }
+
+        .product-card .badge-new {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: #2ecc71;
+            color: white;
+            padding: 3px 12px;
+            border-radius: 30px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 1;
+        }
+
+        .product-card .badge-limited {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: #e74c3c;
+            color: white;
+            padding: 3px 12px;
+            border-radius: 30px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 1;
+        }
+
+        .product-card .discount {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: #e74c3c;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 700;
+            z-index: 1;
+        }
+
+        .wishlist {
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: white;
+            border-radius: 50%;
+            border: 1px solid #eee;
+            color: #ccc;
+            font-size: 14px;
+            position: absolute;
+            bottom: 14px;
+            right: 14px;
+            z-index: 2;
+        }
+
+        .wishlist i {
+            pointer-events: none;
+        }
+
+        .product-card .info {
+            padding: 16px;
+        }
+
+        .product-card .info .brand {
+            font-size: 12px;
+            color: var(--light-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .product-card .info h3 {
+            font-size: 15px;
+            font-weight: 600;
+            margin: 4px 0 8px;
+            line-height: 1.3;
+        }
+
+        .product-card .info .rating {
+            font-size: 13px;
+            color: #f39c12;
+            margin-bottom: 8px;
+        }
+
+        .product-card .info .rating span {
+            color: var(--gray);
+            font-size: 12px;
+        }
+
+        .product-card .info .price {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .product-card .info .price .current {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .product-card .info .price .old {
+            font-size: 14px;
+            color: var(--light-gray);
+            text-decoration: line-through;
+        }
+
+        .add-btn {
+            width: 100%;
+            padding: 10px;
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .add-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(94,64,116,0.3);
+        }
+
+        .add-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--primary-dark);
+            color: rgba(255,255,255,0.8);
+            padding: 50px 6% 20px;
+            margin-top: 40px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-grid p {
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .footer-grid h4 {
+            color: white;
+            font-size: 16px;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .footer-grid ul {
+            list-style: none;
+        }
+
+        .footer-grid ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-grid ul li a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .footer-grid ul li a:hover {
+            color: white;
+        }
+
+        .social {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .payment {
+            display: flex;
+            gap: 15px;
+            font-size: 24px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* ===== TOAST ===== */
+        .toast-notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #2d1a3a;
+            color: white;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            z-index: 10000;
+            animation: slideInUp 0.4s ease forwards;
+            font-family: 'Inter', sans-serif;
+            max-width: 350px;
+            border-left: 4px solid #e91e63;
+        }
+
+        @keyframes slideInUp {
+            0% { transform: translateY(100px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes slideOutDown {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(100px); opacity: 0; }
+        }
+
+        @keyframes badgePulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.4); }
+            100% { transform: scale(1); }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1200px) {
+            .search-results {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .filter-sidebar {
+                flex: 0 0 220px;
+                padding: 16px;
+            }
+            .search-layout {
+                gap: 20px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .search-layout {
+                flex-direction: column;
+            }
+            .filter-sidebar {
+                flex: 1 1 auto;
+                width: 100%;
+                position: relative;
+                top: 0;
+                max-height: none;
+                overflow-y: visible;
+            }
+            .search-results {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .search-box-large {
+                flex-direction: column;
+            }
+            .search-box-large input {
+                font-size: 14px;
+                padding: 12px 16px;
+            }
+            .search-box-large button {
+                padding: 12px 24px;
+                font-size: 14px;
+            }
+            .search-header h1 {
+                font-size: 28px;
+            }
+            .topbar .right {
+                display: none;
+            }
+            .header {
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+            .search {
+                order: 3;
+                flex: 1 1 100%;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .navigation ul li {
+                padding: 10px 14px;
+            }
+            .navigation ul li a {
+                font-size: 12px;
+            }
+            .sort-select {
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .search-results {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            .search-filters {
+                gap: 8px;
+            }
+            .search-filters .filter-tag {
+                font-size: 11px;
+                padding: 4px 12px;
+            }
+            .search-header h1 {
+                font-size: 24px;
+            }
+            .header-icons {
+                gap: 12px;
+            }
+            .header-icons > div a i {
+                font-size: 16px;
+            }
+            .header-icons > div a span {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== TOP BAR ===== -->
+    <div class="topbar">
+        <div class="left">
+            <i class="fa-solid fa-truck-fast"></i> Free Delivery inside Kathmandu on Orders above Rs.3000
+        </div>
+        <div class="right">
+            <a href="#"><i class="fa-regular fa-clock"></i> Track Order</a>
+            <a href="#"><i class="fa-regular fa-newspaper"></i> Beauty Blog</a>
+            <a href="#"><i class="fa-regular fa-circle-question"></i> Help Center</a>
+        </div>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <div class="logo">
+            <a href="index.html"><img src="images/logo.png" alt="Kasbi Beauty" onerror="this.src='https://via.placeholder.com/200x95/5E4074/FFFFFF?text=Kasbi'"></a>
+        </div>
+        <div class="search">
+            <input type="text" id="headerSearchInput" placeholder="Search skincare, makeup, serum...">
+            <button id="headerSearchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+        <div class="header-icons">
+            <div>
+                <a href="wishlist.html">
+                    <i class="fa-regular fa-heart"></i>
+                    <span>Wishlist</span>
+                </a>
+            </div>
+            <div>
+                <a href="cart.html">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span>Cart</span>
+                    <span class="cart-badge">3</span>
+                </a>
+            </div>
+            <div>
+                <a href="account.html">
+                    <i class="fa-regular fa-user"></i>
+                    <span>Account</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+  
+
+    <!-- ===== SEARCH RESULTS ===== -->
+    <section class="search-results-section">
+        <div class="search-layout">
+
+            <!-- ===== FILTER SIDEBAR ===== -->
+            <aside class="filter-sidebar">
+                <div class="filter-header">
+                    <h3><i class="fa-solid fa-sliders" style="margin-right:8px; color:var(--primary);"></i> Filters</h3>
+                    <a href="#" id="clearAllFilters">Clear All</a>
+                </div>
+
+                <div class="active-chip-row" id="activeChipRow"></div>
+
+                <!-- Brand -->
+                <div class="filter-group" id="brandGroup">
+                    <div class="group-title" data-toggle="brandGroup">Brand <i class="fa-solid fa-chevron-down"></i></div>
+                    <div class="filter-options" id="brandOptions"><!-- built from product data --></div>
+                </div>
+
+                <!-- Price -->
+                <div class="filter-group" id="priceGroup">
+                    <div class="group-title" data-toggle="priceGroup">Price (Rs.) <i class="fa-solid fa-chevron-down"></i></div>
+                    <div class="price-range">
+                        <input type="number" id="priceMin" placeholder="Min" min="0">
+                        <span class="price-sep">—</span>
+                        <input type="number" id="priceMax" placeholder="Max" min="0">
+                        <button id="priceFilterBtn">Go</button>
+                    </div>
+                </div>
+
+                <!-- Rating -->
+                <div class="filter-group" id="ratingGroup">
+                    <div class="group-title" data-toggle="ratingGroup">Customer Rating <i class="fa-solid fa-chevron-down"></i></div>
+                    <div class="filter-options">
+                        <label><input type="radio" name="rating" value="5" data-group="rating"> <span class="filter-stars">★★★★★ <span>& up</span></span></label>
+                        <label><input type="radio" name="rating" value="4" data-group="rating"> <span class="filter-stars">★★★★☆ <span>& up</span></span></label>
+                        <label><input type="radio" name="rating" value="3" data-group="rating"> <span class="filter-stars">★★★☆☆ <span>& up</span></span></label>
+                        <label><input type="radio" name="rating" value="2" data-group="rating"> <span class="filter-stars">★★☆☆☆ <span>& up</span></span></label>
+                    </div>
+                </div>
+
+                <!-- Discount -->
+                <div class="filter-group" id="discountGroup">
+                    <div class="group-title" data-toggle="discountGroup">Discount <i class="fa-solid fa-chevron-down"></i></div>
+                    <div class="filter-options">
+                        <label><input type="checkbox" value="10" data-group="discount"> 10% off or more <span class="count" data-count="10"></span></label>
+                        <label><input type="checkbox" value="20" data-group="discount"> 20% off or more <span class="count" data-count="20"></span></label>
+                        <label><input type="checkbox" value="30" data-group="discount"> 30% off or more <span class="count" data-count="30"></span></label>
+                    </div>
+                </div>
+
+                <!-- Shipped From -->
+                <div class="filter-group" id="shippedGroup">
+                    <div class="group-title" data-toggle="shippedGroup">Shipped From <i class="fa-solid fa-chevron-down"></i></div>
+                    <div class="filter-options" id="shippedOptions"><!-- built from product data --></div>
+                </div>
+
+                <!-- Delivery Option -->
+                <div class="filter-group" id="deliveryGroup">
+                    <div class="group-title" data-toggle="deliveryGroup">Delivery Option <i class="fa-solid fa-chevron-down"></i></div>
+                    <div class="filter-options" id="deliveryOptions"><!-- built from product data --></div>
+                </div>
+
+            </aside>
+
+            <!-- ===== RESULTS AREA ===== -->
+            <div class="results-area">
+                <div class="search-header">
+                    <h1>Search Results</h1>
+                    <div class="search-info">
+                        Showing <strong id="resultCount">0</strong> results for "<strong id="searchTermDisplay">...</strong>"
+                    </div>
+
+                    <!-- Search Box -->
+                    <div class="search-box-large">
+                        <input type="text" id="searchInputLarge" placeholder="Search skincare, makeup, serum...">
+                        <button id="searchBtnLarge"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+                    </div>
+
+                    <!-- Filters -->
+                    <div class="search-filters" id="searchFilters">
+                        <span class="filter-label"><i class="fa-solid fa-sliders"></i> Category:</span>
+                        <span class="filter-tag active" data-filter="all">All</span>
+                        <span class="filter-tag" data-filter="skincare">Skincare</span>
+                        <span class="filter-tag" data-filter="makeup">Makeup</span>
+                        <span class="filter-tag" data-filter="haircare">Hair Care</span>
+                        <span class="filter-tag" data-filter="fragrance">Fragrance</span>
+                        <span class="filter-tag" data-filter="korean">Korean Beauty</span>
+
+                        <select class="sort-select" id="sortSelect">
+                            <option value="relevance">Sort: Relevance</option>
+                            <option value="price-asc">Price: Low to High</option>
+                            <option value="price-desc">Price: High to Low</option>
+                            <option value="rating">Rating: High to Low</option>
+                            <option value="discount">Biggest Discount</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Results -->
+                <div class="search-results" id="searchResults">
+                    <!-- Results loaded dynamically -->
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <a href="index.html"><img src="images/logo1.png" alt="Kasbi Beauty" style="height:45px; width:auto; margin-bottom:16px" onerror="this.src='https://via.placeholder.com/200x45/5E4074/FFFFFF?text=Kasbi'"></a>
+                <p>Your trusted beauty destination in Nepal. Premium skincare, makeup, haircare & more — all 100% authentic.</p>
+                <div class="social">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="#">Beauty Blog</a></li>
+                    <li><a href="#">Track Order</a></li>
+                    <li><a href="#">Returns & Refunds</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Categories</h4>
+                <ul>
+                    <li><a href="skincare.html">Skincare</a></li>
+                    <li><a href="makeup.html">Makeup</a></li>
+                    <li><a href="haircare.html">Hair Care</a></li>
+                    <li><a href="shop.html?category=fragrance">Fragrance</a></li>
+                    <li><a href="shop.html?category=tools">Beauty Tools</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="#"><i class="fa-solid fa-phone" style="margin-right:8px;"></i>+977 980-0000000</a></li>
+                    <li><a href="#"><i class="fa-regular fa-envelope" style="margin-right:8px;"></i>hello@kasbi.com</a></li>
+                    <li><a href="#"><i class="fa-regular fa-location-dot" style="margin-right:8px;"></i>Kathmandu, Nepal</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Kasbi Beauty. All rights reserved.</span>
+            <div class="payment">
+                <i class="fa-brands fa-cc-visa"></i>
+                <i class="fa-brands fa-cc-mastercard"></i>
+                <i class="fa-brands fa-cc-paypal"></i>
+                <i class="fa-solid fa-wallet"></i>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ===== PRODUCT DATABASE =====
+        // Full catalog merged from skincare.html (120), makeup.html (120 static items;
+        // the 40 randomly-generated ones on that page aren't stable enough to index),
+        // haircare.html (90), plus the site's 2 fragrance items. Exact duplicates that
+        // appeared in more than one source page were removed. 330 unique products total.
+        const PROVINCES = ['bagmati', 'madhesh', 'gandaki', 'koshi', 'overseas', 'local'];
+
+const rawProducts = [
+    { id: 1, name: 'Hydrating Cleanser', brand: 'CeraVe', price: 2650, oldPrice: 3200, rating: 5, ratingCount: 325, image: 'images/product1.png', badge: 'bestseller', category: 'skincare', korean: false },
+    { id: 2, name: 'Niacinamide 10% + Zinc', brand: 'The Ordinary', price: 2350, oldPrice: 2850, rating: 5, ratingCount: 280, image: 'images/product2.png', badge: 'new', category: 'skincare', korean: false },
+    { id: 3, name: 'Moisturizing Lotion', brand: 'Cetaphil', price: 2850, oldPrice: 3400, rating: 5, ratingCount: 198, image: 'images/product4.png', badge: 'bestseller', category: 'skincare', korean: false },
+    { id: 4, name: 'Vitamin C Brightening Serum', brand: 'L\'Oreal', price: 3200, oldPrice: 4500, rating: 5, ratingCount: 412, image: 'images/product1.png', badge: 'new', category: 'skincare', korean: false },
+    { id: 5, name: 'Micellar Cleansing Water', brand: 'Garnier', price: 1800, oldPrice: 2000, rating: 5, ratingCount: 267, image: 'images/product2.png', badge: 'bestseller', category: 'skincare', korean: false },
+    { id: 6, name: 'Anthelios Sunscreen SPF 50', brand: 'La Roche-Posay', price: 3600, oldPrice: 4800, rating: 5, ratingCount: 234, image: 'images/product3.png', badge: null, category: 'skincare', korean: false },
+    { id: 7, name: 'Volcanic Clay Face Mask', brand: 'Innisfree', price: 2100, oldPrice: 2500, rating: 5, ratingCount: 189, image: 'images/product4.png', badge: 'new', category: 'skincare', korean: true },
+    { id: 8, name: 'Eye Repair Cream', brand: 'CeraVe', price: 2400, oldPrice: 3000, rating: 5, ratingCount: 156, image: 'images/product1.png', badge: 'bestseller', category: 'skincare', korean: false },
+    { id: 9, name: 'Advanced Snail 96 Mucin', brand: 'COSRX', price: 2150, oldPrice: 2800, rating: 5, ratingCount: 363, image: 'images/product1.png', badge: 'bestseller', category: 'skincare', korean: true },
+    { id: 10, name: 'Low pH Good Morning Gel', brand: 'COSRX', price: 1485, oldPrice: 1650, rating: 5, ratingCount: 289, image: 'images/product2.png', badge: null, category: 'skincare', korean: true },
+    { id: 11, name: 'Niacinamide 15% Serum', brand: 'COSRX', price: 2565, oldPrice: 2850, rating: 5, ratingCount: 412, image: 'images/product3.png', badge: 'new', category: 'skincare', korean: true },
+    { id: 12, name: 'Hyaluronic Acid Cream', brand: 'COSRX', price: 2880, oldPrice: 3200, rating: 5, ratingCount: 234, image: 'images/product4.png', badge: null, category: 'skincare', korean: true },
+    { id: 13, name: 'Refreshing Face Wash', brand: 'Simple', price: 1200, oldPrice: 1400, rating: 4, ratingCount: 178, image: 'images/Simple.png', badge: null, category: 'skincare', korean: false },
+    { id: 14, name: 'Green Tea Face Wash', brand: 'Plum', price: 850, oldPrice: 1100, rating: 4, ratingCount: 156, image: 'images/Plum.jpeg', badge: null, category: 'skincare', korean: false },
+    { id: 15, name: 'Vitamin C Face Serum', brand: 'Mamaearth', price: 950, oldPrice: 1200, rating: 4, ratingCount: 134, image: 'images/Mamaearth.png', badge: null, category: 'skincare', korean: false },
+    { id: 16, name: 'Hyaluronic Acid 2%', brand: 'The Ordinary', price: 1800, oldPrice: 2000, rating: 5, ratingCount: 198, image: 'images/The-ordinary.png', badge: null, category: 'skincare', korean: false },
+    { id: 17, name: 'Gentle Face Wash', brand: 'Cetaphil', price: 1650, oldPrice: 1950, rating: 5, ratingCount: 189, image: 'images/Cetaphil.png', badge: null, category: 'skincare', korean: false },
+    { id: 18, name: 'Lip Sleeping Mask', brand: 'Laneige', price: 3800, oldPrice: 4200, rating: 5, ratingCount: 267, image: 'images/Laneige.png', badge: 'bestseller', category: 'skincare', korean: true },
+    { id: 19, name: 'AHA/BHA Clarifying Toner', brand: 'COSRX', price: 1950, oldPrice: 2300, rating: 5, ratingCount: 312, image: 'images/product2.png', badge: 'bestseller', category: 'skincare', korean: true },
+    { id: 20, name: 'Daily Moisturizing Cream', brand: 'CeraVe', price: 2200, oldPrice: 2800, rating: 5, ratingCount: 278, image: 'images/CeraVE.png', badge: null, category: 'skincare', korean: false },
+    { id: 21, name: 'Hydrating Moisturizer', brand: 'La Roche-Posay', price: 2800, oldPrice: 3300, rating: 5, ratingCount: 198, image: 'images/La-Roche-Posay.png', badge: null, category: 'skincare', korean: false },
+    { id: 22, name: 'Retinol 0.5% Serum', brand: 'The Ordinary', price: 1500, oldPrice: 1700, rating: 5, ratingCount: 223, image: 'images/The-ordinary.png', badge: null, category: 'skincare', korean: false },
+    { id: 23, name: 'Advanced Snail Peptide Eye Cream', brand: 'COSRX', price: 2200, oldPrice: 2500, rating: 5, ratingCount: 167, image: 'images/product1.png', badge: 'new', category: 'skincare', korean: true },
+    { id: 24, name: 'Water Bank Moisture Cream', brand: 'Laneige', price: 2900, oldPrice: 3600, rating: 5, ratingCount: 198, image: 'images/Laneige.png', badge: 'bestseller', category: 'skincare', korean: true },
+    { id: 25, name: 'Vitamin C Moisturizer', brand: 'Mamaearth', price: 850, oldPrice: 1100, rating: 4, ratingCount: 145, image: 'images/Mamaearth.png', badge: null, category: 'skincare', korean: false },
+    { id: 26, name: 'Hydrating Light Moisturizer', brand: 'Simple', price: 900, oldPrice: 1000, rating: 4, ratingCount: 167, image: 'images/Simple.png', badge: null, category: 'skincare', korean: false },
+    { id: 27, name: 'Green Tea Toner', brand: 'Innisfree', price: 1850, oldPrice: 2200, rating: 5, ratingCount: 178, image: 'images/Innisfree.jpeg', badge: null, category: 'skincare', korean: true },
+    { id: 28, name: 'Green Tea Serum', brand: 'Innisfree', price: 2200, oldPrice: 2600, rating: 5, ratingCount: 189, image: 'images/Innisfree.jpeg', badge: 'bestseller', category: 'skincare', korean: true },
+    { id: 29, name: 'Retinol Cream', brand: 'CeraVe', price: 2500, oldPrice: 3000, rating: 5, ratingCount: 167, image: 'images/CeraVE.png', badge: 'new', category: 'skincare', korean: false },
+    { id: 30, name: 'Cicaplast Baume B5', brand: 'La Roche-Posay', price: 1500, oldPrice: 1800, rating: 5, ratingCount: 145, image: 'images/La-Roche-Posay.png', badge: null, category: 'skincare', korean: false },
+    { id: 31, name: 'Salicylic Acid Cleanser', brand: 'COSRX', price: 1650, oldPrice: 1900, rating: 5, ratingCount: 198, image: 'images/product2.png', badge: null, category: 'skincare', korean: true },
+    { id: 32, name: 'Vitamin C Eye Cream', brand: 'Plum', price: 900, oldPrice: 1100, rating: 4, ratingCount: 145, image: 'images/Plum.jpeg', badge: null, category: 'skincare', korean: false },
+    { id: 33, name: 'Niacinamide Moisturizer', brand: 'Mamaearth', price: 950, oldPrice: 1200, rating: 4, ratingCount: 134, image: 'images/Mamaearth.png', badge: null, category: 'skincare', korean: false },
+    { id: 34, name: 'Hyaluronic Acid Serum', brand: 'Simple', price: 1500, oldPrice: 1700, rating: 4, ratingCount: 156, image: 'images/Simple.png', badge: null, category: 'skincare', korean: false },
+    { id: 35, name: 'Water Sleeping Mask', brand: 'Laneige', price: 3200, oldPrice: 3800, rating: 5, ratingCount: 234, image: 'images/Laneige.png', badge: 'bestseller', category: 'skincare', korean: true },
+    { id: 36, name: 'BHA Blackhead Power Liquid', brand: 'COSRX', price: 1850, oldPrice: 2200, rating: 5, ratingCount: 278, image: 'images/product1.png', badge: null, category: 'skincare', korean: true },
+    { id: 37, name: 'Toleriane Cleanser', brand: 'La Roche-Posay', price: 2000, oldPrice: 2400, rating: 5, ratingCount: 167, image: 'images/La-Roche-Posay.png', badge: null, category: 'skincare', korean: false },
+    { id: 38, name: 'Sheer Mineral Sunscreen', brand: 'Cetaphil', price: 2800, oldPrice: 3200, rating: 5, ratingCount: 156, image: 'images/Cetaphil.png', badge: null, category: 'skincare', korean: false },
+    { id: 39, name: 'Aloe Face Mask', brand: 'Innisfree', price: 1800, oldPrice: 2100, rating: 5, ratingCount: 178, image: 'images/Innisfree.jpeg', badge: null, category: 'skincare', korean: true },
+    { id: 40, name: 'Snail 92 All In One Cream', brand: 'COSRX', price: 1950, oldPrice: 2300, rating: 5, ratingCount: 234, image: 'images/product4.png', badge: 'bestseller', category: 'skincare', korean: true },
+    { id: 41, name: 'Ultra-Light Moisturizing Lotion', brand: 'CeraVe', price: 2100, oldPrice: 2500, rating: 5, ratingCount: 189, image: 'images/CeraVE.png', badge: null, category: 'skincare', korean: false },
+    { id: 42, name: 'Green Tea Cleanser', brand: 'Innisfree', price: 1600, oldPrice: 1900, rating: 5, ratingCount: 156, image: 'images/Innisfree.jpeg', badge: null, category: 'skincare', korean: true },
+    { id: 43, name: 'Retinol Eye Cream', brand: 'Mamaearth', price: 1100, oldPrice: 1350, rating: 4, ratingCount: 134, image: 'images/Mamaearth.png', badge: null, category: 'skincare', korean: false },
+    { id: 44, name: 'Cream Skin Toner', brand: 'Laneige', price: 2200, oldPrice: 2600, rating: 5, ratingCount: 189, image: 'images/Laneige.png', badge: 'new', category: 'skincare', korean: true },
+    { id: 45, name: 'Propolis Serum', brand: 'COSRX', price: 2100, oldPrice: 2400, rating: 5, ratingCount: 198, image: 'images/product1.png', badge: null, category: 'skincare', korean: true },
+    { id: 46, name: 'Effaclar Duo Cream', brand: 'La Roche-Posay', price: 2900, oldPrice: 3400, rating: 5, ratingCount: 167, image: 'images/La-Roche-Posay.png', badge: null, category: 'skincare', korean: false },
+    { id: 47, name: 'Gentle Skin Cleanser', brand: 'Cetaphil', price: 1550, oldPrice: 1850, rating: 5, ratingCount: 189, image: 'images/Cetaphil.png', badge: null, category: 'skincare', korean: false },
+    { id: 48, name: 'Green Tea Face Scrub', brand: 'Innisfree', price: 1400, oldPrice: 1650, rating: 4, ratingCount: 145, image: 'images/Innisfree.jpeg', badge: null, category: 'skincare', korean: true },
+    { id: 49, name: 'Vitamin C 23 Serum', brand: 'COSRX', price: 2300, oldPrice: 2600, rating: 5, ratingCount: 178, image: 'images/product3.png', badge: 'new', category: 'skincare', korean: true },
+    { id: 50, name: 'Skin Renewing Night Cream', brand: 'CeraVe', price: 2800, oldPrice: 3200, rating: 5, ratingCount: 156, image: 'images/CeraVE.png', badge: null, category: 'skincare', korean: false },
+    { id: 51, name: 'Jeju Orchid Cream', brand: 'Innisfree', price: 3500, oldPrice: 4000, rating: 5, ratingCount: 167, image: 'images/Innisfree.jpeg', badge: 'bestseller', category: 'skincare', korean: true },
+    { id: 52, name: 'Niacinamide Face Wash', brand: 'Plum', price: 900, oldPrice: 1100, rating: 4, ratingCount: 145, image: 'images/Plum.jpeg', badge: null, category: 'skincare', korean: false },
+    { id: 53, name: 'Glow Serum', brand: 'Laneige', price: 2700, oldPrice: 3100, rating: 5, ratingCount: 189, image: 'images/Laneige.png', badge: null, category: 'skincare', korean: true },
+    { id: 54, name: 'Peptide Serum', brand: 'COSRX', price: 2400, oldPrice: 2700, rating: 5, ratingCount: 156, image: 'images/product4.png', badge: null, category: 'skincare', korean: true },
+    { id: 55, name: 'Redermic R Retinol Cream', brand: 'La Roche-Posay', price: 3800, oldPrice: 4300, rating: 5, ratingCount: 145, image: 'images/La-Roche-Posay.png', badge: 'new', category: 'skincare', korean: false },
+    { id: 56, name: 'Rich Hydrating Cream', brand: 'Cetaphil', price: 2500, oldPrice: 2900, rating: 5, ratingCount: 156, image: 'images/Cetaphil.png', badge: null, category: 'skincare', korean: false },
+    { id: 57, name: 'Volcanic Pore Cleanser', brand: 'Innisfree', price: 1700, oldPrice: 2000, rating: 5, ratingCount: 167, image: 'images/Innisfree.jpeg', badge: null, category: 'skincare', korean: true },
+    { id: 58, name: 'Ceramide Cream', brand: 'COSRX', price: 2100, oldPrice: 2400, rating: 5, ratingCount: 178, image: 'images/product1.png', badge: null, category: 'skincare', korean: true },
+    { id: 59, name: 'Resurfacing Retinol Serum', brand: 'CeraVe', price: 2600, oldPrice: 3000, rating: 5, ratingCount: 167, image: 'images/CeraVE.png', badge: 'new', category: 'skincare', korean: false },
+    { id: 60, name: 'Jeju Orchid Eye Cream', brand: 'Innisfree', price: 2800, oldPrice: 3200, rating: 5, ratingCount: 145, image: 'images/Innisfree.jpeg', badge: null, category: 'skincare', korean: true },
+    { id: 61, name: 'Retinol Serum', brand: 'Plum', price: 1200, oldPrice: 1450, rating: 4, ratingCount: 134, image: 'images/Plum.jpeg', badge: null, category: 'skincare', korean: false },
+    { id: 62, name: 'Radian C Cream', brand: 'Laneige', price: 2900, oldPrice: 3300, rating: 5, ratingCount: 178, image: 'images/Laneige.png', badge: null, category: 'skincare', korean: true },
+    { id: 63, name: 'Galactomyces Toner', brand: 'COSRX', price: 1900, oldPrice: 2200, rating: 5, ratingCount: 189, image: 'images/product2.png', badge: null, category: 'skincare', korean: true },
+    { id: 64, name: 'Anthelios Invisible Fluid', brand: 'La Roche-Posay', price: 3200, oldPrice: 3700, rating: 5, ratingCount: 156, image: 'images/La-Roche-Posay.png', badge: null, category: 'skincare', korean: false },
+    { id: 65, name: 'Daily Facial Moisturizer', brand: 'Cetaphil', price: 1850, oldPrice: 2150, rating: 5, ratingCount: 167, image: 'images/Cetaphil.png', badge: null, category: 'skincare', korean: false },
+    { id: 66, name: 'Peach Hand Cream', brand: 'Innisfree', price: 800, oldPrice: 950, rating: 4, ratingCount: 145, image: 'images/Innisfree.jpeg', badge: null, category: 'skincare', korean: true },
+    { id: 67, name: 'Sunscreen SPF 50', brand: 'COSRX', price: 1850, oldPrice: 2100, rating: 5, ratingCount: 167, image: 'images/product3.png', badge: 'new', category: 'skincare', korean: true },
+    { id: 68, name: 'Vitamin C Serum', brand: 'CeraVe', price: 2700, oldPrice: 3100, rating: 5, ratingCount: 145, image: 'images/CeraVE.png', badge: null, category: 'skincare', korean: false },
+    { id: 69, name: 'Green Tea Moisturizer', brand: 'Innisfree', price: 1900, oldPrice: 2200, rating: 5, ratingCount: 178, image: 'images/Innisfree.jpeg', badge: null, category: 'skincare', korean: true },
+    { id: 70, name: 'Vitamin C Face Wash', brand: 'Plum', price: 850, oldPrice: 1000, rating: 4, ratingCount: 134, image: 'images/Plum.jpeg', badge: null, category: 'skincare', korean: false },
+    { id: 71, name: 'Centella Blemish Cream', brand: 'COSRX', price: 2000, oldPrice: 2300, rating: 5, ratingCount: 178, image: 'images/product2.png', badge: null, category: 'skincare', korean: true },
+    { id: 72, name: 'Cicaplast Hand Cream', brand: 'La Roche-Posay', price: 1200, oldPrice: 1450, rating: 4, ratingCount: 145, image: 'images/La-Roche-Posay.png', badge: null, category: 'skincare', korean: false },
+    { id: 73, name: 'Healthy Radiance Moisturizing Cream', brand: 'Cetaphil', price: 2600, oldPrice: 3000, rating: 5, ratingCount: 156, image: 'images/Cetaphil.png', badge: 'new', category: 'skincare', korean: false },
+    { id: 74, name: 'Lip Balm', brand: 'Innisfree', price: 600, oldPrice: 750, rating: 4, ratingCount: 189, image: 'images/Innisfree.jpeg', badge: null, category: 'skincare', korean: true },
+    { id: 75, name: 'Pimple Patch', brand: 'COSRX', price: 800, oldPrice: 950, rating: 5, ratingCount: 234, image: 'images/product1.png', badge: 'bestseller', category: 'skincare', korean: true },
+    { id: 76, name: 'Hydrating Hyaluronic Acid Serum', brand: 'CeraVe', price: 2300, oldPrice: 2600, rating: 5, ratingCount: 167, image: 'images/CeraVE.png', badge: null, category: 'skincare', korean: false },
+    { id: 77, name: 'Sheet Mask', brand: 'Innisfree', price: 500, oldPrice: 650, rating: 4, ratingCount: 234, image: 'images/Innisfree.jpeg', badge: null, category: 'skincare', korean: true },
+    { id: 78, name: 'Hyaluronic Acid Eye Cream', brand: 'Plum', price: 950, oldPrice: 1150, rating: 4, ratingCount: 145, image: 'images/Plum.jpeg', badge: null, category: 'skincare', korean: false },
+    { id: 79, name: 'Face Mask', brand: 'Laneige', price: 2500, oldPrice: 2900, rating: 5, ratingCount: 178, image: 'images/Laneige.png', badge: null, category: 'skincare', korean: true },
+    { id: 80, name: 'Micellar Water', brand: 'Garnier', price: 1800, oldPrice: 2000, rating: 5, ratingCount: 267, image: 'images/garnier.png', badge: null, category: 'skincare', korean: false },
+    { id: 81, name: 'Eye Repair Cream', brand: 'CeraVe', price: 1950, oldPrice: 2200, rating: 5, ratingCount: 145, image: 'images/CeraVE.png', badge: null, category: 'skincare', korean: false },
+    { id: 82, name: 'Hyaluronic Acid Serum', brand: 'La Roche-Posay', price: 4200, oldPrice: 4700, rating: 5, ratingCount: 189, image: 'images/La-Roche-Posay.png', badge: 'new', category: 'skincare', korean: false },
+    { id: 83, name: 'Green Tea Moisturizer', brand: 'Plum', price: 750, oldPrice: 950, rating: 4, ratingCount: 134, image: 'images/Plum.jpeg', badge: null, category: 'skincare', korean: false },
+    { id: 84, name: 'Aloe Soothing Sunscreen SPF 50', brand: 'COSRX', price: 1850, oldPrice: 2100, rating: 5, ratingCount: 156, image: 'images/product3.png', badge: 'new', category: 'skincare', korean: true },
+    { id: 85, name: 'Pure Vitamin C Serum', brand: 'The Ordinary', price: 2100, oldPrice: 2500, rating: 5, ratingCount: 198, image: 'images/The-ordinary.png', badge: null, category: 'skincare', korean: false },
+    { id: 86, name: 'Cicaplast Gel B5', brand: 'La Roche-Posay', price: 1600, oldPrice: 1850, rating: 5, ratingCount: 145, image: 'images/La-Roche-Posay.png', badge: null, category: 'skincare', korean: false },
+    { id: 87, name: 'Rice Water Bright Cleanser', brand: 'COSRX', price: 1750, oldPrice: 2000, rating: 5, ratingCount: 167, image: 'images/product2.png', badge: null, category: 'skincare', korean: true },
+    { id: 88, name: 'Hydrating Sleep Mask', brand: 'Laneige', price: 3000, oldPrice: 3500, rating: 5, ratingCount: 178, image: 'images/Laneige.png', badge: 'bestseller', category: 'skincare', korean: true },
+    { id: 89, name: 'Retinol 1% Serum', brand: 'The Ordinary', price: 1900, oldPrice: 2200, rating: 5, ratingCount: 189, image: 'images/The-ordinary.png', badge: null, category: 'skincare', korean: false },
+    { id: 90, name: 'Hyaluronic Eye Cream', brand: 'Cetaphil', price: 2200, oldPrice: 2500, rating: 5, ratingCount: 156, image: 'images/Cetaphil.png', badge: null, category: 'skincare', korean: false },
+    { id: 91, name: 'Green Tea Seed Serum', brand: 'Innisfree', price: 2400, oldPrice: 2800, rating: 5, ratingCount: 167, image: 'images/Innisfree.jpeg', badge: 'new', category: 'skincare', korean: true },
+    { id: 92, name: 'Effaclar Purifying Foaming Gel', brand: 'La Roche-Posay', price: 2200, oldPrice: 2600, rating: 5, ratingCount: 145, image: 'images/La-Roche-Posay.png', badge: null, category: 'skincare', korean: false },
+    { id: 93, name: 'Niacinamide 5% + HA', brand: 'The Ordinary', price: 1700, oldPrice: 1950, rating: 5, ratingCount: 178, image: 'images/The-ordinary.png', badge: null, category: 'skincare', korean: false },
+    { id: 94, name: 'Lip Mask', brand: 'Laneige', price: 3200, oldPrice: 3700, rating: 5, ratingCount: 189, image: 'images/Laneige.png', badge: 'bestseller', category: 'skincare', korean: true },
+    { id: 95, name: 'Daily Acne Cleanser', brand: 'COSRX', price: 1850, oldPrice: 2100, rating: 5, ratingCount: 156, image: 'images/product1.png', badge: 'new', category: 'skincare', korean: true },
+    { id: 96, name: 'Glow Face Mask', brand: 'Innisfree', price: 900, oldPrice: 1100, rating: 4, ratingCount: 134, image: 'images/Innisfree.jpeg', badge: null, category: 'skincare', korean: true },
+    { id: 97, name: 'B5 Moisturizer', brand: 'La Roche-Posay', price: 2700, oldPrice: 3100, rating: 5, ratingCount: 167, image: 'images/La-Roche-Posay.png', badge: null, category: 'skincare', korean: false },
+    { id: 98, name: 'Ceramide Eye Cream', brand: 'CeraVe', price: 2300, oldPrice: 2600, rating: 5, ratingCount: 145, image: 'images/CeraVE.png', badge: null, category: 'skincare', korean: false },
+    { id: 99, name: 'Vitamin C 15% Serum', brand: 'COSRX', price: 2500, oldPrice: 2900, rating: 5, ratingCount: 178, image: 'images/product3.png', badge: null, category: 'skincare', korean: true },
+    { id: 100, name: 'Rice Cream Cleanser', brand: 'Cetaphil', price: 1650, oldPrice: 1900, rating: 5, ratingCount: 156, image: 'images/Cetaphil.png', badge: null, category: 'skincare', korean: false },
+    { id: 101, name: 'Green Tea Fresh Cleanser', brand: 'Innisfree', price: 1500, oldPrice: 1750, rating: 5, ratingCount: 167, image: 'images/Innisfree.jpeg', badge: null, category: 'skincare', korean: true },
+    { id: 102, name: 'Ultra Repair Cream', brand: 'La Roche-Posay', price: 3300, oldPrice: 3800, rating: 5, ratingCount: 145, image: 'images/La-Roche-Posay.png', badge: 'bestseller', category: 'skincare', korean: false },
+    { id: 103, name: 'Propolis Synergy Toner', brand: 'COSRX', price: 1950, oldPrice: 2200, rating: 5, ratingCount: 178, image: 'images/product2.png', badge: null, category: 'skincare', korean: true },
+    { id: 104, name: 'Brightening Vitamin C Cream', brand: 'Plum', price: 1100, oldPrice: 1350, rating: 4, ratingCount: 134, image: 'images/Plum.jpeg', badge: null, category: 'skincare', korean: false },
+    { id: 105, name: 'Sunscreen SPF 30', brand: 'Cetaphil', price: 2300, oldPrice: 2600, rating: 5, ratingCount: 156, image: 'images/Cetaphil.png', badge: null, category: 'skincare', korean: false },
+    { id: 106, name: 'Skin Barrier Cream', brand: 'CeraVe', price: 2600, oldPrice: 3000, rating: 5, ratingCount: 167, image: 'images/CeraVE.png', badge: 'new', category: 'skincare', korean: false },
+    { id: 107, name: 'Snail Cream Moisturizer', brand: 'COSRX', price: 2200, oldPrice: 2500, rating: 5, ratingCount: 189, image: 'images/product4.png', badge: null, category: 'skincare', korean: true },
+    { id: 108, name: 'Facial Wash', brand: 'Simple', price: 850, oldPrice: 1000, rating: 4, ratingCount: 145, image: 'images/Simple.png', badge: null, category: 'skincare', korean: false },
+    { id: 109, name: 'Advanced Sunscreen SPF 50', brand: 'La Roche-Posay', price: 3500, oldPrice: 4000, rating: 5, ratingCount: 167, image: 'images/La-Roche-Posay.png', badge: 'bestseller', category: 'skincare', korean: false },
+    { id: 110, name: 'Hyaluronic Cream', brand: 'The Ordinary', price: 1900, oldPrice: 2200, rating: 5, ratingCount: 156, image: 'images/The-ordinary.png', badge: null, category: 'skincare', korean: false },
+    { id: 111, name: 'Water Cream', brand: 'Laneige', price: 2800, oldPrice: 3200, rating: 5, ratingCount: 178, image: 'images/Laneige.png', badge: null, category: 'skincare', korean: true },
+    { id: 112, name: 'Green Tea Cleanser', brand: 'Plum', price: 750, oldPrice: 900, rating: 4, ratingCount: 134, image: 'images/Plum.jpeg', badge: null, category: 'skincare', korean: false },
+    { id: 113, name: 'Vitamin C Cleanser', brand: 'Mamaearth', price: 900, oldPrice: 1100, rating: 4, ratingCount: 145, image: 'images/Mamaearth.png', badge: null, category: 'skincare', korean: false },
+    { id: 114, name: 'Cica Serum', brand: 'COSRX', price: 2100, oldPrice: 2400, rating: 5, ratingCount: 167, image: 'images/product1.png', badge: null, category: 'skincare', korean: true },
+    { id: 115, name: 'Retinol Eye Serum', brand: 'The Ordinary', price: 1600, oldPrice: 1850, rating: 5, ratingCount: 145, image: 'images/The-ordinary.png', badge: null, category: 'skincare', korean: false },
+    { id: 116, name: 'Fresh Sunscreen SPF 50', brand: 'Innisfree', price: 1950, oldPrice: 2200, rating: 5, ratingCount: 156, image: 'images/Innisfree.jpeg', badge: null, category: 'skincare', korean: true },
+    { id: 117, name: 'BHA Skin Toner', brand: 'COSRX', price: 1750, oldPrice: 2000, rating: 5, ratingCount: 178, image: 'images/product2.png', badge: null, category: 'skincare', korean: true },
+    { id: 118, name: 'Niacinamide Face Cream', brand: 'Cetaphil', price: 2400, oldPrice: 2800, rating: 5, ratingCount: 167, image: 'images/Cetaphil.png', badge: null, category: 'skincare', korean: false },
+    { id: 119, name: 'Skin Renewing Serum', brand: 'CeraVe', price: 2900, oldPrice: 3300, rating: 5, ratingCount: 145, image: 'images/CeraVE.png', badge: 'new', category: 'skincare', korean: false },
+    { id: 120, name: 'Orchid Eye Cream', brand: 'Innisfree', price: 2600, oldPrice: 3000, rating: 5, ratingCount: 156, image: 'images/Innisfree.jpeg', badge: null, category: 'skincare', korean: true },
+    { id: 121, name: 'SuperStay Lipstick', brand: 'Maybelline', price: 1450, oldPrice: 2000, rating: 5, ratingCount: 540, image: 'images/product3.png', badge: 'bestseller', category: 'makeup', korean: false },
+    { id: 122, name: 'True Match Foundation', brand: 'L\'Oreal', price: 2800, oldPrice: 3500, rating: 5, ratingCount: 412, image: 'images/product1.png', badge: null, category: 'makeup', korean: false },
+    { id: 123, name: 'Ultimate Eyeshadow Palette', brand: 'NYX', price: 3200, oldPrice: 3800, rating: 5, ratingCount: 328, image: 'images/product2.png', badge: null, category: 'makeup', korean: false },
+    { id: 124, name: 'Lash Sensational Mascara', brand: 'Maybelline', price: 1200, oldPrice: 1600, rating: 5, ratingCount: 289, image: 'images/product4.png', badge: 'bestseller', category: 'makeup', korean: false },
+    { id: 125, name: 'Gloss Bomb Lip Gloss', brand: 'Fenty Beauty', price: 2800, oldPrice: 4000, rating: 5, ratingCount: 456, image: 'images/product3.png', badge: null, category: 'makeup', korean: false },
+    { id: 126, name: 'Pro Longwear Concealer', brand: 'MAC', price: 3600, oldPrice: 4000, rating: 5, ratingCount: 234, image: 'images/product1.png', badge: null, category: 'makeup', korean: false },
+    { id: 127, name: 'Matte Lipstick', brand: 'MAC', price: 3200, oldPrice: 3800, rating: 5, ratingCount: 412, image: 'images/MAC.png', badge: 'bestseller', category: 'makeup', korean: false },
+    { id: 128, name: 'Soft Matte Lip Cream', brand: 'NYX', price: 1650, oldPrice: 2100, rating: 4, ratingCount: 156, image: 'images/NYX.png', badge: null, category: 'makeup', korean: false },
+    { id: 129, name: 'Fit Me Foundation', brand: 'Maybelline', price: 1850, oldPrice: 2200, rating: 4, ratingCount: 189, image: 'images/Maybelline.png', badge: 'new', category: 'makeup', korean: false },
+    { id: 130, name: 'Eyeshadow Palette', brand: 'Huda Beauty', price: 4500, oldPrice: 5000, rating: 5, ratingCount: 289, image: 'images/Huda-Beauty.png', badge: 'new', category: 'makeup', korean: false },
+    { id: 131, name: 'Fit Me Concealer', brand: 'Maybelline', price: 950, oldPrice: 1200, rating: 4, ratingCount: 178, image: 'images/Maybelline.png', badge: null, category: 'makeup', korean: false },
+    { id: 132, name: 'Studio Fix Foundation', brand: 'MAC', price: 2800, oldPrice: 3500, rating: 5, ratingCount: 198, image: 'images/MAC.png', badge: null, category: 'makeup', korean: false },
+    { id: 133, name: 'Can\'t Stop Won\'t Stop Foundation', brand: 'NYX', price: 1400, oldPrice: 1700, rating: 4, ratingCount: 156, image: 'images/NYX.png', badge: null, category: 'makeup', korean: false },
+    { id: 134, name: 'Liquid Matte Lipstick', brand: 'Huda Beauty', price: 3200, oldPrice: 3800, rating: 5, ratingCount: 234, image: 'images/Huda-Beauty.png', badge: null, category: 'makeup', korean: false },
+    { id: 135, name: 'Give Me Mocha Lipstick', brand: 'wet n wild', price: 850, oldPrice: 990, rating: 4, ratingCount: 189, image: 'images/wet-n-wild.png', badge: 'bestseller', category: 'makeup', korean: false },
+    { id: 136, name: 'Pro Concealer', brand: 'L.A. Girl', price: 1200, oldPrice: 1500, rating: 4, ratingCount: 167, image: 'images/LA-Girl.png', badge: null, category: 'makeup', korean: false },
+    { id: 137, name: 'Powder Blush', brand: 'MAC', price: 2100, oldPrice: 2500, rating: 5, ratingCount: 178, image: 'images/MAC.png', badge: null, category: 'makeup', korean: false },
+    { id: 138, name: 'Highlighter Palette', brand: 'Huda Beauty', price: 2800, oldPrice: 3200, rating: 5, ratingCount: 189, image: 'images/Huda-Beauty.png', badge: null, category: 'makeup', korean: false },
+    { id: 139, name: 'Epic Ink Liner', brand: 'NYX', price: 1250, oldPrice: 1400, rating: 4, ratingCount: 167, image: 'images/NYX.png', badge: 'new', category: 'makeup', korean: false },
+    { id: 140, name: 'MegaLast Liquid Lipstick', brand: 'wet n wild', price: 700, oldPrice: 850, rating: 4, ratingCount: 156, image: 'images/wet-n-wild.png', badge: null, category: 'makeup', korean: false },
+    { id: 141, name: 'HD Foundation', brand: 'L.A. Girl', price: 2100, oldPrice: 2500, rating: 4, ratingCount: 145, image: 'images/LA-Girl.png', badge: 'new', category: 'makeup', korean: false },
+    { id: 142, name: 'Lash Sensational Sky High Mascara', brand: 'Maybelline', price: 1550, oldPrice: 1800, rating: 5, ratingCount: 345, image: 'images/Maybelline.png', badge: 'bestseller', category: 'makeup', korean: false },
+    { id: 143, name: 'Lip Lingerie', brand: 'NYX', price: 950, oldPrice: 1200, rating: 4, ratingCount: 178, image: 'images/NYX.png', badge: null, category: 'makeup', korean: false },
+    { id: 144, name: 'MegaGlo Highlighter', brand: 'wet n wild', price: 800, oldPrice: 950, rating: 4, ratingCount: 156, image: 'images/wet-n-wild.png', badge: null, category: 'makeup', korean: false },
+    { id: 145, name: 'Butter Gloss', brand: 'NYX', price: 800, oldPrice: 1000, rating: 4, ratingCount: 234, image: 'images/NYX.png', badge: null, category: 'makeup', korean: false },
+    { id: 146, name: 'Pro Setting Powder', brand: 'L.A. Girl', price: 1400, oldPrice: 1650, rating: 4, ratingCount: 156, image: 'images/LA-Girl.png', badge: null, category: 'makeup', korean: false },
+    { id: 147, name: 'Matte Lipstick Set', brand: 'O.TWO.O', price: 1200, oldPrice: 1500, rating: 4, ratingCount: 145, image: 'images/OTWO.png', badge: null, category: 'makeup', korean: false },
+    { id: 148, name: 'Eyeshadow Palette', brand: 'O.TWO.O', price: 1800, oldPrice: 2200, rating: 4, ratingCount: 134, image: 'images/OTWO.png', badge: 'new', category: 'makeup', korean: false },
+    { id: 149, name: 'Loose Face Powder', brand: 'Airspun', price: 1500, oldPrice: 1800, rating: 4, ratingCount: 156, image: 'images/Airspun.png', badge: null, category: 'makeup', korean: false },
+    { id: 150, name: 'Translucent Powder', brand: 'Airspun', price: 1800, oldPrice: 2100, rating: 4, ratingCount: 145, image: 'images/Airspun.png', badge: 'sale', category: 'makeup', korean: false },
+    { id: 151, name: 'Fit Me Powder', brand: 'Maybelline', price: 1200, oldPrice: 1500, rating: 4, ratingCount: 189, image: 'images/Maybelline.png', badge: null, category: 'makeup', korean: false },
+    { id: 152, name: 'Milk Jumbo Eye Pencil', brand: 'NYX', price: 600, oldPrice: 750, rating: 4, ratingCount: 234, image: 'images/NYX.png', badge: null, category: 'makeup', korean: false },
+    { id: 153, name: 'Lipglass', brand: 'MAC', price: 1800, oldPrice: 2100, rating: 5, ratingCount: 234, image: 'images/MAC.png', badge: null, category: 'makeup', korean: false },
+    { id: 154, name: 'MegaSlim Skinny Mascara', brand: 'wet n wild', price: 650, oldPrice: 800, rating: 4, ratingCount: 167, image: 'images/wet-n-wild.png', badge: null, category: 'makeup', korean: false },
+    { id: 155, name: 'Brow Glue', brand: 'NYX', price: 1000, oldPrice: 1200, rating: 4, ratingCount: 189, image: 'images/NYX.png', badge: null, category: 'makeup', korean: false },
+    { id: 156, name: 'High Definition Blush', brand: 'NYX', price: 1100, oldPrice: 1350, rating: 4, ratingCount: 156, image: 'images/NYX.png', badge: null, category: 'makeup', korean: false },
+    { id: 157, name: 'Pro Filt\'r Foundation', brand: 'Fenty Beauty', price: 4200, oldPrice: 4800, rating: 5, ratingCount: 312, image: 'images/product1.png', badge: 'bestseller', category: 'makeup', korean: false },
+    { id: 158, name: 'Nude Lipstick', brand: 'MAC', price: 2800, oldPrice: 3300, rating: 5, ratingCount: 198, image: 'images/MAC.png', badge: null, category: 'makeup', korean: false },
+    { id: 159, name: 'Matte Eyeshadow Palette', brand: 'Huda Beauty', price: 3500, oldPrice: 4000, rating: 5, ratingCount: 234, image: 'images/Huda-Beauty.png', badge: null, category: 'makeup', korean: false },
+    { id: 160, name: 'Falsies Mascara', brand: 'Maybelline', price: 1100, oldPrice: 1400, rating: 4, ratingCount: 178, image: 'images/Maybelline.png', badge: null, category: 'makeup', korean: false },
+    { id: 161, name: 'Cream Blush', brand: 'Fenty Beauty', price: 2400, oldPrice: 2800, rating: 5, ratingCount: 189, image: 'images/product3.png', badge: 'new', category: 'makeup', korean: false },
+    { id: 162, name: 'Instant Age Rewind Concealer', brand: 'Maybelline', price: 1300, oldPrice: 1600, rating: 4, ratingCount: 234, image: 'images/Maybelline.png', badge: null, category: 'makeup', korean: false },
+    { id: 163, name: 'Lip Liner', brand: 'NYX', price: 700, oldPrice: 850, rating: 4, ratingCount: 167, image: 'images/NYX.png', badge: null, category: 'makeup', korean: false },
+    { id: 164, name: 'Setting Spray', brand: 'MAC', price: 2600, oldPrice: 3000, rating: 5, ratingCount: 178, image: 'images/MAC.png', badge: null, category: 'makeup', korean: false },
+    { id: 165, name: 'Sunkissed Bronzer', brand: 'Fenty Beauty', price: 3100, oldPrice: 3600, rating: 5, ratingCount: 156, image: 'images/product2.png', badge: 'bestseller', category: 'makeup', korean: false },
+    { id: 166, name: 'Ink Eyeliner', brand: 'NYX', price: 850, oldPrice: 1000, rating: 4, ratingCount: 189, image: 'images/NYX.png', badge: null, category: 'makeup', korean: false },
+    { id: 167, name: 'Soft Touch Highlighter', brand: 'wet n wild', price: 650, oldPrice: 800, rating: 4, ratingCount: 145, image: 'images/wet-n-wild.png', badge: null, category: 'makeup', korean: false },
+    { id: 168, name: 'Glow Foundation', brand: 'L.A. Girl', price: 1900, oldPrice: 2200, rating: 4, ratingCount: 156, image: 'images/LA-Girl.png', badge: null, category: 'makeup', korean: false },
+    { id: 169, name: 'Wet Lip Gloss', brand: 'NYX', price: 750, oldPrice: 900, rating: 4, ratingCount: 234, image: 'images/NYX.png', badge: 'new', category: 'makeup', korean: false },
+    { id: 170, name: 'Perfecting Powder', brand: 'Airspun', price: 1400, oldPrice: 1700, rating: 4, ratingCount: 145, image: 'images/Airspun.png', badge: null, category: 'makeup', korean: false },
+    { id: 171, name: 'Blush Palette', brand: 'Huda Beauty', price: 3200, oldPrice: 3800, rating: 5, ratingCount: 189, image: 'images/Huda-Beauty.png', badge: null, category: 'makeup', korean: false },
+    { id: 172, name: 'Mascara Primer', brand: 'Maybelline', price: 900, oldPrice: 1100, rating: 4, ratingCount: 156, image: 'images/Maybelline.png', badge: null, category: 'makeup', korean: false },
+    { id: 173, name: 'Liquid Foundation', brand: 'MAC', price: 3200, oldPrice: 3700, rating: 5, ratingCount: 167, image: 'images/MAC.png', badge: 'bestseller', category: 'makeup', korean: false },
+    { id: 174, name: 'Matte Blush', brand: 'NYX', price: 950, oldPrice: 1200, rating: 4, ratingCount: 178, image: 'images/NYX.png', badge: null, category: 'makeup', korean: false },
+    { id: 175, name: 'Brow Pomade', brand: 'NYX', price: 1000, oldPrice: 1250, rating: 4, ratingCount: 167, image: 'images/NYX.png', badge: null, category: 'makeup', korean: false },
+    { id: 176, name: 'Metallic Eyeshadow', brand: 'Huda Beauty', price: 2800, oldPrice: 3200, rating: 5, ratingCount: 145, image: 'images/Huda-Beauty.png', badge: 'new', category: 'makeup', korean: false },
+    { id: 177, name: 'Lip Oil', brand: 'NYX', price: 850, oldPrice: 1000, rating: 4, ratingCount: 189, image: 'images/NYX.png', badge: null, category: 'makeup', korean: false },
+    { id: 178, name: 'HD Setting Powder', brand: 'L.A. Girl', price: 1500, oldPrice: 1800, rating: 4, ratingCount: 156, image: 'images/LA-Girl.png', badge: null, category: 'makeup', korean: false },
+    { id: 179, name: 'Lip Scrub', brand: 'wet n wild', price: 550, oldPrice: 650, rating: 4, ratingCount: 134, image: 'images/wet-n-wild.png', badge: null, category: 'makeup', korean: false },
+    { id: 180, name: 'High Coverage Foundation', brand: 'Fenty Beauty', price: 4600, oldPrice: 5200, rating: 5, ratingCount: 234, image: 'images/product1.png', badge: 'bestseller', category: 'makeup', korean: false },
+    { id: 181, name: 'Eyeshadow Base', brand: 'NYX', price: 800, oldPrice: 950, rating: 4, ratingCount: 156, image: 'images/NYX.png', badge: null, category: 'makeup', korean: false },
+    { id: 182, name: 'Dewy Foundation', brand: 'L\'Oreal', price: 2600, oldPrice: 3000, rating: 5, ratingCount: 178, image: 'images/product2.png', badge: null, category: 'makeup', korean: false },
+    { id: 183, name: 'Matte Setting Spray', brand: 'MAC', price: 2200, oldPrice: 2600, rating: 5, ratingCount: 189, image: 'images/MAC.png', badge: null, category: 'makeup', korean: false },
+    { id: 184, name: 'Liquid Highlighter', brand: 'wet n wild', price: 750, oldPrice: 900, rating: 4, ratingCount: 145, image: 'images/wet-n-wild.png', badge: null, category: 'makeup', korean: false },
+    { id: 185, name: 'Concealer Palette', brand: 'L.A. Girl', price: 1800, oldPrice: 2100, rating: 4, ratingCount: 156, image: 'images/LA-Girl.png', badge: null, category: 'makeup', korean: false },
+    { id: 186, name: 'Lip Plumper', brand: 'NYX', price: 1100, oldPrice: 1300, rating: 4, ratingCount: 167, image: 'images/NYX.png', badge: 'new', category: 'makeup', korean: false },
+    { id: 187, name: 'Cream Foundation', brand: 'MAC', price: 3000, oldPrice: 3500, rating: 5, ratingCount: 178, image: 'images/MAC.png', badge: null, category: 'makeup', korean: false },
+    { id: 188, name: 'Highlighter Stick', brand: 'Fenty Beauty', price: 2600, oldPrice: 3000, rating: 5, ratingCount: 189, image: 'images/product3.png', badge: null, category: 'makeup', korean: false },
+    { id: 189, name: 'Brow Gel', brand: 'NYX', price: 750, oldPrice: 900, rating: 4, ratingCount: 156, image: 'images/NYX.png', badge: null, category: 'makeup', korean: false },
+    { id: 190, name: 'Natural Blush', brand: 'wet n wild', price: 600, oldPrice: 750, rating: 4, ratingCount: 145, image: 'images/wet-n-wild.png', badge: null, category: 'makeup', korean: false },
+    { id: 191, name: 'Perfecting Concealer', brand: 'Maybelline', price: 1100, oldPrice: 1300, rating: 4, ratingCount: 167, image: 'images/Maybelline.png', badge: null, category: 'makeup', korean: false },
+    { id: 192, name: 'Shadow Palette', brand: 'NYX', price: 2200, oldPrice: 2600, rating: 4, ratingCount: 156, image: 'images/NYX.png', badge: null, category: 'makeup', korean: false },
+    { id: 193, name: 'Lip Satin', brand: 'O.TWO.O', price: 900, oldPrice: 1100, rating: 4, ratingCount: 145, image: 'images/OTWO.png', badge: null, category: 'makeup', korean: false },
+    { id: 194, name: 'Dewy Setting Spray', brand: 'L\'Oreal', price: 1800, oldPrice: 2100, rating: 4, ratingCount: 156, image: 'images/product1.png', badge: null, category: 'makeup', korean: false },
+    { id: 195, name: 'Bronzer Palette', brand: 'Huda Beauty', price: 3800, oldPrice: 4300, rating: 5, ratingCount: 178, image: 'images/Huda-Beauty.png', badge: 'new', category: 'makeup', korean: false },
+    { id: 196, name: 'Mascara Lash', brand: 'wet n wild', price: 550, oldPrice: 700, rating: 4, ratingCount: 134, image: 'images/wet-n-wild.png', badge: null, category: 'makeup', korean: false },
+    { id: 197, name: 'Brow Pencil', brand: 'NYX', price: 700, oldPrice: 850, rating: 4, ratingCount: 156, image: 'images/NYX.png', badge: null, category: 'makeup', korean: false },
+    { id: 198, name: 'Silk Foundation', brand: 'L.A. Girl', price: 1700, oldPrice: 2000, rating: 4, ratingCount: 145, image: 'images/LA-Girl.png', badge: null, category: 'makeup', korean: false },
+    { id: 199, name: 'Matte Lip Stain', brand: 'wet n wild', price: 650, oldPrice: 800, rating: 4, ratingCount: 167, image: 'images/wet-n-wild.png', badge: null, category: 'makeup', korean: false },
+    { id: 200, name: 'Finishing Powder', brand: 'Airspun', price: 1600, oldPrice: 1900, rating: 4, ratingCount: 156, image: 'images/Airspun.png', badge: null, category: 'makeup', korean: false },
+    { id: 201, name: 'Radiant Blush', brand: 'Fenty Beauty', price: 2300, oldPrice: 2700, rating: 5, ratingCount: 178, image: 'images/product2.png', badge: null, category: 'makeup', korean: false },
+    { id: 202, name: 'Eyeliner Pen', brand: 'NYX', price: 650, oldPrice: 800, rating: 4, ratingCount: 189, image: 'images/NYX.png', badge: null, category: 'makeup', korean: false },
+    { id: 203, name: 'Lip Primer', brand: 'NYX', price: 700, oldPrice: 850, rating: 4, ratingCount: 145, image: 'images/NYX.png', badge: null, category: 'makeup', korean: false },
+    { id: 204, name: 'Glow Powder', brand: 'MAC', price: 2400, oldPrice: 2800, rating: 5, ratingCount: 156, image: 'images/MAC.png', badge: null, category: 'makeup', korean: false },
+    { id: 205, name: 'Pro Eyeshadow', brand: 'Huda Beauty', price: 3000, oldPrice: 3500, rating: 5, ratingCount: 178, image: 'images/Huda-Beauty.png', badge: 'bestseller', category: 'makeup', korean: false },
+    { id: 206, name: 'Liquid Blush', brand: 'wet n wild', price: 700, oldPrice: 850, rating: 4, ratingCount: 145, image: 'images/wet-n-wild.png', badge: null, category: 'makeup', korean: false },
+    { id: 207, name: 'Concealer Stick', brand: 'Maybelline', price: 1000, oldPrice: 1200, rating: 4, ratingCount: 156, image: 'images/Maybelline.png', badge: null, category: 'makeup', korean: false },
+    { id: 208, name: 'Mascara Volume', brand: 'L\'Oreal', price: 1400, oldPrice: 1700, rating: 4, ratingCount: 167, image: 'images/product4.png', badge: null, category: 'makeup', korean: false },
+    { id: 209, name: 'Highlighter Stick', brand: 'NYX', price: 900, oldPrice: 1100, rating: 4, ratingCount: 145, image: 'images/NYX.png', badge: null, category: 'makeup', korean: false },
+    { id: 210, name: 'Brow Mascara', brand: 'NYX', price: 750, oldPrice: 900, rating: 4, ratingCount: 156, image: 'images/NYX.png', badge: null, category: 'makeup', korean: false },
+    { id: 211, name: 'Lip Tint', brand: 'O.TWO.O', price: 650, oldPrice: 800, rating: 4, ratingCount: 134, image: 'images/OTWO.png', badge: null, category: 'makeup', korean: false },
+    { id: 212, name: 'Primer Foundation', brand: 'MAC', price: 2800, oldPrice: 3200, rating: 5, ratingCount: 167, image: 'images/MAC.png', badge: null, category: 'makeup', korean: false },
+    { id: 213, name: 'Cream Highlighter', brand: 'Fenty Beauty', price: 2700, oldPrice: 3100, rating: 5, ratingCount: 178, image: 'images/product3.png', badge: null, category: 'makeup', korean: false },
+    { id: 214, name: 'Matte Eyeshadow', brand: 'NYX', price: 1000, oldPrice: 1200, rating: 4, ratingCount: 156, image: 'images/NYX.png', badge: null, category: 'makeup', korean: false },
+    { id: 215, name: 'Lip Gloss Set', brand: 'wet n wild', price: 900, oldPrice: 1100, rating: 4, ratingCount: 145, image: 'images/wet-n-wild.png', badge: 'new', category: 'makeup', korean: false },
+    { id: 216, name: 'Mineral Foundation', brand: 'Airspun', price: 1700, oldPrice: 2000, rating: 4, ratingCount: 156, image: 'images/Airspun.png', badge: null, category: 'makeup', korean: false },
+    { id: 217, name: 'Shimmer Eyeshadow', brand: 'Huda Beauty', price: 2900, oldPrice: 3300, rating: 5, ratingCount: 167, image: 'images/Huda-Beauty.png', badge: null, category: 'makeup', korean: false },
+    { id: 218, name: 'Full Coverage Concealer', brand: 'L.A. Girl', price: 1300, oldPrice: 1600, rating: 4, ratingCount: 145, image: 'images/LA-Girl.png', badge: null, category: 'makeup', korean: false },
+    { id: 219, name: 'Mascara Waterproof', brand: 'Maybelline', price: 1300, oldPrice: 1600, rating: 4, ratingCount: 156, image: 'images/Maybelline.png', badge: null, category: 'makeup', korean: false },
+    { id: 220, name: 'Liquid Lipstick', brand: 'MAC', price: 2900, oldPrice: 3400, rating: 5, ratingCount: 167, image: 'images/MAC.png', badge: 'bestseller', category: 'makeup', korean: false },
+    { id: 221, name: 'Bronzer Stick', brand: 'Fenty Beauty', price: 2800, oldPrice: 3200, rating: 5, ratingCount: 145, image: 'images/product2.png', badge: null, category: 'makeup', korean: false },
+    { id: 222, name: 'Setting Powder', brand: 'NYX', price: 1200, oldPrice: 1400, rating: 4, ratingCount: 156, image: 'images/NYX.png', badge: null, category: 'makeup', korean: false },
+    { id: 223, name: 'Lip Stain', brand: 'wet n wild', price: 550, oldPrice: 650, rating: 4, ratingCount: 134, image: 'images/wet-n-wild.png', badge: null, category: 'makeup', korean: false },
+    { id: 224, name: 'Eyeshadow Stick', brand: 'NYX', price: 650, oldPrice: 800, rating: 4, ratingCount: 145, image: 'images/NYX.png', badge: null, category: 'makeup', korean: false },
+    { id: 225, name: 'Blush Stick', brand: 'wet n wild', price: 600, oldPrice: 750, rating: 4, ratingCount: 156, image: 'images/wet-n-wild.png', badge: null, category: 'makeup', korean: false },
+    { id: 226, name: 'High Coverage Concealer', brand: 'MAC', price: 2400, oldPrice: 2800, rating: 5, ratingCount: 167, image: 'images/MAC.png', badge: null, category: 'makeup', korean: false },
+    { id: 227, name: 'Glossy Lip Balm', brand: 'O.TWO.O', price: 750, oldPrice: 900, rating: 4, ratingCount: 145, image: 'images/OTWO.png', badge: null, category: 'makeup', korean: false },
+    { id: 228, name: 'Matte Bronzer', brand: 'Huda Beauty', price: 3400, oldPrice: 3900, rating: 5, ratingCount: 156, image: 'images/Huda-Beauty.png', badge: null, category: 'makeup', korean: false },
+    { id: 229, name: 'Brow Kit', brand: 'NYX', price: 1200, oldPrice: 1400, rating: 4, ratingCount: 156, image: 'images/NYX.png', badge: 'new', category: 'makeup', korean: false },
+    { id: 230, name: 'Dewy Blush', brand: 'Fenty Beauty', price: 2200, oldPrice: 2600, rating: 5, ratingCount: 167, image: 'images/product1.png', badge: null, category: 'makeup', korean: false },
+    { id: 231, name: 'Translucent Setting Powder', brand: 'Airspun', price: 1550, oldPrice: 1800, rating: 4, ratingCount: 145, image: 'images/Airspun.png', badge: null, category: 'makeup', korean: false },
+    { id: 232, name: 'Lip Pencil', brand: 'MAC', price: 1600, oldPrice: 1900, rating: 5, ratingCount: 156, image: 'images/MAC.png', badge: null, category: 'makeup', korean: false },
+    { id: 233, name: 'Mascara Curl', brand: 'Maybelline', price: 1000, oldPrice: 1200, rating: 4, ratingCount: 167, image: 'images/Maybelline.png', badge: null, category: 'makeup', korean: false },
+    { id: 234, name: 'Highlighter Powder', brand: 'NYX', price: 950, oldPrice: 1150, rating: 4, ratingCount: 145, image: 'images/NYX.png', badge: null, category: 'makeup', korean: false },
+    { id: 235, name: 'Concealer Cream', brand: 'L.A. Girl', price: 1100, oldPrice: 1300, rating: 4, ratingCount: 156, image: 'images/LA-Girl.png', badge: null, category: 'makeup', korean: false },
+    { id: 236, name: 'Matte Eyeshadow Pot', brand: 'wet n wild', price: 400, oldPrice: 500, rating: 4, ratingCount: 145, image: 'images/wet-n-wild.png', badge: null, category: 'makeup', korean: false },
+    { id: 237, name: 'Foundation Stick', brand: 'Fenty Beauty', price: 4000, oldPrice: 4500, rating: 5, ratingCount: 178, image: 'images/product2.png', badge: 'bestseller', category: 'makeup', korean: false },
+    { id: 238, name: 'Brow Pencil Duo', brand: 'NYX', price: 850, oldPrice: 1000, rating: 4, ratingCount: 156, image: 'images/NYX.png', badge: null, category: 'makeup', korean: false },
+    { id: 239, name: 'Glow Setting Spray', brand: 'MAC', price: 2400, oldPrice: 2800, rating: 5, ratingCount: 156, image: 'images/MAC.png', badge: null, category: 'makeup', korean: false },
+    { id: 240, name: 'Expert Repair Shampoo', brand: 'L\'Oreal', price: 1800, oldPrice: 2250, rating: 5, ratingCount: 412, image: 'images/product4.png', badge: 'bestseller', category: 'haircare', korean: false },
+    { id: 241, name: 'Ultimate Blends Conditioner', brand: 'Garnier', price: 1500, oldPrice: 1800, rating: 5, ratingCount: 328, image: 'images/product1.png', badge: null, category: 'haircare', korean: false },
+    { id: 242, name: 'Intensive Hair Mask', brand: 'Moroccanoil', price: 3500, oldPrice: 5000, rating: 5, ratingCount: 289, image: 'images/product2.png', badge: 'bestseller', category: 'haircare', korean: false },
+    { id: 243, name: 'Argan Oil Hair Serum', brand: 'OGX', price: 2200, oldPrice: 2500, rating: 5, ratingCount: 234, image: 'images/product3.png', badge: null, category: 'haircare', korean: false },
+    { id: 244, name: 'Hair Oil Serum', brand: 'L\'Oreal', price: 1600, oldPrice: 2100, rating: 5, ratingCount: 198, image: 'images/product4.png', badge: null, category: 'haircare', korean: false },
+    { id: 245, name: 'Heat Protectant Spray', brand: 'TRESemmé', price: 1200, oldPrice: 1300, rating: 5, ratingCount: 167, image: 'images/product1.png', badge: null, category: 'haircare', korean: false },
+    { id: 246, name: 'Total Repair 5 Shampoo', brand: 'L\'Oreal', price: 2200, oldPrice: 2800, rating: 5, ratingCount: 234, image: 'images/L\'Oreal.png', badge: 'bestseller', category: 'haircare', korean: false },
+    { id: 247, name: 'Total Repair 5 Conditioner', brand: 'L\'Oreal', price: 1850, oldPrice: 2300, rating: 5, ratingCount: 234, image: 'images/L\'Oreal.png', badge: null, category: 'haircare', korean: false },
+    { id: 248, name: 'Hair Mask Banana', brand: 'Garnier', price: 950, oldPrice: 1100, rating: 4, ratingCount: 145, image: 'images/garnier.png', badge: null, category: 'haircare', korean: false },
+    { id: 249, name: 'Elvive Shampoo', brand: 'L\'Oreal', price: 1400, oldPrice: 1700, rating: 5, ratingCount: 189, image: 'images/L\'Oreal.png', badge: null, category: 'haircare', korean: false },
+    { id: 250, name: 'Elvive Conditioner', brand: 'L\'Oreal', price: 1400, oldPrice: 1700, rating: 5, ratingCount: 178, image: 'images/L\'Oreal.png', badge: null, category: 'haircare', korean: false },
+    { id: 251, name: 'Keratin Smooth Shampoo', brand: 'TRESemmé', price: 1300, oldPrice: 1600, rating: 4, ratingCount: 156, image: 'images/product1.png', badge: null, category: 'haircare', korean: false },
+    { id: 252, name: 'Keratin Smooth Conditioner', brand: 'TRESemmé', price: 1300, oldPrice: 1600, rating: 4, ratingCount: 145, image: 'images/product2.png', badge: null, category: 'haircare', korean: false },
+    { id: 253, name: 'Moroccanoil Treatment', brand: 'Moroccanoil', price: 4500, oldPrice: 5500, rating: 5, ratingCount: 234, image: 'images/product3.png', badge: 'bestseller', category: 'haircare', korean: false },
+    { id: 254, name: 'Argan Oil Shampoo', brand: 'OGX', price: 1800, oldPrice: 2100, rating: 4, ratingCount: 167, image: 'images/product4.png', badge: null, category: 'haircare', korean: false },
+    { id: 255, name: 'Argan Oil Conditioner', brand: 'OGX', price: 1800, oldPrice: 2100, rating: 4, ratingCount: 156, image: 'images/product1.png', badge: null, category: 'haircare', korean: false },
+    { id: 256, name: 'Coconut Oil Shampoo', brand: 'OGX', price: 1700, oldPrice: 2000, rating: 4, ratingCount: 189, image: 'images/product2.png', badge: null, category: 'haircare', korean: false },
+    { id: 257, name: 'Coconut Oil Conditioner', brand: 'OGX', price: 1700, oldPrice: 2000, rating: 4, ratingCount: 178, image: 'images/product3.png', badge: null, category: 'haircare', korean: false },
+    { id: 258, name: 'Fructis Sleek & Shine Shampoo', brand: 'Garnier', price: 1200, oldPrice: 1450, rating: 4, ratingCount: 156, image: 'images/garnier.png', badge: null, category: 'haircare', korean: false },
+    { id: 259, name: 'Fructis Sleek & Shine Conditioner', brand: 'Garnier', price: 1200, oldPrice: 1450, rating: 4, ratingCount: 145, image: 'images/garnier.png', badge: null, category: 'haircare', korean: false },
+    { id: 260, name: 'Hair Serum Argan Oil', brand: 'L\'Oreal', price: 1900, oldPrice: 2300, rating: 5, ratingCount: 198, image: 'images/L\'Oreal.png', badge: 'new', category: 'haircare', korean: false },
+    { id: 261, name: 'Hair Mask Coconut', brand: 'Garnier', price: 850, oldPrice: 1000, rating: 4, ratingCount: 134, image: 'images/garnier.png', badge: null, category: 'haircare', korean: false },
+    { id: 262, name: 'Hair Mask Avocado', brand: 'Garnier', price: 900, oldPrice: 1050, rating: 4, ratingCount: 145, image: 'images/garnier.png', badge: null, category: 'haircare', korean: false },
+    { id: 263, name: 'Kérastase Resistance Shampoo', brand: 'Kérastase', price: 3800, oldPrice: 4500, rating: 5, ratingCount: 178, image: 'images/product4.png', badge: 'bestseller', category: 'haircare', korean: false },
+    { id: 264, name: 'Kérastase Resistance Conditioner', brand: 'Kérastase', price: 3800, oldPrice: 4500, rating: 5, ratingCount: 167, image: 'images/product1.png', badge: null, category: 'haircare', korean: false },
+    { id: 265, name: 'Aveda Rosemary Mint Shampoo', brand: 'Aveda', price: 3200, oldPrice: 3800, rating: 5, ratingCount: 156, image: 'images/product2.png', badge: null, category: 'haircare', korean: false },
+    { id: 266, name: 'Aveda Rosemary Mint Conditioner', brand: 'Aveda', price: 3200, oldPrice: 3800, rating: 5, ratingCount: 145, image: 'images/product3.png', badge: null, category: 'haircare', korean: false },
+    { id: 267, name: 'Moroccanoil Moisture Repair Shampoo', brand: 'Moroccanoil', price: 3600, oldPrice: 4200, rating: 5, ratingCount: 189, image: 'images/product4.png', badge: 'new', category: 'haircare', korean: false },
+    { id: 268, name: 'Moroccanoil Moisture Repair Conditioner', brand: 'Moroccanoil', price: 3600, oldPrice: 4200, rating: 5, ratingCount: 178, image: 'images/product1.png', badge: null, category: 'haircare', korean: false },
+    { id: 269, name: 'OGX Biotin Shampoo', brand: 'OGX', price: 1650, oldPrice: 1900, rating: 4, ratingCount: 156, image: 'images/product2.png', badge: null, category: 'haircare', korean: false },
+    { id: 270, name: 'OGX Biotin Conditioner', brand: 'OGX', price: 1650, oldPrice: 1900, rating: 4, ratingCount: 145, image: 'images/product3.png', badge: null, category: 'haircare', korean: false },
+    { id: 271, name: 'TRESemmé Flawless Curls Shampoo', brand: 'TRESemmé', price: 1100, oldPrice: 1350, rating: 4, ratingCount: 134, image: 'images/product4.png', badge: null, category: 'haircare', korean: false },
+    { id: 272, name: 'TRESemmé Flawless Curls Conditioner', brand: 'TRESemmé', price: 1100, oldPrice: 1350, rating: 4, ratingCount: 123, image: 'images/product1.png', badge: null, category: 'haircare', korean: false },
+    { id: 273, name: 'L\'Oreal Professional Shampoo', brand: 'L\'Oreal', price: 2600, oldPrice: 3100, rating: 5, ratingCount: 167, image: 'images/L\'Oreal.png', badge: 'bestseller', category: 'haircare', korean: false },
+    { id: 274, name: 'L\'Oreal Professional Conditioner', brand: 'L\'Oreal', price: 2600, oldPrice: 3100, rating: 5, ratingCount: 156, image: 'images/L\'Oreal.png', badge: null, category: 'haircare', korean: false },
+    { id: 275, name: 'Hair Mask Shea Butter', brand: 'Garnier', price: 800, oldPrice: 950, rating: 4, ratingCount: 145, image: 'images/garnier.png', badge: null, category: 'haircare', korean: false },
+    { id: 276, name: 'Hair Mask Argan Oil', brand: 'OGX', price: 2200, oldPrice: 2600, rating: 4, ratingCount: 156, image: 'images/product2.png', badge: null, category: 'haircare', korean: false },
+    { id: 277, name: 'Kérastase Nutritive Shampoo', brand: 'Kérastase', price: 3600, oldPrice: 4200, rating: 5, ratingCount: 178, image: 'images/product3.png', badge: 'new', category: 'haircare', korean: false },
+    { id: 278, name: 'Kérastase Nutritive Conditioner', brand: 'Kérastase', price: 3600, oldPrice: 4200, rating: 5, ratingCount: 167, image: 'images/product4.png', badge: null, category: 'haircare', korean: false },
+    { id: 279, name: 'Aveda Damage Remedy Shampoo', brand: 'Aveda', price: 3400, oldPrice: 4000, rating: 5, ratingCount: 156, image: 'images/product1.png', badge: null, category: 'haircare', korean: false },
+    { id: 280, name: 'Aveda Damage Remedy Conditioner', brand: 'Aveda', price: 3400, oldPrice: 4000, rating: 5, ratingCount: 145, image: 'images/product2.png', badge: null, category: 'haircare', korean: false },
+    { id: 281, name: 'Moroccanoil Smoothing Shampoo', brand: 'Moroccanoil', price: 3400, oldPrice: 4000, rating: 5, ratingCount: 189, image: 'images/product3.png', badge: null, category: 'haircare', korean: false },
+    { id: 282, name: 'Moroccanoil Smoothing Conditioner', brand: 'Moroccanoil', price: 3400, oldPrice: 4000, rating: 5, ratingCount: 178, image: 'images/product4.png', badge: null, category: 'haircare', korean: false },
+    { id: 283, name: 'Hair Oil Coconut', brand: 'OGX', price: 1500, oldPrice: 1800, rating: 4, ratingCount: 156, image: 'images/product1.png', badge: null, category: 'haircare', korean: false },
+    { id: 284, name: 'Hair Oil Argan', brand: 'Moroccanoil', price: 4200, oldPrice: 5000, rating: 5, ratingCount: 234, image: 'images/product2.png', badge: 'bestseller', category: 'haircare', korean: false },
+    { id: 285, name: 'Frizz Control Serum', brand: 'TRESemmé', price: 1100, oldPrice: 1300, rating: 4, ratingCount: 145, image: 'images/product3.png', badge: null, category: 'haircare', korean: false },
+    { id: 286, name: 'Smoothing Hair Cream', brand: 'L\'Oreal', price: 1500, oldPrice: 1800, rating: 4, ratingCount: 156, image: 'images/L\'Oreal.png', badge: null, category: 'haircare', korean: false },
+    { id: 287, name: 'Volume Boosting Shampoo', brand: 'TRESemmé', price: 1200, oldPrice: 1450, rating: 4, ratingCount: 134, image: 'images/product4.png', badge: null, category: 'haircare', korean: false },
+    { id: 288, name: 'Volume Boosting Conditioner', brand: 'TRESemmé', price: 1200, oldPrice: 1450, rating: 4, ratingCount: 123, image: 'images/product1.png', badge: null, category: 'haircare', korean: false },
+    { id: 289, name: 'Kérastase Genesis Shampoo', brand: 'Kérastase', price: 3900, oldPrice: 4600, rating: 5, ratingCount: 178, image: 'images/product2.png', badge: 'new', category: 'haircare', korean: false },
+    { id: 290, name: 'Kérastase Genesis Conditioner', brand: 'Kérastase', price: 3900, oldPrice: 4600, rating: 5, ratingCount: 167, image: 'images/product3.png', badge: null, category: 'haircare', korean: false },
+    { id: 291, name: 'Aveda Invati Shampoo', brand: 'Aveda', price: 3800, oldPrice: 4500, rating: 5, ratingCount: 156, image: 'images/product4.png', badge: 'bestseller', category: 'haircare', korean: false },
+    { id: 292, name: 'Aveda Invati Conditioner', brand: 'Aveda', price: 3800, oldPrice: 4500, rating: 5, ratingCount: 145, image: 'images/product1.png', badge: null, category: 'haircare', korean: false },
+    { id: 293, name: 'Garnier Fructis Strength Shampoo', brand: 'Garnier', price: 1100, oldPrice: 1300, rating: 4, ratingCount: 134, image: 'images/garnier.png', badge: null, category: 'haircare', korean: false },
+    { id: 294, name: 'Garnier Fructis Strength Conditioner', brand: 'Garnier', price: 1100, oldPrice: 1300, rating: 4, ratingCount: 123, image: 'images/garnier.png', badge: null, category: 'haircare', korean: false },
+    { id: 295, name: 'Hair Mask Aloe Vera', brand: 'Garnier', price: 750, oldPrice: 900, rating: 4, ratingCount: 145, image: 'images/garnier.png', badge: null, category: 'haircare', korean: false },
+    { id: 296, name: 'Hair Mask Olive Oil', brand: 'OGX', price: 1900, oldPrice: 2300, rating: 4, ratingCount: 156, image: 'images/product2.png', badge: null, category: 'haircare', korean: false },
+    { id: 297, name: 'Styling Gel', brand: 'L\'Oreal', price: 1300, oldPrice: 1600, rating: 4, ratingCount: 145, image: 'images/L\'Oreal.png', badge: null, category: 'haircare', korean: false },
+    { id: 298, name: 'Hair Mousse', brand: 'TRESemmé', price: 1000, oldPrice: 1200, rating: 4, ratingCount: 134, image: 'images/product3.png', badge: null, category: 'haircare', korean: false },
+    { id: 299, name: 'Color Protect Shampoo', brand: 'L\'Oreal', price: 2100, oldPrice: 2500, rating: 5, ratingCount: 156, image: 'images/L\'Oreal.png', badge: null, category: 'haircare', korean: false },
+    { id: 300, name: 'Color Protect Conditioner', brand: 'L\'Oreal', price: 2100, oldPrice: 2500, rating: 5, ratingCount: 145, image: 'images/L\'Oreal.png', badge: null, category: 'haircare', korean: false },
+    { id: 301, name: 'Keratin Repair Serum', brand: 'TRESemmé', price: 1400, oldPrice: 1700, rating: 4, ratingCount: 156, image: 'images/product4.png', badge: null, category: 'haircare', korean: false },
+    { id: 302, name: 'Moroccanoil Curl Shampoo', brand: 'Moroccanoil', price: 3500, oldPrice: 4200, rating: 5, ratingCount: 167, image: 'images/product1.png', badge: 'new', category: 'haircare', korean: false },
+    { id: 303, name: 'Moroccanoil Curl Conditioner', brand: 'Moroccanoil', price: 3500, oldPrice: 4200, rating: 5, ratingCount: 156, image: 'images/product2.png', badge: null, category: 'haircare', korean: false },
+    { id: 304, name: 'Kérastase Discipline Shampoo', brand: 'Kérastase', price: 3700, oldPrice: 4400, rating: 5, ratingCount: 178, image: 'images/product3.png', badge: null, category: 'haircare', korean: false },
+    { id: 305, name: 'Kérastase Discipline Conditioner', brand: 'Kérastase', price: 3700, oldPrice: 4400, rating: 5, ratingCount: 167, image: 'images/product4.png', badge: null, category: 'haircare', korean: false },
+    { id: 306, name: 'Aveda Pure Abundance Shampoo', brand: 'Aveda', price: 3100, oldPrice: 3700, rating: 5, ratingCount: 145, image: 'images/product1.png', badge: null, category: 'haircare', korean: false },
+    { id: 307, name: 'Aveda Pure Abundance Conditioner', brand: 'Aveda', price: 3100, oldPrice: 3700, rating: 5, ratingCount: 134, image: 'images/product2.png', badge: null, category: 'haircare', korean: false },
+    { id: 308, name: 'Hair Dry Shampoo', brand: 'Garnier', price: 850, oldPrice: 1000, rating: 4, ratingCount: 156, image: 'images/garnier.png', badge: null, category: 'haircare', korean: false },
+    { id: 309, name: 'Hair Spray', brand: 'L\'Oreal', price: 1100, oldPrice: 1300, rating: 4, ratingCount: 145, image: 'images/L\'Oreal.png', badge: null, category: 'haircare', korean: false },
+    { id: 310, name: 'Hair Gloss', brand: 'OGX', price: 1600, oldPrice: 1900, rating: 4, ratingCount: 134, image: 'images/product3.png', badge: null, category: 'haircare', korean: false },
+    { id: 311, name: 'Repairing Hair Mask', brand: 'Kérastase', price: 4200, oldPrice: 5000, rating: 5, ratingCount: 189, image: 'images/product4.png', badge: 'bestseller', category: 'haircare', korean: false },
+    { id: 312, name: 'Hair Mask Honey', brand: 'Garnier', price: 780, oldPrice: 930, rating: 4, ratingCount: 145, image: 'images/garnier.png', badge: null, category: 'haircare', korean: false },
+    { id: 313, name: 'Moroccanoil Treatment Light', brand: 'Moroccanoil', price: 4200, oldPrice: 5000, rating: 5, ratingCount: 198, image: 'images/product1.png', badge: null, category: 'haircare', korean: false },
+    { id: 314, name: 'Smoothing Serum', brand: 'L\'Oreal', price: 1700, oldPrice: 2000, rating: 4, ratingCount: 156, image: 'images/L\'Oreal.png', badge: null, category: 'haircare', korean: false },
+    { id: 315, name: 'Frizz Control Cream', brand: 'TRESemmé', price: 1000, oldPrice: 1200, rating: 4, ratingCount: 145, image: 'images/product2.png', badge: null, category: 'haircare', korean: false },
+    { id: 316, name: 'Aveda Thickening Shampoo', brand: 'Aveda', price: 3300, oldPrice: 3900, rating: 5, ratingCount: 156, image: 'images/product3.png', badge: 'new', category: 'haircare', korean: false },
+    { id: 317, name: 'Aveda Thickening Conditioner', brand: 'Aveda', price: 3300, oldPrice: 3900, rating: 5, ratingCount: 145, image: 'images/product4.png', badge: null, category: 'haircare', korean: false },
+    { id: 318, name: 'Kérastase Elixir Oil', brand: 'Kérastase', price: 4800, oldPrice: 5700, rating: 5, ratingCount: 234, image: 'images/product1.png', badge: 'bestseller', category: 'haircare', korean: false },
+    { id: 319, name: 'Hair Mask Protein', brand: 'OGX', price: 2000, oldPrice: 2400, rating: 4, ratingCount: 156, image: 'images/product2.png', badge: null, category: 'haircare', korean: false },
+    { id: 320, name: 'Shine Serum', brand: 'L\'Oreal', price: 1500, oldPrice: 1800, rating: 4, ratingCount: 145, image: 'images/L\'Oreal.png', badge: null, category: 'haircare', korean: false },
+    { id: 321, name: 'Root Lifting Spray', brand: 'TRESemmé', price: 950, oldPrice: 1150, rating: 4, ratingCount: 134, image: 'images/product3.png', badge: null, category: 'haircare', korean: false },
+    { id: 322, name: 'Texturizing Spray', brand: 'Garnier', price: 900, oldPrice: 1100, rating: 4, ratingCount: 145, image: 'images/garnier.png', badge: null, category: 'haircare', korean: false },
+    { id: 323, name: 'Moisture Shampoo', brand: 'OGX', price: 1600, oldPrice: 1900, rating: 4, ratingCount: 156, image: 'images/product4.png', badge: null, category: 'haircare', korean: false },
+    { id: 324, name: 'Moisture Conditioner', brand: 'OGX', price: 1600, oldPrice: 1900, rating: 4, ratingCount: 145, image: 'images/product1.png', badge: null, category: 'haircare', korean: false },
+    { id: 325, name: 'Aveda Botanical Shampoo', brand: 'Aveda', price: 3000, oldPrice: 3600, rating: 5, ratingCount: 156, image: 'images/product2.png', badge: null, category: 'haircare', korean: false },
+    { id: 326, name: 'Aveda Botanical Conditioner', brand: 'Aveda', price: 3000, oldPrice: 3600, rating: 5, ratingCount: 145, image: 'images/product3.png', badge: null, category: 'haircare', korean: false },
+    { id: 327, name: 'Hair Mask Keratin', brand: 'TRESemmé', price: 1300, oldPrice: 1600, rating: 4, ratingCount: 134, image: 'images/product4.png', badge: null, category: 'haircare', korean: false },
+    { id: 328, name: 'Heat Protection Serum', brand: 'L\'Oreal', price: 1400, oldPrice: 1700, rating: 4, ratingCount: 156, image: 'images/L\'Oreal.png', badge: null, category: 'haircare', korean: false },
+    { id: 329, name: 'Bombshell Perfume', brand: 'Victoria\'s Secret', price: 6500, oldPrice: 7500, rating: 5, ratingCount: 234, image: 'images/Victorias-Secret.png', badge: 'bestseller', category: 'fragrance', korean: false },
+    { id: 330, name: 'Body Lotion', brand: 'Bath & Body Works', price: 2500, oldPrice: 3000, rating: 4, ratingCount: 189, image: 'images/Bath-Body-Works.png', badge: 'sale', category: 'fragrance', korean: false }
+];
+
+        // Derive discount %, shippedFrom and delivery deterministically from each product
+        // so every filter in the sidebar is backed by real, consistent data.
+        const allProducts = rawProducts.map(p => {
+            const discountPct = p.oldPrice ? Math.round((1 - p.price / p.oldPrice) * 100) : 0;
+            return {
+                ...p,
+                discount: `-${discountPct}%`,
+                discountPct,
+                shippedFrom: PROVINCES[p.id % PROVINCES.length],
+                delivery: p.id % 3 === 0 ? ['standard', 'express'] : ['standard']
+            };
+        });
+
+        // ===== STATE =====
+        let currentSearchTerm = '';
+        let currentCategory = 'all';
+
+        // ===== HELPERS =====
+        function getSearchTerm() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('q') || '';
+        }
+
+        function getCheckedValues(group) {
+            return Array.from(document.querySelectorAll(`input[data-group="${group}"]:checked`)).map(el => el.value);
+        }
+
+        function formatBrandLabel(brand) {
+            return brand;
+        }
+
+        function formatProvinceLabel(code) {
+            const map = {
+                bagmati: 'Bagmati Province',
+                madhesh: 'Madhesh Province',
+                gandaki: 'Gandaki Province',
+                koshi: 'Koshi Province',
+                overseas: 'Overseas',
+                local: 'Local Warehouse'
+            };
+            return map[code] || code;
+        }
+
+        // ===== BUILD SIDEBAR OPTIONS FROM REAL PRODUCT DATA =====
+        function buildSidebar() {
+            // Brand list, counted, sorted by count desc then name
+            const brandCounts = {};
+            allProducts.forEach(p => { brandCounts[p.brand] = (brandCounts[p.brand] || 0) + 1; });
+            const brands = Object.keys(brandCounts).sort((a, b) => brandCounts[b] - brandCounts[a] || a.localeCompare(b));
+
+            document.getElementById('brandOptions').innerHTML = brands.map(b => `
+                <label>
+                    <input type="checkbox" value="${b}" data-group="brand">
+                    ${formatBrandLabel(b)}
+                    <span class="count">(${brandCounts[b]})</span>
+                </label>
+            `).join('');
+
+            // Shipped From, counted
+            const provinceCounts = {};
+            allProducts.forEach(p => { provinceCounts[p.shippedFrom] = (provinceCounts[p.shippedFrom] || 0) + 1; });
+            document.getElementById('shippedOptions').innerHTML = PROVINCES
+                .filter(code => provinceCounts[code])
+                .map(code => `
+                    <label>
+                        <input type="checkbox" value="${code}" data-group="shipped">
+                        ${formatProvinceLabel(code)}
+                        <span class="count">(${provinceCounts[code]})</span>
+                    </label>
+                `).join('');
+
+            // Delivery option, counted
+            const standardCount = allProducts.filter(p => p.delivery.includes('standard')).length;
+            const expressCount = allProducts.filter(p => p.delivery.includes('express')).length;
+            document.getElementById('deliveryOptions').innerHTML = `
+                <label><input type="checkbox" value="standard" data-group="delivery"> Standard (3–5 days) <span class="count">(${standardCount})</span></label>
+                <label><input type="checkbox" value="express" data-group="delivery"> Express (24 hrs) <span class="count">(${expressCount})</span></label>
+            `;
+
+            // Discount tier counts
+            document.querySelectorAll('[data-count]').forEach(el => {
+                const threshold = parseInt(el.getAttribute('data-count'));
+                const count = allProducts.filter(p => p.discountPct >= threshold).length;
+                el.textContent = `(${count})`;
+            });
+
+            // Wire up change listeners now that the inputs exist
+            document.querySelectorAll('.filter-sidebar input[type="checkbox"], .filter-sidebar input[type="radio"]').forEach(el => {
+                el.addEventListener('change', applyAllFilters);
+            });
+
+            // Collapsible group titles
+            document.querySelectorAll('.group-title[data-toggle]').forEach(title => {
+                title.addEventListener('click', () => {
+                    document.getElementById(title.dataset.toggle).classList.toggle('collapsed');
+                });
+            });
+        }
+
+        // ===== ACTIVE FILTER CHIPS =====
+        function renderActiveChips() {
+            const chips = [];
+
+            document.querySelectorAll('.filter-sidebar input:checked').forEach(el => {
+                let label = el.parentElement.textContent.trim().replace(/\s+/g, ' ');
+                chips.push({ label, clear: () => { el.checked = false; applyAllFilters(); } });
+            });
+
+            const min = document.getElementById('priceMin').value;
+            const max = document.getElementById('priceMax').value;
+            if (min || max) {
+                chips.push({
+                    label: `Rs.${min || 0} – Rs.${max || '∞'}`,
+                    clear: () => {
+                        document.getElementById('priceMin').value = '';
+                        document.getElementById('priceMax').value = '';
+                        applyAllFilters();
+                    }
+                });
+            }
+
+            const row = document.getElementById('activeChipRow');
+            if (chips.length === 0) {
+                row.innerHTML = '';
+                return;
+            }
+            row.innerHTML = chips.map((c, i) => `<span class="active-chip" data-chip="${i}"><i class="fa-solid fa-xmark"></i>${c.label}</span>`).join('');
+            row.querySelectorAll('.active-chip').forEach((el, i) => {
+                el.addEventListener('click', chips[i].clear);
+            });
+        }
+
+        // ===== CORE FILTER + SORT + RENDER =====
+        function applyAllFilters() {
+            let filtered = allProducts;
+
+            // Text search
+            if (currentSearchTerm) {
+                const term = currentSearchTerm.toLowerCase();
+                filtered = filtered.filter(p =>
+                    p.name.toLowerCase().includes(term) ||
+                    p.brand.toLowerCase().includes(term) ||
+                    p.category.toLowerCase().includes(term)
+                );
+            }
+
+            // Category tab ('korean' is a cross-category tag, not its own category)
+            if (currentCategory === 'korean') {
+                filtered = filtered.filter(p => p.korean);
+            } else if (currentCategory !== 'all') {
+                filtered = filtered.filter(p => p.category === currentCategory);
+            }
+
+            // Brand checkboxes (OR within group)
+            const brands = getCheckedValues('brand');
+            if (brands.length) filtered = filtered.filter(p => brands.includes(p.brand));
+
+            // Shipped from checkboxes (OR within group)
+            const provinces = getCheckedValues('shipped');
+            if (provinces.length) filtered = filtered.filter(p => provinces.includes(p.shippedFrom));
+
+            // Delivery option checkboxes (OR within group)
+            const deliveries = getCheckedValues('delivery');
+            if (deliveries.length) filtered = filtered.filter(p => deliveries.some(d => p.delivery.includes(d)));
+
+            // Discount tiers (OR within group -> matches highest selected tier)
+            const discountTiers = getCheckedValues('discount').map(Number);
+            if (discountTiers.length) {
+                const minTier = Math.min(...discountTiers);
+                filtered = filtered.filter(p => p.discountPct >= minTier);
+            }
+
+            // Rating (single select: "X stars & up")
+            const ratingEl = document.querySelector('input[name="rating"]:checked');
+            if (ratingEl) {
+                const minRating = parseInt(ratingEl.value);
+                filtered = filtered.filter(p => p.rating >= minRating);
+            }
+
+            // Price range
+            const minPriceRaw = document.getElementById('priceMin').value;
+            const maxPriceRaw = document.getElementById('priceMax').value;
+            const minPrice = minPriceRaw !== '' ? parseInt(minPriceRaw) : 0;
+            const maxPrice = maxPriceRaw !== '' ? parseInt(maxPriceRaw) : Infinity;
+            filtered = filtered.filter(p => p.price >= minPrice && p.price <= maxPrice);
+
+            // Sort
+            const sortBy = document.getElementById('sortSelect').value;
+            if (sortBy === 'price-asc') filtered = [...filtered].sort((a, b) => a.price - b.price);
+            else if (sortBy === 'price-desc') filtered = [...filtered].sort((a, b) => b.price - a.price);
+            else if (sortBy === 'rating') filtered = [...filtered].sort((a, b) => b.rating - a.rating || b.ratingCount - a.ratingCount);
+            else if (sortBy === 'discount') filtered = [...filtered].sort((a, b) => b.discountPct - a.discountPct);
+
+            renderProductGrid(filtered);
+            renderActiveChips();
+        }
+
+        // ===== RENDER PRODUCT GRID =====
+        function renderProductGrid(filtered) {
+            const resultsContainer = document.getElementById('searchResults');
+            const resultCount = document.getElementById('resultCount');
+            const searchTermDisplay = document.getElementById('searchTermDisplay');
+
+            searchTermDisplay.textContent = currentSearchTerm || 'All Products';
+            resultCount.textContent = filtered.length;
+
+            if (filtered.length === 0) {
+                resultsContainer.innerHTML = `
+                    <div class="no-results">
+                        <i class="fa-regular fa-face-frown"></i>
+                        <h3>No Products Found</h3>
+                        <p>We couldn't find any products matching your filters${currentSearchTerm ? ` for "<strong>${currentSearchTerm}</strong>"` : ''}.</p>
+                        <div class="suggestions">
+                            <a href="#" onclick="event.preventDefault(); document.getElementById('clearAllFilters').click();">Clear Filters</a>
+                            <a href="shop.html">Browse All Products</a>
+                            <a href="skincare.html">Skincare</a>
+                            <a href="makeup.html">Makeup</a>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            resultsContainer.innerHTML = filtered.map(product => {
+                let badgeHTML = '';
+                if (product.badge === 'bestseller') {
+                    badgeHTML = `<span class="badge-bestseller">⭐ Best Seller</span>`;
+                } else if (product.badge === 'new') {
+                    badgeHTML = `<span class="badge-new">✨ New</span>`;
+                } else if (product.badge === 'sale') {
+                    badgeHTML = `<span class="badge-limited">🔥 Sale</span>`;
+                }
+
+                let stars = '';
+                for (let i = 0; i < 5; i++) {
+                    stars += i < product.rating ? '★' : '☆';
+                }
+
+                let oldPriceHTML = product.oldPrice ? `<span class="old">Rs.${product.oldPrice.toLocaleString()}</span>` : '';
+
+                return `
+                    <a href="product-detail.html?id=${product.id}" class="product-link">
+                        <div class="product-card">
+                            <div class="image-wrap">
+                                ${badgeHTML}
+                                <span class="discount">${product.discount}</span>
+                                <span class="wishlist" onclick="event.stopPropagation();"><i class="fa-regular fa-heart"></i></span>
+                                <img src="${product.image}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/300x300/f5f0eb/5E4074?text=No+Image'">
+                            </div>
+                            <div class="info">
+                                <span class="brand">${product.brand}</span>
+                                <h3>${product.name}</h3>
+                                <div class="rating">${stars} <span>(${product.ratingCount})</span></div>
+                                <div class="price">
+                                    <span class="current">Rs.${product.price.toLocaleString()}</span>
+                                    ${oldPriceHTML}
+                                </div>
+                                <button class="add-btn" onclick="event.stopPropagation();"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                            </div>
+                        </div>
+                    </a>
+                `;
+            }).join('');
+        }
+
+        // ===== SEARCH ACTIONS =====
+        function performSearch() {
+            const input = document.getElementById('searchInputLarge');
+            const term = input.value.trim();
+            if (term) {
+                window.location.href = `search.html?q=${encodeURIComponent(term)}`;
+            } else {
+                showToast('⚠️ Please enter a search term');
+            }
+        }
+
+        function performHeaderSearch() {
+            const input = document.getElementById('headerSearchInput');
+            const term = input.value.trim();
+            if (term) {
+                window.location.href = `search.html?q=${encodeURIComponent(term)}`;
+            } else {
+                showToast('⚠️ Please enter a search term');
+            }
+        }
+
+        // ===== SETUP =====
+        document.addEventListener('DOMContentLoaded', function() {
+            buildSidebar();
+
+            // Header search
+            document.getElementById('headerSearchBtn').addEventListener('click', performHeaderSearch);
+            document.getElementById('headerSearchInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') performHeaderSearch();
+            });
+
+            // Large search
+            document.getElementById('searchBtnLarge').addEventListener('click', performSearch);
+            document.getElementById('searchInputLarge').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') performSearch();
+            });
+
+            // Category tags
+            document.querySelectorAll('.filter-tag').forEach(tag => {
+                tag.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    currentCategory = this.dataset.filter;
+                    applyAllFilters();
+                });
+            });
+
+            // Sort
+            document.getElementById('sortSelect').addEventListener('change', applyAllFilters);
+
+            // Price filter
+            document.getElementById('priceFilterBtn').addEventListener('click', function() {
+                const min = document.getElementById('priceMin').value || 0;
+                const max = document.getElementById('priceMax').value || '∞';
+                applyAllFilters();
+                showToast(`💰 Showing products from Rs.${min} to Rs.${max}`);
+            });
+
+            // Clear all filters
+            document.getElementById('clearAllFilters').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.filter-sidebar input[type="checkbox"], .filter-sidebar input[type="radio"]').forEach(el => el.checked = false);
+                document.getElementById('priceMin').value = '';
+                document.getElementById('priceMax').value = '';
+                showToast('🧹 All filters cleared');
+                applyAllFilters();
+            });
+
+            // Initial state from URL
+            const searchTerm = getSearchTerm();
+            currentSearchTerm = searchTerm;
+            document.getElementById('searchInputLarge').value = searchTerm;
+            document.getElementById('headerSearchInput').value = searchTerm;
+
+            applyAllFilters();
+        });
+
+        // ===== WISHLIST + ADD TO CART =====
+        document.addEventListener('click', function(e) {
+            const wishlistBtn = e.target.closest('.wishlist');
+            if (wishlistBtn) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                const icon = wishlistBtn.querySelector('i');
+                const productCard = wishlistBtn.closest('.product-card');
+                const productName = productCard ? productCard.querySelector('h3')?.textContent || 'Product' : 'Product';
+
+                icon.classList.toggle('fa-regular');
+                icon.classList.toggle('fa-solid');
+
+                if (icon.classList.contains('fa-solid')) {
+                    wishlistBtn.style.background = '#5E4074';
+                    wishlistBtn.style.color = 'white';
+                    wishlistBtn.style.borderColor = '#5E4074';
+                    wishlistBtn.style.transform = 'scale(1.2)';
+                    setTimeout(() => { wishlistBtn.style.transform = ''; }, 300);
+                    showToast(`❤️ ${productName} added to Wishlist!`);
+                } else {
+                    wishlistBtn.style.background = 'white';
+                    wishlistBtn.style.color = '#ccc';
+                    wishlistBtn.style.borderColor = '#eee';
+                    showToast(`💔 ${productName} removed from Wishlist`);
+                }
+            }
+
+            const addBtn = e.target.closest('.add-btn');
+            if (addBtn) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                const originalText = addBtn.innerHTML;
+                const productCard = addBtn.closest('.product-card');
+                const productName = productCard ? productCard.querySelector('h3')?.textContent || 'Product' : 'Product';
+
+                addBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="margin-right:8px;"></i>Adding...';
+                addBtn.style.background = '#5E4074';
+                addBtn.style.color = 'white';
+                addBtn.disabled = true;
+
+                setTimeout(() => {
+                    addBtn.innerHTML = '<i class="fa-solid fa-check" style="margin-right:8px;"></i>Added!';
+                    addBtn.style.background = '#2ecc71';
+                    addBtn.style.color = 'white';
+                    updateCartBadge();
+                    showToast(`✅ ${productName} added to cart!`);
+
+                    setTimeout(() => {
+                        addBtn.innerHTML = originalText;
+                        addBtn.style.background = '';
+                        addBtn.style.color = '';
+                        addBtn.disabled = false;
+                    }, 2000);
+                }, 800);
+            }
+        });
+
+        // ===== CART BADGE UPDATE =====
+        let cartCount = 3;
+
+        function updateCartBadge() {
+            cartCount++;
+            const badge = document.querySelector('.cart-badge');
+            if (badge) {
+                badge.textContent = cartCount;
+                badge.style.animation = 'none';
+                setTimeout(() => {
+                    badge.style.animation = 'badgePulse 0.5s ease';
+                }, 10);
+            }
+        }
+
+        // ===== TOAST NOTIFICATION =====
+        function showToast(message) {
+            const existingToast = document.querySelector('.toast-notification');
+            if (existingToast) {
+                existingToast.remove();
+            }
+
+            const toast = document.createElement('div');
+            toast.className = 'toast-notification';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'slideOutDown 0.4s ease forwards';
+                setTimeout(() => {
+                    toast.remove();
+                }, 400);
+            }, 3000);
+        }
+
+        console.log('🔍 Kasbi Beauty — Search Page Loaded with ' + allProducts.length + ' products!');
+    </script>
+
+</body>
+</html>

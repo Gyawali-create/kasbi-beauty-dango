@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Shopping Cart — Kasbi Beauty{% endblock %}
+
+{% block extra_head %}
+<style>
+.page-header-inner{background:var(--cream);padding:30px 6%;text-align:center;}
+.page-header-inner h1{font-family:'Cormorant Garamond',serif;font-size:38px;color:var(--dark);margin-bottom:6px;}
+.page-header-inner .breadcrumb{font-size:13px;color:var(--gray);}
+.page-header-inner .breadcrumb a{color:var(--primary);}
+.cart-section{padding:40px 6% 80px;max-width:1200px;margin:0 auto;}
+.cart-grid{display:grid;grid-template-columns:2fr 1fr;gap:30px;}
+.cart-items{display:flex;flex-direction:column;gap:16px;}
+.cart-item{display:flex;gap:20px;background:var(--white);border-radius:var(--border-radius);padding:20px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.04);transition:var(--transition);align-items:center;}
+.cart-item:hover{box-shadow:var(--shadow-hover);}
+.cart-item img{width:100px;height:100px;object-fit:contain;background:var(--cream);border-radius:12px;padding:10px;flex-shrink:0;}
+.cart-item-details{flex:1;}
+.cart-item-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
+.cart-item-header .brand{font-size:11px;font-weight:600;color:var(--primary);text-transform:uppercase;letter-spacing:0.8px;}
+.cart-item-header h3{font-size:16px;font-weight:600;color:var(--dark);margin:4px 0;}
+.cart-price{font-size:18px;font-weight:700;color:var(--primary);}
+.cart-actions{display:flex;gap:12px;align-items:center;margin-top:10px;}
+.qty-form{display:flex;align-items:center;gap:10px;border:1px solid #e0e0e0;border-radius:30px;padding:4px 12px;}
+.qty-btn{background:none;border:none;cursor:pointer;font-size:16px;color:var(--primary);padding:4px 8px;transition:var(--transition);}
+.qty-btn:hover{color:var(--gold);}
+.qty-input{width:40px;text-align:center;border:none;font-weight:600;font-size:14px;outline:none;}
+.remove-btn{background:none;border:1px solid #e0e0e0;color:var(--gray);cursor:pointer;padding:6px 14px;border-radius:20px;font-size:12px;transition:var(--transition);}
+.remove-btn:hover{border-color:#e74c3c;color:#e74c3c;}
+.cart-summary{background:var(--white);border-radius:var(--border-radius);padding:30px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.04);height:fit-content;position:sticky;top:100px;}
+.cart-summary h3{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--dark);margin-bottom:20px;padding-bottom:14px;border-bottom:2px solid var(--cream);}
+.summary-row{display:flex;justify-content:space-between;padding:10px 0;font-size:15px;color:var(--gray);}
+.summary-row.total{font-size:20px;font-weight:700;color:var(--dark);border-top:2px solid var(--cream);padding-top:14px;margin-top:8px;}
+.summary-row.total span:last-child{color:var(--primary);}
+.checkout-link{display:block;background:var(--primary);color:white;padding:14px;border-radius:30px;font-size:15px;font-weight:600;text-align:center;text-decoration:none;margin-top:20px;transition:var(--transition);}
+.checkout-link:hover{background:#4a2f5e;transform:translateY(-2px);box-shadow:0 8px 24px rgba(94,64,116,0.3);}
+.continue-shop{display:inline-flex;align-items:center;gap:8px;margin-top:14px;color:var(--primary);font-weight:500;text-decoration:none;font-size:14px;transition:var(--transition);}
+.continue-shop:hover{color:var(--gold);transform:translateX(-4px);}
+.empty-cart{text-align:center;padding:80px 20px;}
+.empty-cart i{font-size:64px;color:#ddd;margin-bottom:20px;}
+.empty-cart h2{font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--dark);margin-bottom:10px;}
+.empty-cart p{color:var(--gray);margin-bottom:24px;}
+@media(max-width:992px){.cart-grid{grid-template-columns:1fr;}.cart-summary{position:static;}}
+@media(max-width:640px){.cart-item{flex-direction:column;text-align:center;padding:16px;}.cart-item-header{flex-direction:column;align-items:center;gap:6px;}.cart-actions{justify-content:center;flex-wrap:wrap;}}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header-inner">
+  <h1>Shopping Cart</h1>
+  <div class="breadcrumb">
+    <a href="{% url 'core:home' %}">Home</a> / Cart
+  </div>
+</div>
+
+<section class="cart-section">
+  {% if cart and cart.items.count > 0 %}
+  <div class="cart-grid">
+    <div class="cart-items">
+      {% for item in cart.items.all %}
+      <div class="cart-item">
+        <img src="{% if item.product.thumbnail %}{{ item.product.thumbnail.url }}{% else %}{% static 'img/hero.png' %}{% endif %}" alt="{{ item.product.name }}">
+        <div class="cart-item-details">
+          <div class="cart-item-header">
+            <div>
+              <span class="brand">{{ item.product.brand|default:"" }}</span>
+              <h3>{{ item.product.name }}</h3>
+              <div class="cart-price">Rs. {{ item.subtotal }}</div>
+            </div>
+          </div>
+          <div class="cart-actions">
+            <form method="post" action="{% url 'cart:update' item.id %}" style="margin:0;">
+              {% csrf_token %}
+              <div class="qty-form">
+                <button type="button" class="qty-btn" onclick="chQty(this,-1)"><i class="fa-solid fa-minus"></i></button>
+                <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="{{ item.product.stock }}" class="qty-input" readonly>
+                <button type="button" class="qty-btn" onclick="chQty(this,1)"><i class="fa-solid fa-plus"></i></button>
+              </div>
+            </form>
+            <form method="post" action="{% url 'cart:remove' item.id %}" style="margin:0;display:inline;">
+              {% csrf_token %}
+              <button type="submit" class="remove-btn"><i class="fa-regular fa-trash-can"></i> Remove</button>
+            </form>
+          </div>
+          <div style="font-size:12px;color:var(--gray);margin-top:6px;">Rs. {{ item.product.current_price }} each × {{ item.quantity }}</div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="cart-summary">
+      <h3>Order Summary</h3>
+      <div class="summary-row"><span>Subtotal ({{ cart.item_count }} item{{ cart.item_count|pluralize }})</span><span>Rs. {{ cart.total }}</span></div>
+      <div class="summary-row"><span>Shipping</span><span>{% if cart.shipping == 0 %}Free{% else %}Rs. {{ cart.shipping }}{% endif %}</span></div>
+      <div class="summary-row total"><span>Total</span><span>Rs. {{ cart.grand_total }}</span></div>
+      <a href="{% url 'orders:checkout' %}" class="checkout-link">
+        <i class="fa-solid fa-lock" style="margin-right:8px;"></i> Proceed to Checkout
+      </a>
+      <a href="{% url 'products:shop' %}" class="continue-shop">
+        <i class="fa-solid fa-arrow-left"></i> Continue Shopping
+      </a>
+    </div>
+  </div>
+
+  {% else %}
+  <div class="empty-cart">
+    <i class="fa-regular fa-face-frown"></i>
+    <h2>Your Cart is Empty</h2>
+    <p>Add some amazing beauty products to get started!</p>
+    <a href="{% url 'products:shop' %}" class="checkout-link" style="display:inline-block;width:auto;padding:12px 40px;">
+      <i class="fa-solid fa-shop" style="margin-right:8px;"></i> Start Shopping
+    </a>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function chQty(btn, delta) {
+  const form = btn.closest('form');
+  const input = form.querySelector('.qty-input');
+  let v = parseInt(input.value) + delta;
+  const max = parseInt(input.max);
+  if (v < 1) v = 1;
+  if (v > max) { showToast(`⚠️ Only ${max} units available.`); return; }
+  input.value = v;
+  form.submit();
+}
+</script>
+{% endblock %}

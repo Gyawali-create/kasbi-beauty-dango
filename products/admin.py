@@ -1,10 +1,17 @@
 from django.contrib import admin
-from .models import Category, Brand, Product, ProductImage, Wishlist, Coupon
+from .models import Category, Brand, Product, ProductImage, Wishlist, Coupon, Review
 
 
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
     extra = 1
+
+
+class ReviewInline(admin.TabularInline):
+    model = Review
+    extra = 0
+    readonly_fields = ('user', 'rating', 'comment', 'created_at')
+    can_delete = True
 
 
 @admin.register(Category)
@@ -30,8 +37,23 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ('name', 'description')
     list_editable = ('price', 'discount_price', 'stock', 'is_active', 'is_featured')
     prepopulated_fields = {'slug': ('name',)}
-    inlines = [ProductImageInline]
+    inlines = [ProductImageInline, ReviewInline]
     ordering = ('-created_at',)
+
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ('product', 'user', 'rating', 'short_comment', 'created_at')
+    list_filter = ('rating',)
+    search_fields = ('product__name', 'user__username', 'comment')
+    readonly_fields = ('product', 'user', 'created_at')
+
+    def short_comment(self, obj):
+        return obj.comment[:60] + '...' if len(obj.comment) > 60 else obj.comment
+    short_comment.short_description = 'Comment'
+
+    def has_add_permission(self, request):
+        return False
 
 
 @admin.register(Wishlist)

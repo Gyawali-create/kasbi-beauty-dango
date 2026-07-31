@@ -1,95 +1,208 @@
-from decimal import Decimal
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.db import transaction
+from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
+import hmac, hashlib, base64, uuid, json, requests as http_requests
 from cart.models import Cart
 from products.models import Coupon
-from .forms import CheckoutForm
 from .models import Order, OrderItem, Payment
+from .forms import CheckoutForm
 
+
+# ── helpers ──────────────────────────────────────────────────────────────────
+
+def _esewa_signature(total_amount, transaction_uuid, product_code):
+    """Generate HMAC-SHA256 base64 signature for eSewa."""
+    message = f'total_amount={total_amount},transaction_uuid={transaction_uuid},product_code={product_code}'
+    key = settings.ESEWA_SECRET_KEY.encode('utf-8')
+    sig = hmac.new(key, message.encode('utf-8'), hashlib.sha256).digest()
+    return base64.b64encode(sig).decode('utf-8')
+
+
+# ── checkout ─────────────────────────────────────────────────────────────────
 
 @login_required
 def checkout_view(request):
-    cart, _ = Cart.objects.get_or_create(user=request.user)
-    if not cart.items.exists():
-        messages.info(request, 'Your cart is empty.')
-        return redirect('products:list')
+    try:
+        cart = request.user.cart
+    except Cart.DoesNotExist:
+        messages.error(request, 'Your cart is empty.')
+        return redirect('cart:detail')
+
+    if cart.items.count() == 0:
+        messages.error(request, 'Your cart is empty.')
+        return redirect('cart:detail')
 
     if request.method == 'POST':
         form = CheckoutForm(request.POST)
         if form.is_valid():
-            with transaction.atomic():
-                order = form.save(commit=False)
-                order.user = request.user
-                subtotal = cart.total
-                discount = Decimal('0')
+            order = form.save(commit=False)
+            order.user = request.user
+            order.subtotal = cart.total
+            order.discount_amount = 0
 
-                code = form.cleaned_data.get('coupon_code', '').strip()
-                coupon = None
-                if code:
-                    try:
-                        coupon = Coupon.objects.get(code__iexact=code)
-                        if coupon.is_valid():
-                            discount = subtotal * Decimal(coupon.discount_percent) / Decimal('100')
-                        else:
-                            messages.warning(request, 'Coupon is not valid or has expired.')
-                            coupon = None
-                    except Coupon.DoesNotExist:
-                        messages.warning(request, 'Coupon code not found.')
+            coupon_code = form.cleaned_data.get('coupon_code', '').strip()
+            if coupon_code:
+                try:
+                    coupon = Coupon.objects.get(code__iexact=coupon_code)
+                    if coupon.is_valid():
+                        order.coupon = coupon
+                        order.discount_amount = (order.subtotal * coupon.discount_percent) / 100
+                        coupon.times_used += 1
+                        coupon.save()
+                        messages.success(request, f'Coupon "{coupon.code}" applied! You saved Rs.{order.discount_amount:.2f}')
+                    else:
+                        messages.warning(request, f'Coupon "{coupon_code}" is expired or invalid.')
+                except Coupon.DoesNotExist:
+                    messages.warning(request, f'Coupon "{coupon_code}" not found.')
 
-                order.coupon = coupon
-                order.subtotal = subtotal
-                order.discount_amount = discount
-                order.total = subtotal - discount
-                order.save()
+            order.total = order.subtotal - order.discount_amount
+            order.save()
 
-                for item in cart.items.select_related('product'):
-                    OrderItem.objects.create(
-                        order=order,
-                        product=item.product,
-                        product_name=item.product.name,
-                        price=item.product.current_price,
-                        quantity=item.quantity,
-                    )
-                    item.product.stock = max(item.product.stock - item.quantity, 0)
-                    item.product.popularity += item.quantity
-                    item.product.save(update_fields=['stock', 'popularity'])
-
-                Payment.objects.create(
+            for cart_item in cart.items.all():
+                OrderItem.objects.create(
                     order=order,
-                    amount=order.total,
-                    method=order.payment_method,
-                    status='success' if order.payment_method != 'cod' else 'pending',
+                    product=cart_item.product,
+                    product_name=cart_item.product.name,
+                    price=cart_item.product.current_price,
+                    quantity=cart_item.quantity,
                 )
-                if order.payment_method != 'cod':
-                    order.is_paid = True
-                    order.save(update_fields=['is_paid'])
 
-                if coupon:
-                    coupon.times_used += 1
-                    coupon.save(update_fields=['times_used'])
-
+            # COD → immediate success payment record
+            if order.payment_method == 'cod':
+                Payment.objects.create(
+                    order=order, amount=order.total,
+                    method='cod', status='success',
+                )
                 cart.items.all().delete()
+                messages.success(request, f'Order #{order.order_number} placed! We will contact you soon.')
+                return redirect('orders:history')
 
-            messages.success(request, f'Order {order.order_number} placed successfully!')
-            return redirect('orders:detail', order_number=order.order_number)
+            # eSewa → redirect to eSewa payment page
+            elif order.payment_method == 'esewa':
+                Payment.objects.create(
+                    order=order, amount=order.total,
+                    method='esewa', status='pending',
+                )
+                cart.items.all().delete()
+                return redirect('orders:esewa_initiate', order_number=order.order_number)
+
+            # Other online methods → pending
+            else:
+                Payment.objects.create(
+                    order=order, amount=order.total,
+                    method=order.payment_method, status='pending',
+                )
+                cart.items.all().delete()
+                messages.success(request, f'Order #{order.order_number} placed! Payment pending.')
+                return redirect('orders:history')
+        else:
+            messages.error(request, 'Please correct the errors below.')
     else:
         initial = {}
         if hasattr(request.user, 'profile'):
-            p = request.user.profile
+            profile = request.user.profile
             initial = {
-                'full_name': request.user.get_full_name() or request.user.username,
-                'phone': p.phone,
-                'address_line': p.address_line,
-                'city': p.city,
-                'postal_code': p.postal_code,
-                'country': p.country or 'Nepal',
+                'full_name': f'{request.user.first_name} {request.user.last_name}'.strip() or request.user.username,
+                'phone': profile.phone,
+                'address_line': profile.address_line,
+                'city': profile.city,
+                'postal_code': profile.postal_code,
+                'country': profile.country or 'Nepal',
             }
         form = CheckoutForm(initial=initial)
 
     return render(request, 'orders/checkout.html', {'form': form, 'cart': cart})
 
+
+# ── eSewa ─────────────────────────────────────────────────────────────────────
+
+@login_required
+def esewa_initiate(request, order_number):
+    """Render a page that auto-submits the eSewa payment form."""
+    order = get_object_or_404(Order, order_number=order_number, user=request.user)
+    total_amount = str(order.total)
+    transaction_uuid = order.order_number
+    product_code = settings.ESEWA_PRODUCT_CODE
+    signature = _esewa_signature(total_amount, transaction_uuid, product_code)
+    base = settings.ESEWA_BASE_URL
+
+    context = {
+        'order': order,
+        'esewa_url': settings.ESEWA_PAYMENT_URL,
+        'amount': str(order.total),
+        'tax_amount': '0',
+        'total_amount': total_amount,
+        'transaction_uuid': transaction_uuid,
+        'product_code': product_code,
+        'product_service_charge': '0',
+        'product_delivery_charge': '0',
+        'success_url': f'{base}/orders/esewa/success/',
+        'failure_url': f'{base}/orders/esewa/failure/',
+        'signed_field_names': 'total_amount,transaction_uuid,product_code',
+        'signature': signature,
+    }
+    return render(request, 'orders/esewa_initiate.html', context)
+
+
+@csrf_exempt
+def esewa_success(request):
+    """eSewa redirects here after successful payment with base64 encoded data."""
+    encoded = request.GET.get('data', '')
+    if not encoded:
+        messages.error(request, 'Invalid eSewa response.')
+        return redirect('orders:history')
+
+    try:
+        decoded = json.loads(base64.b64decode(encoded).decode('utf-8'))
+        status = decoded.get('status')
+        transaction_uuid = decoded.get('transaction_uuid')
+        total_amount = decoded.get('total_amount')
+        transaction_code = decoded.get('transaction_code', '')
+
+        # Verify signature
+        received_sig = decoded.get('signature', '')
+        signed_fields = decoded.get('signed_field_names', '')
+        fields = [f.strip() for f in signed_fields.split(',')]
+        message = ','.join(f'{f}={decoded.get(f, "")}' for f in fields)
+        key = settings.ESEWA_SECRET_KEY.encode('utf-8')
+        expected_sig = base64.b64encode(
+            hmac.new(key, message.encode('utf-8'), hashlib.sha256).digest()
+        ).decode('utf-8')
+
+        if received_sig != expected_sig:
+            messages.error(request, 'eSewa payment verification failed. Please contact support.')
+            return redirect('orders:history')
+
+        if status == 'COMPLETE':
+            order = get_object_or_404(Order, order_number=transaction_uuid)
+            order.is_paid = True
+            order.status = 'processing'
+            order.save()
+            payment = order.payment
+            payment.status = 'success'
+            payment.transaction_id = transaction_code
+            payment.save()
+            messages.success(request, f'Payment successful! Order #{order.order_number} confirmed.')
+            return redirect('orders:detail', order_number=order.order_number)
+        else:
+            messages.warning(request, f'eSewa payment status: {status}. Please contact support.')
+            return redirect('orders:history')
+
+    except Exception as e:
+        messages.error(request, f'Error processing eSewa response: {str(e)}')
+        return redirect('orders:history')
+
+
+@csrf_exempt
+def esewa_failure(request):
+    """eSewa redirects here on failure or cancellation."""
+    messages.error(request, 'eSewa payment was cancelled or failed. Please try again.')
+    return redirect('orders:history')
+
+
+# ── order history / detail ────────────────────────────────────────────────────
 
 @login_required
 def order_history(request):

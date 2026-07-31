@@ -1,0 +1,161 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+
+{% block title %}{{ title }} | Kasbi Admin{% endblock %}
+
+{% block branding %}
+<div id="site-name" style="display:flex;align-items:center;gap:12px;">
+  <div style="width:36px;height:36px;background:linear-gradient(135deg,#5E4074,#8B69A4);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+    <span style="color:white;font-size:18px;font-weight:900;">K</span>
+  </div>
+  <div>
+    <div style="font-size:16px;font-weight:700;color:white;line-height:1.1;">Kasbi Beauty</div>
+    <div style="font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:1px;text-transform:uppercase;">Admin Panel</div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & base ── */
+*{box-sizing:border-box;}
+body{font-family:'Inter',sans-serif!important;background:#f4f5f7!important;}
+
+/* ── Top nav bar ── */
+#header{
+  background:linear-gradient(135deg,#2d1a3a 0%,#5E4074 100%)!important;
+  padding:0 24px!important;
+  height:58px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  box-shadow:0 2px 12px rgba(0,0,0,0.2)!important;
+  position:sticky!important;top:0!important;z-index:1000!important;
+}
+#site-name a{color:white!important;text-decoration:none!important;}
+#user-tools{font-size:12px!important;color:rgba(255,255,255,0.75)!important;}
+#user-tools a{color:rgba(255,255,255,0.85)!important;padding:4px 10px!important;border-radius:20px!important;border:1px solid rgba(255,255,255,0.2)!important;margin-left:6px!important;transition:all 0.2s!important;}
+#user-tools a:hover{background:rgba(255,255,255,0.15)!important;color:white!important;}
+
+/* ── Breadcrumbs ── */
+div.breadcrumbs{
+  background:#fff!important;
+  padding:10px 24px!important;
+  border-bottom:1px solid #eee!important;
+  font-size:13px!important;
+  color:#666!important;
+}
+div.breadcrumbs a{color:#5E4074!important;}
+
+/* ── Content layout ── */
+#content-main,#content{padding:24px!important;}
+#content{background:#f4f5f7!important;}
+
+/* ── Module / app headings ── */
+.module h2,.module caption,
+.inline-group h2{
+  background:linear-gradient(135deg,#5E4074,#7B5A93)!important;
+  color:white!important;
+  padding:10px 16px!important;
+  font-size:13px!important;
+  font-weight:600!important;
+  letter-spacing:0.3px!important;
+  border-radius:10px 10px 0 0!important;
+}
+
+/* ── App index cards ── */
+.app-kasbi .section,
+#content-main .module{
+  background:white!important;
+  border-radius:14px!important;
+  box-shadow:0 2px 12px rgba(0,0,0,0.06)!important;
+  border:none!important;
+  margin-bottom:24px!important;
+  overflow:hidden!important;
+}
+
+/* ── Change list table ── */
+#changelist{background:white!important;border-radius:14px!important;box-shadow:0 2px 12px rgba(0,0,0,0.06)!important;overflow:hidden!important;}
+#changelist-filter{background:white!important;border-left:none!important;padding:16px!important;border-radius:0 14px 14px 0!important;box-shadow:0 2px 12px rgba(0,0,0,0.06)!important;}
+#changelist-filter h2{background:var(--primary)!important;color:white!important;padding:10px 14px!important;border-radius:10px!important;font-size:12px!important;font-weight:600!important;margin-bottom:12px!important;}
+#changelist-filter li.selected a{color:#5E4074!important;font-weight:600!important;}
+#result_list{width:100%!important;border-collapse:collapse!important;}
+#result_list thead th{background:#f8f6fb!important;color:#5E4074!important;font-size:11px!important;font-weight:700!important;letter-spacing:0.5px!important;text-transform:uppercase!important;padding:10px 14px!important;border-bottom:2px solid #ede8f3!important;}
+#result_list tbody tr{transition:background 0.15s!important;}
+#result_list tbody tr:hover{background:#faf8fc!important;}
+#result_list tbody td{padding:10px 14px!important;border-bottom:1px solid #f0edf5!important;font-size:13px!important;}
+#result_list tbody tr:last-child td{border-bottom:none!important;}
+
+/* ── Action bar ── */
+.actions{background:#f8f6fb!important;border-radius:10px!important;padding:10px 14px!important;margin-bottom:12px!important;}
+
+/* ── Forms ── */
+.form-row{padding:12px 16px!important;border-bottom:1px solid #f5f3f8!important;}
+.form-row label{font-size:13px!important;font-weight:600!important;color:#3a2650!important;}
+input[type=text],input[type=email],input[type=password],input[type=number],
+input[type=url],select,textarea{
+  border:1px solid #ddd!important;
+  border-radius:8px!important;
+  padding:8px 12px!important;
+  font-size:13px!important;
+  font-family:'Inter',sans-serif!important;
+  transition:border-color 0.2s!important;
+}
+input[type=text]:focus,input[type=email]:focus,textarea:focus,select:focus{
+  border-color:#5E4074!important;
+  outline:none!important;
+  box-shadow:0 0 0 3px rgba(94,64,116,0.1)!important;
+}
+
+/* ── Buttons ── */
+.button,.submit-row input[type=submit],.submit-row a.deletelink{
+  border-radius:30px!important;
+  padding:9px 22px!important;
+  font-size:13px!important;
+  font-weight:600!important;
+  border:none!important;
+  cursor:pointer!important;
+  font-family:'Inter',sans-serif!important;
+}
+.default,.submit-row input[type=submit]{
+  background:linear-gradient(135deg,#5E4074,#7B5A93)!important;
+  color:white!important;
+}
+.default:hover,.submit-row input[type=submit]:hover{
+  background:linear-gradient(135deg,#4a2f5e,#5E4074)!important;
+  opacity:0.95!important;
+}
+.submit-row a.deletelink{background:#e74c3c!important;color:white!important;}
+.submit-row{background:#f8f6fb!important;border-top:2px solid #ede8f3!important;padding:14px 20px!important;border-radius:0 0 14px 14px!important;}
+
+/* ── Inline admin ── */
+.inline-group{background:white!important;border-radius:14px!important;margin-bottom:20px!important;overflow:hidden!important;box-shadow:0 2px 8px rgba(0,0,0,0.06)!important;}
+.inline-related{border-bottom:1px solid #f5f3f8!important;}
+.tabular td,.tabular th{padding:8px 12px!important;font-size:13px!important;}
+
+/* ── Messages ── */
+ul.messagelist li{border-radius:10px!important;padding:12px 18px!important;font-size:13px!important;}
+ul.messagelist li.success{background:#d4edda!important;color:#155724!important;border:1px solid #c3e6cb!important;}
+ul.messagelist li.error{background:#f8d7da!important;color:#721c24!important;border:1px solid #f5c6cb!important;}
+ul.messagelist li.warning{background:#fff3cd!important;color:#856404!important;border:1px solid #ffeaa7!important;}
+
+/* ── Pagination ── */
+.paginator a,.paginator .this-page{
+  border-radius:8px!important;padding:4px 10px!important;
+  border:1px solid #ddd!important;font-size:13px!important;margin:0 2px!important;
+}
+.paginator .this-page{background:#5E4074!important;color:white!important;border-color:#5E4074!important;}
+
+/* ── Dashboard shortcut links ── */
+#content-main .module table td a{color:#5E4074!important;font-weight:500!important;}
+#content-main .module table td a:hover{text-decoration:underline!important;}
+.addlink::before{content:"＋ "!important;}
+.changelink::before{content:"✎ "!important;}
+
+/* ── Recent actions ── */
+#recent-actions-module h2{background:linear-gradient(135deg,#D4AF37,#EBCB65)!important;color:#2d1a3a!important;}
+#recent-actions-module .actionlist li{font-size:13px!important;padding:6px 0!important;border-bottom:1px solid #f5f3f8!important;}
+</style>
+{% endblock %}

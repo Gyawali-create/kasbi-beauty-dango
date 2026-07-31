@@ -1,0 +1,151 @@
+{% load static %}
+{#
+  Drop-in dynamic product grid + sort bar + pagination + cart + wishlist.
+  Include this AFTER the filter sidebar closes and BEFORE </section>.
+  Requires context: page_obj, sort, query, selected_category, selected_brand, min_price, max_price, wishlist_ids
+#}
+
+    <!-- Products Column -->
+    <div>
+
+        <!-- Sort toolbar -->
+        <div class="shop-toolbar">
+            <span id="productCount">
+                Showing {{ page_obj.start_index }}–{{ page_obj.end_index }} of {{ page_obj.paginator.count }} products
+            </span>
+            <form method="get" id="sortForm">
+                {% if query %}<input type="hidden" name="q" value="{{ query }}">{% endif %}
+                {% if selected_category %}<input type="hidden" name="category" value="{{ selected_category }}">{% endif %}
+                {% if selected_brand %}<input type="hidden" name="brand" value="{{ selected_brand }}">{% endif %}
+                {% if min_price %}<input type="hidden" name="min_price" value="{{ min_price }}">{% endif %}
+                {% if max_price %}<input type="hidden" name="max_price" value="{{ max_price }}">{% endif %}
+                <select id="sortSelect" name="sort" onchange="this.form.submit()">
+                    <option value="newest"     {% if sort == 'newest' or not sort %}selected{% endif %}>Sort by: Default</option>
+                    <option value="price_low"  {% if sort == 'price_low'  %}selected{% endif %}>Sort by: Price: Low to High</option>
+                    <option value="price_high" {% if sort == 'price_high' %}selected{% endif %}>Sort by: Price: High to Low</option>
+                    <option value="popularity" {% if sort == 'popularity' %}selected{% endif %}>Sort by: Rating</option>
+                </select>
+            </form>
+        </div>
+
+        <!-- Product grid -->
+        <div class="product-grid" id="productGrid">
+            {% for p in page_obj %}
+            <a href="{{ p.get_absolute_url }}" class="product-link">
+                <div class="product-card" data-category="{{ p.category.slug|default:'' }}" data-price="{{ p.current_price }}" data-rating="5">
+                    <div class="image-wrap">
+                        {% if p.is_featured %}<span class="badge-bestseller">&#11088; Best Seller</span>{% endif %}
+                        {% if p.discount_price %}<span class="discount">Sale</span>{% endif %}
+                        <span class="wishlist" onclick="event.preventDefault();event.stopPropagation();kasbiWL(this,{{ p.id }})">
+                            <i class="{% if p.id in wishlist_ids %}fa-solid{% else %}fa-regular{% endif %} fa-heart"></i>
+                        </span>
+                        <img src="{% if p.thumbnail %}{{ p.thumbnail.url }}{% else %}{% static 'img/hero.png' %}{% endif %}" alt="{{ p.name }}">
+                    </div>
+                    <div class="info">
+                        <span class="brand">{{ p.brand|default:"" }}</span>
+                        <h3>{{ p.name }}</h3>
+                        <div class="rating">&#9733;&#9733;&#9733;&#9733;&#9733; <span>({{ p.popularity|default:0 }})</span></div>
+                        <div class="price">
+                            <span class="current">Rs.{{ p.current_price }}</span>
+                            {% if p.discount_price %}<span class="old">Rs.{{ p.price }}</span>{% endif %}
+                        </div>
+                        {% if user.is_authenticated and p.in_stock %}
+                        <form method="post" action="{% url 'cart:add' p.id %}" onclick="event.stopPropagation();" style="margin:0;">
+                            {% csrf_token %}
+                            <input type="hidden" name="quantity" value="1">
+                            <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                            <button type="submit" class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
+                        </form>
+                        {% elif not p.in_stock %}
+                        <button class="add-btn" disabled style="opacity:0.5;cursor:not-allowed;">Out of Stock</button>
+                        {% else %}
+                        <a href="{% url 'accounts:login' %}?next={{ request.get_full_path }}" class="add-btn" style="display:block;text-align:center;text-decoration:none;" onclick="event.stopPropagation();">Login to Buy</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </a>
+            {% empty %}
+            <div style="grid-column:1/-1;text-align:center;padding:80px 20px;color:var(--gray);">
+                <i class="fa-regular fa-face-frown" style="font-size:48px;display:block;margin-bottom:16px;color:#ddd;"></i>
+                <h3 style="font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--dark);margin-bottom:8px;">No products found</h3>
+                <p>Try adjusting your filters or <a href="{{ request.path }}" style="color:var(--primary);">clear filters</a>.</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if page_obj.paginator.num_pages > 1 %}
+        <div class="pagination" style="display:flex;gap:8px;justify-content:center;margin-top:30px;flex-wrap:wrap;">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}&sort={{ sort }}&q={{ query }}&category={{ selected_category }}&brand={{ selected_brand }}&min_price={{ min_price }}&max_price={{ max_price }}" style="display:inline-flex;align-items:center;justify-content:center;min-width:40px;height:40px;padding:0 12px;border-radius:8px;background:white;border:1px solid #eee;color:#666;text-decoration:none;transition:all .3s;font-weight:500;"><i class="fa-solid fa-chevron-left"></i></a>
+            {% endif %}
+            {% for num in page_obj.paginator.page_range %}
+                {% if num == page_obj.number %}
+                <span style="display:inline-flex;align-items:center;justify-content:center;min-width:40px;height:40px;padding:0 12px;border-radius:8px;background:#5E4074;color:white;font-weight:600;">{{ num }}</span>
+                {% elif num|add:"-2" <= page_obj.number and num|add:"2" >= page_obj.number %}
+                <a href="?page={{ num }}&sort={{ sort }}&q={{ query }}&category={{ selected_category }}&brand={{ selected_brand }}&min_price={{ min_price }}&max_price={{ max_price }}" style="display:inline-flex;align-items:center;justify-content:center;min-width:40px;height:40px;padding:0 12px;border-radius:8px;background:white;border:1px solid #eee;color:#666;text-decoration:none;transition:all .3s;font-weight:500;">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}&sort={{ sort }}&q={{ query }}&category={{ selected_category }}&brand={{ selected_brand }}&min_price={{ min_price }}&max_price={{ max_price }}" style="display:inline-flex;align-items:center;justify-content:center;min-width:40px;height:40px;padding:0 12px;border-radius:8px;background:white;border:1px solid #eee;color:#666;text-decoration:none;transition:all .3s;font-weight:500;"><i class="fa-solid fa-chevron-right"></i></a>
+            {% endif %}
+        </div>
+        {% endif %}
+
+    </div><!-- end products column -->
+
+</section><!-- end shop-section -->
+
+<!-- ===== WISHLIST + SEARCH JS (shared) ===== -->
+<script>
+function kasbiWL(el, id) {
+    {% if user.is_authenticated %}
+    const icon = el.querySelector('i');
+    const removing = icon.classList.contains('fa-solid');
+    const url = removing ? '/products/wishlist/remove/' + id + '/' : '/products/wishlist/add/' + id + '/';
+    fetch(url, {method: 'GET', credentials: 'same-origin'})
+        .then(function() {
+            icon.classList.toggle('fa-solid', !removing);
+            icon.classList.toggle('fa-regular', removing);
+            el.style.background   = removing ? '' : '#5E4074';
+            el.style.color        = removing ? '' : 'white';
+            el.style.borderColor  = removing ? '' : '#5E4074';
+            kasbiToast(removing ? '&#128148; Removed from Wishlist' : '&#10084;&#65039; Added to Wishlist!');
+        })
+        .catch(function() { window.location.href = url; });
+    {% else %}
+    window.location.href = "{% url 'accounts:login' %}";
+    {% endif %}
+}
+
+function kasbiToast(msg) {
+    var old = document.querySelector('.kasbi-toast');
+    if (old) old.remove();
+    var t = document.createElement('div');
+    t.className = 'kasbi-toast';
+    t.innerHTML = msg;
+    t.style.cssText = 'position:fixed;bottom:30px;right:30px;background:#2d1a3a;color:white;padding:14px 24px;border-radius:12px;font-size:14px;font-weight:500;box-shadow:0 8px 30px rgba(0,0,0,.2);z-index:10000;border-left:4px solid #e91e63;font-family:Inter,sans-serif;max-width:350px;animation:kbSlideIn .4s ease forwards;';
+    document.body.appendChild(t);
+    setTimeout(function() { t.style.animation = 'kbSlideOut .4s ease forwards'; setTimeout(function(){ t.remove(); }, 400); }, 3000);
+}
+
+/* Search wiring — works for any page with the header search bar */
+(function() {
+    var inp = document.querySelector('header .search input, .header .search input');
+    var btn = document.querySelector('header .search button, .header .search button');
+    if (!inp || !btn) return;
+    var q = "{{ query|escapejs }}";
+    if (q) inp.value = q;
+    function go() {
+        var v = inp.value.trim();
+        if (v) window.location.href = "{% url 'products:search' %}?q=" + encodeURIComponent(v);
+    }
+    btn.addEventListener('click', function(e) { e.preventDefault(); go(); });
+    inp.addEventListener('keydown', function(e) { if (e.key === 'Enter') { e.preventDefault(); go(); } });
+})();
+</script>
+<style>
+@keyframes kbSlideIn  { from { transform:translateY(100px);opacity:0; } to { transform:translateY(0);opacity:1; } }
+@keyframes kbSlideOut { from { transform:translateY(0);opacity:1; } to { transform:translateY(100px);opacity:0; } }
+.pagination a:hover { background:#5E4074 !important; color:white !important; border-color:#5E4074 !important; }
+</style>

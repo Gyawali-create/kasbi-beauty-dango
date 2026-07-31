@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{% if existing %}Edit Review{% else %}Write a Review{% endif %} — {{ product.name }}{% endblock %}
+
+{% block content %}
+<div style="background:var(--cream);padding:30px 6%;text-align:center;border-bottom:1px solid rgba(0,0,0,0.05);">
+    <h1 style="font-family:'Cormorant Garamond',serif;font-size:36px;color:var(--dark);margin-bottom:6px;">
+        {% if existing %}Edit Your Review{% else %}Write a Review{% endif %}
+    </h1>
+    <div style="font-size:13px;color:var(--gray);">
+        <a href="{% url 'core:home' %}" style="color:var(--primary);">Home</a> /
+        <a href="{% url 'products:detail' product.slug %}" style="color:var(--primary);">{{ product.name }}</a> /
+        Review
+    </div>
+</div>
+
+<section style="padding:50px 6%;max-width:640px;margin:0 auto;">
+    <div style="background:var(--white);border-radius:20px;padding:36px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.05);">
+
+        <!-- Product Preview -->
+        <div style="display:flex;gap:16px;align-items:center;padding-bottom:24px;border-bottom:1px solid var(--cream);margin-bottom:28px;">
+            {% if product.thumbnail %}
+            <img src="{{ product.thumbnail.url }}" alt="{{ product.name }}"
+                 style="width:64px;height:64px;object-fit:contain;background:var(--cream);border-radius:12px;padding:6px;">
+            {% endif %}
+            <div>
+                <div style="font-size:11px;color:var(--gray);font-weight:600;text-transform:uppercase;letter-spacing:1px;">
+                    {{ product.brand.name|default:"" }}
+                </div>
+                <div style="font-size:16px;font-weight:700;color:var(--dark);">{{ product.name }}</div>
+            </div>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <!-- Star Rating -->
+            <div style="margin-bottom:24px;">
+                <label style="display:block;font-size:13px;font-weight:600;color:var(--dark);margin-bottom:12px;">
+                    Your Rating <span style="color:#e74c3c;">*</span>
+                </label>
+                <div style="display:flex;gap:8px;flex-direction:row-reverse;justify-content:flex-end;" id="starRating">
+                    {% for i in "54321" %}
+                    <label style="cursor:pointer;font-size:32px;color:#ddd;transition:color 0.15s;" for="star{{ i }}">★
+                        <input type="radio" name="rating" id="star{{ i }}" value="{{ i }}"
+                               style="display:none;"
+                               {% if existing and existing.rating == i|add:0 %}checked{% elif not existing and i == "5" %}checked{% endif %}>
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Comment -->
+            <div style="margin-bottom:24px;">
+                <label style="display:block;font-size:13px;font-weight:600;color:var(--dark);margin-bottom:8px;">
+                    Your Review
+                </label>
+                <textarea name="comment" rows="5" placeholder="Share your experience with this product..."
+                    style="width:100%;padding:13px 16px;border:1px solid #e0e0e0;border-radius:12px;font-size:14px;font-family:'Inter',sans-serif;outline:none;resize:vertical;box-sizing:border-box;transition:border-color 0.2s;"
+                    onfocus="this.style.borderColor='var(--primary)'"
+                    onblur="this.style.borderColor='#e0e0e0'">{{ existing.comment|default:"" }}</textarea>
+            </div>
+
+            <div style="display:flex;gap:12px;">
+                <button type="submit" class="btn-primary" style="flex:1;justify-content:center;">
+                    <i class="fa-regular fa-star"></i>
+                    {% if existing %}Update Review{% else %}Submit Review{% endif %}
+                </button>
+                <a href="{% url 'products:detail' product.slug %}" class="btn-secondary" style="flex:1;justify-content:center;">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</section>
+
+<script>
+// Highlight stars on hover and selection
+const labels = document.querySelectorAll('#starRating label');
+const inputs = document.querySelectorAll('#starRating input');
+
+function updateStars() {
+    let checked = 0;
+    inputs.forEach((inp, idx) => { if (inp.checked) checked = 5 - idx; });
+    labels.forEach((lbl, idx) => {
+        lbl.style.color = (5 - idx) <= checked ? '#f5b342' : '#ddd';
+    });
+}
+
+inputs.forEach(inp => inp.addEventListener('change', updateStars));
+labels.forEach((lbl, idx) => {
+    lbl.addEventListener('mouseenter', () => {
+        labels.forEach((l, i) => { l.style.color = i >= idx ? '#f5b342' : '#ddd'; });
+    });
+    lbl.addEventListener('mouseleave', updateStars);
+});
+
+updateStars();
+</script>
+{% endblock %}

@@ -1,66 +1,60 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block title %}Order #{{ order.order_number }} — Kasbi Beauty{% endblock %}
+
 {% block content %}
-<div class="container py-4">
-  <h2 class="text-kasbi mb-1">Order {{ order.order_number }}</h2>
-  <p class="text-muted">Placed on {{ order.created_at|date:"M d, Y H:i" }}</p>
+<div style="background:var(--cream);padding:30px 6%;text-align:center;">
+  <h1 style="font-family:'Cormorant Garamond',serif;font-size:38px;color:var(--dark);">Order #{{ order.order_number }}</h1>
+  <p style="color:var(--gray);">Placed on {{ order.created_at|date:"F d, Y" }}</p>
+</div>
 
-  <div class="row g-4">
-    <div class="col-md-8">
-      <div class="card p-4 stat-card mb-4">
-        <h6 class="mb-3">Order Status</h6>
-        <div class="progress" style="height: 10px;">
-          {% if order.status == 'cancelled' %}
-            <div class="progress-bar bg-danger" style="width: 100%">Cancelled</div>
-          {% else %}
-            {% if order.status == 'pending' %}
-              <div class="progress-bar bg-kasbi" style="width: 25%"></div>
-            {% elif order.status == 'processing' %}
-              <div class="progress-bar bg-kasbi" style="width: 50%"></div>
-            {% elif order.status == 'shipped' %}
-              <div class="progress-bar bg-kasbi" style="width: 75%"></div>
-            {% elif order.status == 'delivered' %}
-              <div class="progress-bar bg-kasbi" style="width: 100%"></div>
-            {% endif %}
-          {% endif %}
-        </div>
-        <p class="mt-2 mb-0">Current status: <span class="badge bg-secondary">{{ order.get_status_display }}</span></p>
-      </div>
+<section style="padding:40px 6% 80px;max-width:860px;margin:0 auto;">
+  <a href="{% url 'orders:history' %}" style="display:inline-flex;align-items:center;gap:8px;color:var(--primary);font-size:14px;text-decoration:none;margin-bottom:24px;">
+    <i class="fa-solid fa-arrow-left"></i> Back to Orders
+  </a>
 
-      <div class="card p-4 stat-card">
-        <h6 class="mb-3">Items</h6>
-        <table class="table">
-          <thead><tr><th>Product</th><th>Price</th><th>Qty</th><th>Subtotal</th></tr></thead>
-          <tbody>
-            {% for item in order.items.all %}
-            <tr>
-              <td>{{ item.product_name }}</td>
-              <td>Rs. {{ item.price }}</td>
-              <td>{{ item.quantity }}</td>
-              <td>Rs. {{ item.subtotal }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+  <div style="background:var(--white);border-radius:var(--border-radius);padding:30px;box-shadow:var(--shadow);margin-bottom:20px;border:1px solid rgba(0,0,0,0.04);">
+    <h4 style="font-size:15px;font-weight:700;color:var(--dark);margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--cream);">
+      <i class="fa-solid fa-bag-shopping" style="color:var(--primary);margin-right:8px;"></i>Items Ordered
+    </h4>
+    {% for item in order.items.all %}
+    <div style="display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--cream);align-items:center;">
+      <img src="{% if item.product and item.product.thumbnail %}{{ item.product.thumbnail.url }}{% else %}{% static 'img/hero.png' %}{% endif %}" style="width:60px;height:60px;object-fit:contain;background:var(--cream);border-radius:10px;padding:8px;" alt="{{ item.product_name }}">
+      <div style="flex:1;">
+        <div style="font-size:14px;font-weight:600;color:var(--dark);">{{ item.product_name }}</div>
+        <div style="font-size:12px;color:var(--gray);">Rs. {{ item.price }} × {{ item.quantity }}</div>
       </div>
+      <div style="font-size:15px;font-weight:700;color:var(--primary);">Rs. {{ item.subtotal }}</div>
     </div>
+    {% endfor %}
+    <div style="display:flex;justify-content:space-between;padding:12px 0;font-size:14px;color:var(--gray);border-bottom:1px solid var(--cream);"><span>Subtotal</span><span>Rs. {{ order.subtotal }}</span></div>
+    {% if order.discount_amount > 0 %}
+    <div style="display:flex;justify-content:space-between;padding:12px 0;font-size:14px;color:#2ecc71;border-bottom:1px solid var(--cream);"><span>Discount</span><span>−Rs. {{ order.discount_amount }}</span></div>
+    {% endif %}
+    <div style="display:flex;justify-content:space-between;padding:14px 0;font-size:18px;font-weight:700;color:var(--dark);"><span>Total</span><span style="color:var(--primary);">Rs. {{ order.total }}</span></div>
+  </div>
 
-    <div class="col-md-4">
-      <div class="card p-4 stat-card mb-4">
-        <h6>Shipping To</h6>
-        <p class="mb-1">{{ order.full_name }}</p>
-        <p class="mb-1">{{ order.address_line }}, {{ order.city }}</p>
-        <p class="mb-1">{{ order.postal_code }} {{ order.country }}</p>
-        <p class="mb-0">{{ order.phone }}</p>
-      </div>
-      <div class="card p-4 stat-card">
-        <h6>Payment Summary</h6>
-        <div class="d-flex justify-content-between"><span>Subtotal</span><span>Rs. {{ order.subtotal }}</span></div>
-        <div class="d-flex justify-content-between"><span>Discount</span><span>-Rs. {{ order.discount_amount }}</span></div>
-        <hr>
-        <div class="d-flex justify-content-between fw-bold"><span>Total</span><span>Rs. {{ order.total }}</span></div>
-        <p class="mt-2 mb-0 small text-muted">Payment method: {{ order.get_payment_method_display }}</p>
-      </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+    <div style="background:var(--white);border-radius:var(--border-radius);padding:24px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.04);">
+      <h4 style="font-size:14px;font-weight:700;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid var(--cream);"><i class="fa-solid fa-location-dot" style="color:var(--primary);margin-right:6px;"></i>Shipping</h4>
+      <p style="font-size:14px;color:var(--dark);font-weight:600;">{{ order.full_name }}</p>
+      <p style="font-size:13px;color:var(--gray);">{{ order.phone }}</p>
+      <p style="font-size:13px;color:var(--gray);">{{ order.address_line }}, {{ order.city }}, {{ order.country }}</p>
+    </div>
+    <div style="background:var(--white);border-radius:var(--border-radius);padding:24px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.04);">
+      <h4 style="font-size:14px;font-weight:700;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid var(--cream);"><i class="fa-solid fa-credit-card" style="color:var(--primary);margin-right:6px;"></i>Payment</h4>
+      <p style="font-size:14px;color:var(--dark);">{{ order.get_payment_method_display }}</p>
+      <p style="font-size:13px;">
+        {% if order.is_paid %}
+        <span style="color:#155724;background:#d4edda;padding:3px 12px;border-radius:20px;font-size:12px;">✓ Paid</span>
+        {% else %}
+        <span style="color:#856404;background:#fff3cd;padding:3px 12px;border-radius:20px;font-size:12px;">Pending</span>
+        {% endif %}
+      </p>
+      <p style="font-size:13px;margin-top:8px;color:var(--dark);">
+        Status: <strong>{{ order.get_status_display }}</strong>
+      </p>
     </div>
   </div>
-</div>
+</section>
 {% endblock %}

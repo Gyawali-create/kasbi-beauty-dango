@@ -108,6 +108,23 @@ class Wishlist(models.Model):
         return f'{self.user} - {self.product}'
 
 
+class Review(models.Model):
+    RATING_CHOICES = [(i, str(i)) for i in range(1, 6)]
+
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviews')
+    rating = models.PositiveSmallIntegerField(choices=RATING_CHOICES, default=5)
+    comment = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('product', 'user')
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f'{self.user.username} — {self.product.name} ({self.rating}★)'
+
+
 class Coupon(models.Model):
     code = models.CharField(max_length=30, unique=True)
     description = models.CharField(max_length=200, blank=True)

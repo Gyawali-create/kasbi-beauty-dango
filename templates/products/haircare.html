@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Hair Care — Kasbi Beauty{% endblock %}
+
+{% block extra_head %}
+<style>
+.category-banner{background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border-radius:32px;padding:50px 60px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:30px;margin:40px 6%;position:relative;overflow:hidden;}
+.category-banner::before{content:'✿';position:absolute;right:-20px;top:-30px;font-size:120px;opacity:0.06;transform:rotate(15deg);}
+.category-banner .tag{font-size:12px;letter-spacing:2px;color:#2e7d32;font-weight:600;background:rgba(255,255,255,0.3);padding:6px 18px;border-radius:40px;}
+.category-banner h2{font-family:'Cormorant Garamond',serif;font-size:42px;margin:8px 0;color:#2d1a3a;}
+.category-banner p{color:#4a3a5a;max-width:400px;font-weight:300;}
+.category-banner .stats{display:flex;gap:12px;flex-wrap:wrap;}
+.category-banner .stats span{background:rgba(255,255,255,0.6);backdrop-filter:blur(4px);padding:8px 20px;border-radius:40px;font-weight:600;font-size:13px;color:#2e7d32;}
+@media(max-width:768px){.category-banner{padding:30px 24px;flex-direction:column;text-align:center;}.category-banner h2{font-size:30px;}}
+</style>
+{% endblock %}
+
+{% block pre_content %}
+<div class="category-banner">
+    <div>
+        <span class="tag">✿ CATEGORY</span>
+        <h2>Hair Care</h2>
+        <p>Strengthen, nourish, and style with our expert-curated hair care collection.</p>
+        <div class="stats">
+            <span>{{ page_obj.paginator.count }}+ Products</span>
+            <span>100% Authentic</span>
+            <span>Free Delivery above Rs.3000</span>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+{% include 'products/_product_grid.html' %}
+{% endblock %}

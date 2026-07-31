@@ -1,0 +1,1695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kasbi Beauty — Brand Products</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+        /* ===== BRAND PRODUCT PAGE STYLES ===== */
+        .brand-product-page {
+            padding: 40px 6% 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .brand-header {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            padding: 30px;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0,0,0,0.04);
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .brand-header .brand-logo-large {
+            width: 120px;
+            height: 120px;
+            background: var(--cream);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            flex-shrink: 0;
+        }
+
+        .brand-header .brand-logo-large img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .brand-header .brand-info h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 36px;
+            color: var(--dark);
+            margin: 0 0 4px;
+        }
+
+        .brand-header .brand-info .brand-stats {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .brand-header .brand-info .brand-stats span {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .brand-header .brand-info .brand-stats span i {
+            margin-right: 6px;
+            color: var(--primary);
+        }
+
+        .brand-header .back-btn {
+            margin-left: auto;
+            padding: 10px 24px;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            background: transparent;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            color: var(--gray);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand-header .back-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .brand-products-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .brand-products-title h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            color: var(--dark);
+        }
+
+        .brand-products-title .product-count {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .brand-products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .brand-product-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 16px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0,0,0,0.04);
+            transition: var(--transition);
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .brand-product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary);
+        }
+
+        .brand-product-card .product-image {
+            width: 100%;
+            height: 180px;
+            background: var(--cream);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .brand-product-card .product-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            padding: 10px;
+            transition: var(--transition);
+        }
+
+        .brand-product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .brand-product-card .product-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--gold-gradient);
+            color: var(--dark);
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-product-card .product-badge.new {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .brand-product-card .product-badge.sale {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .brand-product-card h4 {
+            font-size: 15px;
+            margin: 12px 0 4px;
+            font-weight: 600;
+        }
+
+        .brand-product-card .product-brand-name {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .no-products {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--gray);
+            grid-column: 1 / -1;
+        }
+
+        .no-products i {
+            font-size: 60px;
+            display: block;
+            margin-bottom: 16px;
+            color: #ddd;
+        }
+
+        .no-products h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .brand-products-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .brand-header .back-btn {
+                margin-left: 0;
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .brand-products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+            .brand-header {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+            }
+            .brand-header .brand-logo-large {
+                width: 100px;
+                height: 100px;
+            }
+            .brand-header .brand-info h1 {
+                font-size: 28px;
+            }
+            .brand-header .brand-info .brand-stats {
+                justify-content: center;
+            }
+            .brand-products-title h2 {
+                font-size: 24px;
+            }
+            .brand-product-card .product-image {
+                height: 140px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .brand-products-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            .brand-product-card {
+                padding: 12px;
+            }
+            .brand-product-card .product-image {
+                height: 120px;
+            }
+            .brand-product-card h4 {
+                font-size: 13px;
+            }
+            .brand-header .brand-info h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== TOP BAR ===== -->
+    <div class="topbar">
+        <div class="left">
+            <i class="fa-solid fa-truck-fast"></i> Free Delivery inside Kathmandu on Orders above Rs.3000
+        </div>
+        <div class="right">
+            <a href="#"><i class="fa-regular fa-clock"></i> Track Order</a>
+            <a href="#"><i class="fa-regular fa-newspaper"></i> Beauty Blog</a>
+            <a href="#"><i class="fa-regular fa-circle-question"></i> Help Center</a>
+        </div>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <div class="logo">
+            <a href="index.html"><img src="images/logo.png" alt="Kasbi Beauty"></a>
+        </div>
+        <div class="search">
+            <input type="text" placeholder="Search skincare, makeup, serum...">
+            <button><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+        <div class="header-icons">
+            <div>
+                <a href="wishlist.html" style="display:flex; flex-direction:column; align-items:center; text-decoration:none; color:inherit;">
+                    <i class="fa-regular fa-heart"></i>
+                    <span>Wishlist</span>
+                </a>
+            </div>
+            <div>
+                <a href="cart.html" style="display:flex; flex-direction:column; align-items:center; text-decoration:none; color:inherit;">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span>Cart</span>
+                    <span class="cart-badge">3</span>
+                </a>
+            </div>
+            <div>
+                <a href="account.html" style="display:flex; flex-direction:column; align-items:center; text-decoration:none; color:inherit;">
+                    <i class="fa-regular fa-user"></i>
+                    <span>Account</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navigation">
+        <ul>
+            <li><a href="index.html"></a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="brands.html" class="active">Brands</a></li>
+            <li><a href="skincare.html">Skincare</a></li>
+            <li><a href="makeup.html">Makeup</a></li>
+            <li><a href="haircare.html">Hair Care</a></li>
+            <li>
+                <a href="newarrivals.html" class="new-arrivals-link">
+                    <span class="new-arrivals-text">New Arrivals</span>
+                    <span class="new-badge-animated">✨ NEW</span>
+                </a>
+            </li>
+            <li><a href="bestsellers.html">Best Sellers</a></li>
+            <li>
+                <a href="offers.html" class="offers-link">
+                    <span class="offers-text">Offers</span>
+                    <span class="offers-badge-animated">🔥 SALE</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- ===== BRAND PRODUCT PAGE ===== -->
+    <section class="brand-product-page" id="brandProductPage">
+        <!-- Brand Header -->
+        <div class="brand-header" id="brandHeader">
+            <div class="brand-logo-large">
+                <img id="brandLogo" src="images/CeraVe.png" alt="Brand Logo">
+            </div>
+            <div class="brand-info">
+                <h1 id="brandName">CeraVe</h1>
+                <div class="brand-stats">
+                    <span><i class="fa-regular fa-box"></i> <span id="productTotal">30</span> Products</span>
+                    <span><i class="fa-regular fa-star"></i> <span id="brandRating">4.8</span> Rating</span>
+                    <span><i class="fa-regular fa-tag"></i> <span id="brandCategory">Skincare</span></span>
+                </div>
+            </div>
+            <a href="brands.html" class="back-btn">
+                <i class="fa-solid fa-arrow-left"></i> Back to Brands
+            </a>
+        </div>
+
+        <!-- Products Title -->
+        <div class="brand-products-title">
+            <h2>All Products</h2>
+            <span class="product-count" id="productCountLabel">Showing products</span>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="brand-products-grid" id="brandProductsGrid">
+            <!-- Products loaded dynamically -->
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <a href="index.html"><img src="images/logo.png" alt="Kasbi Beauty" style="height:45px; width:auto; margin-bottom:16px; filter:brightness(10) grayscale(1) opacity(0.8);"></a>
+                <p>Your trusted beauty destination in Nepal. Premium skincare, makeup, haircare & more — all 100% authentic.</p>
+                <div class="social">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="#">Beauty Blog</a></li>
+                    <li><a href="#">Track Order</a></li>
+                    <li><a href="#">Returns & Refunds</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Categories</h4>
+                <ul>
+                    <li><a href="skincare.html">Skincare</a></li>
+                    <li><a href="makeup.html">Makeup</a></li>
+                    <li><a href="haircare.html">Hair Care</a></li>
+                    <li><a href="shop.html?category=fragrance">Fragrance</a></li>
+                    <li><a href="shop.html?category=tools">Beauty Tools</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="#"><i class="fa-solid fa-phone" style="margin-right:8px;"></i>+977 980-0000000</a></li>
+                    <li><a href="#"><i class="fa-regular fa-envelope" style="margin-right:8px;"></i>hello@kasbi.com</a></li>
+                    <li><a href="#"><i class="fa-regular fa-location-dot" style="margin-right:8px;"></i>Kathmandu, Nepal</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Kasbi Beauty. All rights reserved.</span>
+            <div class="payment">
+                <i class="fa-brands fa-cc-visa"></i>
+                <i class="fa-brands fa-cc-mastercard"></i>
+                <i class="fa-brands fa-cc-paypal"></i>
+                <i class="fa-solid fa-wallet"></i>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ===== BRAND PRODUCTS DATA - ALL BRANDS WITH CORRECT PRODUCT COUNTS =====
+        const brandProductsData = {
+            // ===== SKINCARE BRANDS =====
+            cerave: {
+                name: 'CeraVe',
+                logo: 'images/CeraVe.png',
+                category: 'Skincare',
+                rating: '4.8',
+                productCount: 30,
+                products: [
+                    { name: 'Hydrating Cleanser', image: 'images/CeraVE.png', badge: 'Best Seller' },
+                    { name: 'Daily Moisturizing Cream', image: 'images/CeraVE.png', badge: null },
+                    { name: 'Eye Repair Cream', image: 'images/CeraVE.png', badge: null },
+                    { name: 'Foaming Cleanser', image: 'images/CeraVE.png', badge: 'Sale' },
+                    { name: 'Hydrating Cleanser', image: 'images/CeraVE.png', badge: null },
+                    { name: 'Renewing SA Cleanser', image: 'images/CeraVE.png', badge: null },
+                    { name: 'Ultra-Light Moisturizing Lotion', image: 'images/CeraVE.png', badge: null },
+                    { name: 'Skin Renewing Night Cream', image: 'images/CeraVE.png', badge: null },
+                    { name: 'Resurfacing Retinol Serum', image: 'images/CeraVE.png', badge: 'New' },
+                    { name: 'Vitamin C Serum', image: 'images/CeraVE.png', badge: null },
+                    { name: 'Hydrating Hyaluronic Acid Serum', image: 'images/CeraVE.png', badge: null },
+                    { name: 'Foaming Facial Cleanser', image: 'images/CeraVE.png', badge: null },
+                    { name: 'Hydrating Micellar Water', image: 'images/CeraVE.png', badge: null },
+                    { name: 'Moisturizing Cream', image: 'images/CeraVE.png', badge: 'Best Seller' },
+                    { name: 'Daily Facial Moisturizer', image: 'images/CeraVE.png', badge: null },
+                    { name: 'AM Facial Moisturizing Lotion', image: 'images/CeraVE.png', badge: null },
+                    { name: 'PM Facial Moisturizing Lotion', image: 'images/CeraVE.png', badge: null },
+                    { name: 'Eye Repair Cream', image: 'images/CeraVE.png', badge: null },
+                    { name: 'Hydrating Body Wash', image: 'images/CeraVE.png', badge: null },
+                    { name: 'Moisturizing Body Wash', image: 'images/CeraVE.png', badge: null },
+                    { name: 'Healing Ointment', image: 'images/CeraVE.png', badge: null },
+                    { name: 'Therapeutic Hand Cream', image: 'images/CeraVE.png', badge: null },
+                    { name: 'Foot Cream', image: 'images/CeraVE.png', badge: null },
+                    { name: 'Baby Wash & Shampoo', image: 'images/CeraVE.png', badge: null },
+                    { name: 'Baby Lotion', image: 'images/CeraVE.png', badge: null },
+                    { name: 'Baby Healing Ointment', image: 'images/CeraVE.png', badge: null },
+                    { name: 'Acne Foaming Cream Cleanser', image: 'images/CeraVE.png', badge: null },
+                    { name: 'Acne Control Gel', image: 'images/CeraVE.png', badge: null },
+                    { name: 'Blemish Control Gel', image: 'images/CeraVE.png', badge: null },
+                    { name: 'Hydrating Mineral Sunscreen', image: 'images/CeraVE.png', badge: 'New' }
+                ]
+            },
+            cetaphil: {
+                name: 'Cetaphil',
+                logo: 'images/Cetaphil.png',
+                category: 'Skincare',
+                rating: '4.6',
+                productCount: 25,
+                products: [
+                    { name: 'Moisturizing Lotion', image: 'images/Cetaphil.png', badge: null },
+                    { name: 'Eye Repair Cream', image: 'images/Cetaphil.png', badge: null },
+                    { name: 'Gentle Face Wash', image: 'images/Cetaphil.png', badge: null },
+                    { name: 'Daily Facial Moisturizer', image: 'images/Cetaphil.png', badge: null },
+                    { name: 'Rich Hydrating Cream', image: 'images/Cetaphil.png', badge: null },
+                    { name: 'Gentle Skin Cleanser', image: 'images/Cetaphil.png', badge: null },
+                    { name: 'Dermacontrol Foam Wash', image: 'images/Cetaphil.png', badge: null },
+                    { name: 'Oil Control Foam Wash', image: 'images/Cetaphil.png', badge: null },
+                    { name: 'Deep Cleansing Face Wash', image: 'images/Cetaphil.png', badge: null },
+                    { name: 'Brightness Radiance Foaming Cream Cleanser', image: 'images/Cetaphil.png', badge: null },
+                    { name: 'Brightness Radiance Renewing Cream', image: 'images/Cetaphil.png', badge: null },
+                    { name: 'Brightness Radiance Day Cream', image: 'images/Cetaphil.png', badge: null },
+                    { name: 'Brightness Radiance Night Cream', image: 'images/Cetaphil.png', badge: null },
+                    { name: 'Sheer Mineral Sunscreen', image: 'images/Cetaphil.png', badge: null },
+                    { name: 'Daily Facial Cleanser', image: 'images/Cetaphil.png', badge: null },
+                    { name: 'Moisturizing Cream', image: 'images/Cetaphil.png', badge: null },
+                    { name: 'Restoring Lotion', image: 'images/Cetaphil.png', badge: null },
+                    { name: 'Restoring Cream', image: 'images/Cetaphil.png', badge: null },
+                    { name: 'Baby Wash & Shampoo', image: 'images/Cetaphil.png', badge: null },
+                    { name: 'Baby Daily Lotion', image: 'images/Cetaphil.png', badge: null },
+                    { name: 'Baby Healing Ointment', image: 'images/Cetaphil.png', badge: null },
+                    { name: 'Healthy Radiance Mineral Sunscreen', image: 'images/Cetaphil.png', badge: null },
+                    { name: 'Healthy Radiance Moisturizing Cream', image: 'images/Cetaphil.png', badge: null },
+                    { name: 'Healthy Radiance Night Cream', image: 'images/Cetaphil.png', badge: null },
+                    { name: 'Healthy Radiance Eye Cream', image: 'images/Cetaphil.png', badge: null }
+                ]
+            },
+            theordinary: {
+                name: 'The Ordinary',
+                logo: 'images/The-Ordinary.png',
+                category: 'Skincare',
+                rating: '4.8',
+                productCount: 42,
+                products: [
+                    { name: 'Niacinamide 10%', image: 'images/The-ordinary.png', badge: 'Best Seller' },
+                    { name: 'Hyaluronic Acid 2%', image: 'images/The-ordinary.png', badge: null },
+                    { name: 'Retinol 0.5% Serum', image: 'images/The-ordinary.png', badge: null },
+                    { name: 'Vitamin C Serum', image: 'images/The-ordinary.png', badge: 'New' },
+                    { name: 'Glycolic Acid 7%', image: 'images/The-ordinary.png', badge: null },
+                    { name: 'Lactic Acid 5%', image: 'images/The-ordinary.png', badge: null },
+                    { name: 'Salicylic Acid 2%', image: 'images/The-ordinary.png', badge: null },
+                    { name: 'Azelaic Acid 10%', image: 'images/The-ordinary.png', badge: null },
+                    { name: 'AHA 30% + BHA 2% Peeling Solution', image: 'images/The-ordinary.png', badge: null },
+                    { name: 'Alpha Arbutin 2%', image: 'images/The-ordinary.png', badge: null },
+                    { name: 'Ascorbic Acid 8%', image: 'images/The-ordinary.png', badge: null },
+                    { name: 'Buffet Serum', image: 'images/The-ordinary.png', badge: null },
+                    { name: 'Caffeine Solution 5%', image: 'images/The-ordinary.png', badge: null },
+                    { name: 'Copper Peptides 1%', image: 'images/The-ordinary.png', badge: null },
+                    { name: 'EUK 134 0.1%', image: 'images/The-ordinary.png', badge: null },
+                    { name: 'Ferulic Acid 3%', image: 'images/The-ordinary.png', badge: null },
+                    { name: 'Hyaluronic Acid 2% + B5', image: 'images/The-ordinary.png', badge: null },
+                    { name: 'Lactic Acid 10% + HA', image: 'images/The-ordinary.png', badge: null },
+                    { name: 'Mandelic Acid 10%', image: 'images/The-ordinary.png', badge: null },
+                    { name: 'Natural Moisturizing Factors', image: 'images/The-ordinary.png', badge: null },
+                    { name: 'Pycnogenol 5%', image: 'images/The-ordinary.png', badge: null },
+                    { name: 'Resveratrol 3%', image: 'images/The-ordinary.png', badge: null },
+                    { name: 'Retinol 1%', image: 'images/The-ordinary.png', badge: null },
+                    { name: 'Retinol 0.2%', image: 'images/The-ordinary.png', badge: null },
+                    { name: 'Squalane Cleanser', image: 'images/The-ordinary.png', badge: null },
+                    { name: '100% Plant-Derived Squalane', image: 'images/The-ordinary.png', badge: null },
+                    { name: '100% Organic Cold-Pressed Rose Hip Oil', image: 'images/The-ordinary.png', badge: null },
+                    { name: '100% Organic Cold-Pressed Argan Oil', image: 'images/The-ordinary.png', badge: null },
+                    { name: '100% Organic Cold-Pressed Marula Oil', image: 'images/The-ordinary.png', badge: null },
+                    { name: '100% Organic Cold-Pressed Borage Oil', image: 'images/The-ordinary.png', badge: null },
+                    { name: '100% Organic Cold-Pressed Chia Seed Oil', image: 'images/The-ordinary.png', badge: null },
+                    { name: '100% Organic Cold-Pressed Grapeseed Oil', image: 'images/The-ordinary.png', badge: null },
+                    { name: '100% Organic Cold-Pressed Jojoba Oil', image: 'images/The-ordinary.png', badge: null },
+                    { name: '100% Organic Cold-Pressed Prickly Pear Oil', image: 'images/The-ordinary.png', badge: null },
+                    { name: '100% Organic Cold-Pressed Rosehip Oil', image: 'images/The-ordinary.png', badge: null },
+                    { name: '100% Organic Cold-Pressed Safflower Oil', image: 'images/The-ordinary.png', badge: null },
+                    { name: '100% Organic Cold-Pressed Tamanu Oil', image: 'images/The-ordinary.png', badge: null },
+                    { name: '100% Organic Cold-Pressed Yangu Oil', image: 'images/The-ordinary.png', badge: null },
+                    { name: '100% Organic Cold-Pressed Camellia Oil', image: 'images/The-ordinary.png', badge: null },
+                    { name: '100% Organic Cold-Pressed Plum Oil', image: 'images/The-ordinary.png', badge: null },
+                    { name: '100% Organic Cold-Pressed Avocado Oil', image: 'images/The-ordinary.png', badge: null },
+                    { name: '100% Organic Cold-Pressed Coconut Oil', image: 'images/The-ordinary.png', badge: null }
+                ]
+            },
+            thepurest: {
+                name: 'The Purest Solutions',
+                logo: 'images/The-Purest-Solutions.png',
+                category: 'Skincare',
+                rating: '4.5',
+                productCount: 22,
+                products: [
+                    { name: 'Vitamin C Serum', image: 'images/The-Purest-Solutions.png', badge: 'Best Seller' },
+                    { name: 'Hyaluronic Acid Serum', image: 'images/The-Purest-Solutions.png', badge: null },
+                    { name: 'Niacinamide Serum', image: 'images/The-Purest-Solutions.png', badge: 'New' },
+                    { name: 'Retinol Serum', image: 'images/The-Purest-Solutions.png', badge: null },
+                    { name: 'AHA/BHA Toner', image: 'images/The-Purest-Solutions.png', badge: null },
+                    { name: 'Vitamin C Cleanser', image: 'images/The-Purest-Solutions.png', badge: null },
+                    { name: 'Hyaluronic Acid Moisturizer', image: 'images/The-Purest-Solutions.png', badge: null },
+                    { name: 'Niacinamide Moisturizer', image: 'images/The-Purest-Solutions.png', badge: null },
+                    { name: 'Retinol Moisturizer', image: 'images/The-Purest-Solutions.png', badge: null },
+                    { name: 'Vitamin C Eye Cream', image: 'images/The-Purest-Solutions.png', badge: null },
+                    { name: 'Hyaluronic Acid Eye Cream', image: 'images/The-Purest-Solutions.png', badge: null },
+                    { name: 'Niacinamide Eye Cream', image: 'images/The-Purest-Solutions.png', badge: null },
+                    { name: 'Retinol Eye Cream', image: 'images/The-Purest-Solutions.png', badge: null },
+                    { name: 'Vitamin C Sunscreen', image: 'images/The-Purest-Solutions.png', badge: null },
+                    { name: 'Hyaluronic Acid Sunscreen', image: 'images/The-Purest-Solutions.png', badge: null },
+                    { name: 'Niacinamide Sunscreen', image: 'images/The-Purest-Solutions.png', badge: null },
+                    { name: 'Retinol Sunscreen', image: 'images/The-Purest-Solutions.png', badge: null },
+                    { name: 'Vitamin C Mask', image: 'images/The-Purest-Solutions.png', badge: null },
+                    { name: 'Hyaluronic Acid Mask', image: 'images/The-Purest-Solutions.png', badge: null },
+                    { name: 'Niacinamide Mask', image: 'images/The-Purest-Solutions.png', badge: null },
+                    { name: 'Retinol Mask', image: 'images/The-Purest-Solutions.png', badge: null },
+                    { name: 'Vitamin C Face Wash', image: 'images/The-Purest-Solutions.png', badge: null }
+                ]
+            },
+            'la-roche-posay': {
+                name: 'La Roche-Posay',
+                logo: 'images/La-Roche-Posay.png',
+                category: 'Skincare',
+                rating: '4.9',
+                productCount: 22,
+                products: [
+                    { name: 'Anthelios Sunscreen SPF 50', image: 'images/La-Roche-Posay.png', badge: 'Best Seller' },
+                    { name: 'Hydrating Moisturizer', image: 'images/La-Roche-Posay.png', badge: null },
+                    { name: 'Hyaluronic Acid Serum', image: 'images/La-Roche-Posay.png', badge: 'New' },
+                    { name: 'Effaclar Duo Cream', image: 'images/La-Roche-Posay.png', badge: null },
+                    { name: 'Toleriane Cleanser', image: 'images/La-Roche-Posay.png', badge: null },
+                    { name: 'Cicaplast Baume B5', image: 'images/La-Roche-Posay.png', badge: null },
+                    { name: 'Anthelios Sunscreen SPF 30', image: 'images/La-Roche-Posay.png', badge: null },
+                    { name: 'Effaclar Purifying Foaming Gel', image: 'images/La-Roche-Posay.png', badge: null },
+                    { name: 'Toleriane Ultra Cream', image: 'images/La-Roche-Posay.png', badge: null },
+                    { name: 'Redermic R Retinol Cream', image: 'images/La-Roche-Posay.png', badge: null },
+                    { name: 'Vitamin C Serum', image: 'images/La-Roche-Posay.png', badge: null },
+                    { name: 'Hyaluronic Acid Moisturizer', image: 'images/La-Roche-Posay.png', badge: null },
+                    { name: 'Effaclar Mat', image: 'images/La-Roche-Posay.png', badge: null },
+                    { name: 'Anthelios Invisible Fluid', image: 'images/La-Roche-Posay.png', badge: null },
+                    { name: 'Cicaplast Hand Cream', image: 'images/La-Roche-Posay.png', badge: null },
+                    { name: 'Toleriane Dermallergo Serum', image: 'images/La-Roche-Posay.png', badge: null },
+                    { name: 'Effaclar Serum', image: 'images/La-Roche-Posay.png', badge: null },
+                    { name: 'Anthelios Sunscreen Stick', image: 'images/La-Roche-Posay.png', badge: null },
+                    { name: 'Cicaplast Lip Balm', image: 'images/La-Roche-Posay.png', badge: null },
+                    { name: 'Toleriane Eye Cream', image: 'images/La-Roche-Posay.png', badge: null },
+                    { name: 'Effaclar Adapalene Gel', image: 'images/La-Roche-Posay.png', badge: null },
+                    { name: 'Anthelios Mineral Sunscreen', image: 'images/La-Roche-Posay.png', badge: null }
+                ]
+            },
+            simple: {
+                name: 'Simple',
+                logo: 'images/Simple.png',
+                category: 'Skincare',
+                rating: '4.3',
+                productCount: 24,
+                products: [
+                    { name: 'Refreshing Face Wash', image: 'images/Simple.png', badge: null },
+                    { name: 'Hydrating Light Moisturizer', image: 'images/Simple.png', badge: null },
+                    { name: 'Kind to Skin Face Wash', image: 'images/Simple.png', badge: null },
+                    { name: 'Daily Detox Face Wash', image: 'images/Simple.png', badge: null },
+                    { name: 'Hydrating Face Wash', image: 'images/Simple.png', badge: null },
+                    { name: 'Moisturizing Face Wash', image: 'images/Simple.png', badge: null },
+                    { name: 'Exfoliating Face Wash', image: 'images/Simple.png', badge: null },
+                    { name: 'Sensitive Skin Face Wash', image: 'images/Simple.png', badge: null },
+                    { name: 'Organic Face Wash', image: 'images/Simple.png', badge: null },
+                    { name: 'Vitamin C Face Wash', image: 'images/Simple.png', badge: null },
+                    { name: 'Vitamin C Moisturizer', image: 'images/Simple.png', badge: null },
+                    { name: 'Hyaluronic Acid Moisturizer', image: 'images/Simple.png', badge: null },
+                    { name: 'Sensitive Skin Moisturizer', image: 'images/Simple.png', badge: null },
+                    { name: 'Daily Detox Moisturizer', image: 'images/Simple.png', badge: null },
+                    { name: 'Hydrating Light Moisturizer', image: 'images/Simple.png', badge: null },
+                    { name: 'Vitamin C Eye Cream', image: 'images/Simple.png', badge: null },
+                    { name: 'Hyaluronic Acid Eye Cream', image: 'images/Simple.png', badge: null },
+                    { name: 'Sensitive Skin Eye Cream', image: 'images/Simple.png', badge: null },
+                    { name: 'Daily Detox Eye Cream', image: 'images/Simple.png', badge: null },
+                    { name: 'Vitamin C Serum', image: 'images/Simple.png', badge: null },
+                    { name: 'Hyaluronic Acid Serum', image: 'images/Simple.png', badge: null },
+                    { name: 'Sensitive Skin Serum', image: 'images/Simple.png', badge: null },
+                    { name: 'Daily Detox Serum', image: 'images/Simple.png', badge: null },
+                    { name: 'Water Boost Face Gel', image: 'images/Simple.png', badge: null }
+                ]
+            },
+            plum: {
+                name: 'Plum',
+                logo: 'images/Plum.jpeg',
+                category: 'Skincare',
+                rating: '4.4',
+                productCount: 25,
+                products: [
+                    { name: 'Green Tea Face Wash', image: 'images/Plum.jpeg', badge: null },
+                    { name: 'Green Tea Moisturizer', image: 'images/Plum.jpeg', badge: null },
+                    { name: 'Green Tea Toner', image: 'images/Plum.jpeg', badge: null },
+                    { name: 'Green Tea Serum', image: 'images/Plum.jpeg', badge: null },
+                    { name: 'Green Tea Eye Cream', image: 'images/Plum.jpeg', badge: null },
+                    { name: 'Green Tea Face Mask', image: 'images/Plum.jpeg', badge: null },
+                    { name: 'Green Tea Sunscreen', image: 'images/Plum.jpeg', badge: null },
+                    { name: 'Green Tea Face Scrub', image: 'images/Plum.jpeg', badge: null },
+                    { name: 'Vitamin C Face Wash', image: 'images/Plum.jpeg', badge: null },
+                    { name: 'Vitamin C Moisturizer', image: 'images/Plum.jpeg', badge: null },
+                    { name: 'Vitamin C Serum', image: 'images/Plum.jpeg', badge: null },
+                    { name: 'Vitamin C Eye Cream', image: 'images/Plum.jpeg', badge: null },
+                    { name: 'Vitamin C Face Mask', image: 'images/Plum.jpeg', badge: null },
+                    { name: 'Niacinamide Face Wash', image: 'images/Plum.jpeg', badge: null },
+                    { name: 'Niacinamide Moisturizer', image: 'images/Plum.jpeg', badge: null },
+                    { name: 'Niacinamide Serum', image: 'images/Plum.jpeg', badge: null },
+                    { name: 'Niacinamide Eye Cream', image: 'images/Plum.jpeg', badge: null },
+                    { name: 'Retinol Serum', image: 'images/Plum.jpeg', badge: null },
+                    { name: 'Retinol Moisturizer', image: 'images/Plum.jpeg', badge: null },
+                    { name: 'Retinol Eye Cream', image: 'images/Plum.jpeg', badge: null },
+                    { name: 'Hyaluronic Acid Serum', image: 'images/Plum.jpeg', badge: null },
+                    { name: 'Hyaluronic Acid Moisturizer', image: 'images/Plum.jpeg', badge: null },
+                    { name: 'Hyaluronic Acid Eye Cream', image: 'images/Plum.jpeg', badge: null },
+                    { name: 'Green Tea Body Lotion', image: 'images/Plum.jpeg', badge: null },
+                    { name: 'Vitamin C Body Lotion', image: 'images/Plum.jpeg', badge: null }
+                ]
+            },
+            mamaearth: {
+                name: 'Mamaearth',
+                logo: 'images/Mamaearth.png',
+                category: 'Skincare',
+                rating: '4.2',
+                productCount: 18,
+                products: [
+                    { name: 'Vitamin C Face Serum', image: 'images/Mamaearth.png', badge: null },
+                    { name: 'Vitamin C Moisturizer', image: 'images/Mamaearth.png', badge: null },
+                    { name: 'Vitamin C Face Wash', image: 'images/Mamaearth.png', badge: null },
+                    { name: 'Vitamin C Toner', image: 'images/Mamaearth.png', badge: null },
+                    { name: 'Vitamin C Eye Cream', image: 'images/Mamaearth.png', badge: null },
+                    { name: 'Niacinamide Face Serum', image: 'images/Mamaearth.png', badge: null },
+                    { name: 'Niacinamide Moisturizer', image: 'images/Mamaearth.png', badge: null },
+                    { name: 'Niacinamide Face Wash', image: 'images/Mamaearth.png', badge: null },
+                    { name: 'Niacinamide Toner', image: 'images/Mamaearth.png', badge: null },
+                    { name: 'Retinol Face Serum', image: 'images/Mamaearth.png', badge: null },
+                    { name: 'Retinol Moisturizer', image: 'images/Mamaearth.png', badge: null },
+                    { name: 'Retinol Eye Cream', image: 'images/Mamaearth.png', badge: null },
+                    { name: 'Hyaluronic Acid Serum', image: 'images/Mamaearth.png', badge: null },
+                    { name: 'Hyaluronic Acid Moisturizer', image: 'images/Mamaearth.png', badge: null },
+                    { name: 'Hyaluronic Acid Eye Cream', image: 'images/Mamaearth.png', badge: null },
+                    { name: 'Vitamin C Sunscreen', image: 'images/Mamaearth.png', badge: null },
+                    { name: 'Niacinamide Sunscreen', image: 'images/Mamaearth.png', badge: null },
+                    { name: 'Retinol Sunscreen', image: 'images/Mamaearth.png', badge: null }
+                ]
+            },
+            axisy: {
+                name: 'Axis-Y',
+                logo: 'images/Axis-Y.jpeg',
+                category: 'Skincare',
+                rating: '4.6',
+                productCount: 14,
+                products: [
+                    { name: 'Spot The Difference Blemish Treatment', image: 'images/Axis-Y.jpeg', badge: 'Best Seller' },
+                    { name: 'Sunday Morning Cleanser', image: 'images/Axis-Y.jpeg', badge: null },
+                    { name: 'Glow Serum', image: 'images/Axis-Y.jpeg', badge: null },
+                    { name: 'Artichoke Intensive Skin Barrier Ampoule', image: 'images/Axis-Y.jpeg', badge: null },
+                    { name: 'Cera-Heart My Skin Ampoule', image: 'images/Axis-Y.jpeg', badge: null },
+                    { name: 'Mugwort Pore Clarifying Wash Off Pack', image: 'images/Axis-Y.jpeg', badge: null },
+                    { name: 'Sunscreen SPF 50', image: 'images/Axis-Y.jpeg', badge: null },
+                    { name: 'Cica Cream', image: 'images/Axis-Y.jpeg', badge: null },
+                    { name: 'Toner', image: 'images/Axis-Y.jpeg', badge: null },
+                    { name: 'Moisturizer', image: 'images/Axis-Y.jpeg', badge: null },
+                    { name: 'Eye Cream', image: 'images/Axis-Y.jpeg', badge: null },
+                    { name: 'Face Mask', image: 'images/Axis-Y.jpeg', badge: null },
+                    { name: 'Face Scrub', image: 'images/Axis-Y.jpeg', badge: null },
+                    { name: 'Lip Balm', image: 'images/Axis-Y.jpeg', badge: null }
+                ]
+            },
+            'dot-key': {
+                name: 'Dot & Key',
+                logo: 'images/Dot-Key.png',
+                category: 'Skincare',
+                rating: '4.3',
+                productCount: 15,
+                products: [
+                    { name: 'Vitamin C Face Wash', image: 'images/Dot-Key.png', badge: 'Sale' },
+                    { name: 'Hyaluronic Acid Moisturizer', image: 'images/Dot-Key.png', badge: null },
+                    { name: 'Vitamin C Moisturizer', image: 'images/Dot-Key.png', badge: null },
+                    { name: 'Retinol Serum', image: 'images/Dot-Key.png', badge: null },
+                    { name: 'Niacinamide Serum', image: 'images/Dot-Key.png', badge: null },
+                    { name: 'Vitamin C Serum', image: 'images/Dot-Key.png', badge: null },
+                    { name: 'Hyaluronic Acid Serum', image: 'images/Dot-Key.png', badge: null },
+                    { name: 'Eye Cream', image: 'images/Dot-Key.png', badge: null },
+                    { name: 'Sunscreen SPF 50', image: 'images/Dot-Key.png', badge: null },
+                    { name: 'Toner', image: 'images/Dot-Key.png', badge: null },
+                    { name: 'Face Mask', image: 'images/Dot-Key.png', badge: null },
+                    { name: 'Face Scrub', image: 'images/Dot-Key.png', badge: null },
+                    { name: 'Body Lotion', image: 'images/Dot-Key.png', badge: null },
+                    { name: 'Lip Balm', image: 'images/Dot-Key.png', badge: null },
+                    { name: 'Hand Cream', image: 'images/Dot-Key.png', badge: null }
+                ]
+            },
+
+            // ===== MAKEUP BRANDS =====
+            maybelline: {
+                name: 'Maybelline',
+                logo: 'images/Maybelline.png',
+                category: 'Makeup',
+                rating: '4.7',
+                productCount: 38,
+                products: [
+                    { name: 'SuperStay Lipstick', image: 'images/Maybelline.png', badge: 'Best Seller' },
+                    { name: 'Fit Me Foundation', image: 'images/Maybelline.png', badge: 'New' },
+                    { name: 'Lash Sensational Mascara', image: 'images/Maybelline.png', badge: 'Best Seller' },
+                    { name: 'Fit Me Concealer', image: 'images/Maybelline.png', badge: null },
+                    { name: 'SuperStay Matte Ink Lipstick', image: 'images/Maybelline.png', badge: null },
+                    { name: 'Fit Me Powder', image: 'images/Maybelline.png', badge: null },
+                    { name: 'Colossal Mascara', image: 'images/Maybelline.png', badge: null },
+                    { name: 'Instant Age Rewind Concealer', image: 'images/Maybelline.png', badge: null },
+                    { name: 'Fit Me Blush', image: 'images/Maybelline.png', badge: null },
+                    { name: 'Fit Me Highlighter', image: 'images/Maybelline.png', badge: null },
+                    { name: 'Superstay Foundation', image: 'images/Maybelline.png', badge: null },
+                    { name: 'Lash Sensational Sky High Mascara', image: 'images/Maybelline.png', badge: null },
+                    { name: 'Tattoo Liner', image: 'images/Maybelline.png', badge: null },
+                    { name: 'Brow Tattoo', image: 'images/Maybelline.png', badge: null },
+                    { name: 'Fit Me Loose Powder', image: 'images/Maybelline.png', badge: null },
+                    { name: 'Superstay Powder', image: 'images/Maybelline.png', badge: null },
+                    { name: 'City Bronzer', image: 'images/Maybelline.png', badge: null },
+                    { name: 'Fit Me Setting Spray', image: 'images/Maybelline.png', badge: null },
+                    { name: 'Lash Lift Mascara', image: 'images/Maybelline.png', badge: null },
+                    { name: 'Brow Drama', image: 'images/Maybelline.png', badge: null },
+                    { name: 'Fit Me Lipstick', image: 'images/Maybelline.png', badge: null },
+                    { name: 'Superstay Crayon', image: 'images/Maybelline.png', badge: null },
+                    { name: 'Tattoo Brow', image: 'images/Maybelline.png', badge: null },
+                    { name: 'City Lipstick', image: 'images/Maybelline.png', badge: null },
+                    { name: 'Fit Me Glow', image: 'images/Maybelline.png', badge: null },
+                    { name: 'Superstay Concealer', image: 'images/Maybelline.png', badge: null },
+                    { name: 'Lash Sensational Mascara Waterproof', image: 'images/Maybelline.png', badge: null },
+                    { name: 'Colossal Curl Bounce', image: 'images/Maybelline.png', badge: null },
+                    { name: 'Fit Me Matte + Poreless', image: 'images/Maybelline.png', badge: null },
+                    { name: 'Fit Me Dewy + Smooth', image: 'images/Maybelline.png', badge: null },
+                    { name: 'Superstay 24HR Lipstick', image: 'images/Maybelline.png', badge: null },
+                    { name: 'Tattoo Eyeliner', image: 'images/Maybelline.png', badge: null },
+                    { name: 'Brow Ultra Slim', image: 'images/Maybelline.png', badge: null },
+                    { name: 'Fit Me Cream Blush', image: 'images/Maybelline.png', badge: null },
+                    { name: 'Superstay Matte Ink Crayon', image: 'images/Maybelline.png', badge: null },
+                    { name: 'Lash Sensational Mascara Curved', image: 'images/Maybelline.png', badge: null },
+                    { name: 'Fit Me Primer', image: 'images/Maybelline.png', badge: null },
+                    { name: 'City Lip Gloss', image: 'images/Maybelline.png', badge: null }
+                ]
+            },
+            loreal: {
+                name: 'L\'Oreal',
+                logo: 'images/L\'Oreal.png',
+                category: 'Makeup',
+                rating: '4.8',
+                productCount: 45,
+                products: [
+                    { name: 'Revitalift Serum', image: 'images/L\'Oreal.png', badge: 'New' },
+                    { name: 'Infallible Concealer', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'True Match Foundation', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Voluminous Mascara', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Paris Lipstick', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Elvive Shampoo', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Revitalift Moisturizer', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Infallible Foundation', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'True Match Concealer', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Voluminous Lash Paradise', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Colour Riche Lipstick', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Elvive Conditioner', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Revitalift Eye Cream', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Infallible Lipstick', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'True Match Powder', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Voluminous Million Lashes', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Colour Riche Lip Liner', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Elvive Hair Mask', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Revitalift Night Cream', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Infallible Setting Spray', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'True Match Blush', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Voluminous Butterfly', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Colour Riche Nail Polish', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Elvive Oil', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Revitalift Sunscreen', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Infallible Eyeliner', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'True Match Serum', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Voluminous Colossal', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Colour Riche Lip Gloss', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Elvive Serum', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Revitalift Cleanser', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Infallible Primer', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'True Match Eye Cream', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Voluminous Smoky', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Colour Riche Lip Stain', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Elvive Leave-In', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Revitalift Toner', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Infallible Bronzer', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'True Match Highlighter', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Voluminous Lash Primer', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Colour Riche Matte Lipstick', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Elvive Hair Serum', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Revitalift Retinol Cream', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'Infallible Dewy Setting Spray', image: 'images/L\'Oreal.png', badge: null },
+                    { name: 'True Match Concealer Pen', image: 'images/L\'Oreal.png', badge: null }
+                ]
+            },
+            nyx: {
+                name: 'NYX',
+                logo: 'images/NYX.png',
+                category: 'Makeup',
+                rating: '4.5',
+                productCount: 28,
+                products: [
+                    { name: 'Soft Matte Lip Cream', image: 'images/NYX.png', badge: null },
+                    { name: 'Epic Ink Liner', image: 'images/NYX.png', badge: 'New' },
+                    { name: 'Can\'t Stop Won\'t Stop Foundation', image: 'images/NYX.png', badge: null },
+                    { name: 'Lip Lingerie', image: 'images/NYX.png', badge: null },
+                    { name: 'Milk Jumbo Eye Pencil', image: 'images/NYX.png', badge: null },
+                    { name: 'Setting Spray', image: 'images/NYX.png', badge: null },
+                    { name: 'Butter Gloss', image: 'images/NYX.png', badge: null },
+                    { name: 'Micro Brow Pencil', image: 'images/NYX.png', badge: null },
+                    { name: 'High Definition Blush', image: 'images/NYX.png', badge: null },
+                    { name: 'Concealer Wand', image: 'images/NYX.png', badge: null },
+                    { name: 'Marshmallow Primer', image: 'images/NYX.png', badge: null },
+                    { name: 'Epic Wear Eyeliner', image: 'images/NYX.png', badge: null },
+                    { name: 'Lip Oil', image: 'images/NYX.png', badge: null },
+                    { name: 'Brow Glue', image: 'images/NYX.png', badge: null },
+                    { name: 'High Definition Powder', image: 'images/NYX.png', badge: null },
+                    { name: 'Matte Finish Setting Spray', image: 'images/NYX.png', badge: null },
+                    { name: 'Dewy Finish Setting Spray', image: 'images/NYX.png', badge: null },
+                    { name: 'Eye Shadow Palette', image: 'images/NYX.png', badge: null },
+                    { name: 'Lip Pencil', image: 'images/NYX.png', badge: null },
+                    { name: 'Eye Primer', image: 'images/NYX.png', badge: null },
+                    { name: 'Eyeliner Pencil', image: 'images/NYX.png', badge: null },
+                    { name: 'Mascara', image: 'images/NYX.png', badge: null },
+                    { name: 'Blush Stick', image: 'images/NYX.png', badge: null },
+                    { name: 'Highlighter Stick', image: 'images/NYX.png', badge: null },
+                    { name: 'Contour Stick', image: 'images/NYX.png', badge: null },
+                    { name: 'Brow Gel', image: 'images/NYX.png', badge: null },
+                    { name: 'Eye Glitter', image: 'images/NYX.png', badge: null },
+                    { name: 'Liquid Lipstick', image: 'images/NYX.png', badge: null }
+                ]
+            },
+            mac: {
+                name: 'MAC',
+                logo: 'images/MAC.png',
+                category: 'Makeup',
+                rating: '4.9',
+                productCount: 32,
+                products: [
+                    { name: 'Matte Lipstick', image: 'images/MAC.png', badge: 'Best Seller' },
+                    { name: 'Studio Fix Foundation', image: 'images/MAC.png', badge: null },
+                    { name: 'Powder Blush', image: 'images/MAC.png', badge: null },
+                    { name: 'Pro Longwear Concealer', image: 'images/MAC.png', badge: null },
+                    { name: 'Fix+ Setting Spray', image: 'images/MAC.png', badge: null },
+                    { name: 'Lipglass', image: 'images/MAC.png', badge: null },
+                    { name: 'Eye Shadow', image: 'images/MAC.png', badge: null },
+                    { name: 'Studio Fix Powder', image: 'images/MAC.png', badge: null },
+                    { name: 'Studio Radiance Foundation', image: 'images/MAC.png', badge: null },
+                    { name: 'Highlighter', image: 'images/MAC.png', badge: null },
+                    { name: 'Liquid Lipstick', image: 'images/MAC.png', badge: null },
+                    { name: 'Lip Pencil', image: 'images/MAC.png', badge: null },
+                    { name: 'Eye Liner', image: 'images/MAC.png', badge: null },
+                    { name: 'Mascara', image: 'images/MAC.png', badge: null },
+                    { name: 'Primer', image: 'images/MAC.png', badge: null },
+                    { name: 'Bronzer', image: 'images/MAC.png', badge: null },
+                    { name: 'Concealer', image: 'images/MAC.png', badge: null },
+                    { name: 'Setting Powder', image: 'images/MAC.png', badge: null },
+                    { name: 'Lip Conditioner', image: 'images/MAC.png', badge: null },
+                    { name: 'Eye Shadow Palette', image: 'images/MAC.png', badge: null },
+                    { name: 'Liquid Eyeliner', image: 'images/MAC.png', badge: null },
+                    { name: 'Lip Scrub', image: 'images/MAC.png', badge: null },
+                    { name: 'Face Primer', image: 'images/MAC.png', badge: null },
+                    { name: 'Setting Spray', image: 'images/MAC.png', badge: null },
+                    { name: 'Cream Blush', image: 'images/MAC.png', badge: null },
+                    { name: 'Highlighter Palette', image: 'images/MAC.png', badge: null },
+                    { name: 'Eye Shadow Single', image: 'images/MAC.png', badge: null },
+                    { name: 'Lip Pencil Set', image: 'images/MAC.png', badge: null },
+                    { name: 'Mascara Primer', image: 'images/MAC.png', badge: null },
+                    { name: 'Concealer Palette', image: 'images/MAC.png', badge: null },
+                    { name: 'Setting Powder Mini', image: 'images/MAC.png', badge: null },
+                    { name: 'Lip Gloss', image: 'images/MAC.png', badge: null }
+                ]
+            },
+            'wet-n-wild': {
+                name: 'wet n wild',
+                logo: 'images/wet-n-wild.png',
+                category: 'Makeup',
+                rating: '4.3',
+                productCount: 30,
+                products: [
+                    { name: 'Give Me Mocha Lipstick', image: 'images/wet-n-wild.png', badge: 'Best Seller' },
+                    { name: 'MegaLast Liquid Lipstick', image: 'images/wet-n-wild.png', badge: null },
+                    { name: 'MegaGlo Highlighter', image: 'images/wet-n-wild.png', badge: null },
+                    { name: 'MegaSlim Skinny Mascara', image: 'images/wet-n-wild.png', badge: null },
+                    { name: 'MegaLiner Eyeliner', image: 'images/wet-n-wild.png', badge: null },
+                    { name: 'MegaVolume Mascara', image: 'images/wet-n-wild.png', badge: null },
+                    { name: 'MegaLast Lip Color', image: 'images/wet-n-wild.png', badge: null },
+                    { name: 'MegaGlo Makeup Stick', image: 'images/wet-n-wild.png', badge: null },
+                    { name: 'MegaSmooth Foundation', image: 'images/wet-n-wild.png', badge: null },
+                    { name: 'MegaCushion Foundation', image: 'images/wet-n-wild.png', badge: null },
+                    { name: 'MegaLash Mascara', image: 'images/wet-n-wild.png', badge: null },
+                    { name: 'MegaSlim Eyebrow Pencil', image: 'images/wet-n-wild.png', badge: null },
+                    { name: 'MegaGlo Bronzer', image: 'images/wet-n-wild.png', badge: null },
+                    { name: 'MegaLast Setting Spray', image: 'images/wet-n-wild.png', badge: null },
+                    { name: 'MegaSmooth Concealer', image: 'images/wet-n-wild.png', badge: null },
+                    { name: 'MegaGlo Blush', image: 'images/wet-n-wild.png', badge: null },
+                    { name: 'MegaLiner Liquid Eyeliner', image: 'images/wet-n-wild.png', badge: null },
+                    { name: 'MegaVolume Mascara Waterproof', image: 'images/wet-n-wild.png', badge: null },
+                    { name: 'MegaLast Lipstick Matte', image: 'images/wet-n-wild.png', badge: null },
+                    { name: 'MegaGlo Highlighter Powder', image: 'images/wet-n-wild.png', badge: null },
+                    { name: 'MegaSmooth Face Primer', image: 'images/wet-n-wild.png', badge: null },
+                    { name: 'MegaCushion Concealer', image: 'images/wet-n-wild.png', badge: null },
+                    { name: 'MegaLash Mascara Waterproof', image: 'images/wet-n-wild.png', badge: null },
+                    { name: 'MegaSlim Eyebrow Pencil Micro', image: 'images/wet-n-wild.png', badge: null },
+                    { name: 'MegaGlo Blush Stick', image: 'images/wet-n-wild.png', badge: null },
+                    { name: 'MegaLast Setting Powder', image: 'images/wet-n-wild.png', badge: null },
+                    { name: 'MegaSmooth Foundation Stick', image: 'images/wet-n-wild.png', badge: null },
+                    { name: 'MegaLiner Eyeliner Pen', image: 'images/wet-n-wild.png', badge: null },
+                    { name: 'MegaVolume Mascara Curved', image: 'images/wet-n-wild.png', badge: null },
+                    { name: 'MegaLast Lip Gloss', image: 'images/wet-n-wild.png', badge: null }
+                ]
+            },
+            'la-girl': {
+                name: 'L.A. Girl',
+                logo: 'images/LA-Girl.png',
+                category: 'Makeup',
+                rating: '4.4',
+                productCount: 22,
+                products: [
+                    { name: 'Pro Concealer', image: 'images/LA-Girl.png', badge: null },
+                    { name: 'HD Foundation', image: 'images/LA-Girl.png', badge: 'New' },
+                    { name: 'Pro Setting Powder', image: 'images/LA-Girl.png', badge: null },
+                    { name: 'Pro Matte Lipstick', image: 'images/LA-Girl.png', badge: null },
+                    { name: 'Pro Brow Pencil', image: 'images/LA-Girl.png', badge: null },
+                    { name: 'Pro Highlighter', image: 'images/LA-Girl.png', badge: null },
+                    { name: 'Pro Blush', image: 'images/LA-Girl.png', badge: null },
+                    { name: 'Pro Setting Spray', image: 'images/LA-Girl.png', badge: null },
+                    { name: 'Pro Lip Gloss', image: 'images/LA-Girl.png', badge: null },
+                    { name: 'Pro Mascara', image: 'images/LA-Girl.png', badge: null },
+                    { name: 'Pro Eyeliner', image: 'images/LA-Girl.png', badge: null },
+                    { name: 'Pro Eye Shadow', image: 'images/LA-Girl.png', badge: null },
+                    { name: 'Pro Primer', image: 'images/LA-Girl.png', badge: null },
+                    { name: 'Pro Concealer Wand', image: 'images/LA-Girl.png', badge: null },
+                    { name: 'Pro Blush Stick', image: 'images/LA-Girl.png', badge: null },
+                    { name: 'Pro Highlighter Stick', image: 'images/LA-Girl.png', badge: null },
+                    { name: 'Pro Brow Gel', image: 'images/LA-Girl.png', badge: null },
+                    { name: 'Pro Lip Pencil', image: 'images/LA-Girl.png', badge: null },
+                    { name: 'Pro Eye Liner Pencil', image: 'images/LA-Girl.png', badge: null },
+                    { name: 'Pro Setting Powder Mini', image: 'images/LA-Girl.png', badge: null },
+                    { name: 'Pro Lip Stain', image: 'images/LA-Girl.png', badge: null },
+                    { name: 'Pro Eye Shadow Palette', image: 'images/LA-Girl.png', badge: null }
+                ]
+            },
+            'huda-beauty': {
+                name: 'Huda Beauty',
+                logo: 'images/Huda-Beauty.png',
+                category: 'Makeup',
+                rating: '4.9',
+                productCount: 28,
+                products: [
+                    { name: 'Eyeshadow Palette', image: 'images/Huda-Beauty.png', badge: 'New' },
+                    { name: 'Liquid Matte Lipstick', image: 'images/Huda-Beauty.png', badge: null },
+                    { name: 'Highlighter Palette', image: 'images/Huda-Beauty.png', badge: null },
+                    { name: 'Baking Powder', image: 'images/Huda-Beauty.png', badge: null },
+                    { name: 'Concealer', image: 'images/Huda-Beauty.png', badge: null },
+                    { name: 'Foundation', image: 'images/Huda-Beauty.png', badge: null },
+                    { name: 'Blush', image: 'images/Huda-Beauty.png', badge: null },
+                    { name: 'Bronzer', image: 'images/Huda-Beauty.png', badge: null },
+                    { name: 'Mascara', image: 'images/Huda-Beauty.png', badge: null },
+                    { name: 'Eye Liner', image: 'images/Huda-Beauty.png', badge: null },
+                    { name: 'Lip Gloss', image: 'images/Huda-Beauty.png', badge: null },
+                    { name: 'Setting Spray', image: 'images/Huda-Beauty.png', badge: null },
+                    { name: 'Face Palette', image: 'images/Huda-Beauty.png', badge: null },
+                    { name: 'Eye Shadow', image: 'images/Huda-Beauty.png', badge: null },
+                    { name: 'Lip Pencil', image: 'images/Huda-Beauty.png', badge: null },
+                    { name: 'Primer', image: 'images/Huda-Beauty.png', badge: null },
+                    { name: 'Highlighter', image: 'images/Huda-Beauty.png', badge: null },
+                    { name: 'Contour', image: 'images/Huda-Beauty.png', badge: null },
+                    { name: 'Setting Powder', image: 'images/Huda-Beauty.png', badge: null },
+                    { name: 'Eye Glitter', image: 'images/Huda-Beauty.png', badge: null },
+                    { name: 'Lip Oil', image: 'images/Huda-Beauty.png', badge: null },
+                    { name: 'Brow Pencil', image: 'images/Huda-Beauty.png', badge: null },
+                    { name: 'Brow Gel', image: 'images/Huda-Beauty.png', badge: null },
+                    { name: 'Face Primer', image: 'images/Huda-Beauty.png', badge: null },
+                    { name: 'Eye Primer', image: 'images/Huda-Beauty.png', badge: null },
+                    { name: 'Lip Balm', image: 'images/Huda-Beauty.png', badge: null },
+                    { name: 'Mascara Primer', image: 'images/Huda-Beauty.png', badge: null },
+                    { name: 'Setting Mist', image: 'images/Huda-Beauty.png', badge: null }
+                ]
+            },
+            airspun: {
+                name: 'Airspun',
+                logo: 'images/Airspun.png',
+                category: 'Makeup',
+                rating: '4.2',
+                productCount: 18,
+                products: [
+                    { name: 'Loose Face Powder', image: 'images/Airspun.png', badge: null },
+                    { name: 'Translucent Powder', image: 'images/Airspun.png', badge: 'Sale' },
+                    { name: 'Pressed Powder', image: 'images/Airspun.png', badge: null },
+                    { name: 'Foundation', image: 'images/Airspun.png', badge: null },
+                    { name: 'Concealer', image: 'images/Airspun.png', badge: null },
+                    { name: 'Blush', image: 'images/Airspun.png', badge: null },
+                    { name: 'Bronzer', image: 'images/Airspun.png', badge: null },
+                    { name: 'Highlighter', image: 'images/Airspun.png', badge: null },
+                    { name: 'Eye Shadow', image: 'images/Airspun.png', badge: null },
+                    { name: 'Mascara', image: 'images/Airspun.png', badge: null },
+                    { name: 'Eyeliner', image: 'images/Airspun.png', badge: null },
+                    { name: 'Lipstick', image: 'images/Airspun.png', badge: null },
+                    { name: 'Lip Gloss', image: 'images/Airspun.png', badge: null },
+                    { name: 'Setting Spray', image: 'images/Airspun.png', badge: null },
+                    { name: 'Primer', image: 'images/Airspun.png', badge: null },
+                    { name: 'Lip Pencil', image: 'images/Airspun.png', badge: null },
+                    { name: 'Eye Shadow Palette', image: 'images/Airspun.png', badge: null },
+                    { name: 'Face Primer', image: 'images/Airspun.png', badge: null }
+                ]
+            },
+            otwo: {
+                name: 'O.TWO.O',
+                logo: 'images/OTWO.png',
+                category: 'Makeup',
+                rating: '4.1',
+                productCount: 16,
+                products: [
+                    { name: 'Matte Lipstick Set', image: 'images/OTWO.png', badge: null },
+                    { name: 'Eyeshadow Palette', image: 'images/OTWO.png', badge: 'New' },
+                    { name: 'Foundation', image: 'images/OTWO.png', badge: null },
+                    { name: 'Concealer', image: 'images/OTWO.png', badge: null },
+                    { name: 'Blush', image: 'images/OTWO.png', badge: null },
+                    { name: 'Highlighter', image: 'images/OTWO.png', badge: null },
+                    { name: 'Mascara', image: 'images/OTWO.png', badge: null },
+                    { name: 'Eyeliner', image: 'images/OTWO.png', badge: null },
+                    { name: 'Lip Gloss', image: 'images/OTWO.png', badge: null },
+                    { name: 'Setting Spray', image: 'images/OTWO.png', badge: null },
+                    { name: 'Primer', image: 'images/OTWO.png', badge: null },
+                    { name: 'Lip Pencil', image: 'images/OTWO.png', badge: null },
+                    { name: 'Brow Pencil', image: 'images/OTWO.png', badge: null },
+                    { name: 'Eye Shadow', image: 'images/OTWO.png', badge: null },
+                    { name: 'Blush Palette', image: 'images/OTWO.png', badge: null },
+                    { name: 'Highlighter Palette', image: 'images/OTWO.png', badge: null }
+                ]
+            },
+            ducare: {
+                name: 'DUcare',
+                logo: 'images/DUcare.png',
+                category: 'Makeup',
+                rating: '4.3',
+                productCount: 20,
+                products: [
+                    { name: 'Makeup Brush Set', image: 'images/DUcare.png', badge: null },
+                    { name: 'Foundation Brush', image: 'images/DUcare.png', badge: null },
+                    { name: 'Blush Brush', image: 'images/DUcare.png', badge: null },
+                    { name: 'Eye Shadow Brush', image: 'images/DUcare.png', badge: null },
+                    { name: 'Powder Brush', image: 'images/DUcare.png', badge: null },
+                    { name: 'Concealer Brush', image: 'images/DUcare.png', badge: null },
+                    { name: 'Lip Brush', image: 'images/DUcare.png', badge: null },
+                    { name: 'Blending Brush', image: 'images/DUcare.png', badge: null },
+                    { name: 'Flat Foundation Brush', image: 'images/DUcare.png', badge: null },
+                    { name: 'Angled Blush Brush', image: 'images/DUcare.png', badge: null },
+                    { name: 'Eyeliner Brush', image: 'images/DUcare.png', badge: null },
+                    { name: 'Mascara Brush', image: 'images/DUcare.png', badge: null },
+                    { name: 'Highlighter Brush', image: 'images/DUcare.png', badge: null },
+                    { name: 'Contour Brush', image: 'images/DUcare.png', badge: null },
+                    { name: 'Bronzer Brush', image: 'images/DUcare.png', badge: null },
+                    { name: 'Fan Brush', image: 'images/DUcare.png', badge: null },
+                    { name: 'Sponge', image: 'images/DUcare.png', badge: null },
+                    { name: 'Brush Set Travel', image: 'images/DUcare.png', badge: null },
+                    { name: 'Brush Set Premium', image: 'images/DUcare.png', badge: null },
+                    { name: 'Brush Set Rose Gold', image: 'images/DUcare.png', badge: null }
+                ]
+            },
+            forever52: {
+                name: 'Forever52',
+                logo: 'images/Forever52.png',
+                category: 'Makeup',
+                rating: '4.2',
+                productCount: 20,
+                products: [
+                    { name: 'HD Foundation', image: 'images/Forever52.png', badge: null },
+                    { name: 'Matte Lipstick', image: 'images/Forever52.png', badge: null },
+                    { name: 'Concealer', image: 'images/Forever52.png', badge: null },
+                    { name: 'Blush', image: 'images/Forever52.png', badge: null },
+                    { name: 'Highlighter', image: 'images/Forever52.png', badge: null },
+                    { name: 'Mascara', image: 'images/Forever52.png', badge: null },
+                    { name: 'Eyeliner', image: 'images/Forever52.png', badge: null },
+                    { name: 'Lip Gloss', image: 'images/Forever52.png', badge: null },
+                    { name: 'Eye Shadow', image: 'images/Forever52.png', badge: null },
+                    { name: 'Setting Spray', image: 'images/Forever52.png', badge: null },
+                    { name: 'Primer', image: 'images/Forever52.png', badge: null },
+                    { name: 'Lip Pencil', image: 'images/Forever52.png', badge: null },
+                    { name: 'Brow Pencil', image: 'images/Forever52.png', badge: null },
+                    { name: 'Powder', image: 'images/Forever52.png', badge: null },
+                    { name: 'Bronzer', image: 'images/Forever52.png', badge: null },
+                    { name: 'Face Palette', image: 'images/Forever52.png', badge: null },
+                    { name: 'Eye Shadow Palette', image: 'images/Forever52.png', badge: null },
+                    { name: 'Lip Balm', image: 'images/Forever52.png', badge: null },
+                    { name: 'Face Primer', image: 'images/Forever52.png', badge: null },
+                    { name: 'Setting Powder', image: 'images/Forever52.png', badge: null }
+                ]
+            },
+            pastel: {
+                name: 'Pastel',
+                logo: 'images/Pastel.jpeg',
+                category: 'Makeup',
+                rating: '4.0',
+                productCount: 12,
+                products: [
+                    { name: 'Lipstick', image: 'images/Pastel.jpeg', badge: null },
+                    { name: 'Nail Polish Set', image: 'images/Pastel.jpeg', badge: 'Sale' },
+                    { name: 'Foundation', image: 'images/Pastel.jpeg', badge: null },
+                    { name: 'Concealer', image: 'images/Pastel.jpeg', badge: null },
+                    { name: 'Blush', image: 'images/Pastel.jpeg', badge: null },
+                    { name: 'Highlighter', image: 'images/Pastel.jpeg', badge: null },
+                    { name: 'Mascara', image: 'images/Pastel.jpeg', badge: null },
+                    { name: 'Eyeliner', image: 'images/Pastel.jpeg', badge: null },
+                    { name: 'Lip Gloss', image: 'images/Pastel.jpeg', badge: null },
+                    { name: 'Eye Shadow', image: 'images/Pastel.jpeg', badge: null },
+                    { name: 'Setting Spray', image: 'images/Pastel.jpeg', badge: null },
+                    { name: 'Primer', image: 'images/Pastel.jpeg', badge: null }
+                ]
+            },
+            inglot: {
+                name: 'Inglot',
+                logo: 'images/Inglot.jpg',
+                category: 'Makeup',
+                rating: '4.6',
+                productCount: 16,
+                products: [
+                    { name: 'Duraline Makeup Mixing Liquid', image: 'images/Inglot.jpg', badge: null },
+                    { name: 'Eyeshadow Palette', image: 'images/Inglot.jpg', badge: null },
+                    { name: 'Lipstick', image: 'images/Inglot.jpg', badge: null },
+                    { name: 'Foundation', image: 'images/Inglot.jpg', badge: null },
+                    { name: 'Concealer', image: 'images/Inglot.jpg', badge: null },
+                    { name: 'Blush', image: 'images/Inglot.jpg', badge: null },
+                    { name: 'Highlighter', image: 'images/Inglot.jpg', badge: null },
+                    { name: 'Mascara', image: 'images/Inglot.jpg', badge: null },
+                    { name: 'Eyeliner', image: 'images/Inglot.jpg', badge: null },
+                    { name: 'Lip Gloss', image: 'images/Inglot.jpg', badge: null },
+                    { name: 'Setting Spray', image: 'images/Inglot.jpg', badge: null },
+                    { name: 'Primer', image: 'images/Inglot.jpg', badge: null },
+                    { name: 'Lip Pencil', image: 'images/Inglot.jpg', badge: null },
+                    { name: 'Eye Shadow', image: 'images/Inglot.jpg', badge: null },
+                    { name: 'Brow Pencil', image: 'images/Inglot.jpg', badge: null },
+                    { name: 'Face Primer', image: 'images/Inglot.jpg', badge: null }
+                ]
+            },
+
+            // ===== HAIR CARE BRANDS =====
+            garnier: {
+                name: 'Garnier',
+                logo: 'images/Garnier.png',
+                category: 'Hair Care',
+                rating: '4.5',
+                productCount: 35,
+                products: [
+                    { name: 'Micellar Water', image: 'images/garnier.png', badge: null },
+                    { name: 'Hair Mask Banana', image: 'images/garnier.png', badge: null },
+                    { name: 'Shampoo', image: 'images/garnier.png', badge: null },
+                    { name: 'Conditioner', image: 'images/garnier.png', badge: null },
+                    { name: 'Hair Oil', image: 'images/garnier.png', badge: null },
+                    { name: 'Face Wash', image: 'images/garnier.png', badge: null },
+                    { name: 'Moisturizer', image: 'images/garnier.png', badge: null },
+                    { name: 'Sunscreen', image: 'images/garnier.png', badge: null },
+                    { name: 'Hair Serum', image: 'images/garnier.png', badge: null },
+                    { name: 'Styling Cream', image: 'images/garnier.png', badge: null },
+                    { name: 'Dry Shampoo', image: 'images/garnier.png', badge: null },
+                    { name: 'Leave-In Conditioner', image: 'images/garnier.png', badge: null },
+                    { name: 'Hair Spray', image: 'images/garnier.png', badge: null },
+                    { name: 'Hair Gel', image: 'images/garnier.png', badge: null },
+                    { name: 'Mousse', image: 'images/garnier.png', badge: null },
+                    { name: 'Hair Mask Coconut', image: 'images/garnier.png', badge: null },
+                    { name: 'Hair Mask Avocado', image: 'images/garnier.png', badge: null },
+                    { name: 'Hair Mask Aloe Vera', image: 'images/garnier.png', badge: null },
+                    { name: 'Hair Mask Argan Oil', image: 'images/garnier.png', badge: null },
+                    { name: 'Hair Mask Shea Butter', image: 'images/garnier.png', badge: null },
+                    { name: 'Shampoo Coconut', image: 'images/garnier.png', badge: null },
+                    { name: 'Shampoo Avocado', image: 'images/garnier.png', badge: null },
+                    { name: 'Shampoo Aloe Vera', image: 'images/garnier.png', badge: null },
+                    { name: 'Shampoo Argan Oil', image: 'images/garnier.png', badge: null },
+                    { name: 'Shampoo Shea Butter', image: 'images/garnier.png', badge: null },
+                    { name: 'Conditioner Coconut', image: 'images/garnier.png', badge: null },
+                    { name: 'Conditioner Avocado', image: 'images/garnier.png', badge: null },
+                    { name: 'Conditioner Aloe Vera', image: 'images/garnier.png', badge: null },
+                    { name: 'Conditioner Argan Oil', image: 'images/garnier.png', badge: null },
+                    { name: 'Conditioner Shea Butter', image: 'images/garnier.png', badge: null },
+                    { name: 'Hair Color', image: 'images/garnier.png', badge: null },
+                    { name: 'Hair Bleach', image: 'images/garnier.png', badge: null },
+                    { name: 'Hair Toner', image: 'images/garnier.png', badge: null },
+                    { name: 'Hair Gloss', image: 'images/garnier.png', badge: null },
+                    { name: 'Hair Treatment', image: 'images/garnier.png', badge: null }
+                ]
+            },
+
+            // ===== FRAGRANCE BRANDS =====
+            'victorias-secret': {
+                name: 'Victoria\'s Secret',
+                logo: 'images/Victorias-Secret.png',
+                category: 'Fragrance',
+                rating: '4.8',
+                productCount: 15,
+                products: [
+                    { name: 'Bombshell Perfume', image: 'images/Victorias-Secret.png', badge: 'Best Seller' },
+                    { name: 'Mist Body Spray', image: 'images/Victorias-Secret.png', badge: null },
+                    { name: 'Perfume Collection', image: 'images/Victorias-Secret.png', badge: null },
+                    { name: 'Body Lotion', image: 'images/Victorias-Secret.png', badge: null },
+                    { name: 'Body Cream', image: 'images/Victorias-Secret.png', badge: null },
+                    { name: 'Body Mist', image: 'images/Victorias-Secret.png', badge: null },
+                    { name: 'Perfume Rollerball', image: 'images/Victorias-Secret.png', badge: null },
+                    { name: 'Perfume Oil', image: 'images/Victorias-Secret.png', badge: null },
+                    { name: 'Body Spray', image: 'images/Victorias-Secret.png', badge: null },
+                    { name: 'Lotion', image: 'images/Victorias-Secret.png', badge: null },
+                    { name: 'Cream', image: 'images/Victorias-Secret.png', badge: null },
+                    { name: 'Mist', image: 'images/Victorias-Secret.png', badge: null },
+                    { name: 'Perfume Gift Set', image: 'images/Victorias-Secret.png', badge: null },
+                    { name: 'Body Wash', image: 'images/Victorias-Secret.png', badge: null },
+                    { name: 'Hand Cream', image: 'images/Victorias-Secret.png', badge: null }
+                ]
+            },
+            'bath-body-works': {
+                name: 'Bath & Body Works',
+                logo: 'images/Bath-Body-Works.png',
+                category: 'Fragrance',
+                rating: '4.6',
+                productCount: 32,
+                products: [
+                    { name: 'Body Lotion', image: 'images/Bath-Body-Works.png', badge: null },
+                    { name: 'Hand Cream', image: 'images/Bath-Body-Works.png', badge: 'Sale' },
+                    { name: 'Body Mist', image: 'images/Bath-Body-Works.png', badge: null },
+                    { name: 'Body Cream', image: 'images/Bath-Body-Works.png', badge: null },
+                    { name: 'Hand Soap', image: 'images/Bath-Body-Works.png', badge: null },
+                    { name: 'Candle', image: 'images/Bath-Body-Works.png', badge: null },
+                    { name: 'Perfume', image: 'images/Bath-Body-Works.png', badge: null },
+                    { name: 'Body Wash', image: 'images/Bath-Body-Works.png', badge: null },
+                    { name: 'Shower Gel', image: 'images/Bath-Body-Works.png', badge: null },
+                    { name: 'Bath Salt', image: 'images/Bath-Body-Works.png', badge: null },
+                    { name: 'Bomb Bath', image: 'images/Bath-Body-Works.png', badge: null },
+                    { name: 'Face Mist', image: 'images/Bath-Body-Works.png', badge: null },
+                    { name: 'Lip Balm', image: 'images/Bath-Body-Works.png', badge: null },
+                    { name: 'Hand Lotion', image: 'images/Bath-Body-Works.png', badge: null },
+                    { name: 'Foot Cream', image: 'images/Bath-Body-Works.png', badge: null },
+                    { name: 'PocketBac Hand Gel', image: 'images/Bath-Body-Works.png', badge: null },
+                    { name: 'PocketBac Spray', image: 'images/Bath-Body-Works.png', badge: null },
+                    { name: 'Wallflower Air Freshener', image: 'images/Bath-Body-Works.png', badge: null },
+                    { name: 'Hand Sanitizer', image: 'images/Bath-Body-Works.png', badge: null },
+                    { name: 'Body Scrub', image: 'images/Bath-Body-Works.png', badge: null },
+                    { name: 'Body Oil', image: 'images/Bath-Body-Works.png', badge: null },
+                    { name: 'Body Butter', image: 'images/Bath-Body-Works.png', badge: null },
+                    { name: 'Lotion', image: 'images/Bath-Body-Works.png', badge: null },
+                    { name: 'Cream', image: 'images/Bath-Body-Works.png', badge: null },
+                    { name: 'Mist', image: 'images/Bath-Body-Works.png', badge: null },
+                    { name: 'Perfume', image: 'images/Bath-Body-Works.png', badge: null },
+                    { name: 'Candle 3-Wick', image: 'images/Bath-Body-Works.png', badge: null },
+                    { name: 'Candle Single Wick', image: 'images/Bath-Body-Works.png', badge: null },
+                    { name: 'Car Freshener', image: 'images/Bath-Body-Works.png', badge: null },
+                    { name: 'Room Spray', image: 'images/Bath-Body-Works.png', badge: null },
+                    { name: 'Gift Set', image: 'images/Bath-Body-Works.png', badge: null },
+                    { name: 'Travel Size', image: 'images/Bath-Body-Works.png', badge: null }
+                ]
+            },
+
+            // ===== KOREAN BEAUTY BRANDS =====
+            cosrx: {
+                name: 'COSRX',
+                logo: 'images/COSRX.png',
+                category: 'Korean Beauty',
+                rating: '4.9',
+                productCount: 38,
+                products: [
+                    { name: 'Advanced Snail 96 Mucin', image: 'images/product1.png', badge: 'Best Seller' },
+                    { name: 'Low pH Good Morning Gel', image: 'images/product2.png', badge: null },
+                    { name: 'Niacinamide 15% Serum', image: 'images/product3.png', badge: 'New' },
+                    { name: 'Hyaluronic Acid Cream', image: 'images/product4.png', badge: null },
+                    { name: 'AHA/BHA Toner', image: 'images/product2.png', badge: null },
+                    { name: 'Snail Peptide Eye Cream', image: 'images/product1.png', badge: null },
+                    { name: 'Aloe Soothing Sunscreen', image: 'images/product3.png', badge: null },
+                    { name: 'Galactomyces Toner', image: 'images/product1.png', badge: null },
+                    { name: 'Centella Blemish Cream', image: 'images/product2.png', badge: null },
+                    { name: 'Pimple Patch', image: 'images/product3.png', badge: null },
+                    { name: 'Salicylic Acid Cleanser', image: 'images/product4.png', badge: null },
+                    { name: 'BHA Blackhead Power Liquid', image: 'images/product1.png', badge: null },
+                    { name: 'AHA Whitehead Power Liquid', image: 'images/product2.png', badge: null },
+                    { name: 'Snail 92 All In One Cream', image: 'images/product3.png', badge: null },
+                    { name: 'Snail 96 Essence', image: 'images/product4.png', badge: null },
+                    { name: 'Low pH Cleanser', image: 'images/product1.png', badge: null },
+                    { name: 'Oil-Free Moisturizer', image: 'images/product2.png', badge: null },
+                    { name: 'Rice Overnight Mask', image: 'images/product3.png', badge: null },
+                    { name: 'Honey Overnight Mask', image: 'images/product4.png', badge: null },
+                    { name: 'Propolis Serum', image: 'images/product1.png', badge: null },
+                    { name: 'Vitamin C 23 Serum', image: 'images/product2.png', badge: null },
+                    { name: 'Retinol Serum', image: 'images/product3.png', badge: null },
+                    { name: 'Peptide Serum', image: 'images/product4.png', badge: null },
+                    { name: 'Ceramide Cream', image: 'images/product1.png', badge: null },
+                    { name: 'Sunscreen SPF 50', image: 'images/product2.png', badge: null },
+                    { name: 'Toner', image: 'images/product3.png', badge: null },
+                    { name: 'Face Mask', image: 'images/product4.png', badge: null },
+                    { name: 'Lip Balm', image: 'images/product1.png', badge: null },
+                    { name: 'Eye Cream', image: 'images/product2.png', badge: null },
+                    { name: 'Moisturizer', image: 'images/product3.png', badge: null },
+                    { name: 'Cleanser', image: 'images/product4.png', badge: null },
+                    { name: 'Serum', image: 'images/product1.png', badge: null },
+                    { name: 'Essence', image: 'images/product2.png', badge: null },
+                    { name: 'Cream', image: 'images/product3.png', badge: null },
+                    { name: 'Lotion', image: 'images/product4.png', badge: null },
+                    { name: 'Mist', image: 'images/product1.png', badge: null },
+                    { name: 'Sheet Mask', image: 'images/product2.png', badge: null },
+                    { name: 'Eye Mask', image: 'images/product3.png', badge: null }
+                ]
+            },
+            innisfree: {
+                name: 'Innisfree',
+                logo: 'images/Innisfree.jpeg',
+                category: 'Korean Beauty',
+                rating: '4.7',
+                productCount: 28,
+                products: [
+                    { name: 'Volcanic Clay Face Mask', image: 'images/Innisfree.jpeg', badge: 'Best Seller' },
+                    { name: 'Green Tea Toner', image: 'images/Innisfree.jpeg', badge: null },
+                    { name: 'Green Tea Serum', image: 'images/Innisfree.jpeg', badge: null },
+                    { name: 'Green Tea Moisturizer', image: 'images/Innisfree.jpeg', badge: null },
+                    { name: 'Volcanic Pore Cleanser', image: 'images/Innisfree.jpeg', badge: null },
+                    { name: 'Jeju Orchid Cream', image: 'images/Innisfree.jpeg', badge: null },
+                    { name: 'Jeju Orchid Eye Cream', image: 'images/Innisfree.jpeg', badge: null },
+                    { name: 'Sunscreen SPF 50', image: 'images/Innisfree.jpeg', badge: null },
+                    { name: 'Green Tea Foaming Cleanser', image: 'images/Innisfree.jpeg', badge: null },
+                    { name: 'Volcanic Foaming Cleanser', image: 'images/Innisfree.jpeg', badge: null },
+                    { name: 'Peach Hand Cream', image: 'images/Innisfree.jpeg', badge: null },
+                    { name: 'Lip Balm', image: 'images/Innisfree.jpeg', badge: null },
+                    { name: 'Face Mask', image: 'images/Innisfree.jpeg', badge: null },
+                    { name: 'Sheet Mask', image: 'images/Innisfree.jpeg', badge: null },
+                    { name: 'Eye Cream', image: 'images/Innisfree.jpeg', badge: null },
+                    { name: 'Moisturizer', image: 'images/Innisfree.jpeg', badge: null },
+                    { name: 'Cleanser', image: 'images/Innisfree.jpeg', badge: null },
+                    { name: 'Toner', image: 'images/Innisfree.jpeg', badge: null },
+                    { name: 'Serum', image: 'images/Innisfree.jpeg', badge: null },
+                    { name: 'Essence', image: 'images/Innisfree.jpeg', badge: null },
+                    { name: 'Cream', image: 'images/Innisfree.jpeg', badge: null },
+                    { name: 'Lotion', image: 'images/Innisfree.jpeg', badge: null },
+                    { name: 'Mist', image: 'images/Innisfree.jpeg', badge: null },
+                    { name: 'Hand Cream', image: 'images/Innisfree.jpeg', badge: null },
+                    { name: 'Body Lotion', image: 'images/Innisfree.jpeg', badge: null },
+                    { name: 'Lip Mask', image: 'images/Innisfree.jpeg', badge: null },
+                    { name: 'Eye Mask', image: 'images/Innisfree.jpeg', badge: null },
+                    { name: 'Exfoliator', image: 'images/Innisfree.jpeg', badge: null }
+                ]
+            },
+            laneige: {
+                name: 'Laneige',
+                logo: 'images/Laneige.png',
+                category: 'Korean Beauty',
+                rating: '4.8',
+                productCount: 20,
+                products: [
+                    { name: 'Lip Sleeping Mask', image: 'images/Laneige.png', badge: 'Best Seller' },
+                    { name: 'Water Bank Moisture Cream', image: 'images/Laneige.png', badge: null },
+                    { name: 'Water Sleeping Mask', image: 'images/Laneige.png', badge: null },
+                    { name: 'Cream Skin Toner', image: 'images/Laneige.png', badge: null },
+                    { name: 'Cream Skin Moisturizer', image: 'images/Laneige.png', badge: null },
+                    { name: 'Radian C Cream', image: 'images/Laneige.png', badge: null },
+                    { name: 'Glow Serum', image: 'images/Laneige.png', badge: null },
+                    { name: 'Sunscreen SPF 50', image: 'images/Laneige.png', badge: null },
+                    { name: 'Foundation', image: 'images/Laneige.png', badge: null },
+                    { name: 'Cushion Foundation', image: 'images/Laneige.png', badge: null },
+                    { name: 'Blush', image: 'images/Laneige.png', badge: null },
+                    { name: 'Lip Gloss', image: 'images/Laneige.png', badge: null },
+                    { name: 'Lip Balm', image: 'images/Laneige.png', badge: null },
+                    { name: 'Face Mask', image: 'images/Laneige.png', badge: null },
+                    { name: 'Eye Cream', image: 'images/Laneige.png', badge: null },
+                    { name: 'Moisturizer', image: 'images/Laneige.png', badge: null },
+                    { name: 'Cleanser', image: 'images/Laneige.png', badge: null },
+                    { name: 'Toner', image: 'images/Laneige.png', badge: null },
+                    { name: 'Serum', image: 'images/Laneige.png', badge: null },
+                    { name: 'Essence', image: 'images/Laneige.png', badge: null }
+                ]
+            },
+            skin1004: {
+                name: 'Skin1004',
+                logo: 'images/Skin1004.jpeg',
+                category: 'Korean Beauty',
+                rating: '4.6',
+                productCount: 18,
+                products: [
+                    { name: 'Centella Asiatica Serum', image: 'images/Skin1004.jpeg', badge: 'New' },
+                    { name: 'Madagascar Centella Cream', image: 'images/Skin1004.jpeg', badge: null },
+                    { name: 'Toner', image: 'images/Skin1004.jpeg', badge: null },
+                    { name: 'Moisturizer', image: 'images/Skin1004.jpeg', badge: null },
+                    { name: 'Cleanser', image: 'images/Skin1004.jpeg', badge: null },
+                    { name: 'Sunscreen SPF 50', image: 'images/Skin1004.jpeg', badge: null },
+                    { name: 'Eye Cream', image: 'images/Skin1004.jpeg', badge: null },
+                    { name: 'Face Mask', image: 'images/Skin1004.jpeg', badge: null },
+                    { name: 'Serum', image: 'images/Skin1004.jpeg', badge: null },
+                    { name: 'Essence', image: 'images/Skin1004.jpeg', badge: null },
+                    { name: 'Cream', image: 'images/Skin1004.jpeg', badge: null },
+                    { name: 'Lotion', image: 'images/Skin1004.jpeg', badge: null },
+                    { name: 'Mist', image: 'images/Skin1004.jpeg', badge: null },
+                    { name: 'Lip Balm', image: 'images/Skin1004.jpeg', badge: null },
+                    { name: 'Hand Cream', image: 'images/Skin1004.jpeg', badge: null },
+                    { name: 'Body Lotion', image: 'images/Skin1004.jpeg', badge: null },
+                    { name: 'Face Scrub', image: 'images/Skin1004.jpeg', badge: null },
+                    { name: 'Exfoliator', image: 'images/Skin1004.jpeg', badge: null }
+                ]
+            },
+            'dr-althea': {
+                name: 'Dr. Althea',
+                logo: 'images/Dr-Althea.jpeg',
+                category: 'Korean Beauty',
+                rating: '4.5',
+                productCount: 15,
+                products: [
+                    { name: 'Vitamin C Serum', image: 'images/Dr-Althea.jpeg', badge: null },
+                    { name: 'Resurfacing Serum', image: 'images/Dr-Althea.jpeg', badge: null },
+                    { name: 'Toner', image: 'images/Dr-Althea.jpeg', badge: null },
+                    { name: 'Moisturizer', image: 'images/Dr-Althea.jpeg', badge: null },
+                    { name: 'Cleanser', image: 'images/Dr-Althea.jpeg', badge: null },
+                    { name: 'Sunscreen SPF 50', image: 'images/Dr-Althea.jpeg', badge: null },
+                    { name: 'Eye Cream', image: 'images/Dr-Althea.jpeg', badge: null },
+                    { name: 'Face Mask', image: 'images/Dr-Althea.jpeg', badge: null },
+                    { name: 'Serum', image: 'images/Dr-Althea.jpeg', badge: null },
+                    { name: 'Essence', image: 'images/Dr-Althea.jpeg', badge: null },
+                    { name: 'Cream', image: 'images/Dr-Althea.jpeg', badge: null },
+                    { name: 'Lotion', image: 'images/Dr-Althea.jpeg', badge: null },
+                    { name: 'Lip Balm', image: 'images/Dr-Althea.jpeg', badge: null },
+                    { name: 'Hand Cream', image: 'images/Dr-Althea.jpeg', badge: null },
+                    { name: 'Body Lotion', image: 'images/Dr-Althea.jpeg', badge: null }
+                ]
+            },
+
+            // ===== BABYCARE BRANDS =====
+            sanosan: {
+                name: 'Sanosan',
+                logo: 'images/sanosan.jpeg',
+                category: 'Babycare',
+                rating: '4.7',
+                productCount: 12,
+                products: [
+                    { name: 'Baby Chamomile Shampoo', image: 'images/sanosan.jpeg', badge: null },
+                    { name: 'Baby Care Lotion', image: 'images/sanosan.jpeg', badge: null },
+                    { name: 'Nappy Rash Cream', image: 'images/sanosan.jpeg', badge: 'Best Seller' },
+                    { name: 'Baby Care Soap', image: 'images/sanosan.jpeg', badge: null },
+                    { name: 'Baby Care Oil', image: 'images/sanosan.jpeg', badge: null },
+                    { name: 'Baby Care Cream', image: 'images/sanosan.jpeg', badge: null },
+                    { name: 'Baby Care Powder', image: 'images/sanosan.jpeg', badge: null },
+                    { name: 'Baby Care Sunscreen', image: 'images/sanosan.jpeg', badge: null },
+                    { name: 'Baby Care Lip Balm', image: 'images/sanosan.jpeg', badge: null },
+                    { name: 'Baby Care Body Wash', image: 'images/sanosan.jpeg', badge: null },
+                    { name: 'Baby Care Hand Cream', image: 'images/sanosan.jpeg', badge: null },
+                    { name: 'Baby Care Foot Cream', image: 'images/sanosan.jpeg', badge: null }
+                ]
+            }
+        };
+
+        // ===== GET BRAND FROM URL =====
+        function getBrandFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('brand') || 'cerave';
+        }
+
+        // ===== LOAD BRAND PRODUCTS =====
+        function loadBrandProducts() {
+            const brandKey = getBrandFromURL();
+            const brandData = brandProductsData[brandKey];
+
+            if (!brandData) {
+                document.getElementById('brandProductsGrid').innerHTML = `
+                    <div class="no-products">
+                        <i class="fa-regular fa-face-frown"></i>
+                        <h3>Brand Not Found</h3>
+                        <p>We couldn't find products for this brand. Please go back and try again.</p>
+                        <a href="brands.html" style="display:inline-block; margin-top:16px; padding:12px 30px; background:var(--primary); color:white; border-radius:30px; text-decoration:none; font-weight:500;">Back to Brands</a>
+                    </div>
+                `;
+                return;
+            }
+
+            document.getElementById('brandLogo').src = brandData.logo;
+            document.getElementById('brandName').textContent = brandData.name;
+            document.getElementById('productTotal').textContent = brandData.productCount;
+            document.getElementById('brandRating').textContent = brandData.rating;
+            document.getElementById('brandCategory').textContent = brandData.category;
+            document.getElementById('productCountLabel').textContent = `Showing ${brandData.products.length} of ${brandData.productCount} products`;
+
+            const grid = document.getElementById('brandProductsGrid');
+            
+            if (brandData.products.length === 0) {
+                grid.innerHTML = `
+                    <div class="no-products">
+                        <i class="fa-regular fa-box-open"></i>
+                        <h3>No Products Available</h3>
+                        <p>This brand currently has no products in our collection.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = brandData.products.map(product => {
+                let badgeHTML = '';
+                if (product.badge) {
+                    let badgeClass = '';
+                    if (product.badge === 'Best Seller') badgeClass = '';
+                    else if (product.badge === 'New') badgeClass = 'new';
+                    else if (product.badge === 'Sale') badgeClass = 'sale';
+                    badgeHTML = `<span class="product-badge ${badgeClass}">${product.badge}</span>`;
+                }
+
+                return `
+                    <div class="brand-product-card">
+                        <div class="product-image">
+                            <img src="${product.image}" alt="${product.name}">
+                        </div>
+                        ${badgeHTML}
+                        <h4>${product.name}</h4>
+                        <span class="product-brand-name">${brandData.name}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ===== SEARCH FUNCTIONALITY =====
+        const searchInput = document.querySelector('.search input');
+        const searchButton = document.querySelector('.search button');
+
+        function performSearch() {
+            const searchTerm = searchInput.value.trim();
+            if (searchTerm) {
+                showToast(`🔍 Searching for "${searchTerm}"...`);
+                setTimeout(() => {
+                    window.location.href = `shop.html?search=${encodeURIComponent(searchTerm)}`;
+                }, 800);
+            } else {
+                showToast('⚠️ Please enter a search term');
+            }
+        }
+
+        if (searchButton) {
+            searchButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                performSearch();
+            });
+        }
+
+        if (searchInput) {
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    performSearch();
+                }
+            });
+        }
+
+        // ===== TOAST NOTIFICATION =====
+        function showToast(message) {
+            const existingToast = document.querySelector('.toast-notification');
+            if (existingToast) {
+                existingToast.remove();
+            }
+
+            const toast = document.createElement('div');
+            toast.className = 'toast-notification';
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                background: #2d1a3a;
+                color: white;
+                padding: 14px 24px;
+                border-radius: 12px;
+                font-size: 14px;
+                font-weight: 500;
+                box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+                z-index: 10000;
+                animation: slideInUp 0.4s ease forwards;
+                font-family: 'Inter', sans-serif;
+                max-width: 350px;
+                border-left: 4px solid #e91e63;
+            `;
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'slideOutDown 0.4s ease forwards';
+                setTimeout(() => {
+                    toast.remove();
+                }, 400);
+            }, 3000);
+        }
+
+        // ===== ADD CSS =====
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+            @keyframes slideInUp {
+                0% { transform: translateY(100px); opacity: 0; }
+                100% { transform: translateY(0); opacity: 1; }
+            }
+            @keyframes slideOutDown {
+                0% { transform: translateY(0); opacity: 1; }
+                100% { transform: translateY(100px); opacity: 0; }
+            }
+            .cart-badge {
+                display: inline-block;
+                background: #e91e63;
+                color: white;
+                font-size: 10px;
+                font-weight: 700;
+                border-radius: 50%;
+                padding: 2px 6px;
+                min-width: 18px;
+                text-align: center;
+                position: absolute;
+                top: -8px;
+                right: -10px;
+            }
+            .header-icons > div {
+                position: relative;
+            }
+        `;
+        document.head.appendChild(styleSheet);
+
+        // ===== LOAD ON PAGE LOAD =====
+        document.addEventListener('DOMContentLoaded', loadBrandProducts);
+
+        console.log('🏷️ Kasbi Beauty — Brand Products Page Loaded!');
+    </script>
+
+</body>
+</html>
