@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from products.models import Product, Wishlist
 from .forms import ContactForm
+from .models import SiteSettings
 
 
 def home_view(request):
@@ -24,10 +25,12 @@ def home_view(request):
 
 
 def about_view(request):
-    return render(request, 'core/about.html')
+    site = SiteSettings.load()
+    return render(request, 'core/about.html', {'site': site})
 
 
 def contact_view(request):
+    site = SiteSettings.load()
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
@@ -38,4 +41,4 @@ def contact_view(request):
             messages.error(request, 'Please correct the errors below.')
     else:
         form = ContactForm()
-    return render(request, 'core/contact.html', {'form': form})
+    return render(request, 'core/contact.html', {'form': form, 'site': site})

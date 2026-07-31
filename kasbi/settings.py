@@ -146,3 +146,10 @@ MEDIA_ROOT = BASE_DIR / 'media'
 LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = 'core:home'
 LOGOUT_REDIRECT_URL = 'core:home'
+
+# eSewa payment settings
+ESEWA_PRODUCT_CODE = config('ESEWA_PRODUCT_CODE', default='EPAYTEST')
+ESEWA_SECRET_KEY   = config('ESEWA_SECRET_KEY',   default='8gBm/:&EnhH.1/q')
+ESEWA_PAYMENT_URL  = config('ESEWA_PAYMENT_URL',  default='https://rc-epay.esewa.com.np/api/epay/main/v2/form')
+ESEWA_STATUS_URL   = config('ESEWA_STATUS_URL',   default='https://rc.esewa.com.np/api/epay/transaction/status/')
+ESEWA_BASE_URL     = config('ESEWA_BASE_URL',     default='http://127.0.0.1:8000')
