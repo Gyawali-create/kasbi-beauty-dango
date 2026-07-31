@@ -122,14 +122,16 @@
         <button class="cf-close" id="categoryClose" aria-label="Close categories"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <ul>
-        <li><a href="{% url 'products:skincare' %}" class="cf-link"><i class="fa-solid fa-pump-soap cf-icon"></i><span class="cf-label">Skincare</span><span class="cf-count">120+</span><i class="fa-solid fa-chevron-right cf-arrow"></i></a></li>
-        <li><a href="{% url 'products:haircare' %}" class="cf-link"><i class="fa-solid fa-spa cf-icon"></i><span class="cf-label">Haircare</span><span class="cf-count">60+</span><i class="fa-solid fa-chevron-right cf-arrow"></i></a></li>
-        <li><a href="{% url 'products:makeup' %}" class="cf-link"><i class="fa-solid fa-palette cf-icon"></i><span class="cf-label">Makeup</span><span class="cf-count">85+</span><i class="fa-solid fa-chevron-right cf-arrow"></i></a></li>
-        <li><a href="{% url 'products:shop' %}?category=tools" class="cf-link"><i class="fa-solid fa-brush cf-icon"></i><span class="cf-label">Brushes &amp; Tools</span><span class="cf-count">25+</span><i class="fa-solid fa-chevron-right cf-arrow"></i></a></li>
-        <li><a href="{% url 'products:shop' %}?category=bodycare" class="cf-link"><i class="fa-solid fa-bath cf-icon"></i><span class="cf-label">Body Care</span><span class="cf-count">40+</span><i class="fa-solid fa-chevron-right cf-arrow"></i></a></li>
-        <li><a href="{% url 'products:shop' %}?category=babycare" class="cf-link"><i class="fa-solid fa-baby cf-icon"></i><span class="cf-label">Babycare</span><span class="cf-count">15+</span><i class="fa-solid fa-chevron-right cf-arrow"></i></a></li>
-        <li><a href="{% url 'products:shop' %}?category=fragrance" class="cf-link"><i class="fa-solid fa-spray-can-sparkles cf-icon"></i><span class="cf-label">Fragrances</span><span class="cf-count">45+</span><i class="fa-solid fa-chevron-right cf-arrow"></i></a></li>
-        <li><a href="{% url 'products:shop' %}?category=lashes" class="cf-link"><i class="fa-regular fa-eye cf-icon"></i><span class="cf-label">Lashes &amp; Glue</span><span class="cf-count">12+</span><i class="fa-solid fa-chevron-right cf-arrow"></i></a></li>
+        {% for category in nav_categories %}
+        <li>
+            <a href="{% url 'products:shop' %}?category={{ category.slug }}" class="cf-link">
+                <i class="fa-solid fa-tag cf-icon"></i>
+                <span class="cf-label">{{ category.name }}</span>
+                <span class="cf-count">{{ category.products.count }}+</span>
+                <i class="fa-solid fa-chevron-right cf-arrow"></i>
+            </a>
+        </li>
+        {% endfor %}
         <li class="cf-divider"></li>
         <li><a href="{% url 'products:brands' %}" class="cf-link"><i class="fa-solid fa-tags cf-icon"></i><span class="cf-label">All Brands</span><i class="fa-solid fa-chevron-right cf-arrow"></i></a></li>
         <li><a href="{% url 'products:offers' %}" class="cf-link"><i class="fa-solid fa-fire cf-icon"></i><span class="cf-label">Offers &amp; Deals</span><i class="fa-solid fa-chevron-right cf-arrow"></i></a></li>
@@ -190,14 +192,26 @@
         <div>
             <h4>Contact</h4>
             <ul>
+                {% if site_settings.phone %}
+                <li><a href="tel:{{ site_settings.phone }}"><i class="fa-solid fa-phone" style="margin-right:8px;"></i>{{ site_settings.phone }}</a></li>
+                {% else %}
                 <li><a href="tel:+9779800000000"><i class="fa-solid fa-phone" style="margin-right:8px;"></i>+977 980-0000000</a></li>
-                <li><a href="mailto:hello@kasbi.com"><i class="fa-regular fa-envelope" style="margin-right:8px;"></i>hello@kasbi.com</a></li>
+                {% endif %}
+                {% if site_settings.email %}
+                <li><a href="mailto:{{ site_settings.email }}"><i class="fa-regular fa-envelope" style="margin-right:8px;"></i>{{ site_settings.email }}</a></li>
+                {% else %}
+                <li><a href="mailto:support@kasbibeauty.com"><i class="fa-regular fa-envelope" style="margin-right:8px;"></i>support@kasbibeauty.com</a></li>
+                {% endif %}
+                {% if site_settings.address %}
+                <li><i class="fa-regular fa-location-dot" style="margin-right:8px;"></i>{{ site_settings.address }}</li>
+                {% else %}
                 <li><i class="fa-regular fa-location-dot" style="margin-right:8px;"></i>Kathmandu, Nepal</li>
+                {% endif %}
             </ul>
         </div>
     </div>
     <div class="footer-bottom">
-        <span>&copy; {% now "Y" %} Kasbi Beauty. All rights reserved.</span>
+        <span>&copy; {% now "Y" %} {{ site_settings.site_name|default:"Kasbi Beauty" }}. All rights reserved.</span>
         <div class="payment">
             <i class="fa-brands fa-cc-visa"></i>
             <i class="fa-brands fa-cc-mastercard"></i>

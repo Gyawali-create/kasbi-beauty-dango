@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}Redirecting to eSewa — Kasbi Beauty{% endblock %}
+
+{% block content %}
+<div style="min-height:60vh;display:flex;align-items:center;justify-content:center;padding:40px 6%;">
+  <div style="background:var(--white);border-radius:24px;padding:48px 40px;max-width:480px;width:100%;text-align:center;box-shadow:var(--shadow-hover);">
+
+    <!-- eSewa logo colours -->
+    <div style="width:80px;height:80px;background:linear-gradient(135deg,#60BB46,#3a9922);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+      <span style="color:white;font-size:28px;font-weight:900;">e</span>
+    </div>
+
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--dark);margin-bottom:8px;">
+      Redirecting to eSewa
+    </h2>
+    <p style="color:var(--gray);font-size:14px;margin-bottom:6px;">
+      Order <strong style="color:var(--dark);">#{{ order.order_number }}</strong>
+    </p>
+    <p style="color:var(--gray);font-size:14px;margin-bottom:28px;">
+      Total: <strong style="color:var(--primary);font-size:18px;">Rs. {{ order.total }}</strong>
+    </p>
+
+    <div style="width:48px;height:4px;background:var(--primary);border-radius:4px;margin:0 auto 24px;animation:loading 1.2s infinite alternate;"></div>
+    <p style="font-size:13px;color:var(--gray);">You will be redirected to eSewa payment page in a moment...</p>
+
+    <!-- Hidden auto-submit form -->
+    <form id="esewaForm" action="{{ esewa_url }}" method="POST" style="display:none;">
+      <input type="hidden" name="amount"                  value="{{ amount }}">
+      <input type="hidden" name="tax_amount"              value="{{ tax_amount }}">
+      <input type="hidden" name="total_amount"            value="{{ total_amount }}">
+      <input type="hidden" name="transaction_uuid"        value="{{ transaction_uuid }}">
+      <input type="hidden" name="product_code"            value="{{ product_code }}">
+      <input type="hidden" name="product_service_charge"  value="{{ product_service_charge }}">
+      <input type="hidden" name="product_delivery_charge" value="{{ product_delivery_charge }}">
+      <input type="hidden" name="success_url"             value="{{ success_url }}">
+      <input type="hidden" name="failure_url"             value="{{ failure_url }}">
+      <input type="hidden" name="signed_field_names"      value="{{ signed_field_names }}">
+      <input type="hidden" name="signature"               value="{{ signature }}">
+    </form>
+
+    <a href="#" onclick="document.getElementById('esewaForm').submit(); return false;"
+       style="display:inline-flex;align-items:center;gap:8px;margin-top:16px;background:#60BB46;color:white;padding:12px 28px;border-radius:30px;font-weight:600;font-size:14px;text-decoration:none;">
+      Pay with eSewa Now →
+    </a>
+  </div>
+</div>
+
+<style>
+@keyframes loading {
+  from { width: 20px; opacity: 0.4; }
+  to   { width: 80px; opacity: 1; }
+}
+</style>
+
+<script>
+  // Auto-submit after 2 seconds
+  setTimeout(() => document.getElementById('esewaForm').submit(), 2000);
+</script>
+{% endblock %}

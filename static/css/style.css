@@ -3132,3 +3132,322 @@ ul {
 .form-control[type="tel"] {
     width: 100%;
 }
+
+
+/* ===========================
+   QUICK-ACCESS DOCK
+=========================== */
+.quick-dock {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(26, 26, 46, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 8px 14px;
+    border-radius: 60px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    z-index: 900;
+    border: 1px solid rgba(255,255,255,0.08);
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.qd-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 8px 14px;
+    border-radius: 40px;
+    border: none;
+    background: transparent;
+    color: rgba(255,255,255,0.75);
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.qd-btn:hover,
+.qd-btn.active {
+    background: rgba(255,255,255,0.12);
+    color: white;
+}
+
+.qd-icon {
+    font-size: 15px;
+    line-height: 1;
+}
+
+.qd-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    color: inherit;
+}
+
+.qd-btn.qd-top {
+    color: rgba(255,255,255,0.5);
+    display: none; /* shown via JS when scrolled */
+}
+
+.qd-btn.qd-top.visible {
+    display: flex;
+}
+
+.qd-btn.qd-fire .qd-icon {
+    color: #ff6b35;
+}
+
+.qd-btn.qd-categories .qd-icon {
+    color: var(--gold, #D4AF37);
+}
+
+.qd-btn.qd-account .qd-icon {
+    color: #a78bdc;
+}
+
+/* ===========================
+   CATEGORY FLYOUT
+=========================== */
+.category-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 1099;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.category-backdrop.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.category-flyout {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 300px;
+    background: var(--white);
+    z-index: 1100;
+    overflow-y: auto;
+    transform: translateX(-100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 8px 0 40px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+}
+
+.category-flyout.open {
+    transform: translateX(0);
+}
+
+.cf-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 20px 16px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--dark);
+    position: sticky;
+    top: 0;
+    background: var(--white);
+    z-index: 1;
+}
+
+.cf-heading i {
+    color: var(--primary);
+    margin-right: 8px;
+}
+
+.cf-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--gray);
+    transition: all 0.2s;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cf-close:hover {
+    background: var(--cream);
+    color: var(--dark);
+}
+
+.category-flyout ul {
+    padding: 10px 0;
+    flex: 1;
+}
+
+.cf-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    color: var(--dark);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.cf-link:hover {
+    background: var(--cream);
+    color: var(--primary);
+    padding-left: 26px;
+}
+
+.cf-icon {
+    width: 20px;
+    text-align: center;
+    color: var(--primary);
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.cf-label {
+    flex: 1;
+}
+
+.cf-count {
+    font-size: 11px;
+    background: rgba(94, 64, 116, 0.08);
+    color: var(--primary);
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.cf-arrow {
+    font-size: 11px;
+    color: var(--gray);
+    opacity: 0.5;
+}
+
+.cf-divider {
+    height: 1px;
+    background: rgba(0,0,0,0.06);
+    margin: 8px 20px;
+}
+
+.cf-viewall {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 12px 16px 16px;
+    padding: 13px;
+    background: var(--primary);
+    color: white;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.cf-viewall:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+/* mouse glow effect */
+.mouse-glow {
+    position: fixed;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(94,64,116,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    transition: opacity 0.3s;
+    opacity: 0;
+}
+
+.mouse-glow.active {
+    opacity: 1;
+}
+
+/* scroll reveal */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.scroll-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* new arrivals & offers nav badges */
+.new-arrivals-link,
+.offers-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.new-badge-animated {
+    background: linear-gradient(135deg, #4CAF50, #81C784);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    letter-spacing: 0.3px;
+    animation: pulse-badge 2s infinite;
+}
+
+.offers-badge-animated {
+    background: linear-gradient(135deg, #FF5722, #FF8A65);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    letter-spacing: 0.3px;
+    animation: pulse-badge 2s infinite;
+}
+
+@keyframes pulse-badge {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+}
+
+/* header-icons — fix for anchor tags (not divs) */
+.header-icons a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    transition: var(--transition);
+}
+
+.header-icons a:hover i { color: var(--primary); }
+.header-icons a:hover span { color: var(--primary); }
+.header-icons a:hover { transform: translateY(-2px); }
+
+.cart { position: relative; }

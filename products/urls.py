@@ -29,6 +29,10 @@ urlpatterns = [
     path('wishlist/add/<int:product_id>/',  views.wishlist_add,    name='wishlist_add'),
     path('wishlist/remove/<int:product_id>/', views.wishlist_remove, name='wishlist_remove'),
 
+    # Reviews
+    path('<slug:slug>/review/', views.review_create, name='review_create'),
+    path('<slug:slug>/review/delete/', views.review_delete, name='review_delete'),
+
     # Product detail (must be last — slug catches everything)
     path('<slug:slug>/', views.product_detail, name='detail'),
 ]

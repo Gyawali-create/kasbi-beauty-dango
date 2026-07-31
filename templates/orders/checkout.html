@@ -89,6 +89,16 @@
             {{ form.payment_method }}
             {% if form.payment_method.errors %}<p class="field-error">{{ form.payment_method.errors|striptags }}</p>{% endif %}
           </div>
+          <!-- eSewa badge -->
+          <div id="esewaBadge" style="display:none;margin-top:14px;background:#f0faf0;border:1px solid #c3e6c3;border-radius:12px;padding:14px 18px;display:flex;align-items:center;gap:12px;">
+            <div style="width:36px;height:36px;background:linear-gradient(135deg,#60BB46,#3a9922);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span style="color:white;font-size:16px;font-weight:900;">e</span>
+            </div>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:#2a7a1a;">Pay via eSewa</div>
+              <div style="font-size:12px;color:#555;">You'll be redirected to eSewa to complete payment securely.</div>
+            </div>
+          </div>
         </div>
 
         <div class="checkout-card">
@@ -116,7 +126,7 @@
           <div class="summary-row"><span>Subtotal</span><span>Rs. {{ cart.total }}</span></div>
           <div class="summary-row"><span>Shipping</span><span>{% if cart.shipping == 0 %}Free{% else %}Rs. {{ cart.shipping }}{% endif %}</span></div>
           <div class="summary-row total"><span>Total</span><span>Rs. {{ cart.grand_total }}</span></div>
-          <button type="submit" class="place-btn">
+          <button type="submit" class="place-btn" id="placeBtn">
             <i class="fa-solid fa-bag-shopping" style="margin-right:8px;"></i>Place Order
           </button>
           <div style="text-align:center;margin-top:12px;">
@@ -129,4 +139,32 @@
     </div>
   </form>
 </section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+const paySelect = document.querySelector('[name="payment_method"]');
+const esewaBadge = document.getElementById('esewaBadge');
+const placeBtn = document.getElementById('placeBtn');
+
+function updatePayUI() {
+  const val = paySelect ? paySelect.value : '';
+  if (esewaBadge) {
+    esewaBadge.style.display = val === 'esewa' ? 'flex' : 'none';
+  }
+  if (placeBtn) {
+    if (val === 'esewa') {
+      placeBtn.innerHTML = '<span style="background:#60BB46;width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;margin-right:8px;">e</span>Pay with eSewa';
+      placeBtn.style.background = '#60BB46';
+    } else {
+      placeBtn.innerHTML = '<i class="fa-solid fa-bag-shopping" style="margin-right:8px;"></i>Place Order';
+      placeBtn.style.background = '';
+    }
+  }
+}
+if (paySelect) {
+  paySelect.addEventListener('change', updatePayUI);
+  updatePayUI();
+}
+</script>
 {% endblock %}

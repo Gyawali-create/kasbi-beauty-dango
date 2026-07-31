@@ -1,9 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.db.models import Q
+from django.db.models import Q, Avg
 from django.core.paginator import Paginator
-from .models import Product, Category, Brand, Wishlist
+from .models import Product, Category, Brand, Wishlist, Review
 
 
 def _product_list_context(request, products, page_title=None):
@@ -141,15 +141,67 @@ def product_detail(request, slug):
         category=product.category, is_active=True
     ).exclude(pk=product.pk)[:4]
     in_wishlist = False
+    user_review = None
     if request.user.is_authenticated:
         in_wishlist = Wishlist.objects.filter(
             user=request.user, product=product
         ).exists()
+        user_review = Review.objects.filter(user=request.user, product=product).first()
+
+    reviews = Review.objects.filter(product=product).select_related('user')
+    avg_rating = reviews.aggregate(avg=Avg('rating'))['avg'] or 0
+    review_count = reviews.count()
+
     return render(request, 'products/product_detail.html', {
-        'product':    product,
-        'related':    related,
-        'in_wishlist': in_wishlist,
+        'product':      product,
+        'related':      related,
+        'in_wishlist':  in_wishlist,
+        'reviews':      reviews,
+        'user_review':  user_review,
+        'avg_rating':   round(avg_rating, 1),
+        'review_count': review_count,
     })
+
+
+@login_required
+def review_create(request, slug):
+    """Create or update a review for a product."""
+    product = get_object_or_404(Product, slug=slug, is_active=True)
+    existing = Review.objects.filter(user=request.user, product=product).first()
+
+    if request.method == 'POST':
+        rating = int(request.POST.get('rating', 5))
+        comment = request.POST.get('comment', '').strip()
+        rating = max(1, min(5, rating))  # clamp 1-5
+
+        if existing:
+            existing.rating = rating
+            existing.comment = comment
+            existing.save()
+            messages.success(request, 'Your review has been updated.')
+        else:
+            Review.objects.create(
+                product=product,
+                user=request.user,
+                rating=rating,
+                comment=comment,
+            )
+            messages.success(request, 'Thank you! Your review has been submitted.')
+        return redirect('products:detail', slug=slug)
+
+    return render(request, 'products/review_form.html', {
+        'product': product,
+        'existing': existing,
+    })
+
+
+@login_required
+def review_delete(request, slug):
+    """Delete the logged-in user's review for a product."""
+    product = get_object_or_404(Product, slug=slug, is_active=True)
+    Review.objects.filter(user=request.user, product=product).delete()
+    messages.success(request, 'Your review has been removed.')
+    return redirect('products:detail', slug=slug)
 
 
 @login_required
