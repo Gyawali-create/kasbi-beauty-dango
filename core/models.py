@@ -1,4 +1,4 @@
-from django.db import models
+﻿from django.db import models
 
 
 class ContactMessage(models.Model):
@@ -18,11 +18,11 @@ class ContactMessage(models.Model):
 
 class SiteSettings(models.Model):
     """Singleton-style model holding company/about info, editable from admin."""
-    site_name = models.CharField(max_length=100, default='Kasbi Beauty')
+    site_name = models.CharField(max_length=100, default='Kisba Beauty')
     tagline = models.CharField(max_length=200, blank=True, default='Beauty, delivered.')
-    about_text = models.TextField(blank=True, default='Kasbi Beauty brings you authentic, high quality beauty and cosmetic products.')
+    about_text = models.TextField(blank=True, default='Kisba Beauty brings you authentic, high quality beauty and cosmetic products.')
     mission = models.TextField(blank=True)
-    email = models.EmailField(blank=True, default='support@kasbibeauty.com')
+    email = models.EmailField(blank=True, default='support@kisbabeauty.com')
     phone = models.CharField(max_length=20, blank=True)
     address = models.CharField(max_length=255, blank=True)
     logo = models.ImageField(upload_to='site/', blank=True, null=True)

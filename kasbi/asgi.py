@@ -1,5 +1,5 @@
-"""
-ASGI config for kasbi project.
+﻿"""
+ASGI config for Kisba project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 

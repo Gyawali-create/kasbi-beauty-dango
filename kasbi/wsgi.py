@@ -1,5 +1,5 @@
-"""
-WSGI config for kasbi project.
+﻿"""
+WSGI config for Kisba project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

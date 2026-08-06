@@ -1,4 +1,4 @@
-"""URL configuration for kasbi project."""
+﻿"""URL configuration for Kisba project."""
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
