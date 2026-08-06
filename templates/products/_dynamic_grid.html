@@ -1,4 +1,4 @@
-{% load static %}
+﻿{% load static %}
 {#
   Drop-in dynamic product grid + sort bar + pagination + cart + wishlist.
   Include this AFTER the filter sidebar closes and BEFORE </section>.
@@ -36,7 +36,7 @@
                     <div class="image-wrap">
                         {% if p.is_featured %}<span class="badge-bestseller">&#11088; Best Seller</span>{% endif %}
                         {% if p.discount_price %}<span class="discount">Sale</span>{% endif %}
-                        <span class="wishlist" onclick="event.preventDefault();event.stopPropagation();kasbiWL(this,{{ p.id }})">
+                        <span class="wishlist" onclick="event.preventDefault();event.stopPropagation();KisbaWL(this,{{ p.id }})">
                             <i class="{% if p.id in wishlist_ids %}fa-solid{% else %}fa-regular{% endif %} fa-heart"></i>
                         </span>
                         <img src="{% if p.thumbnail %}{{ p.thumbnail.url }}{% else %}{% static 'img/hero.png' %}{% endif %}" alt="{{ p.name }}">
@@ -98,7 +98,7 @@
 
 <!-- ===== WISHLIST + SEARCH JS (shared) ===== -->
 <script>
-function kasbiWL(el, id) {
+function KisbaWL(el, id) {
     {% if user.is_authenticated %}
     const icon = el.querySelector('i');
     const removing = icon.classList.contains('fa-solid');
@@ -110,7 +110,7 @@ function kasbiWL(el, id) {
             el.style.background   = removing ? '' : '#5E4074';
             el.style.color        = removing ? '' : 'white';
             el.style.borderColor  = removing ? '' : '#5E4074';
-            kasbiToast(removing ? '&#128148; Removed from Wishlist' : '&#10084;&#65039; Added to Wishlist!');
+            KisbaToast(removing ? '&#128148; Removed from Wishlist' : '&#10084;&#65039; Added to Wishlist!');
         })
         .catch(function() { window.location.href = url; });
     {% else %}
@@ -118,11 +118,11 @@ function kasbiWL(el, id) {
     {% endif %}
 }
 
-function kasbiToast(msg) {
-    var old = document.querySelector('.kasbi-toast');
+function KisbaToast(msg) {
+    var old = document.querySelector('.Kisba-toast');
     if (old) old.remove();
     var t = document.createElement('div');
-    t.className = 'kasbi-toast';
+    t.className = 'Kisba-toast';
     t.innerHTML = msg;
     t.style.cssText = 'position:fixed;bottom:30px;right:30px;background:#2d1a3a;color:white;padding:14px 24px;border-radius:12px;font-size:14px;font-weight:500;box-shadow:0 8px 30px rgba(0,0,0,.2);z-index:10000;border-left:4px solid #e91e63;font-family:Inter,sans-serif;max-width:350px;animation:kbSlideIn .4s ease forwards;';
     document.body.appendChild(t);

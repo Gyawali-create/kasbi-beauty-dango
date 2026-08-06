@@ -1,4 +1,4 @@
-from django.core.management.base import BaseCommand
+﻿from django.core.management.base import BaseCommand
 from django.core.files import File
 from django.utils import timezone
 from datetime import timedelta
@@ -7,15 +7,15 @@ from core.models import SiteSettings
 
 
 class Command(BaseCommand):
-    help = 'Seed the database with sample Kasbi Beauty data'
+    help = 'Seed the database with sample Kisba Beauty data'
 
     def handle(self, *args, **options):
         # Site settings with logo/favicon
         site = SiteSettings.load()
-        site.site_name = 'Kasbi Beauty'
+        site.site_name = 'Kisba Beauty'
         site.tagline = 'Beauty, delivered.'
         site.about_text = (
-            'Kasbi Beauty is Nepal\'s trusted destination for authentic skincare, '
+            'Kisba Beauty is Nepal\'s trusted destination for authentic skincare, '
             'makeup, and self-care essentials. We partner directly with trusted brands '
             'to bring you genuine products at honest prices, delivered right to your door.'
         )
@@ -23,7 +23,7 @@ class Command(BaseCommand):
             'To make quality beauty and self-care accessible to everyone, while '
             'championing transparency, authenticity, and excellent customer service.'
         )
-        site.email = 'support@kasbibeauty.com'
+        site.email = 'support@kisbabeauty.com'
         site.phone = '+977-1-4123456'
         site.address = 'Durbarmarg, Kathmandu, Nepal'
         try:
@@ -42,7 +42,7 @@ class Command(BaseCommand):
             cat, _ = Category.objects.get_or_create(name=name)
             cat_objs[name] = cat
 
-        brands = ['Kasbi Originals', 'Glow Lab', 'Himal Botanics', 'Pure Skin Co.', 'Velvet Rose']
+        brands = ['Kisba Originals', 'Glow Lab', 'Himal Botanics', 'Pure Skin Co.', 'Velvet Rose']
         brand_objs = {}
         for name in brands:
             b, _ = Brand.objects.get_or_create(name=name)
@@ -59,7 +59,7 @@ class Command(BaseCommand):
              'A romantic floral fragrance blending fresh rose petals with jasmine and soft musk.'),
             ('Shea Butter Body Lotion', 'Bath & Body', 'Pure Skin Co.', 550, 449, 80, False,
              'Rich, fast-absorbing body lotion with shea butter for 24-hour hydration.'),
-            ('Jade Facial Roller', 'Tools & Accessories', 'Kasbi Originals', 850, None, 30, False,
+            ('Jade Facial Roller', 'Tools & Accessories', 'Kisba Originals', 850, None, 30, False,
              'Natural jade roller that helps reduce puffiness and improve circulation.'),
             ('Gentle Foaming Cleanser', 'Skincare', 'Pure Skin Co.', 720, None, 3, True,
              'A sulfate-free foaming cleanser suitable for all skin types, including sensitive skin.'),
@@ -67,7 +67,7 @@ class Command(BaseCommand):
              'Deep-cleansing charcoal mask that draws out impurities and unclogs pores.'),
             ('Volumizing Mascara', 'Makeup', 'Glow Lab', 590, None, 45, False,
              'Buildable formula that adds dramatic volume and length without clumping.'),
-            ('Silk Hair Wrap Towel', 'Tools & Accessories', 'Kasbi Originals', 450, None, 4, False,
+            ('Silk Hair Wrap Towel', 'Tools & Accessories', 'Kisba Originals', 450, None, 4, False,
              'Ultra-absorbent, gentle-on-hair towel wrap that reduces frizz and drying time.'),
             ('Coconut Milk Shampoo Bar', 'Haircare', 'Himal Botanics', 380, 320, 70, True,
              'Eco-friendly, plastic-free shampoo bar that cleanses and moisturizes hair naturally.'),
@@ -108,4 +108,4 @@ class Command(BaseCommand):
         )
         self.stdout.write(self.style.SUCCESS('Coupon WELCOME10 ready.'))
 
-        self.stdout.write(self.style.SUCCESS('Seeding complete! Visit /admin/ (admin / Kasbi@2026) to manage everything.'))
+        self.stdout.write(self.style.SUCCESS('Seeding complete! Visit /admin/ (admin / Kisba@2026) to manage everything.'))

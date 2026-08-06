@@ -1,7 +1,7 @@
-{% extends 'admin/base.html' %}
+﻿{% extends 'admin/base.html' %}
 {% load static i18n %}
 
-{% block title %}{{ title }} | Kasbi Admin{% endblock %}
+{% block title %}{{ title }} | Kisba Admin{% endblock %}
 
 {% block branding %}
 <div id="site-name" style="display:flex;align-items:center;gap:10px;">
@@ -9,7 +9,7 @@
     <span style="color:white;font-size:16px;font-weight:900;">K</span>
   </div>
   <div>
-    <div style="font-size:15px;font-weight:700;color:white;line-height:1.1;">Kasbi Beauty</div>
+    <div style="font-size:15px;font-weight:700;color:white;line-height:1.1;">Kisba Beauty</div>
     <div style="font-size:9px;color:rgba(255,255,255,0.55);letter-spacing:1px;text-transform:uppercase;">Admin Panel</div>
   </div>
 </div>
@@ -62,7 +62,7 @@ body{
 /* ══════════════════════════════════════
    SIDEBAR
 ══════════════════════════════════════ */
-#kasbi-sidebar{
+#Kisba-sidebar{
   position:fixed!important;
   top:56px!important;
   left:0!important;
@@ -76,9 +76,9 @@ body{
   scrollbar-width:thin!important;
   scrollbar-color:#333 #1e1e2e!important;
 }
-#kasbi-sidebar::-webkit-scrollbar{width:4px!important;}
-#kasbi-sidebar::-webkit-scrollbar-track{background:#1e1e2e!important;}
-#kasbi-sidebar::-webkit-scrollbar-thumb{background:#444!important;border-radius:4px!important;}
+#Kisba-sidebar::-webkit-scrollbar{width:4px!important;}
+#Kisba-sidebar::-webkit-scrollbar-track{background:#1e1e2e!important;}
+#Kisba-sidebar::-webkit-scrollbar-thumb{background:#444!important;border-radius:4px!important;}
 
 .sb-section{
   padding:6px 16px 2px!important;
@@ -354,7 +354,7 @@ ul.messagelist li.warning{background:#fff3cd!important;color:#856404!important;b
    RESPONSIVE — collapse sidebar on small
 ══════════════════════════════════════ */
 @media(max-width:900px){
-  #kasbi-sidebar{display:none!important;}
+  #Kisba-sidebar{display:none!important;}
   #container{padding-left:0!important;}
 }
 </style>
@@ -406,7 +406,7 @@ ul.messagelist li.warning{background:#fff3cd!important;color:#856404!important;b
     { icon:'🔑', label:'Groups',          href:'/admin/auth/group/' },
   ];
 
-  var html = '<div id="kasbi-sidebar">';
+  var html = '<div id="Kisba-sidebar">';
   nav.forEach(function(item){
     if(item.section){
       html += '<div class="sb-section">' + item.section + '</div>';

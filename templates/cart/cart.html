@@ -1,7 +1,7 @@
-{% extends 'base.html' %}
+﻿{% extends 'base.html' %}
 {% block content %}
 <div class="container py-4">
-  <h2 class="text-kasbi mb-4">Shopping Cart</h2>
+  <h2 class="text-Kisba mb-4">Shopping Cart</h2>
   {% if cart.items.all %}
   <div class="table-responsive">
     <table class="table align-middle bg-white rounded">
@@ -19,7 +19,7 @@
             <form method="post" action="{% url 'cart:update' item.id %}" class="d-flex gap-2">
               {% csrf_token %}
               <input type="number" name="quantity" value="{{ item.quantity }}" min="0" max="{{ item.product.stock }}" class="form-control form-control-sm">
-              <button type="submit" class="btn btn-sm btn-outline-kasbi">Update</button>
+              <button type="submit" class="btn btn-sm btn-outline-Kisba">Update</button>
             </form>
           </td>
           <td>Rs. {{ item.subtotal }}</td>
@@ -35,7 +35,7 @@
         <span>Total ({{ cart.item_count }} items)</span>
         <strong>Rs. {{ cart.total }}</strong>
       </div>
-      <a href="{% url 'orders:checkout' %}" class="btn btn-kasbi w-100">Proceed to Checkout</a>
+      <a href="{% url 'orders:checkout' %}" class="btn btn-Kisba w-100">Proceed to Checkout</a>
     </div>
   </div>
   {% else %}
