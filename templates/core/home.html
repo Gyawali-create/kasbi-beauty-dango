@@ -1493,46 +1493,21 @@
             <a href="{% url 'products:shop' %}">View all categories →</a>
         </div>
         <div class="cat-grid">
-            <a href="{% url 'products:skincare' %}" class="cat-item">
-                <img src="{% static 'img/skincare.png' %}" alt="Skincare">
-                <h4>Skincare</h4>
-                <span>120+ Products</span>
+            {% for cat in nav_categories %}
+            <a href="{% url 'products:shop' %}?category={{ cat.slug }}" class="cat-item">
+                {% if cat.image %}
+                <img src="{{ cat.image.url }}" alt="{{ cat.name }}">
+                {% else %}
+                <div style="width:100%;height:140px;background:linear-gradient(135deg,var(--cream),#f0e8f0);display:flex;align-items:center;justify-content:center;border-radius:16px 16px 0 0;">
+                    <span style="font-size:48px;">🌸</span>
+                </div>
+                {% endif %}
+                <h4>{{ cat.name }}</h4>
+                <span>{{ cat.products.count }}+ Products</span>
             </a>
-            <a href="{% url 'products:haircare' %}" class="cat-item">
-                <img src="{% static 'img/haircare.png' %}" alt="Haircare">
-                <h4>Haircare</h4>
-                <span>60+ Products</span>
-            </a>
-            <a href="{% url 'products:makeup' %}" class="cat-item">
-                <img src="{% static 'img/makeup.png' %}" alt="Makeup">
-                <h4>Makeup</h4>
-                <span>85+ Products</span>
-            </a>
-            <a href="{% url 'products:shop' %}?category=tools" class="cat-item">
-                <img src="{% static 'img/tools.png' %}" alt="Tools">
-                <h4>Brushes &amp; Tools</h4>
-                <span>25+ Products</span>
-            </a>
-            <a href="{% url 'products:shop' %}?category=bodycare" class="cat-item">
-                <img src="{% static 'img/bodycare.png' %}" alt="Body Care">
-                <h4>Body Care</h4>
-                <span>40+ Products</span>
-            </a>
-            <a href="{% url 'products:shop' %}?category=babycare" class="cat-item">
-                <img src="{% static 'img/babycare.png' %}" alt="Babycare">
-                <h4>Babycare</h4>
-                <span>15+ Products</span>
-            </a>
-            <a href="{% url 'products:shop' %}?category=fragrance" class="cat-item">
-                <img src="{% static 'img/fragrance.png' %}" alt="Fragrance">
-                <h4>Fragrances</h4>
-                <span>45+ Products</span>
-            </a>
-            <a href="{% url 'products:shop' %}?category=lashes" class="cat-item">
-                <img src="{% static 'img/lashes.png' %}" alt="Lashes">
-                <h4>Lashes &amp; Glue</h4>
-                <span>12+ Products</span>
-            </a>
+            {% empty %}
+            <p style="color:var(--gray);grid-column:1/-1;text-align:center;padding:20px;">No categories yet. Add some from the admin panel.</p>
+            {% endfor %}
         </div>
     </section>
 
@@ -1950,7 +1925,7 @@
             </div>
         </div>
         <div style="text-align:center; margin-top:30px;">
-            <a href="shop.html?sort=outofstock" class="btn-secondary" style="padding:12px 40px;">
+            <a href="{% url 'products:shop' %}?sort=outofstock" class="btn-secondary" style="padding:12px 40px;">
                 Load More <i class="fa-solid fa-arrow-down" style="margin-left:10px;"></i>
             </a>
         </div>
@@ -2109,7 +2084,7 @@
       </div>
       <div class="info">
         <span class="brand">{{ p.brand|default:"" }}</span>
-        <h3>{{ p.name|truncatechars:32 }}</h3>
+        <h3><a href="{{ p.get_absolute_url }}" style="color:inherit;text-decoration:none;">{{ p.name|truncatechars:32 }}</a></h3>
         <div class="price">
           <span class="current">Rs.{{ p.current_price }}</span>
           {% if p.discount_price %}<span class="old">Rs.{{ p.price }}</span>{% endif %}
@@ -2139,13 +2114,13 @@
   <div class="section-title"><span class="sub">DEALS OF THE DAY</span><h2>Out of Stock <span class="highlight">Items</span></h2></div>
   <div class="deals-grid">
     {% for p in out_of_stock_products %}
-    <div class="deal-card">
+    <a href="{{ p.get_absolute_url }}" class="deal-card" style="text-decoration:none;color:inherit;">
       <div class="deal-img">{% if p.thumbnail %}<img src="{{ p.thumbnail.url }}" alt="{{ p.name }}" style="width:100%;height:100%;object-fit:contain;">{% else %}🧴{% endif %}</div>
       <h4>{{ p.name }}</h4>
       <span class="category-tag">{{ p.category|default:"" }}</span>
       <div class="price">Rs. {{ p.current_price }}</div>
-      {% if user.is_authenticated %}<a href="{% url 'products:wishlist_add' p.id %}" class="wishlist-deal"><i class="fa-regular fa-heart"></i></a>{% else %}<div class="wishlist-deal"><i class="fa-regular fa-heart"></i></div>{% endif %}
-    </div>
+      {% if user.is_authenticated %}<span href="{% url 'products:wishlist_add' p.id %}" class="wishlist-deal"><i class="fa-regular fa-heart"></i></span>{% else %}<div class="wishlist-deal"><i class="fa-regular fa-heart"></i></div>{% endif %}
+    </a>
     {% empty %}
     <div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--gray);">No out-of-stock items currently.</div>
     {% endfor %}

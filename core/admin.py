@@ -31,7 +31,7 @@ class SiteSettingsAdmin(admin.ModelAdmin):
             'fields': ('site_name', 'tagline', 'logo', 'favicon'),
         }),
         ('About Content', {
-            'fields': ('about_text', 'mission'),
+            'fields': ('about_text', 'mission', 'about_image'),
         }),
         ('Contact Info', {
             'fields': ('email', 'phone', 'address'),
