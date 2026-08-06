@@ -27,6 +27,7 @@ class SiteSettings(models.Model):
     address = models.CharField(max_length=255, blank=True)
     logo = models.ImageField(upload_to='site/', blank=True, null=True)
     favicon = models.ImageField(upload_to='site/', blank=True, null=True)
+    about_image = models.ImageField(upload_to='site/', blank=True, null=True, help_text='Image shown on the About Us page')
 
     class Meta:
         verbose_name_plural = 'Site Settings'
