@@ -1,16 +1,1002 @@
 ﻿{% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Special Offers — Kisba Beauty{% endblock %}
+{% block title %}Special Offers — Kasbi Beauty{% endblock %}
+
+{% block extra_head %}
+<style>
+/* ===== OFFERS PAGE SPECIFIC STYLES ===== */
+
+/* Flash Sale Banner */
+.flash-banner {
+    margin: -30px 6% 40px;
+    background: linear-gradient(135deg, #D4AF37, #EBCB65);
+    border-radius: 32px;
+    padding: 40px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+    color: #1a1a2e;
+    box-shadow: 0 20px 60px rgba(212,175,55,0.25);
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.flash-banner::before {
+    content: '⚡';
+    position: absolute;
+    right: -10px;
+    top: -20px;
+    font-size: 100px;
+    opacity: 0.08;
+    transform: rotate(15deg);
+}
+
+.flash-banner .left .tag {
+    font-size: 12px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    background: rgba(26,26,46,0.08);
+    padding: 4px 16px;
+    border-radius: 40px;
+    display: inline-block;
+}
+
+.flash-banner .left h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px;
+    margin: 8px 0 4px;
+    font-weight: 700;
+}
+
+.flash-banner .left p {
+    font-weight: 300;
+    opacity: 0.7;
+}
+
+.flash-banner .right {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.flash-banner .right .btn-dark {
+    background: #1a1a2e;
+    color: white;
+    padding: 14px 36px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    text-decoration: none;
+}
+
+.flash-banner .right .btn-dark:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+}
+
+.flash-banner .right .timer-mini {
+    display: flex;
+    gap: 8px;
+    background: rgba(26,26,46,0.06);
+    padding: 10px 20px;
+    border-radius: 50px;
+}
+
+.flash-banner .right .timer-mini .item {
+    text-align: center;
+}
+
+.flash-banner .right .timer-mini .num {
+    font-size: 20px;
+    font-weight: 700;
+    font-family: 'Cormorant Garamond', serif;
+    display: block;
+    line-height: 1;
+}
+
+.flash-banner .right .timer-mini .lbl {
+    font-size: 9px;
+    text-transform: uppercase;
+    opacity: 0.5;
+    letter-spacing: 1px;
+}
+
+/* Offer Cards Grid */
+.offers-grid-section {
+    padding: 40px 6% 0;
+    background: var(--cream);
+}
+
+.offers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+}
+
+.offer-card-large {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    padding: 40px 32px;
+    transition: var(--transition);
+    border: 1px solid rgba(0,0,0,0.04);
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.offer-card-large:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-hover);
+}
+
+.offer-card-large .icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.offer-card-large .tag {
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    color: var(--gray);
+    text-transform: uppercase;
+}
+
+.offer-card-large h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    margin: 8px 0 4px;
+    font-weight: 700;
+    color: var(--dark);
+}
+
+.offer-card-large p {
+    color: var(--gray);
+    font-size: 14px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.offer-card-large .offer-btn {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: var(--transition);
+    text-decoration: none;
+}
+
+.offer-card-large .offer-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(94,64,116,0.25);
+    background: var(--primary-dark);
+}
+
+.offer-card-large.purple .offer-btn {
+    background: var(--primary);
+}
+
+.offer-card-large.gold .offer-btn {
+    background: linear-gradient(135deg, #D4AF37, #E8C84A);
+    color: var(--dark);
+}
+
+.offer-card-large.gold .offer-btn:hover {
+    box-shadow: 0 8px 25px rgba(212,175,55,0.35);
+}
+
+.offer-card-large.green .offer-btn {
+    background: #3C9070;
+}
+
+.offer-card-large.green .offer-btn:hover {
+    background: #2d6b55;
+}
+
+.offer-card-large .badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: #e74c3c;
+    color: white;
+    padding: 4px 14px;
+    border-radius: 30px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+/* Discounted Products */
+.discounted-products {
+    padding: 60px 6% 80px;
+    background: var(--white);
+}
+
+.discounted-products .section-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.discounted-products .section-title .sub {
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    background: rgba(94,64,116,0.06);
+    padding: 6px 20px;
+    border-radius: 40px;
+    display: inline-block;
+}
+
+.discounted-products .section-title h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    margin-top: 10px;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.discounted-products .section-title h2 .highlight {
+    color: var(--primary);
+}
+
+.discounted-products .view-all {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.discounted-products .view-all .btn-secondary {
+    padding: 12px 40px;
+    border: 2px solid var(--primary);
+    border-radius: 50px;
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 14px;
+    transition: var(--transition);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.discounted-products .view-all .btn-secondary:hover {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 8px 25px rgba(94,64,116,0.25);
+}
+
+/* Coupon Section */
+.coupon-section {
+    padding: 60px 6% 80px;
+    background: var(--cream);
+}
+
+.coupon-section .section-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.coupon-section .section-title .sub {
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    background: rgba(94,64,116,0.06);
+    padding: 6px 20px;
+    border-radius: 40px;
+    display: inline-block;
+}
+
+.coupon-section .section-title h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    margin-top: 10px;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.coupon-section .section-title h2 .highlight {
+    color: var(--primary);
+}
+
+.coupon-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+}
+
+.coupon-card {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    padding: 32px 28px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    border: 2px dashed #ddd;
+    transition: var(--transition);
+    box-shadow: var(--shadow);
+}
+
+.coupon-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+}
+
+.coupon-card .coupon-icon {
+    font-size: 40px;
+    color: var(--primary);
+    flex-shrink: 0;
+}
+
+.coupon-card .coupon-info h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--dark);
+}
+
+.coupon-card .coupon-info p {
+    font-size: 13px;
+    color: var(--gray);
+    margin: 4px 0;
+}
+
+.coupon-card .coupon-code {
+    display: inline-block;
+    background: var(--cream);
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--primary);
+    letter-spacing: 1px;
+    margin-top: 4px;
+}
+
+.coupon-card .coupon-btn {
+    margin-left: auto;
+    padding: 10px 24px;
+    border: none;
+    background: var(--primary);
+    color: white;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: var(--transition);
+    flex-shrink: 0;
+}
+
+.coupon-card .coupon-btn:hover {
+    background: var(--primary-dark);
+    transform: scale(1.02);
+}
+
+/* Product card styles for discounted products */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+}
+
+.product-card {
+    background: var(--cream);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    position: relative;
+    transition: var(--transition);
+    cursor: pointer;
+    border: 1px solid rgba(0,0,0,0.04);
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--primary);
+}
+
+.product-card .image-wrap {
+    padding: 20px 20px 0;
+    background: var(--white);
+    position: relative;
+}
+
+.product-card .image-wrap img {
+    height: 200px;
+    object-fit: contain;
+    transition: var(--transition);
+}
+
+.product-card:hover .image-wrap img {
+    transform: scale(1.05);
+}
+
+.product-card .discount-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background: var(--primary);
+    color: white;
+    padding: 4px 14px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 600;
+    animation: pulseBadge 2s ease-in-out infinite;
+}
+
+@keyframes pulseBadge {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.product-card .wishlist {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 38px;
+    height: 38px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    transition: var(--transition);
+    color: #ccc;
+    border: 1px solid #eee;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.product-card .wishlist:hover {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    transform: scale(1.08);
+}
+
+.product-card .info {
+    padding: 16px 20px 20px;
+}
+
+.product-card .info .brand {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gray);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.product-card .info h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 4px 0 4px;
+    color: var(--dark);
+}
+
+.product-card .info .rating {
+    color: #f5b342;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.product-card .info .rating span {
+    color: #c0c0d0;
+    font-weight: 300;
+    margin-left: 6px;
+    font-size: 12px;
+}
+
+.product-card .info .price {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.product-card .info .price .current {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.product-card .info .price .old {
+    font-size: 13px;
+    color: #c0c0d0;
+    text-decoration: line-through;
+    font-weight: 300;
+}
+
+.product-card .info .add-btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: var(--primary);
+    color: white;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 13px;
+    transition: var(--transition);
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+}
+
+.product-card .info .add-btn:hover {
+    background: var(--primary-dark);
+    box-shadow: 0 8px 25px rgba(94,64,116,0.25);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .offers-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .coupon-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .flash-banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px 24px;
+        margin: -20px 4% 30px;
+    }
+    .flash-banner .left h2 {
+        font-size: 30px;
+    }
+    .flash-banner .right {
+        justify-content: center;
+    }
+    .offers-grid {
+        grid-template-columns: 1fr;
+    }
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+    .coupon-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    .coupon-card .coupon-btn {
+        margin-left: 0;
+        width: 100%;
+    }
+    .flash-banner .right .timer-mini {
+        padding: 8px 14px;
+    }
+    .flash-banner .right .timer-mini .num {
+        font-size: 16px;
+    }
+    .discounted-products .section-title h2 {
+        font-size: 30px;
+    }
+    .coupon-section .section-title h2 {
+        font-size: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .flash-banner {
+        padding: 24px 16px;
+    }
+    .flash-banner .left h2 {
+        font-size: 26px;
+    }
+    .flash-banner .right .timer-mini {
+        gap: 4px;
+        padding: 6px 12px;
+    }
+    .flash-banner .right .timer-mini .num {
+        font-size: 14px;
+    }
+    .flash-banner .right .btn-dark {
+        padding: 12px 24px;
+        font-size: 13px;
+        width: 100%;
+        justify-content: center;
+    }
+    .product-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+    .product-card .image-wrap img {
+        height: 140px;
+    }
+    .product-card .info {
+        padding: 12px 14px 16px;
+    }
+    .product-card .info h3 {
+        font-size: 14px;
+    }
+    .product-card .info .price .current {
+        font-size: 15px;
+    }
+    .offer-card-large {
+        padding: 28px 20px;
+    }
+    .offer-card-large h3 {
+        font-size: 26px;
+    }
+    .coupon-card {
+        padding: 24px 16px;
+    }
+}
+</style>
+{% endblock %}
 
 {% block pre_content %}
-<div class="page-header-inner" style="background:linear-gradient(135deg,#fce4ec,#ffebee);padding:40px 6%;text-align:center;border-bottom:1px solid rgba(0,0,0,0.04);">
-    <span style="font-size:12px;letter-spacing:2px;color:#c62828;font-weight:600;background:rgba(255,255,255,0.5);padding:6px 18px;border-radius:40px;display:inline-block;margin-bottom:12px;">🔥 LIMITED TIME</span>
-    <h1 style="font-family:'Cormorant Garamond',serif;font-size:42px;color:var(--dark);margin-bottom:8px;">Special Offers</h1>
-    <p style="color:var(--gray);max-width:500px;margin:0 auto;">Unbeatable deals on your favourite beauty products. Don't miss out!</p>
+<!-- ===== OFFERS GRID ===== -->
+<section class="offers-grid-section">
+    <div class="offers-grid">
+        <div class="offer-card-large purple">
+            <span class="icon">🌟</span>
+            <span class="tag">LIMITED OFFER</span>
+            <h3>Buy 2 Get 1 FREE</h3>
+            <p>Selected Korean Skincare — stock up & save big on your favorites!</p>
+            <a href="#discounted" class="offer-btn"><i class="fa-solid fa-gift" style="margin-right:8px;"></i>Shop Now</a>
+            <span class="badge">🔥 HOT</span>
+        </div>
+        <div class="offer-card-large gold">
+            <span class="icon">🎉</span>
+            <span class="tag">NEW MEMBER</span>
+            <h3>20% OFF</h3>
+            <p>On Your First Purchase — welcome to the Kasbi family! Use code: WELCOME20</p>
+            <a href="#discounted" class="offer-btn"><i class="fa-solid fa-ticket" style="margin-right:8px;"></i>Claim Now</a>
+            <span class="badge">✨ NEW</span>
+        </div>
+        <div class="offer-card-large green">
+            <span class="icon">🚚</span>
+            <span class="tag">FREE SHIPPING</span>
+            <h3>Orders Above Rs.3000</h3>
+            <p>Anywhere Inside Nepal — no hidden charges. Free delivery on all orders!</p>
+            <a href="#discounted" class="offer-btn"><i class="fa-solid fa-map-location-dot" style="margin-right:8px;"></i>Explore</a>
+            <span class="badge">💯 FREE</span>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FLASH SALE BANNER ===== -->
+<div class="flash-banner">
+    <div class="left">
+        <span class="tag">⚡ FLASH SALE</span>
+        <h2>Up to 50% Off</h2>
+        <p>Hurry! These deals won't last long. Shop now and save big!</p>
+    </div>
+    <div class="right">
+        <div class="timer-mini">
+            <div class="item">
+                <span class="num" id="flashDays">05</span>
+                <span class="lbl">Days</span>
+            </div>
+            <div class="item">
+                <span class="num" id="flashHours">18</span>
+                <span class="lbl">Hours</span>
+            </div>
+            <div class="item">
+                <span class="num" id="flashMinutes">35</span>
+                <span class="lbl">Mins</span>
+            </div>
+            <div class="item">
+                <span class="num" id="flashSeconds">42</span>
+                <span class="lbl">Secs</span>
+            </div>
+        </div>
+        <a href="#discounted" class="btn-dark">
+            <i class="fa-solid fa-bolt"></i> Shop Now
+        </a>
+    </div>
 </div>
 {% endblock %}
 
 {% block content %}
-{% include 'products/_product_grid.html' %}
+<!-- ===== DISCOUNTED PRODUCTS ===== -->
+<section class="discounted-products" id="discounted">
+    <div class="section-title">
+        <span class="sub">DEALS OF THE DAY</span>
+        <h2>Discounted <span class="highlight">Products</span></h2>
+    </div>
+    <div class="product-grid" id="discountedGrid">
+        <!-- Products will be dynamically loaded here -->
+    </div>
+    <div class="view-all">
+        <a href="{% url 'products:shop' %}?sort=offer" class="btn-secondary">
+            View All Deals <i class="fa-solid fa-arrow-right" style="margin-left:10px;"></i>
+        </a>
+    </div>
+</section>
+
+<!-- ===== COUPON SECTION ===== -->
+<section class="coupon-section">
+    <div class="section-title">
+        <span class="sub">SAVE MORE</span>
+        <h2>Exclusive <span class="highlight">Coupons</span></h2>
+    </div>
+    <div class="coupon-grid">
+        <div class="coupon-card">
+            <div class="coupon-icon">🎁</div>
+            <div class="coupon-info">
+                <h4>First Order Discount</h4>
+                <p>Get 20% off on your very first purchase</p>
+                <span class="coupon-code">WELCOME20</span>
+            </div>
+            <button class="coupon-btn" onclick="copyCoupon('WELCOME20')">Copy Code</button>
+        </div>
+        <div class="coupon-card">
+            <div class="coupon-icon">💎</div>
+            <div class="coupon-info">
+                <h4>Premium Member Offer</h4>
+                <p>Extra 15% off on all Korean skincare</p>
+                <span class="coupon-code">KOREAN15</span>
+            </div>
+            <button class="coupon-btn" onclick="copyCoupon('KOREAN15')">Copy Code</button>
+        </div>
+        <div class="coupon-card">
+            <div class="coupon-icon">🚚</div>
+            <div class="coupon-info">
+                <h4>Free Shipping</h4>
+                <p>Free delivery on orders above Rs.3000</p>
+                <span class="coupon-code">FREESHIP</span>
+            </div>
+            <button class="coupon-btn" onclick="copyCoupon('FREESHIP')">Copy Code</button>
+        </div>
+        <div class="coupon-card">
+            <div class="coupon-icon">🎊</div>
+            <div class="coupon-info">
+                <h4>Birthday Bonus</h4>
+                <p>25% off on your birthday month</p>
+                <span class="coupon-code">BDAY25</span>
+            </div>
+            <button class="coupon-btn" onclick="copyCoupon('BDAY25')">Copy Code</button>
+        </div>
+    </div>
+</section>
+
+<script>
+// ===== DISCOUNTED PRODUCTS DATA =====
+const discountedProducts = [
+    { id: 1, name: 'Hydrating Cleanser', brand: 'CeraVe', price: 1920, oldPrice: 3200, rating: 5, ratingCount: 325, discount: 40 },
+    { id: 3, name: 'SuperStay Lipstick', brand: 'Maybelline', price: 1000, oldPrice: 2000, rating: 5, ratingCount: 540, discount: 50 },
+    { id: 2, name: 'Niacinamide 10%', brand: 'The Ordinary', price: 1995, oldPrice: 2850, rating: 5, ratingCount: 280, discount: 30 },
+    { id: 4, name: 'Moisturizing Lotion', brand: 'Cetaphil', price: 1870, oldPrice: 3400, rating: 5, ratingCount: 198, discount: 45 },
+    { id: 5, name: 'Revitalift Serum', brand: 'L\'Oreal', price: 3375, oldPrice: 4500, rating: 5, ratingCount: 412, discount: 25 },
+    { id: 6, name: 'Micellar Water', brand: 'Garnier', price: 1300, oldPrice: 2000, rating: 5, ratingCount: 267, discount: 35 },
+    { id: 9, name: 'Advanced Snail 96 Mucin', brand: 'COSRX', price: 2240, oldPrice: 2800, rating: 5, ratingCount: 363, discount: 20 },
+    { id: 22, name: 'Fit Me Foundation', brand: 'Maybelline', price: 1750, oldPrice: 2500, rating: 5, ratingCount: 298, discount: 30 }
+];
+
+function getInitials(name) {
+    return name.split(' ').map(w => w[0]).slice(0,2).join('').toUpperCase();
+}
+
+function renderDiscountedProducts() {
+    const grid = document.getElementById('discountedGrid');
+    
+    grid.innerHTML = discountedProducts.map(product => {
+        let stars = '';
+        for (let i = 0; i < 5; i++) stars += i < product.rating ? '★' : '☆';
+        const initials = getInitials(product.name);
+        
+        return `
+            <div class="product-card">
+                <div class="image-wrap">
+                    <span class="discount-badge">-${product.discount}%</span>
+                    <span class="wishlist" onclick="event.stopPropagation();toggleWishlist(this);"><i class="fa-regular fa-heart"></i></span>
+                    <svg viewBox="0 0 200 200" style="width:100%;height:200px;background:#eee6d8;">
+                        <rect width="200" height="200" fill="#eee6d8"/>
+                        <text x="100" y="115" font-family="Inter, sans-serif" font-size="42" font-weight="700" fill="#5E4074" text-anchor="middle">${initials}</text>
+                    </svg>
+                </div>
+                <div class="info">
+                    <span class="brand">${product.brand}</span>
+                    <h3>${product.name}</h3>
+                    <div class="rating">${stars} <span>(${product.ratingCount})</span></div>
+                    <div class="price">
+                        <span class="current">Rs.${product.price.toLocaleString()}</span>
+                        <span class="old">Rs.${product.oldPrice.toLocaleString()}</span>
+                    </div>
+                    <button class="add-btn" onclick="event.stopPropagation();addToCart(this, '${product.name}');">
+                        <i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart
+                    </button>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// ===== FLASH SALE TIMER =====
+function startFlashTimer() {
+    const days = document.getElementById('flashDays');
+    const hours = document.getElementById('flashHours');
+    const minutes = document.getElementById('flashMinutes');
+    const seconds = document.getElementById('flashSeconds');
+
+    let d = 5, h = 18, m = 35, s = 42;
+
+    setInterval(() => {
+        s--;
+        if (s < 0) { s = 59; m--; }
+        if (m < 0) { m = 59; h--; }
+        if (h < 0) { h = 23; d--; }
+
+        days.textContent = String(d).padStart(2, '0');
+        hours.textContent = String(h).padStart(2, '0');
+        minutes.textContent = String(m).padStart(2, '0');
+        seconds.textContent = String(s).padStart(2, '0');
+    }, 1000);
+}
+
+// ===== COPY COUPON CODE =====
+function copyCoupon(code) {
+    const btn = event.target;
+    const originalText = btn.textContent;
+    
+    navigator.clipboard.writeText(code).then(() => {
+        btn.textContent = '✅ Copied!';
+        btn.style.background = '#2ecc71';
+        btn.style.color = 'white';
+        
+        setTimeout(() => {
+            btn.textContent = originalText;
+            btn.style.background = '';
+            btn.style.color = '';
+        }, 2000);
+    }).catch(() => {
+        alert('Copy code: ' + code);
+    });
+}
+
+// ===== WISHLIST TOGGLE =====
+function toggleWishlist(element) {
+    const icon = element.querySelector('i');
+    icon.classList.toggle('fa-regular');
+    icon.classList.toggle('fa-solid');
+    if (icon.classList.contains('fa-solid')) {
+        element.style.background = '#5E4074';
+        element.style.color = 'white';
+        element.style.borderColor = '#5E4074';
+        showToast('❤️ Added to Wishlist!');
+    } else {
+        element.style.background = 'white';
+        element.style.color = '#ccc';
+        element.style.borderColor = '#eee';
+        showToast('💔 Removed from Wishlist');
+    }
+}
+
+// ===== ADD TO CART =====
+function addToCart(button, productName) {
+    const originalText = button.innerHTML;
+    button.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="margin-right:8px;"></i>Adding...';
+    button.style.background = '#5E4074';
+    button.style.color = 'white';
+    button.disabled = true;
+    
+    setTimeout(() => {
+        button.innerHTML = '<i class="fa-solid fa-check" style="margin-right:8px;"></i>Added!';
+        button.style.background = '#2ecc71';
+        button.style.color = 'white';
+        updateCartBadge();
+        showToast(`✅ ${productName} added to cart!`);
+        
+        setTimeout(() => {
+            button.innerHTML = originalText;
+            button.style.background = '';
+            button.style.color = '';
+            button.disabled = false;
+        }, 2000);
+    }, 700);
+}
+
+let cartCount = 3;
+function updateCartBadge() {
+    cartCount++;
+    const badge = document.querySelector('.cart-badge');
+    if (badge) {
+        badge.textContent = cartCount;
+        badge.style.animation = 'none';
+        setTimeout(() => {
+            badge.style.animation = 'badgePulse 0.5s ease';
+        }, 10);
+    }
+}
+
+// ===== TOAST NOTIFICATION =====
+function showToast(message) {
+    const existing = document.querySelector('.toast-notification');
+    if (existing) existing.remove();
+
+    const toast = document.createElement('div');
+    toast.className = 'toast-notification';
+    toast.textContent = message;
+    toast.style.cssText = `
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: #2d1a3a;
+        color: white;
+        padding: 14px 24px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 500;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+        z-index: 10000;
+        animation: slideInUp 0.4s ease forwards;
+        font-family: 'Inter', sans-serif;
+        max-width: 350px;
+        border-left: 4px solid #e91e63;
+    `;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.style.animation = 'slideOutDown 0.4s ease forwards';
+        setTimeout(() => { toast.remove(); }, 400);
+    }, 3000);
+}
+
+// ===== ADD CSS ANIMATIONS =====
+const styleSheet = document.createElement('style');
+styleSheet.textContent = `
+    @keyframes slideInUp {
+        0% { transform: translateY(100px); opacity: 0; }
+        100% { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes slideOutDown {
+        0% { transform: translateY(0); opacity: 1; }
+        100% { transform: translateY(100px); opacity: 0; }
+    }
+    @keyframes badgePulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.4); }
+        100% { transform: scale(1); }
+    }
+    .toast-notification {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: #2d1a3a;
+        color: white;
+        padding: 14px 24px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 500;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+        z-index: 10000;
+        animation: slideInUp 0.4s ease forwards;
+        font-family: 'Inter', sans-serif;
+        max-width: 350px;
+        border-left: 4px solid #e91e63;
+    }
+`;
+document.head.appendChild(styleSheet);
+
+// ===== INITIALIZE =====
+document.addEventListener('DOMContentLoaded', function() {
+    renderDiscountedProducts();
+    startFlashTimer();
+});
+
+console.log('🎉 Kasbi Beauty — Special Offers Page 🎉');
+</script>
 {% endblock %}

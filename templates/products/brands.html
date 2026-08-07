@@ -2,57 +2,465 @@
 {% load static %}
 {% block title %}All Brands — {{ site_settings.site_name }}{% endblock %}
 
-{% block pre_content %}
-<div style="background:var(--cream);padding:40px 6%;text-align:center;border-bottom:1px solid rgba(0,0,0,0.05);">
-    <span style="font-size:12px;letter-spacing:2px;color:var(--primary);font-weight:600;text-transform:uppercase;">Our Partners</span>
-    <h1 style="font-family:'Cormorant Garamond',serif;font-size:42px;color:var(--dark);margin:10px 0 8px;">All <span style="color:var(--primary);">Brands</span></h1>
-    <p style="color:var(--gray);font-size:15px;">Showing {{ brands|length }} brand{{ brands|length|pluralize }}</p>
-    <div style="font-size:13px;color:var(--gray);margin-top:8px;">
-        <a href="{% url 'core:home' %}" style="color:var(--primary);">Home</a> / Brands
-    </div>
-</div>
-{% endblock %}
+{% block pre_content %}{% endblock %}
 
 {% block content %}
-<section style="padding:50px 6%;max-width:1400px;margin:0 auto;">
+<section style="padding:40px 6%;max-width:1440px;margin:0 auto;">
 
-    {% if brands %}
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:20px;">
-        {% for brand in brands %}
-        <a href="{% url 'products:shop' %}?brand={{ brand.slug }}"
-           style="background:var(--white);border-radius:16px;padding:28px 20px;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:12px;"
-           onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';"
-           onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+    <!-- Header with title and count -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:700;color:var(--dark);margin:0;">
+            All <span style="color:var(--primary);">Brands</span>
+        </h2>
+        <span style="color:var(--gray);font-size:15px;font-weight:500;" id="brandCount">Showing 32 brands</span>
+    </div>
 
-            <div style="width:80px;height:80px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;">
-                {% if brand.logo %}
-                <img src="{{ brand.logo.url }}" alt="{{ brand.name }}"
-                     style="width:100%;height:100%;object-fit:contain;padding:8px;">
-                {% else %}
-                <span style="font-size:28px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">
-                    {{ brand.name|first|upper }}
-                </span>
-                {% endif %}
+    <!-- Brand Filter - Centered -->
+    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px;justify-content:center;">
+        <button class="filter-btn active" data-filter="all" style="padding:10px 28px;border:2px solid var(--primary);border-radius:30px;background:var(--primary);color:#fff;font-weight:600;cursor:pointer;transition:all 0.3s ease;font-size:14px;font-family:'Inter',sans-serif;">All</button>
+        <button class="filter-btn" data-filter="skincare" style="padding:10px 28px;border:2px solid #e2ded7;border-radius:30px;background:transparent;color:var(--gray);font-weight:600;cursor:pointer;transition:all 0.3s ease;font-size:14px;font-family:'Inter',sans-serif;">Skincare</button>
+        <button class="filter-btn" data-filter="makeup" style="padding:10px 28px;border:2px solid #e2ded7;border-radius:30px;background:transparent;color:var(--gray);font-weight:600;cursor:pointer;transition:all 0.3s ease;font-size:14px;font-family:'Inter',sans-serif;">Makeup</button>
+        <button class="filter-btn" data-filter="haircare" style="padding:10px 28px;border:2px solid #e2ded7;border-radius:30px;background:transparent;color:var(--gray);font-weight:600;cursor:pointer;transition:all 0.3s ease;font-size:14px;font-family:'Inter',sans-serif;">Hair Care</button>
+        <button class="filter-btn" data-filter="fragrance" style="padding:10px 28px;border:2px solid #e2ded7;border-radius:30px;background:transparent;color:var(--gray);font-weight:600;cursor:pointer;transition:all 0.3s ease;font-size:14px;font-family:'Inter',sans-serif;">Fragrance</button>
+        <button class="filter-btn" data-filter="korean" style="padding:10px 28px;border:2px solid #e2ded7;border-radius:30px;background:transparent;color:var(--gray);font-weight:600;cursor:pointer;transition:all 0.3s ease;font-size:14px;font-family:'Inter',sans-serif;">Korean Beauty</button>
+        <button class="filter-btn" data-filter="babycare" style="padding:10px 28px;border:2px solid #e2ded7;border-radius:30px;background:transparent;color:var(--gray);font-weight:600;cursor:pointer;transition:all 0.3s ease;font-size:14px;font-family:'Inter',sans-serif;">Babycare</button>
+    </div>
+
+    <!-- Brands Grid - 4 per row with taller cards -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;" id="brandsGrid">
+
+        <!-- ===== SKINCARE BRANDS ===== -->
+        <!-- CeraVe -->
+        <a href="{% url 'products:shop' %}?brand=cerave" class="brand-card" data-category="skincare" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <!-- Large Image Container -->
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">CV</span>
             </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">CeraVe</h4>
+                <span style="font-size:13px;color:var(--gray);">30 Products</span>
+            </div>
+            <span style="position:absolute;top:12px;right:12px;background:linear-gradient(135deg,#D4AF37,#E8C84A);color:var(--dark);padding:3px 12px;border-radius:20px;font-size:10px;font-weight:700;z-index:2;">⭐ Featured</span>
+        </a>
 
-            <div>
-                <h4 style="font-size:14px;font-weight:700;color:var(--dark);margin:0 0 4px;">{{ brand.name }}</h4>
-                <span style="font-size:12px;color:var(--gray);">
-                    {{ brand.products.count }} product{{ brand.products.count|pluralize }}
-                </span>
+        <!-- Cetaphil -->
+        <a href="{% url 'products:shop' %}?brand=cetaphil" class="brand-card" data-category="skincare" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">CT</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">Cetaphil</h4>
+                <span style="font-size:13px;color:var(--gray);">25 Products</span>
             </div>
         </a>
-        {% endfor %}
-    </div>
 
-    {% else %}
-    <div style="text-align:center;padding:80px 20px;">
-        <i class="fa-solid fa-tags" style="font-size:48px;color:var(--primary);opacity:0.3;margin-bottom:16px;display:block;"></i>
-        <h3 style="color:var(--dark);font-family:'Cormorant Garamond',serif;font-size:28px;margin-bottom:8px;">No brands yet</h3>
-        <p style="color:var(--gray);margin-bottom:24px;">Brands will appear here once added from the admin panel.</p>
-        <a href="{% url 'products:shop' %}" class="btn-primary">Browse All Products</a>
+        <!-- The Ordinary -->
+        <a href="{% url 'products:shop' %}?brand=theordinary" class="brand-card" data-category="skincare" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">TO</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">The Ordinary</h4>
+                <span style="font-size:13px;color:var(--gray);">42 Products</span>
+            </div>
+            <span style="position:absolute;top:12px;right:12px;background:linear-gradient(135deg,#D4AF37,#E8C84A);color:var(--dark);padding:3px 12px;border-radius:20px;font-size:10px;font-weight:700;z-index:2;">⭐ Featured</span>
+        </a>
+
+        <!-- The Purest Solutions -->
+        <a href="{% url 'products:shop' %}?brand=thepurest" class="brand-card" data-category="skincare" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">PS</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">The Purest Solutions</h4>
+                <span style="font-size:13px;color:var(--gray);">22 Products</span>
+            </div>
+        </a>
+
+        <!-- Simple -->
+        <a href="{% url 'products:shop' %}?brand=simple" class="brand-card" data-category="skincare" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">SM</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">Simple</h4>
+                <span style="font-size:13px;color:var(--gray);">24 Products</span>
+            </div>
+        </a>
+
+        <!-- La Roche-Posay -->
+        <a href="{% url 'products:shop' %}?brand=la-roche-posay" class="brand-card" data-category="skincare" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">LR</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">La Roche-Posay</h4>
+                <span style="font-size:13px;color:var(--gray);">22 Products</span>
+            </div>
+            <span style="position:absolute;top:12px;right:12px;background:linear-gradient(135deg,#D4AF37,#E8C84A);color:var(--dark);padding:3px 12px;border-radius:20px;font-size:10px;font-weight:700;z-index:2;">⭐ Featured</span>
+        </a>
+
+        <!-- Axis-Y -->
+        <a href="{% url 'products:shop' %}?brand=axisy" class="brand-card" data-category="skincare" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">AY</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">Axis-Y</h4>
+                <span style="font-size:13px;color:var(--gray);">14 Products</span>
+            </div>
+        </a>
+
+        <!-- Plum -->
+        <a href="{% url 'products:shop' %}?brand=plum" class="brand-card" data-category="skincare" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">PL</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">Plum</h4>
+                <span style="font-size:13px;color:var(--gray);">25 Products</span>
+            </div>
+            <span style="position:absolute;top:12px;right:12px;background:#2ecc71;color:#fff;padding:3px 12px;border-radius:20px;font-size:10px;font-weight:700;z-index:2;">✨ New</span>
+        </a>
+
+        <!-- Mamaearth -->
+        <a href="{% url 'products:shop' %}?brand=mamaearth" class="brand-card" data-category="skincare" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">ME</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">Mamaearth</h4>
+                <span style="font-size:13px;color:var(--gray);">18 Products</span>
+            </div>
+        </a>
+
+        <!-- Dot & Key -->
+        <a href="{% url 'products:shop' %}?brand=dotkey" class="brand-card" data-category="skincare" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">DK</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">Dot &amp; Key</h4>
+                <span style="font-size:13px;color:var(--gray);">15 Products</span>
+            </div>
+        </a>
+
+        <!-- ===== MAKEUP BRANDS ===== -->
+        <!-- Maybelline -->
+        <a href="{% url 'products:shop' %}?brand=maybelline" class="brand-card" data-category="makeup" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">MB</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">Maybelline</h4>
+                <span style="font-size:13px;color:var(--gray);">38 Products</span>
+            </div>
+            <span style="position:absolute;top:12px;right:12px;background:linear-gradient(135deg,#D4AF37,#E8C84A);color:var(--dark);padding:3px 12px;border-radius:20px;font-size:10px;font-weight:700;z-index:2;">⭐ Featured</span>
+        </a>
+
+        <!-- L'Oreal -->
+        <a href="{% url 'products:shop' %}?brand=loreal" class="brand-card" data-category="makeup" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">LO</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">L'Oreal</h4>
+                <span style="font-size:13px;color:var(--gray);">45 Products</span>
+            </div>
+            <span style="position:absolute;top:12px;right:12px;background:linear-gradient(135deg,#D4AF37,#E8C84A);color:var(--dark);padding:3px 12px;border-radius:20px;font-size:10px;font-weight:700;z-index:2;">⭐ Featured</span>
+        </a>
+
+        <!-- NYX -->
+        <a href="{% url 'products:shop' %}?brand=nyx" class="brand-card" data-category="makeup" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">NX</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">NYX</h4>
+                <span style="font-size:13px;color:var(--gray);">28 Products</span>
+            </div>
+        </a>
+
+        <!-- MAC -->
+        <a href="{% url 'products:shop' %}?brand=mac" class="brand-card" data-category="makeup" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">MC</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">MAC</h4>
+                <span style="font-size:13px;color:var(--gray);">32 Products</span>
+            </div>
+            <span style="position:absolute;top:12px;right:12px;background:linear-gradient(135deg,#D4AF37,#E8C84A);color:var(--dark);padding:3px 12px;border-radius:20px;font-size:10px;font-weight:700;z-index:2;">⭐ Featured</span>
+        </a>
+
+        <!-- wet n wild -->
+        <a href="{% url 'products:shop' %}?brand=wetnwild" class="brand-card" data-category="makeup" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">WN</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">wet n wild</h4>
+                <span style="font-size:13px;color:var(--gray);">30 Products</span>
+            </div>
+        </a>
+
+        <!-- L.A. Girl -->
+        <a href="{% url 'products:shop' %}?brand=lagirl" class="brand-card" data-category="makeup" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">LG</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">L.A. Girl</h4>
+                <span style="font-size:13px;color:var(--gray);">22 Products</span>
+            </div>
+        </a>
+
+        <!-- Huda Beauty -->
+        <a href="{% url 'products:shop' %}?brand=hudabeauty" class="brand-card" data-category="makeup" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">HB</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">Huda Beauty</h4>
+                <span style="font-size:13px;color:var(--gray);">28 Products</span>
+            </div>
+            <span style="position:absolute;top:12px;right:12px;background:#2ecc71;color:#fff;padding:3px 12px;border-radius:20px;font-size:10px;font-weight:700;z-index:2;">✨ New</span>
+        </a>
+
+        <!-- Airspun -->
+        <a href="{% url 'products:shop' %}?brand=airspun" class="brand-card" data-category="makeup" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">AP</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">Airspun</h4>
+                <span style="font-size:13px;color:var(--gray);">18 Products</span>
+            </div>
+        </a>
+
+        <!-- O.TWO.O -->
+        <a href="{% url 'products:shop' %}?brand=otwo" class="brand-card" data-category="makeup" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">OT</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">O.TWO.O</h4>
+                <span style="font-size:13px;color:var(--gray);">16 Products</span>
+            </div>
+        </a>
+
+        <!-- DUcare -->
+        <a href="{% url 'products:shop' %}?brand=ducare" class="brand-card" data-category="makeup" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">DC</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">DUcare</h4>
+                <span style="font-size:13px;color:var(--gray);">20 Products</span>
+            </div>
+        </a>
+
+        <!-- Inglot -->
+        <a href="{% url 'products:shop' %}?brand=inglot" class="brand-card" data-category="makeup" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">IG</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">Inglot</h4>
+                <span style="font-size:13px;color:var(--gray);">16 Products</span>
+            </div>
+        </a>
+
+        <!-- Forever52 -->
+        <a href="{% url 'products:shop' %}?brand=forever52" class="brand-card" data-category="makeup" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">F5</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">Forever52</h4>
+                <span style="font-size:13px;color:var(--gray);">20 Products</span>
+            </div>
+        </a>
+
+        <!-- Pastel -->
+        <a href="{% url 'products:shop' %}?brand=pastel" class="brand-card" data-category="makeup" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">PA</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">Pastel</h4>
+                <span style="font-size:13px;color:var(--gray);">12 Products</span>
+            </div>
+        </a>
+
+        <!-- ===== HAIRCARE BRANDS ===== -->
+        <!-- Garnier -->
+        <a href="{% url 'products:shop' %}?brand=garnier" class="brand-card" data-category="haircare" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">GN</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">Garnier</h4>
+                <span style="font-size:13px;color:var(--gray);">35 Products</span>
+            </div>
+            <span style="position:absolute;top:12px;right:12px;background:linear-gradient(135deg,#D4AF37,#E8C84A);color:var(--dark);padding:3px 12px;border-radius:20px;font-size:10px;font-weight:700;z-index:2;">⭐ Featured</span>
+        </a>
+
+        <!-- ===== FRAGRANCE BRANDS ===== -->
+        <!-- Victoria's Secret -->
+        <a href="{% url 'products:shop' %}?brand=victoriassecret" class="brand-card" data-category="fragrance" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">VS</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">Victoria's Secret</h4>
+                <span style="font-size:13px;color:var(--gray);">15 Products</span>
+            </div>
+            <span style="position:absolute;top:12px;right:12px;background:linear-gradient(135deg,#D4AF37,#E8C84A);color:var(--dark);padding:3px 12px;border-radius:20px;font-size:10px;font-weight:700;z-index:2;">⭐ Featured</span>
+        </a>
+
+        <!-- Bath & Body Works -->
+        <a href="{% url 'products:shop' %}?brand=bathbodyworks" class="brand-card" data-category="fragrance" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">BB</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">Bath &amp; Body Works</h4>
+                <span style="font-size:13px;color:var(--gray);">32 Products</span>
+            </div>
+        </a>
+
+        <!-- ===== KOREAN BEAUTY BRANDS ===== -->
+        <!-- COSRX -->
+        <a href="{% url 'products:shop' %}?brand=cosrx" class="brand-card" data-category="korean" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">CX</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">COSRX</h4>
+                <span style="font-size:13px;color:var(--gray);">38 Products</span>
+            </div>
+            <span style="position:absolute;top:12px;right:12px;background:linear-gradient(135deg,#D4AF37,#E8C84A);color:var(--dark);padding:3px 12px;border-radius:20px;font-size:10px;font-weight:700;z-index:2;">⭐ Featured</span>
+        </a>
+
+        <!-- Innisfree -->
+        <a href="{% url 'products:shop' %}?brand=innisfree" class="brand-card" data-category="korean" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">IN</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">Innisfree</h4>
+                <span style="font-size:13px;color:var(--gray);">28 Products</span>
+            </div>
+        </a>
+
+        <!-- Laneige -->
+        <a href="{% url 'products:shop' %}?brand=laneige" class="brand-card" data-category="korean" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">LN</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">Laneige</h4>
+                <span style="font-size:13px;color:var(--gray);">20 Products</span>
+            </div>
+            <span style="position:absolute;top:12px;right:12px;background:#2ecc71;color:#fff;padding:3px 12px;border-radius:20px;font-size:10px;font-weight:700;z-index:2;">✨ New</span>
+        </a>
+
+        <!-- Skin1004 -->
+        <a href="{% url 'products:shop' %}?brand=skin1004" class="brand-card" data-category="korean" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">S1</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">Skin1004</h4>
+                <span style="font-size:13px;color:var(--gray);">18 Products</span>
+            </div>
+        </a>
+
+        <!-- Dr. Althea -->
+        <a href="{% url 'products:shop' %}?brand=dralthea" class="brand-card" data-category="korean" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">DA</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">Dr. Althea</h4>
+                <span style="font-size:13px;color:var(--gray);">15 Products</span>
+            </div>
+        </a>
+
+        <!-- ===== BABYCARE BRANDS ===== -->
+        <!-- Sanosan -->
+        <a href="{% url 'products:shop' %}?brand=sanosan" class="brand-card" data-category="babycare" style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;gap:0;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
+            <div style="width:100%;height:180px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:48px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">SN</span>
+            </div>
+            <div style="padding:16px 16px 8px 16px;">
+                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">Sanosan</h4>
+                <span style="font-size:13px;color:var(--gray);">12 Products</span>
+            </div>
+            <span style="position:absolute;top:12px;right:12px;background:#2ecc71;color:#fff;padding:3px 12px;border-radius:20px;font-size:10px;font-weight:700;z-index:2;">✨ New</span>
+        </a>
+
     </div>
-    {% endif %}
 
 </section>
+
+<script>
+// ===== BRAND FILTER =====
+document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const brandCards = document.querySelectorAll('.brand-card');
+    const brandCount = document.getElementById('brandCount');
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Remove active class from all buttons
+            filterButtons.forEach(btn => {
+                btn.style.background = 'transparent';
+                btn.style.color = 'var(--gray)';
+                btn.style.borderColor = '#e2ded7';
+                btn.classList.remove('active');
+            });
+            
+            // Activate clicked button
+            this.style.background = 'var(--primary)';
+            this.style.color = '#fff';
+            this.style.borderColor = 'var(--primary)';
+            this.classList.add('active');
+
+            const filter = this.dataset.filter;
+            let visibleCount = 0;
+
+            brandCards.forEach(card => {
+                if (filter === 'all' || card.dataset.category === filter) {
+                    card.style.display = 'flex';
+                    card.style.animation = 'fadeIn 0.5s ease forwards';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            if (brandCount) {
+                brandCount.textContent = `Showing ${visibleCount} brands`;
+            }
+        });
+    });
+
+    // ===== FADE IN ANIMATION =====
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .brand-card {
+            animation: fadeIn 0.5s ease forwards;
+        }
+    `;
+    document.head.appendChild(style);
+
+    console.log('🏷️ Kasbi Beauty — Brands Page Loaded!');
+});
+</script>
 {% endblock %}

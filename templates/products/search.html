@@ -1,15 +1,9 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Search Results — Kisba Beauty</title>
+﻿{% extends 'base.html' %}
+{% load static %}
 
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+{% block title %}Search Results — Kasbi Beauty{% endblock %}
 
+{% block extra_head %}
 <style>
 /* ============ BASE / TOKENS ============ */
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -44,86 +38,6 @@ body {
 }
 
 a { color: inherit; }
-
-/* ============ TOP BAR ============ */
-.topbar {
-    background: var(--primary-dark);
-    color: rgba(255,255,255,.82);
-    padding: 9px 6%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 12.5px;
-    flex-wrap: wrap;
-    gap: 8px;
-    letter-spacing: .2px;
-}
-.topbar .left i { margin-right: 8px; color: var(--gold); }
-.topbar .right { display: flex; gap: 22px; }
-.topbar .right a { color: rgba(255,255,255,.72); text-decoration: none; transition: var(--transition); font-size: 12px; }
-.topbar .right a:hover { color: #fff; }
-.topbar .right a i { margin-right: 5px; }
-
-/* ============ HEADER ============ */
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #f8f5ee;
-    padding: 22px 3%;
-    border-bottom: 1px solid #ece5db;
-    gap: 24px;
-}
-
-/* ---- Logo with image ---- */
-.logo a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-}
-.logo img {
-    height: 45px;
-    width: auto;
-    display: block;
-}
-
-/* fallback text logo */
-.logo .logo-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 700;
-    font-size: 30px;
-    color: var(--primary-dark);
-    text-decoration: none;
-    white-space: nowrap;
-}
-.logo .logo-text span { color: var(--gold); font-style: italic; font-size: 20px; }
-
-.search-box {
-    flex: 1;
-    max-width: 780px;
-    height: 52px;
-    border: 2px solid var(--primary);
-    border-radius: 40px;
-    overflow: hidden;
-    background: #fff;
-    display: flex;
-    transition: var(--transition);
-}
-.search-box:focus-within { box-shadow: 0 0 0 4px rgba(94,64,116,.12); }
-.search-box input { flex: 1; padding: 12px 22px; border: none; outline: none; background: transparent; font-size: 14px; font-family: 'Inter', sans-serif; }
-.search-box button { padding: 0 26px; background: var(--primary-gradient); color: #fff; border: none; cursor: pointer; transition: var(--transition); font-size: 16px; }
-.search-box button:hover { filter: brightness(1.08); }
-
-.header-icons { display: flex; gap: 26px; }
-.header-icons > div { position: relative; text-align: center; }
-.header-icons > div a { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: var(--dark); font-size: 11px; font-weight: 500; transition: var(--transition); }
-.header-icons > div a:hover { color: var(--primary); }
-.header-icons > div a i { font-size: 19px; margin-bottom: 2px; }
-.cart-badge {
-    position: absolute; top: -6px; right: 6px; width: 17px; height: 17px;
-    display: flex; justify-content: center; align-items: center; font-size: 10px;
-    background: #ff2b6d; border-radius: 50%; color: #fff; font-weight: 700;
-}
 
 /* ============ SEARCH RESULTS SECTION ============ */
 .search-results-section { padding: 36px 6% 70px; max-width: 1440px; margin: 0 auto; }
@@ -199,12 +113,6 @@ a { color: inherit; }
 .search-header h1 { font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
 .search-header .search-info { color: var(--gray); font-size: 14px; }
 .search-header .search-info strong { color: var(--primary-dark); }
-
-.search-box-large { display: flex; gap: 12px; margin: 18px 0 22px; max-width: 700px; }
-.search-box-large input { flex: 1; padding: 13px 20px; border: 2px solid #e2ded7; border-radius: 30px; font-size: 15px; outline: none; transition: var(--transition); font-family: 'Inter', sans-serif; background: var(--white); }
-.search-box-large input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(94,64,116,.08); }
-.search-box-large button { padding: 13px 30px; background: var(--primary-gradient); color: #fff; border: none; border-radius: 30px; font-size: 14.5px; font-weight: 700; cursor: pointer; transition: var(--transition); white-space: nowrap; }
-.search-box-large button:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(94,64,116,.28); }
 
 .search-filters { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 26px; padding: 15px 0; border-top: 1px solid #ece7dd; border-bottom: 1px solid #ece7dd; }
 .search-filters .filter-label { font-weight: 700; font-size: 13px; color: var(--dark); margin-right: 4px; display: flex; align-items: center; gap: 6px; }
@@ -286,74 +194,25 @@ a { color: inherit; }
 @keyframes slideOutDown { 0%{ transform: translateY(0); opacity:1; } 100%{ transform: translateY(100px); opacity:0; } }
 @keyframes badgePulse { 0%{ transform: scale(1);} 50%{ transform: scale(1.4);} 100%{ transform: scale(1);} }
 
-/* ---- Footer ---- */
-.footer { background: var(--primary-dark); color: rgba(255,255,255,.8); padding: 46px 6% 20px; margin-top: 20px; }
-.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 26px; }
-.footer-grid p { font-size: 13.5px; line-height: 1.8; margin-bottom: 16px; }
-.footer-grid h4 { color: #fff; font-size: 15px; margin-bottom: 14px; font-weight: 700; }
-.footer-grid ul { list-style: none; }
-.footer-grid ul li { margin-bottom: 9px; }
-.footer-grid ul li a { color: rgba(255,255,255,.7); text-decoration: none; font-size: 13.5px; transition: var(--transition); }
-.footer-grid ul li a:hover { color: #fff; }
-.footer-bottom { border-top: 1px solid rgba(255,255,255,.12); padding-top: 18px; display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; flex-wrap: wrap; gap: 10px; }
-
 /* ---- Responsive ---- */
 @media (max-width: 1250px) { .search-results { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 992px) {
     .filter-sidebar { flex: 0 0 230px; padding: 18px; }
     .search-layout { gap: 20px; }
-    .footer-grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 768px) {
     .search-layout { flex-direction: column; }
     .filter-sidebar { flex: 1 1 auto; width: 100%; position: relative; top: 0; max-height: none; overflow-y: visible; }
     .search-results { grid-template-columns: repeat(2, 1fr); }
-    .search-box-large { flex-direction: column; }
-    .header { flex-wrap: wrap; }
-    .search-box { order: 3; flex: 1 1 100%; }
-    .topbar .right { display: none; }
     .search-header h1 { font-size: 27px; }
     .sort-select { margin-left: 0; }
-    .footer-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 480px) { .search-results { grid-template-columns: 1fr 1fr; gap: 12px; } }
 </style>
-</head>
-<body>
+{% endblock %}
 
-<div class="topbar">
-    <div class="left"><i class="fa-solid fa-truck-fast"></i> Free Delivery inside Kathmandu on Orders above Rs.3000</div>
-    <div class="right">
-        <a href="#"><i class="fa-regular fa-clock"></i> Track Order</a>
-        <a href="#"><i class="fa-regular fa-newspaper"></i> Beauty Blog</a>
-        <a href="#"><i class="fa-regular fa-circle-question"></i> Help Center</a>
-    </div>
-</div>
-
-<header class="header">
-    <!-- Logo with image -->
-    <div class="logo">
-        <a href="#">
-            <!-- 
-                Replace the src below with your actual logo URL.
-                For Django, use: {% load static %} and src="{% static 'img/logo3.png' %}"
-            -->
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60'%3E%3Crect width='200' height='60' fill='%235E4074' rx='8'/%3E%3Ctext x='20' y='38' font-family='Cormorant Garamond,serif' font-size='28' font-weight='700' fill='%23D4AF37'%3EKisba%3C/text%3E%3Ctext x='95' y='38' font-family='Cormorant Garamond,serif' font-size='20' font-style='italic' fill='%23fff'%3EBeauty%3C/text%3E%3C/svg%3E" alt="Kisba Beauty" />
-            <!-- fallback text logo (uncomment if image not available) -->
-            <!-- <span class="logo-text">Kisba <span>Beauty</span></span> -->
-        </a>
-    </div>
-    <div class="search-box">
-        <input type="text" id="headerSearchInput" placeholder="Search skincare, makeup, serum...">
-        <button id="headerSearchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
-    </div>
-    <div class="header-icons">
-        <div><a href="#"><i class="fa-regular fa-heart"></i><span>Wishlist</span></a></div>
-        <div><a href="#"><i class="fa-solid fa-bag-shopping"></i><span>Cart</span><span class="cart-badge">3</span></a></div>
-        <div><a href="#"><i class="fa-regular fa-user"></i><span>Account</span></a></div>
-    </div>
-</header>
-
+{% block content %}
+<!-- ============ SEARCH RESULTS SECTION ============ -->
 <section class="search-results-section">
     <div class="search-layout">
 
@@ -418,11 +277,6 @@ a { color: inherit; }
                     for "<strong id="searchTermDisplay">All Products</strong>"
                 </div>
 
-                <div class="search-box-large">
-                    <input type="text" id="searchInputLarge" placeholder="Search skincare, makeup, serum...">
-                    <button id="searchBtnLarge"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
-                </div>
-
                 <div class="search-filters" id="searchFilters">
                     <span class="filter-label"><i class="fa-solid fa-sliders"></i> Category:</span>
                     <span class="filter-tag active" data-filter="all">All</span>
@@ -450,46 +304,8 @@ a { color: inherit; }
     </div>
 </section>
 
-<footer class="footer">
-    <div class="footer-grid">
-        <div>
-            <a href="#" style="display:inline-block; margin-bottom:14px;">
-                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60'%3E%3Crect width='200' height='60' fill='%235E4074' rx='8'/%3E%3Ctext x='20' y='38' font-family='Cormorant Garamond,serif' font-size='28' font-weight='700' fill='%23D4AF37'%3EKisba%3C/text%3E%3Ctext x='95' y='38' font-family='Cormorant Garamond,serif' font-size='20' font-style='italic' fill='%23fff'%3EBeauty%3C/text%3E%3C/svg%3E" alt="Kisba Beauty" style="height:45px; width:auto;" />
-            </a>
-            <p style="margin-top:0;">Your trusted beauty destination in Nepal. Premium skincare, makeup, haircare & fragrance — all 100% authentic.</p>
-        </div>
-        <div>
-            <h4>Quick Links</h4>
-            <ul>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Contact Us</a></li>
-                <li><a href="#">Beauty Blog</a></li>
-                <li><a href="#">Track Order</a></li>
-                <li><a href="#">Returns & Refunds</a></li>
-            </ul>
-        </div>
-        <div>
-            <h4>Categories</h4>
-            <ul>
-                <li><a href="#">Skincare</a></li>
-                <li><a href="#">Makeup</a></li>
-                <li><a href="#">Hair Care</a></li>
-                <li><a href="#">Fragrance</a></li>
-            </ul>
-        </div>
-        <div>
-            <h4>Contact</h4>
-            <ul>
-                <li><a href="#"><i class="fa-solid fa-phone" style="margin-right:8px;"></i>+977 980-0000000</a></li>
-                <li><a href="#"><i class="fa-regular fa-envelope" style="margin-right:8px;"></i>hello@KISBA.com</a></li>
-                <li><a href="#"><i class="fa-regular fa-location-dot" style="margin-right:8px;"></i>Kathmandu, Nepal</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <span>© 2026 Kisba Beauty. All rights reserved.</span>
-    </div>
-</footer>
+<!-- ============ TOAST CONTAINER ============ -->
+<div id="toastContainer"></div>
 
 <script>
 const PROVINCES = ['bagmati', 'madhesh', 'gandaki', 'koshi', 'overseas', 'local'];
@@ -1057,23 +873,30 @@ function renderPagination(totalPages) {
     });
 }
 
-function performSearch(inputEl) {
-    const term = inputEl.value.trim();
-    currentSearchTerm = term;
-    currentPage = 1;
-    document.getElementById('searchInputLarge').value = term;
-    document.getElementById('headerSearchInput').value = term;
-    applyAllFilters();
+function showToast(message) {
+    const existing = document.querySelector('.toast-notification');
+    if (existing) existing.remove();
+    const toast = document.createElement('div');
+    toast.className = 'toast-notification';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+        toast.style.animation = 'slideOutDown 0.4s ease forwards';
+        setTimeout(() => toast.remove(), 400);
+    }, 3000);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Get search term from URL parameter (from the search form submission)
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchParam = urlParams.get('q');
+    
+    if (searchParam) {
+        currentSearchTerm = searchParam.trim();
+        document.getElementById('searchTermDisplay').textContent = currentSearchTerm;
+    }
+
     buildSidebar();
-
-    document.getElementById('headerSearchBtn').addEventListener('click', () => performSearch(document.getElementById('headerSearchInput')));
-    document.getElementById('headerSearchInput').addEventListener('keypress', e => { if (e.key === 'Enter') performSearch(e.target); });
-
-    document.getElementById('searchBtnLarge').addEventListener('click', () => performSearch(document.getElementById('searchInputLarge')));
-    document.getElementById('searchInputLarge').addEventListener('keypress', e => { if (e.key === 'Enter') performSearch(e.target); });
 
     document.querySelectorAll('.filter-tag').forEach(tag => {
         tag.addEventListener('click', function() {
@@ -1139,7 +962,13 @@ document.addEventListener('click', function(e) {
         setTimeout(() => {
             addBtn.innerHTML = '<i class="fa-solid fa-check" style="margin-right:8px;"></i>Added!';
             addBtn.style.background = '#2ecc71'; addBtn.style.color = '#fff';
-            updateCartBadge();
+            const badge = document.querySelector('.cart-badge');
+            if (badge) {
+                cartCount++;
+                badge.textContent = cartCount;
+                badge.style.animation = 'none';
+                setTimeout(() => { badge.style.animation = 'badgePulse 0.5s ease'; }, 10);
+            }
             showToast(`✅ ${productName} added to cart!`);
             setTimeout(() => {
                 addBtn.innerHTML = originalText; addBtn.style.background = ''; addBtn.style.color = ''; addBtn.disabled = false;
@@ -1148,30 +977,7 @@ document.addEventListener('click', function(e) {
     }
 });
 
-function updateCartBadge() {
-    cartCount++;
-    const badge = document.querySelector('.cart-badge');
-    if (badge) {
-        badge.textContent = cartCount;
-        badge.style.animation = 'none';
-        setTimeout(() => { badge.style.animation = 'badgePulse 0.5s ease'; }, 10);
-    }
-}
-
-function showToast(message) {
-    const existing = document.querySelector('.toast-notification');
-    if (existing) existing.remove();
-    const toast = document.createElement('div');
-    toast.className = 'toast-notification';
-    toast.textContent = message;
-    document.body.appendChild(toast);
-    setTimeout(() => {
-        toast.style.animation = 'slideOutDown 0.4s ease forwards';
-        setTimeout(() => toast.remove(), 400);
-    }, 3000);
-}
-
-console.log('🔍 Kisba Beauty — Search Page Loaded with ' + allProducts.length + ' products!');
+console.log('🔍 Kasbi Beauty — Search Page Loaded with ' + allProducts.length + ' products!');
+console.log('🔍 Search term from URL: "' + currentSearchTerm + '"');
 </script>
-</body>
-</html>
+{% endblock %}

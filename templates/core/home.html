@@ -1450,7 +1450,7 @@
         <div class="kasbi-container">
             <div class="kasbi-image">
                 <a href="{% url 'products:offers' %}">
-                    <img src="{% static 'img/kasbi-beauty.png' %}" alt="Kasbi Beauty">
+                    <img src="{% static 'img/kasbi-beauty.png' %}?v=2" alt="Kasbi Beauty">
                 </a>
             </div>
         </div>
@@ -1486,30 +1486,56 @@
         </div>
     </section>
 
-    <!-- ===== SHOP BY CATEGORY ===== -->
-    <section class="shop-categories scroll-reveal">
-        <div class="section-header">
-            <h2>Shop By <span class="highlight">Category</span></h2>
-            <a href="{% url 'products:shop' %}">View all categories →</a>
-        </div>
-        <div class="cat-grid">
-            {% for cat in nav_categories %}
-            <a href="{% url 'products:shop' %}?category={{ cat.slug }}" class="cat-item">
-                {% if cat.image %}
-                <img src="{{ cat.image.url }}" alt="{{ cat.name }}">
-                {% else %}
-                <div style="width:100%;height:140px;background:linear-gradient(135deg,var(--cream),#f0e8f0);display:flex;align-items:center;justify-content:center;border-radius:16px 16px 0 0;">
-                    <span style="font-size:48px;">🌸</span>
-                </div>
-                {% endif %}
-                <h4>{{ cat.name }}</h4>
-                <span>{{ cat.products.count }}+ Products</span>
-            </a>
-            {% empty %}
-            <p style="color:var(--gray);grid-column:1/-1;text-align:center;padding:20px;">No categories yet. Add some from the admin panel.</p>
-            {% endfor %}
-        </div>
-    </section>
+   <!-- ===== SHOP BY CATEGORY ===== -->
+<section class="shop-categories scroll-reveal">
+    <div class="section-header">
+        <h2>Shop By <span class="highlight">Category</span></h2>
+        <a href="{% url 'products:shop' %}">View all categories →</a>
+    </div>
+    <div class="cat-grid">
+        <a href="{% url 'products:skincare' %}" class="cat-item">
+            <img src="{% static 'img/skincare.png' %}" alt="Skincare">
+            <h4>Skincare</h4>
+            <span>120+ Products</span>
+        </a>
+        <a href="{% url 'products:haircare' %}" class="cat-item">
+            <img src="{% static 'img/haircare.png' %}" alt="Haircare">
+            <h4>Haircare</h4>
+            <span>60+ Products</span>
+        </a>
+        <a href="{% url 'products:makeup' %}" class="cat-item">
+            <img src="{% static 'img/makeup.png' %}" alt="Makeup">
+            <h4>Makeup</h4>
+            <span>85+ Products</span>
+        </a>
+        <a href="{% url 'products:shop' %}?category=tools" class="cat-item">
+            <img src="{% static 'img/tools.png' %}" alt="Tools">
+            <h4>Brushes &amp; Tools</h4>
+            <span>25+ Products</span>
+        </a>
+        <a href="{% url 'products:shop' %}?category=bodycare" class="cat-item">
+            <img src="{% static 'img/bodycare.png' %}" alt="Body Care">
+            <h4>Body Care</h4>
+            <span>40+ Products</span>
+        </a>
+        <a href="{% url 'products:shop' %}?category=babycare" class="cat-item">
+            <img src="{% static 'img/babycare.png' %}" alt="Babycare">
+            <h4>Babycare</h4>
+            <span>15+ Products</span>
+        </a>
+        <a href="{% url 'products:shop' %}?category=fragrance" class="cat-item">
+            <img src="{% static 'img/fragrance.png' %}" alt="Fragrance">
+            <h4>Fragrances</h4>
+            <span>45+ Products</span>
+        </a>
+        <a href="{% url 'products:shop' %}?category=lashes" class="cat-item">
+            <img src="{% static 'img/lashes.png' %}" alt="Lashes">
+            <h4>Lashes &amp; Glue</h4>
+            <span>12+ Products</span>
+        </a>
+    </div>
+</section>
+    
 
     <!-- ===== FEATURED BRANDS ===== -->
     <section class="featured-brands scroll-reveal">
