@@ -40,6 +40,13 @@
       <span style="background:#fff3cd;color:#856404;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;">Unpaid</span>
       {% endif %}
       <a href="{% url 'orders:detail' order.order_number %}" style="background:var(--primary);color:white;padding:8px 20px;border-radius:20px;font-size:13px;font-weight:600;text-decoration:none;transition:var(--transition);">View Order</a>
+      {% if not order.is_paid and order.status == 'pending' and order.payment_method == 'esewa' %}
+      <a href="{% url 'orders:esewa_initiate' order.order_number %}"
+         style="background:#60BB46;color:white;padding:8px 20px;border-radius:20px;font-size:13px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
+        <span style="width:18px;height:18px;background:white;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#60BB46;flex-shrink:0;">e</span>
+        Pay with eSewa
+      </a>
+      {% endif %}
     </div>
   </div>
   {% endfor %}
