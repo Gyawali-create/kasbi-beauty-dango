@@ -42,3 +42,27 @@ def contact_view(request):
     else:
         form = ContactForm()
     return render(request, 'core/contact.html', {'form': form, 'site': site})
+
+
+def returns_view(request):
+    site = SiteSettings.load()
+    non_returnable_items = [
+        'Opened skincare products',
+        'Used makeup items',
+        'Intimate care products',
+        'Sale / discounted items',
+        'Gift cards',
+        'Free gift items',
+    ]
+    return_steps = [
+        'Contact us via email or phone within 7 days of receiving your order.',
+        'Provide your order number and reason for return.',
+        'Our team will review and confirm within 24 hours.',
+        'Ship the product back to our address (we share details via email).',
+        'Refund is processed once we receive and inspect the item.',
+    ]
+    return render(request, 'core/returns.html', {
+        'site': site,
+        'non_returnable_items': non_returnable_items,
+        'return_steps': return_steps,
+    })

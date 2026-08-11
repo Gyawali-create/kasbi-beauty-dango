@@ -2,887 +2,289 @@
 
 <!-- ===== SHOP SECTION ===== -->
 <section class="shop-section">
-    <!-- Filters -->
+
+    <!-- ===== FILTER SIDEBAR (dynamic from DB) ===== -->
     <div class="filter-sidebar">
         <h3><i class="fa-solid fa-sliders" style="margin-right:10px;"></i>Filters</h3>
 
-        <div class="filter-group" id="filterCategory">
-            <h4>Categories</h4>
-            <label><input type="checkbox" value="skincare" checked> Skincare</label>
-            <label><input type="checkbox" value="makeup" > Makeup</label>
-            <label><input type="checkbox" value="haircare" > Hair Care</label>
-            <label><input type="checkbox" value="fragrance"> Fragrance</label>
-            <label><input type="checkbox" value="bath"> Bath & Body</label>
-            <label><input type="checkbox" value="tools"> Beauty Tools</label>
-            <label><input type="checkbox" value="korean"> Korean Beauty</label>
-            <label><input type="checkbox" value="babycare"> Babycare</label>
-        </div>
+        <form method="get" id="filterForm">
+            <!-- Preserve search query if present -->
+            {% if query %}<input type="hidden" name="q" value="{{ query }}">{% endif %}
 
-        <div class="filter-group">
-            <h4>Price Range</h4>
-            <div class="price-range">
-                <input type="text" id="priceMin" placeholder="Min" value="500">
-                <span>—</span>
-                <input type="text" id="priceMax" placeholder="Max" value="5000">
+            <!-- CATEGORIES -->
+            <div class="filter-group">
+                <h4>Categories</h4>
+                {% for cat in categories %}
+                <label>
+                    <input type="checkbox" name="category" value="{{ cat.slug }}"
+                        {% if selected_category == cat.slug %}checked{% endif %}>
+                    {{ cat.name }}
+                </label>
+                {% endfor %}
             </div>
-        </div>
 
-        <div class="filter-group" id="filterBrand">
-            <h4>Brands</h4>
-            <label><input type="checkbox" value="cerave"> CeraVe</label>
-            <label><input type="checkbox" value="theordinary"> The Ordinary</label>
-            <label><input type="checkbox" value="maybelline"> Maybelline</label>
-            <label><input type="checkbox" value="cetaphil"> Cetaphil</label>
-            <label><input type="checkbox" value="loreal"> L'Oreal</label>
-            <label><input type="checkbox" value="garnier"> Garnier</label>
-            <label><input type="checkbox" value="cosrx"> COSRX</label>
-            <label><input type="checkbox" value="innisfree"> Innisfree</label>
-            <label><input type="checkbox" value="nyx"> NYX</label>
-            <label><input type="checkbox" value="mac"> MAC</label>
-            <label><input type="checkbox" value="hudabeauty"> Huda Beauty</label>
-            <label><input type="checkbox" value="laneige"> Laneige</label>
-            <label><input type="checkbox" value="larocheposay"> La Roche-Posay</label>
-            <label><input type="checkbox" value="simple"> Simple</label>
-            <label><input type="checkbox" value="plum"> Plum</label>
-            <label><input type="checkbox" value="mamaearth"> Mamaearth</label>
-        </div>
+            <!-- PRICE RANGE -->
+            <div class="filter-group">
+                <h4>Price Range</h4>
+                <div class="price-range">
+                    <input type="number" name="min_price" id="priceMin"
+                           placeholder="Min" value="{{ min_price }}">
+                    <span>—</span>
+                    <input type="number" name="max_price" id="priceMax"
+                           placeholder="Max" value="{{ max_price }}">
+                </div>
+            </div>
 
-        <div class="filter-group">
-            <h4>Rating</h4>
-            <label><input type="radio" name="rating" value="5"> ★★★★★ &amp; up</label>
-            <label><input type="radio" name="rating" value="4"> ★★★★☆ &amp; up</label>
-            <label><input type="radio" name="rating" value="3"> ★★★☆☆ &amp; up</label>
-            <label><input type="radio" name="rating" value="all" checked> All Ratings</label>
-        </div>
+            <!-- BRANDS -->
+            <div class="filter-group">
+                <h4>Brands</h4>
+                {% for brand in brands %}
+                <label>
+                    <input type="checkbox" name="brand" value="{{ brand.slug }}"
+                        {% if selected_brand == brand.slug %}checked{% endif %}>
+                    {{ brand.name }}
+                </label>
+                {% endfor %}
+            </div>
 
-        <button class="btn-filter" id="applyFilters"><i class="fa-solid fa-rotate-right"></i> Apply Filters</button>
-        <button class="btn-filter btn-filter-clear" id="clearFilters" style="margin-top:10px; width:100%;"><i class="fa-solid fa-times"></i> Clear Filters</button>
+            <!-- SORT -->
+            <div class="filter-group">
+                <h4>Sort By</h4>
+                <select name="sort" onchange="this.form.submit()">
+                    <option value="newest"     {% if sort == 'newest' %}selected{% endif %}>Newest First</option>
+                    <option value="price_low"  {% if sort == 'price_low' %}selected{% endif %}>Price: Low to High</option>
+                    <option value="price_high" {% if sort == 'price_high' %}selected{% endif %}>Price: High to Low</option>
+                    <option value="popularity" {% if sort == 'popularity' %}selected{% endif %}>Most Popular</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-filter">
+                <i class="fa-solid fa-rotate-right"></i> Apply Filters
+            </button>
+            <a href="{{ request.path }}" class="btn-filter btn-filter-clear"
+               style="display:block;text-align:center;text-decoration:none;margin-top:10px;">
+                <i class="fa-solid fa-times"></i> Clear Filters
+            </a>
+        </form>
     </div>
 
-    <!-- Products -->
-    <div>
+    <!-- ===== PRODUCT GRID (from DB) ===== -->
+    <div style="flex:1;min-width:0;">
         <div class="shop-toolbar">
-            <span id="productCount">Showing 1–12 of 48 products</span>
-            <select id="sortSelect">
-                <option value="default">Sort by: Default</option>
-                <option value="price-low">Sort by: Price: Low to High</option>
-                <option value="price-high">Sort by: Price: High to Low</option>
-                <option value="rating">Sort by: Rating</option>
+            <span>
+                Showing {{ page_obj.start_index }}–{{ page_obj.end_index }}
+                of {{ page_obj.paginator.count }} product{{ page_obj.paginator.count|pluralize }}
+            </span>
+            <select onchange="window.location=this.value">
+                <option value="?sort=newest{% if query %}&q={{ query }}{% endif %}"
+                    {% if sort == 'newest' %}selected{% endif %}>Sort by: Newest</option>
+                <option value="?sort=price_low{% if query %}&q={{ query }}{% endif %}"
+                    {% if sort == 'price_low' %}selected{% endif %}>Sort by: Price: Low to High</option>
+                <option value="?sort=price_high{% if query %}&q={{ query }}{% endif %}"
+                    {% if sort == 'price_high' %}selected{% endif %}>Sort by: Price: High to Low</option>
+                <option value="?sort=popularity{% if query %}&q={{ query }}{% endif %}"
+                    {% if sort == 'popularity' %}selected{% endif %}>Sort by: Most Popular</option>
             </select>
         </div>
 
         <div class="product-grid" id="productGrid">
-            <!-- Products will be dynamically loaded here -->
+            {% for p in page_obj %}
+            <a href="{{ p.get_absolute_url }}" class="product-link">
+                <div class="product-card">
+                    <div class="image-wrap">
+                        <!-- Wishlist button -->
+                        {% if user.is_authenticated %}
+                        <span class="wishlist {% if p.id in wishlist_ids %}active{% endif %}"
+                              onclick="event.preventDefault();event.stopPropagation();toggleWishlist(this,{{ p.id }});">
+                            <i class="fa-{% if p.id in wishlist_ids %}solid{% else %}regular{% endif %} fa-heart"></i>
+                        </span>
+                        {% else %}
+                        <a href="{% url 'accounts:login' %}?next={{ request.get_full_path }}"
+                           class="wishlist" onclick="event.stopPropagation();">
+                            <i class="fa-regular fa-heart"></i>
+                        </a>
+                        {% endif %}
+
+                        <!-- Product image or initials fallback -->
+                        {% if p.thumbnail %}
+                        <img src="{{ p.thumbnail.url }}" alt="{{ p.name }}">
+                        {% else %}
+                        <svg viewBox="0 0 200 200" style="position:absolute;inset:0;width:100%;height:100%;">
+                            <rect width="200" height="200" fill="#f0ebe2"/>
+                            <text x="100" y="118" font-family="Cormorant Garamond, serif"
+                                  font-size="72" font-weight="700" fill="#C97786"
+                                  text-anchor="middle">{{ p.name|first|upper }}</text>
+                        </svg>
+                        {% endif %}
+                    </div>
+
+                    <div class="info">
+                        <!-- Badges -->
+                        <div class="product-badges">
+                            {% if p.is_featured %}
+                            <span class="product-badge bestseller">⭐ Featured</span>
+                            {% endif %}
+                            {% if p.discount_price %}
+                            <span class="product-badge discount">
+                                -{% widthratio p.discount_price p.price 100 as pct %}{{ 100|add:"-"|stringformat:"s" }}{{ pct }}%
+                            </span>
+                            {% endif %}
+                        </div>
+
+                        <span class="brand">{{ p.brand.name|default:"" }}</span>
+                        <h3>{{ p.name|truncatechars:40 }}</h3>
+
+                        <div class="price">
+                            <span class="current">Rs.{{ p.current_price }}</span>
+                            {% if p.discount_price %}
+                            <span class="old">Rs.{{ p.price }}</span>
+                            {% endif %}
+                        </div>
+
+                        <!-- Add to cart / out of stock / login -->
+                        {% if user.is_authenticated %}
+                            {% if p.in_stock %}
+                            <form method="post" action="{% url 'cart:add' p.id %}"
+                                  onclick="event.stopPropagation();">
+                                {% csrf_token %}
+                                <input type="hidden" name="quantity" value="1">
+                                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                                <button type="submit" class="add-btn">
+                                    <i class="fa-solid fa-cart-plus" style="margin-right:6px;"></i>Add To Cart
+                                </button>
+                            </form>
+                            {% else %}
+                            <button class="add-btn" disabled>Out of Stock</button>
+                            {% endif %}
+                        {% else %}
+                        <a href="{% url 'accounts:login' %}?next={{ request.get_full_path }}"
+                           class="add-btn" style="display:block;text-align:center;text-decoration:none;"
+                           onclick="event.stopPropagation();">Login to Buy</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </a>
+            {% empty %}
+            <div class="no-results" style="grid-column:1/-1;">
+                <i class="fa-regular fa-face-frown"></i>
+                <h3 style="font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--dark);margin-bottom:8px;">
+                    No Products Found
+                </h3>
+                <p style="color:var(--gray);">Try adjusting your filters or
+                    <a href="{% url 'products:shop' %}" style="color:var(--primary);">browse all products</a>.
+                </p>
+            </div>
+            {% endfor %}
         </div>
 
-        <div class="pagination" id="pagination">
-            <!-- Pagination will be dynamically generated -->
+        <!-- PAGINATION -->
+        {% if page_obj.has_other_pages %}
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}{% if sort %}&sort={{ sort }}{% endif %}{% if query %}&q={{ query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_brand %}&brand={{ selected_brand }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}">
+                <i class="fa-solid fa-chevron-left"></i>
+            </a>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                <a class="active">{{ num }}</a>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <a href="?page={{ num }}{% if sort %}&sort={{ sort }}{% endif %}{% if query %}&q={{ query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_brand %}&brand={{ selected_brand }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{% if sort %}&sort={{ sort }}{% endif %}{% if query %}&q={{ query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_brand %}&brand={{ selected_brand }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}">
+                <i class="fa-solid fa-chevron-right"></i>
+            </a>
+            {% endif %}
         </div>
+        {% endif %}
     </div>
 </section>
 
 <style>
-.shop-section {
-    display: flex;
-    gap: 40px;
-    padding: 40px 6%;
-    max-width: 1440px;
-    margin: 0 auto;
-}
-
-.filter-sidebar {
-    flex: 0 0 280px;
-    background: #fff;
-    padding: 24px 20px;
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-    height: fit-content;
-    position: sticky;
-    top: 20px;
-}
-
-.filter-sidebar h3 {
-    font-size: 20px;
-    font-weight: 700;
-    color: #1A1A2E;
-    margin-bottom: 20px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid #f0f0f0;
-}
-
-.filter-group {
-    margin-bottom: 20px;
-}
-
-.filter-group h4 {
-    font-size: 14px;
-    font-weight: 700;
-    color: #1A1A2E;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.filter-group label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 6px 0;
-    font-size: 13px;
-    color: #555;
-    cursor: pointer;
-    transition: color 0.2s;
-}
-
-.filter-group label:hover {
-    color: #d66175;
-}
-
-.filter-group input[type="checkbox"],
-.filter-group input[type="radio"] {
-    accent-color: #d66175;
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
-}
-
-.price-range {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.price-range input {
-    flex: 1;
-    padding: 8px 12px;
-    border: 1px solid #e2ded7;
-    border-radius: 8px;
-    font-size: 13px;
-    outline: none;
-    transition: border-color 0.2s;
-}
-
-.price-range input:focus {
-    border-color: #d66175;
-}
-
-.price-range span {
-    color: #999;
-}
-
-/* ===== FILTER BUTTONS ===== */
-.btn-filter {
-    padding: 12px 20px;
-    border: none;
-    border-radius: 9px;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    width: 100%;
-    font-family: 'Inter', sans-serif;
-    background: #d66175;
-    color: #fff;
-}
-
-.btn-filter:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 14px rgba(214, 97, 117, 0.3);
-}
-
-.btn-filter-clear {
-    background: #d66175;
-    opacity: 0.7;
-}
-
-.btn-filter-clear:hover {
-    opacity: 1;
-}
-
-.shop-toolbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 0;
-    border-bottom: 1px solid #ece7dd;
-    margin-bottom: 24px;
-    flex-wrap: wrap;
-    gap: 12px;
-}
-
-.shop-toolbar span {
-    font-size: 14px;
-    color: #666;
-}
-
-.shop-toolbar select {
-    padding: 8px 16px;
-    border: 1px solid #e2ded7;
-    border-radius: 20px;
-    font-size: 13px;
-    outline: none;
-    background: #fff;
-    cursor: pointer;
-}
-
-.shop-toolbar select:focus {
-    border-color: #d66175;
-}
-
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
-}
-
-.product-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-    transition: transform 0.3s ease;
-}
-
-.product-link:hover {
-    transform: translateY(-4px);
-}
-
-.product-card {
-    background: #fff;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-    transition: box-shadow 0.3s ease;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.product-card:hover {
-    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-}
-
-.product-card .image-wrap {
-    position: relative;
-    padding-top: 100%;
-    background: #f8f5ee;
-    overflow: hidden;
-}
-
-.product-card .image-wrap img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    padding: 20px;
-    transition: transform 0.3s ease;
-}
-
-.product-card:hover .image-wrap img {
-    transform: scale(1.05);
-}
-
-/* ===== REMOVED BADGES FROM IMAGE ===== */
-/* Only wishlist heart stays on the image */
-
-.wishlist {
-    position: absolute;
-    top: 14px;
-    right: 14px;
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background: #fff;
-    border: 1px solid #eee;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    z-index: 2;
-    color: #ccc;
-}
-
-.wishlist:hover {
-    border-color: #d66175;
-    color: #d66175;
-}
-
-.product-card .info {
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}
-
-/* ===== BADGES NOW LIVE IN INFO AREA ===== */
-.product-badges {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 8px;
-}
-
-.product-badge {
-    display: inline-block;
-    padding: 2px 10px;
-    border-radius: 12px;
-    font-size: 9px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-}
-
-.product-badge.bestseller {
-    background: #d66175;
-    color: #fff;
-}
-
-.product-badge.new {
-    background: #2ecc71;
-    color: #fff;
-}
-
-.product-badge.discount {
-    background: #e74c3c;
-    color: #fff;
-}
-
-.product-card .info .brand {
-    font-size: 11px;
-    color: #999;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-weight: 700;
-}
-
-.product-card .info h3 {
-    font-size: 14.5px;
-    font-weight: 600;
-    margin: 4px 0 8px;
-    line-height: 1.3;
-    min-height: 38px;
-}
-
-.product-card .info .rating {
-    font-size: 12px;
-    color: #f39c12;
-    margin-bottom: 8px;
-}
-
-.product-card .info .rating span {
-    color: #999;
-    font-size: 11.5px;
-}
-
-.product-card .info .price {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    margin-bottom: 12px;
-    margin-top: auto;
-}
-
-.product-card .info .price .current {
-    font-size: 17px;
-    font-weight: 800;
-    color: #d66175;
-}
-
-.product-card .info .price .old {
-    font-size: 12.5px;
-    color: #999;
-    text-decoration: line-through;
-}
-
-.add-btn {
-    width: 100%;
-    padding: 10px;
-    background: #d66175;
-    color: #fff;
-    border: none;
-    border-radius: 9px;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: 'Inter', sans-serif;
-}
-
-.add-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 14px rgba(214, 97, 117, 0.3);
-}
-
-.add-btn:disabled {
-    opacity: 0.75;
-    cursor: not-allowed;
-}
-
-.pagination {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 40px;
-    flex-wrap: wrap;
-}
-
-.pagination a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 40px;
-    height: 40px;
-    padding: 0 12px;
-    border-radius: 10px;
-    background: #fff;
-    border: 1px solid #ece7dd;
-    color: #666;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 13.5px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.pagination a:hover:not(.active) {
-    background: #f8f5ee;
-    border-color: #d66175;
-    color: #d66175;
-}
-
-.pagination a.active {
-    background: #d66175;
-    color: #fff;
-    border-color: transparent;
-}
-
-.no-results {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 60px 20px;
-    color: #999;
-}
-
-.no-results i {
-    font-size: 48px;
-    display: block;
-    margin-bottom: 16px;
-}
-
-/* Responsive */
-@media (max-width: 1200px) {
-    .product-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-@media (max-width: 992px) {
-    .shop-section {
-        flex-direction: column;
-    }
-    .filter-sidebar {
-        flex: 1;
-        position: static;
-    }
-    .product-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-@media (max-width: 768px) {
-    .product-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-    }
-    .shop-toolbar {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    .filter-sidebar {
-        padding: 16px;
-    }
-}
-
-@media (max-width: 480px) {
-    .product-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-    }
-    .shop-section {
-        padding: 20px 4%;
-    }
-}
+.shop-section{display:flex;gap:40px;padding:40px 6%;max-width:1440px;margin:0 auto;}
+.filter-sidebar{flex:0 0 260px;background:#fff;padding:24px 20px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.06);height:fit-content;position:sticky;top:80px;}
+.filter-sidebar h3{font-size:18px;font-weight:700;color:var(--dark);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #f0f0f0;}
+.filter-group{margin-bottom:20px;}
+.filter-group h4{font-size:12px;font-weight:700;color:var(--dark);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px;}
+.filter-group label{display:flex;align-items:center;gap:10px;padding:5px 0;font-size:13px;color:#555;cursor:pointer;transition:color 0.2s;}
+.filter-group label:hover{color:var(--primary);}
+.filter-group input[type="checkbox"]{accent-color:var(--primary);width:15px;height:15px;cursor:pointer;}
+.filter-group select{width:100%;padding:8px 12px;border:1px solid #e2ded7;border-radius:8px;font-size:13px;outline:none;font-family:'Inter',sans-serif;}
+.filter-group select:focus{border-color:var(--primary);}
+.price-range{display:flex;gap:10px;align-items:center;}
+.price-range input{flex:1;padding:8px 10px;border:1px solid #e2ded7;border-radius:8px;font-size:13px;outline:none;transition:border-color 0.2s;}
+.price-range input:focus{border-color:var(--primary);}
+.price-range span{color:#999;flex-shrink:0;}
+.btn-filter{padding:11px 16px;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.3s;width:100%;font-family:'Inter',sans-serif;background:var(--primary);color:#fff;}
+.btn-filter:hover{opacity:.9;transform:translateY(-1px);}
+.btn-filter-clear{background:rgba(201,119,134,0.12);color:var(--primary)!important;border:1px solid rgba(201,119,134,0.3);}
+.shop-toolbar{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid #ece7dd;margin-bottom:24px;flex-wrap:wrap;gap:12px;}
+.shop-toolbar span{font-size:14px;color:#666;}
+.shop-toolbar select{padding:8px 16px;border:1px solid #e2ded7;border-radius:20px;font-size:13px;outline:none;background:#fff;cursor:pointer;font-family:'Inter',sans-serif;}
+.shop-toolbar select:focus{border-color:var(--primary);}
+.product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+.product-link{text-decoration:none;color:inherit;display:block;}
+.product-card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.06);transition:all 0.3s;height:100%;display:flex;flex-direction:column;}
+.product-card:hover{box-shadow:0 8px 30px rgba(0,0,0,0.12);transform:translateY(-4px);}
+.product-card .image-wrap{position:relative;padding-top:100%;background:#f8f5ee;overflow:hidden;}
+.product-card .image-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:20px;transition:transform 0.3s;}
+.product-card:hover .image-wrap img{transform:scale(1.05);}
+.wishlist{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:50%;background:#fff;border:1px solid #eee;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.3s;z-index:2;color:#ccc;text-decoration:none;}
+.wishlist:hover,.wishlist.active{border-color:var(--primary);color:var(--primary);background:#fce4ec;}
+.product-card .info{padding:14px 16px 16px;display:flex;flex-direction:column;flex:1;}
+.product-badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;min-height:20px;}
+.product-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:9px;font-weight:700;text-transform:uppercase;}
+.product-badge.bestseller{background:var(--primary);color:#fff;}
+.product-badge.discount{background:#e74c3c;color:#fff;}
+.product-badge.new-badge{background:#2ecc71;color:#fff;}
+.product-card .info .brand{font-size:10px;color:#999;text-transform:uppercase;letter-spacing:0.5px;font-weight:700;}
+.product-card .info h3{font-size:14px;font-weight:600;margin:4px 0 10px;line-height:1.3;color:var(--dark);}
+.product-card .info .price{display:flex;align-items:baseline;gap:8px;margin-bottom:12px;margin-top:auto;}
+.product-card .info .price .current{font-size:17px;font-weight:800;color:var(--primary);}
+.product-card .info .price .old{font-size:12px;color:#999;text-decoration:line-through;}
+.add-btn{width:100%;padding:10px;background:var(--primary);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.3s;font-family:'Inter',sans-serif;}
+.add-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 4px 14px rgba(201,119,134,0.35);}
+.add-btn:disabled{opacity:0.6;cursor:not-allowed;}
+.no-results{text-align:center;padding:60px 20px;color:#999;}
+.no-results i{font-size:48px;display:block;margin-bottom:16px;}
+.pagination{display:flex;justify-content:center;gap:8px;margin-top:40px;flex-wrap:wrap;}
+.pagination a{display:inline-flex;align-items:center;justify-content:center;min-width:40px;height:40px;padding:0 12px;border-radius:10px;background:#fff;border:1px solid #ece7dd;color:#666;text-decoration:none;font-weight:600;font-size:13px;transition:all 0.3s;}
+.pagination a:hover:not(.active){background:#fce4ec;border-color:var(--primary);color:var(--primary);}
+.pagination a.active{background:var(--primary);color:#fff;border-color:transparent;}
+@media(max-width:1200px){.product-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:992px){.shop-section{flex-direction:column;}.filter-sidebar{flex:1;position:static;}.product-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:768px){.product-grid{grid-template-columns:repeat(2,1fr);gap:14px;}.shop-section{padding:20px 4%;}.filter-sidebar{flex:0 0 auto;}}
+@media(max-width:480px){.product-grid{grid-template-columns:1fr 1fr;gap:12px;}}
 </style>
 
 <script>
-// Product data (48 products)
-const products = [
-    { id: 1, name: 'Hydrating Cleanser', brand: 'CeraVe', price: 2650, oldPrice: 3200, rating: 5, ratingCount: 325, badge: 'bestseller', category: 'skincare' },
-    { id: 2, name: 'Niacinamide 10%', brand: 'The Ordinary', price: 2350, oldPrice: 2850, rating: 5, ratingCount: 280, badge: 'bestseller', category: 'skincare' },
-    { id: 3, name: 'SuperStay Lipstick', brand: 'Maybelline', price: 1450, oldPrice: 2000, rating: 5, ratingCount: 540, badge: 'bestseller', category: 'makeup' },
-    { id: 4, name: 'Moisturizing Lotion', brand: 'Cetaphil', price: 2850, oldPrice: 3400, rating: 5, ratingCount: 198, badge: null, category: 'skincare' },
-    { id: 5, name: 'Revitalift Serum', brand: 'L\'Oreal', price: 3200, oldPrice: 4500, rating: 5, ratingCount: 412, badge: 'new', category: 'skincare' },
-    { id: 6, name: 'Micellar Water', brand: 'Garnier', price: 1800, oldPrice: 2000, rating: 5, ratingCount: 267, badge: null, category: 'haircare' },
-    { id: 7, name: 'Advanced Snail 96 Mucin', brand: 'COSRX', price: 2150, oldPrice: 2800, rating: 5, ratingCount: 363, badge: 'bestseller', category: 'skincare' },
-    { id: 8, name: 'Low pH Good Morning Gel', brand: 'COSRX', price: 1485, oldPrice: 1650, rating: 5, ratingCount: 289, badge: null, category: 'skincare' },
-    { id: 9, name: 'Niacinamide 15% Serum', brand: 'COSRX', price: 2565, oldPrice: 2850, rating: 5, ratingCount: 412, badge: 'new', category: 'skincare' },
-    { id: 10, name: 'Hyaluronic Acid Cream', brand: 'COSRX', price: 2880, oldPrice: 3200, rating: 5, ratingCount: 234, badge: null, category: 'skincare' },
-    { id: 11, name: 'Soft Matte Lip Cream', brand: 'NYX', price: 1650, oldPrice: 2100, rating: 4, ratingCount: 156, badge: null, category: 'makeup' },
-    { id: 12, name: 'Refreshing Face Wash', brand: 'Simple', price: 1200, oldPrice: 1400, rating: 4, ratingCount: 178, badge: null, category: 'skincare' },
-    { id: 13, name: 'Matte Lipstick', brand: 'MAC', price: 3200, oldPrice: 3800, rating: 5, ratingCount: 412, badge: 'bestseller', category: 'makeup' },
-    { id: 14, name: 'Anthelios Sunscreen SPF 50', brand: 'La Roche-Posay', price: 3600, oldPrice: 4800, rating: 5, ratingCount: 234, badge: 'new', category: 'skincare' },
-    { id: 15, name: 'Volcanic Clay Face Mask', brand: 'Innisfree', price: 2100, oldPrice: 2500, rating: 5, ratingCount: 189, badge: 'bestseller', category: 'skincare' },
-    { id: 16, name: 'Green Tea Face Wash', brand: 'Plum', price: 850, oldPrice: 1100, rating: 4, ratingCount: 156, badge: null, category: 'skincare' },
-    { id: 17, name: 'Eyeshadow Palette', brand: 'Huda Beauty', price: 4500, oldPrice: 5000, rating: 5, ratingCount: 289, badge: 'new', category: 'makeup' },
-    { id: 18, name: 'Vitamin C Face Serum', brand: 'Mamaearth', price: 950, oldPrice: 1200, rating: 4, ratingCount: 134, badge: null, category: 'skincare' },
-    { id: 19, name: 'Total Repair 5 Shampoo', brand: 'L\'Oreal', price: 2200, oldPrice: 2800, rating: 5, ratingCount: 234, badge: 'bestseller', category: 'haircare' },
-    { id: 20, name: 'Eye Repair Cream', brand: 'Cetaphil', price: 2400, oldPrice: 3000, rating: 5, ratingCount: 156, badge: null, category: 'skincare' },
-    { id: 21, name: 'Hyaluronic Acid 2%', brand: 'The Ordinary', price: 1800, oldPrice: 2000, rating: 5, ratingCount: 198, badge: null, category: 'skincare' },
-    { id: 22, name: 'Fit Me Foundation', brand: 'Maybelline', price: 1850, oldPrice: 2200, rating: 4, ratingCount: 189, badge: 'new', category: 'makeup' },
-    { id: 23, name: 'Lip Sleeping Mask', brand: 'Laneige', price: 3800, oldPrice: 4200, rating: 5, ratingCount: 267, badge: 'bestseller', category: 'skincare' },
-    { id: 24, name: 'Studio Fix Foundation', brand: 'MAC', price: 2800, oldPrice: 3500, rating: 5, ratingCount: 198, badge: null, category: 'makeup' },
-    { id: 25, name: 'AHA/BHA Clarifying Toner', brand: 'COSRX', price: 1950, oldPrice: 2300, rating: 5, ratingCount: 312, badge: 'bestseller', category: 'skincare' },
-    { id: 26, name: 'Daily Moisturizing Cream', brand: 'CeraVe', price: 2200, oldPrice: 2800, rating: 5, ratingCount: 278, badge: null, category: 'skincare' },
-    { id: 27, name: 'Epic Ink Liner', brand: 'NYX', price: 1250, oldPrice: 1400, rating: 4, ratingCount: 167, badge: 'new', category: 'makeup' },
-    { id: 28, name: 'Hydrating Moisturizer', brand: 'La Roche-Posay', price: 2800, oldPrice: 3300, rating: 5, ratingCount: 198, badge: null, category: 'skincare' },
-    { id: 29, name: 'Hair Mask Banana', brand: 'Garnier', price: 950, oldPrice: 1100, rating: 4, ratingCount: 145, badge: null, category: 'haircare' },
-    { id: 30, name: 'Lash Sensational Mascara', brand: 'Maybelline', price: 1550, oldPrice: 2100, rating: 5, ratingCount: 456, badge: 'bestseller', category: 'makeup' },
-    { id: 31, name: 'Retinol 0.5% Serum', brand: 'The Ordinary', price: 1500, oldPrice: 1700, rating: 5, ratingCount: 223, badge: null, category: 'skincare' },
-    { id: 32, name: 'Gentle Face Wash', brand: 'Cetaphil', price: 1650, oldPrice: 1950, rating: 5, ratingCount: 189, badge: null, category: 'skincare' },
-    { id: 33, name: 'Advanced Snail Peptide Eye Cream', brand: 'COSRX', price: 2200, oldPrice: 2500, rating: 5, ratingCount: 167, badge: 'new', category: 'skincare' },
-    { id: 34, name: 'Liquid Matte Lipstick', brand: 'Huda Beauty', price: 3200, oldPrice: 3800, rating: 5, ratingCount: 234, badge: null, category: 'makeup' },
-    { id: 35, name: 'Water Bank Moisture Cream', brand: 'Laneige', price: 2900, oldPrice: 3600, rating: 5, ratingCount: 198, badge: 'bestseller', category: 'skincare' },
-    { id: 36, name: 'Powder Blush', brand: 'MAC', price: 2100, oldPrice: 2500, rating: 5, ratingCount: 178, badge: null, category: 'makeup' },
-    { id: 37, name: 'Eye Repair Cream', brand: 'CeraVe', price: 1950, oldPrice: 2200, rating: 5, ratingCount: 145, badge: null, category: 'skincare' },
-    { id: 38, name: 'Can\'t Stop Won\'t Stop Foundation', brand: 'NYX', price: 1400, oldPrice: 1700, rating: 4, ratingCount: 156, badge: null, category: 'makeup' },
-    { id: 39, name: 'Hyaluronic Acid Serum', brand: 'La Roche-Posay', price: 4200, oldPrice: 4700, rating: 5, ratingCount: 189, badge: 'new', category: 'skincare' },
-    { id: 40, name: 'Green Tea Toner', brand: 'Innisfree', price: 1850, oldPrice: 2200, rating: 5, ratingCount: 178, badge: null, category: 'skincare' },
-    { id: 41, name: 'Total Repair 5 Conditioner', brand: 'L\'Oreal', price: 1850, oldPrice: 2300, rating: 5, ratingCount: 234, badge: 'bestseller', category: 'haircare' },
-    { id: 42, name: 'Vitamin C Serum', brand: 'The Ordinary', price: 1400, oldPrice: 1600, rating: 5, ratingCount: 234, badge: null, category: 'skincare' },
-    { id: 43, name: 'Fit Me Concealer', brand: 'Maybelline', price: 950, oldPrice: 1200, rating: 4, ratingCount: 178, badge: null, category: 'makeup' },
-    { id: 44, name: 'Aloe Soothing Sunscreen SPF 50', brand: 'COSRX', price: 1850, oldPrice: 2100, rating: 5, ratingCount: 156, badge: 'new', category: 'skincare' },
-    { id: 45, name: 'Green Tea Moisturizer', brand: 'Plum', price: 750, oldPrice: 950, rating: 4, ratingCount: 134, badge: null, category: 'skincare' },
-    { id: 46, name: 'Highlighter Palette', brand: 'Huda Beauty', price: 2800, oldPrice: 3200, rating: 5, ratingCount: 189, badge: null, category: 'makeup' },
-    { id: 47, name: 'Vitamin C Moisturizer', brand: 'Mamaearth', price: 850, oldPrice: 1100, rating: 4, ratingCount: 145, badge: null, category: 'skincare' },
-    { id: 48, name: 'Hydrating Light Moisturizer', brand: 'Simple', price: 900, oldPrice: 1000, rating: 4, ratingCount: 167, badge: null, category: 'skincare' }
-];
+function toggleWishlist(el, productId) {
+    var icon = el.querySelector('i');
+    var isWishlisted = icon.classList.contains('fa-solid');
+    var url = isWishlisted
+        ? '/products/wishlist/remove/' + productId + '/'
+        : '/products/wishlist/add/' + productId + '/';
 
-const productsPerPage = 12;
-let currentPage = 1;
-let filteredProducts = [...products];
-
-function getInitials(name) {
-    return name.split(' ').map(w => w[0]).slice(0,2).join('').toUpperCase();
-}
-
-function renderProducts(page = 1) {
-    const grid = document.getElementById('productGrid');
-    const start = (page - 1) * productsPerPage;
-    const end = start + productsPerPage;
-    const pageItems = filteredProducts.slice(start, end);
-    const total = filteredProducts.length;
-    const totalPages = Math.ceil(total / productsPerPage);
-
-    if (total === 0) {
-        grid.innerHTML = `
-            <div class="no-results">
-                <i class="fa-regular fa-face-frown"></i>
-                <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 24px; color: #1A1A2E; margin-bottom: 8px;">No Products Found</h3>
-                <p>Try adjusting your filters or search for something else.</p>
-            </div>
-        `;
-        document.getElementById('pagination').innerHTML = '';
-        document.getElementById('productCount').textContent = 'Showing 0 products';
-        return;
-    }
-
-    grid.innerHTML = pageItems.map(product => {
-        // Build badges HTML
-        let badgesHTML = '';
-        if (product.badge === 'bestseller') {
-            badgesHTML += `<span class="product-badge bestseller">⭐ Best Seller</span>`;
-        } else if (product.badge === 'new') {
-            badgesHTML += `<span class="product-badge new">✨ New</span>`;
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+            'X-Requested-With': 'XMLHttpRequest'
         }
-
-        const discount = product.oldPrice ? Math.round((1 - product.price / product.oldPrice) * 100) : 0;
-        if (discount > 0) {
-            badgesHTML += `<span class="product-badge discount">-${discount}%</span>`;
+    }).then(function() {
+        if (isWishlisted) {
+            icon.classList.replace('fa-solid', 'fa-regular');
+            el.classList.remove('active');
+        } else {
+            icon.classList.replace('fa-regular', 'fa-solid');
+            el.classList.add('active');
         }
-
-        let stars = '';
-        for (let i = 0; i < 5; i++) stars += i < product.rating ? '★' : '☆';
-
-        const oldPriceHTML = product.oldPrice ? `<span class="old">Rs.${product.oldPrice.toLocaleString()}</span>` : '';
-        const initials = getInitials(product.name);
-
-        return `
-            <a href="/product/${product.id}/" class="product-link">
-                <div class="product-card" data-category="${product.category}" data-brand="${product.brand.toLowerCase().replace(/[^a-z]/g, '')}" data-price="${product.price}" data-rating="${product.rating}">
-                    <div class="image-wrap">
-                        <span class="wishlist" onclick="event.preventDefault();event.stopPropagation();toggleWishlist(this);"><i class="fa-regular fa-heart"></i></span>
-                        <svg viewBox="0 0 200 200" style="position:absolute;inset:0;width:100%;height:100%;">
-                            <rect width="200" height="200" fill="#eee6d8"/>
-                            <text x="100" y="108" font-family="Inter, sans-serif" font-size="34" font-weight="700" fill="#1A1A2E" text-anchor="middle">${initials}</text>
-                        </svg>
-                    </div>
-                    <div class="info">
-                        ${badgesHTML ? `<div class="product-badges">${badgesHTML}</div>` : ''}
-                        <span class="brand">${product.brand}</span>
-                        <h3>${product.name}</h3>
-                        <div class="rating">${stars} <span>(${product.ratingCount})</span></div>
-                        <div class="price">
-                            <span class="current">Rs.${product.price.toLocaleString()}</span>
-                            ${oldPriceHTML}
-                        </div>
-                        <button class="add-btn" onclick="event.preventDefault();event.stopPropagation();addToCart(this, '${product.name}');">
-                            <i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart
-                        </button>
-                    </div>
-                </div>
-            </a>
-        `;
-    }).join('');
-
-    renderPagination(totalPages, page);
-    const startNum = (page - 1) * productsPerPage + 1;
-    const endNum = Math.min(page * productsPerPage, total);
-    document.getElementById('productCount').textContent = `Showing ${startNum}–${endNum} of ${total} products`;
-}
-
-function renderPagination(totalPages, current) {
-    const wrap = document.getElementById('pagination');
-    if (totalPages <= 1) { wrap.innerHTML = ''; return; }
-
-    let html = `<a href="#" onclick="event.preventDefault();goToPage(${current - 1});" ${current === 1 ? 'style="opacity:0.4;pointer-events:none;"' : ''}><i class="fa-solid fa-chevron-left"></i></a>`;
-    
-    for (let n = 1; n <= totalPages; n++) {
-        if (n === 1 || n === totalPages || Math.abs(n - current) <= 1) {
-            html += `<a href="#" onclick="event.preventDefault();goToPage(${n});" class="${n === current ? 'active' : ''}">${n}</a>`;
-        } else if (Math.abs(n - current) === 2) {
-            html += `<span style="padding:0 8px;color:#bbb;">…</span>`;
-        }
-    }
-
-    html += `<a href="#" onclick="event.preventDefault();goToPage(${current + 1});" ${current === totalPages ? 'style="opacity:0.4;pointer-events:none;"' : ''}><i class="fa-solid fa-chevron-right"></i></a>`;
-    wrap.innerHTML = html;
-}
-
-function goToPage(page) {
-    const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
-    if (page < 1 || page > totalPages) return;
-    currentPage = page;
-    renderProducts(page);
-    document.querySelector('.shop-toolbar').scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-function filterProducts() {
-    const selectedCategories = [];
-    document.querySelectorAll('#filterCategory input[type="checkbox"]:checked').forEach(cb => {
-        selectedCategories.push(cb.value);
+    }).catch(function() {
+        window.location.href = url;
     });
-
-    const selectedBrands = [];
-    document.querySelectorAll('#filterBrand input[type="checkbox"]:checked').forEach(cb => {
-        selectedBrands.push(cb.value);
-    });
-
-    const ratingRadio = document.querySelector('input[name="rating"]:checked');
-    const selectedRating = ratingRadio ? ratingRadio.value : 'all';
-
-    const minPrice = parseInt(document.getElementById('priceMin').value) || 0;
-    const maxPrice = parseInt(document.getElementById('priceMax').value) || Infinity;
-
-    filteredProducts = products.filter(product => {
-        const categoryMatch = selectedCategories.length === 0 || selectedCategories.includes(product.category);
-        const brandMatch = selectedBrands.length === 0 || selectedBrands.includes(product.brand.toLowerCase().replace(/[^a-z]/g, ''));
-        const ratingMatch = selectedRating === 'all' || product.rating >= parseInt(selectedRating);
-        const priceMatch = product.price >= minPrice && product.price <= maxPrice;
-        return categoryMatch && brandMatch && ratingMatch && priceMatch;
-    });
-
-    sortProducts();
-    currentPage = 1;
-    renderProducts(1);
 }
-
-function sortProducts() {
-    const sortValue = document.getElementById('sortSelect').value;
-    if (sortValue === 'price-low') {
-        filteredProducts.sort((a, b) => a.price - b.price);
-    } else if (sortValue === 'price-high') {
-        filteredProducts.sort((a, b) => b.price - a.price);
-    } else if (sortValue === 'rating') {
-        filteredProducts.sort((a, b) => b.rating - a.rating || b.ratingCount - a.ratingCount);
-    } else {
-        filteredProducts.sort((a, b) => a.id - b.id);
-    }
-}
-
-function toggleWishlist(element) {
-    const icon = element.querySelector('i');
-    const productCard = element.closest('.product-card');
-    const productName = productCard ? productCard.querySelector('h3').textContent : 'Product';
-    
-    icon.classList.toggle('fa-regular');
-    icon.classList.toggle('fa-solid');
-    
-    if (icon.classList.contains('fa-solid')) {
-        element.style.background = '#d66175';
-        element.style.color = '#fff';
-        element.style.borderColor = '#d66175';
-        element.style.transform = 'scale(1.2)';
-        setTimeout(() => { element.style.transform = ''; }, 300);
-        showToast(`❤️ ${productName} added to Wishlist!`);
-    } else {
-        element.style.background = '#fff';
-        element.style.color = '#ccc';
-        element.style.borderColor = '#eee';
-        showToast(`💔 ${productName} removed from Wishlist`);
-    }
-}
-
-function addToCart(button, productName) {
-    const originalText = button.innerHTML;
-    button.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="margin-right:8px;"></i>Adding...';
-    button.style.background = '#d66175';
-    button.style.color = '#fff';
-    button.disabled = true;
-    
-    setTimeout(() => {
-        button.innerHTML = '<i class="fa-solid fa-check" style="margin-right:8px;"></i>Added!';
-        button.style.background = '#2ecc71';
-        button.style.color = '#fff';
-        updateCartBadge();
-        showToast(`✅ ${productName} added to cart!`);
-        
-        setTimeout(() => {
-            button.innerHTML = originalText;
-            button.style.background = '#d66175';
-            button.style.color = '#fff';
-            button.disabled = false;
-        }, 2000);
-    }, 700);
-}
-
-let cartCount = 3;
-function updateCartBadge() {
-    cartCount++;
-    const badge = document.querySelector('.cart-badge');
-    if (badge) {
-        badge.textContent = cartCount;
-        badge.style.animation = 'none';
-        setTimeout(() => {
-            badge.style.animation = 'badgePulse 0.5s ease';
-        }, 10);
-    }
-}
-
-function showToast(message) {
-    const existing = document.querySelector('.toast-notification');
-    if (existing) existing.remove();
-
-    const toast = document.createElement('div');
-    toast.className = 'toast-notification';
-    toast.textContent = message;
-    toast.style.cssText = `
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        background: #1A1A2E;
-        color: white;
-        padding: 14px 24px;
-        border-radius: 12px;
-        font-size: 14px;
-        font-weight: 500;
-        box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-        z-index: 10000;
-        animation: slideInUp 0.4s ease forwards;
-        font-family: 'Inter', sans-serif;
-        max-width: 350px;
-        border-left: 4px solid #d66175;
-    `;
-    document.body.appendChild(toast);
-
-    setTimeout(() => {
-        toast.style.animation = 'slideOutDown 0.4s ease forwards';
-        setTimeout(() => { toast.remove(); }, 400);
-    }, 3000);
-}
-
-// Add CSS animations
-const styleSheet = document.createElement('style');
-styleSheet.textContent = `
-    @keyframes slideInUp {
-        0% { transform: translateY(100px); opacity: 0; }
-        100% { transform: translateY(0); opacity: 1; }
-    }
-    @keyframes slideOutDown {
-        0% { transform: translateY(0); opacity: 1; }
-        100% { transform: translateY(100px); opacity: 0; }
-    }
-    @keyframes badgePulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.4); }
-        100% { transform: scale(1); }
-    }
-    .toast-notification {
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        background: #1A1A2E;
-        color: white;
-        padding: 14px 24px;
-        border-radius: 12px;
-        font-size: 14px;
-        font-weight: 500;
-        box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-        z-index: 10000;
-        animation: slideInUp 0.4s ease forwards;
-        font-family: 'Inter', sans-serif;
-        max-width: 350px;
-        border-left: 4px solid #d66175;
-    }
-`;
-document.head.appendChild(styleSheet);
-
-// Initialize
-document.addEventListener('DOMContentLoaded', function() {
-    // Set default checkbox states
-    document.querySelectorAll('#filterCategory input[type="checkbox"]').forEach(cb => {
-        cb.checked = true;
-    });
-    
-    document.querySelector('input[name="rating"][value="all"]').checked = true;
-    
-    renderProducts(1);
-    
-    // Event listeners
-    document.getElementById('applyFilters').addEventListener('click', filterProducts);
-    document.getElementById('clearFilters').addEventListener('click', function() {
-        document.querySelectorAll('#filterCategory input[type="checkbox"]').forEach(cb => cb.checked = true);
-        document.querySelectorAll('#filterBrand input[type="checkbox"]').forEach(cb => cb.checked = false);
-        document.querySelector('input[name="rating"][value="all"]').checked = true;
-        document.getElementById('priceMin').value = '500';
-        document.getElementById('priceMax').value = '5000';
-        document.getElementById('sortSelect').value = 'default';
-        filterProducts();
-    });
-    document.getElementById('sortSelect').addEventListener('change', function() {
-        sortProducts();
-        currentPage = 1;
-        renderProducts(1);
-    });
-    
-    // Price input validation
-    document.querySelectorAll('.price-range input').forEach(input => {
-        input.addEventListener('input', function() {
-            this.value = this.value.replace(/[^0-9]/g, '');
-        });
-    });
-});
-
-console.log('🛒 Kasbi Beauty — Shop Page Loaded!');
 </script>

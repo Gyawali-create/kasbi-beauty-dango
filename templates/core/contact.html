@@ -135,20 +135,55 @@
       </div>
       {% endif %}
 
-      <!-- Social links -->
+      <!-- Social links from SiteSettings -->
+      {% if site.facebook_url or site.instagram_url or site.youtube_url or site.tiktok_url %}
       <div class="card" style="background:var(--cream);">
         <i class="fa-solid fa-share-nodes"></i>
         <h4>Follow Us</h4>
-        <div style="display:flex;gap:12px;margin-top:10px;">
-          <a href="#" style="width:38px;height:38px;background:var(--primary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:14px;"><i class="fa-brands fa-facebook-f"></i></a>
-          <a href="#" style="width:38px;height:38px;background:#e1306c;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:14px;"><i class="fa-brands fa-instagram"></i></a>
-          <a href="#" style="width:38px;height:38px;background:#ff0000;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:14px;"><i class="fa-brands fa-youtube"></i></a>
-          <a href="#" style="width:38px;height:38px;background:#000000;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:14px;"><i class="fa-brands fa-tiktok"></i></a>
+        <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;">
+          {% if site.facebook_url %}
+          <a href="{{ site.facebook_url }}" target="_blank" rel="noopener"
+             style="width:40px;height:40px;background:#1877f2;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0;">
+            <i class="fa-brands fa-facebook-f" style="font-size:15px;line-height:1;"></i>
+          </a>
+          {% endif %}
+          {% if site.instagram_url %}
+          <a href="{{ site.instagram_url }}" target="_blank" rel="noopener"
+             style="width:40px;height:40px;background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0;">
+            <i class="fa-brands fa-instagram" style="font-size:16px;line-height:1;"></i>
+          </a>
+          {% endif %}
+          {% if site.youtube_url %}
+          <a href="{{ site.youtube_url }}" target="_blank" rel="noopener"
+             style="width:40px;height:40px;background:#ff0000;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0;">
+            <i class="fa-brands fa-youtube" style="font-size:16px;line-height:1;"></i>
+          </a>
+          {% endif %}
+          {% if site.tiktok_url %}
+          <a href="{{ site.tiktok_url }}" target="_blank" rel="noopener"
+             style="width:40px;height:40px;background:#010101;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0;">
+            <i class="fa-brands fa-tiktok" style="font-size:15px;line-height:1;"></i>
+          </a>
+          {% endif %}
         </div>
       </div>
-    </div>
+      {% else %}
+      <!-- Fallback social icons when none set in admin -->
+      <div class="card" style="background:var(--cream);">
+        <i class="fa-solid fa-share-nodes"></i>
+        <h4>Follow Us</h4>
+        <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;">
+          <a href="#" style="width:40px;height:40px;background:#1877f2;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0;"><i class="fa-brands fa-facebook-f" style="font-size:15px;line-height:1;"></i></a>
+          <a href="#" style="width:40px;height:40px;background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0;"><i class="fa-brands fa-instagram" style="font-size:16px;line-height:1;"></i></a>
+          <a href="#" style="width:40px;height:40px;background:#ff0000;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0;"><i class="fa-brands fa-youtube" style="font-size:16px;line-height:1;"></i></a>
+          <a href="#" style="width:40px;height:40px;background:#010101;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0;"><i class="fa-brands fa-tiktok" style="font-size:15px;line-height:1;"></i></a>
+        </div>
+      </div>
+      {% endif %}
 
-  </div>
+    </div><!-- end contact-info -->
+
+  </div><!-- end contact-grid -->
 </section>
 
 {% endblock %}
