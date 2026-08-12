@@ -7,6 +7,7 @@ from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('summernote/', include('django_summernote.urls')),
     # convenience redirect so /admin/dashboard goes to the actual dashboard
     path('admin/dashboard', RedirectView.as_view(url='/dashboard/', permanent=False)),
     path('dashboard/', include('dashboard.urls')),

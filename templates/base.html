@@ -189,13 +189,39 @@ document.querySelectorAll('#quickDock a, #quickDock button').forEach(function(el
 <footer class="footer">
     <div class="footer-grid">
         <div>
-            <a href="{% url 'core:home' %}"><img src="{% static 'img/logo1.png' %}" alt="Kasbi Beauty" style="height:45px;width:auto;margin-bottom:16px;filter:brightness(10) grayscale(1) opacity(0.8);"></a>
-            <p>Your trusted beauty destination in Nepal. Premium skincare, makeup, haircare &amp; more — all 100% authentic.</p>
+            <!-- Logo from SiteSettings, fallback to static -->
+            <a href="{% url 'core:home' %}">
+                {% if site_settings.logo %}
+                <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.site_name }}"
+                     style="height:140px;width:auto;margin-bottom:16px;object-fit:contain;">
+                {% else %}
+                <img src="{% static 'img/logo1.png' %}" alt="Kasbi Beauty"
+                     style="height:45px;width:auto;margin-bottom:16px;filter:brightness(10) grayscale(1) opacity(0.8);">
+                {% endif %}
+            </a>
+            <p>{{ site_settings.about_text|default:"Your trusted beauty destination in Nepal. Premium skincare, makeup, haircare & more — all 100% authentic."|truncatewords:18 }}</p>
+            <!-- Social links from SiteSettings -->
             <div class="social">
+                {% if site_settings.facebook_url %}
+                <a href="{{ site_settings.facebook_url }}" target="_blank" rel="noopener"><i class="fa-brands fa-facebook-f"></i></a>
+                {% else %}
                 <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                {% endif %}
+                {% if site_settings.instagram_url %}
+                <a href="{{ site_settings.instagram_url }}" target="_blank" rel="noopener"><i class="fa-brands fa-instagram"></i></a>
+                {% else %}
                 <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                {% endif %}
+                {% if site_settings.youtube_url %}
+                <a href="{{ site_settings.youtube_url }}" target="_blank" rel="noopener"><i class="fa-brands fa-youtube"></i></a>
+                {% else %}
                 <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                {% endif %}
+                {% if site_settings.tiktok_url %}
+                <a href="{{ site_settings.tiktok_url }}" target="_blank" rel="noopener"><i class="fa-brands fa-tiktok"></i></a>
+                {% else %}
                 <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                {% endif %}
             </div>
         </div>
         <div>
@@ -205,7 +231,7 @@ document.querySelectorAll('#quickDock a, #quickDock button').forEach(function(el
                 <li><a href="{% url 'core:contact' %}">Contact Us</a></li>
                 <li><a href="#">Beauty Blog</a></li>
                 <li><a href="{% url 'orders:history' %}">Track Order</a></li>
-                <li><a href="#">Returns &amp; Refunds</a></li>
+                <li><a href="{% url 'core:returns' %}">Returns &amp; Refunds</a></li>
             </ul>
         </div>
         <div>

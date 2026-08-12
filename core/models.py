@@ -28,6 +28,13 @@ class SiteSettings(models.Model):
     logo = models.ImageField(upload_to='site/', blank=True, null=True)
     favicon = models.ImageField(upload_to='site/', blank=True, null=True)
     about_image = models.ImageField(upload_to='site/', blank=True, null=True, help_text='Image shown on the About Us page')
+    # Returns & Refunds policy text
+    returns_policy = models.TextField(blank=True, help_text='Returns & Refunds policy shown on the Returns page')
+    # Social media links
+    facebook_url  = models.URLField(blank=True)
+    instagram_url = models.URLField(blank=True)
+    youtube_url   = models.URLField(blank=True)
+    tiktok_url    = models.URLField(blank=True)
 
     class Meta:
         verbose_name_plural = 'Site Settings'

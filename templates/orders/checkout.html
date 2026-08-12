@@ -115,7 +115,13 @@
           <h4>Order Summary</h4>
           {% for item in cart.items.all %}
           <div class="order-item">
-            <img src="{% if item.product.thumbnail %}{{ item.product.thumbnail.url }}{% else %}{% static 'img/hero.png' %}{% endif %}" alt="{{ item.product.name }}">
+            {% if item.product.thumbnail %}
+            <img src="{{ item.product.thumbnail.url }}" alt="{{ item.product.name }}">
+            {% else %}
+            <div style="width:52px;height:52px;background:linear-gradient(135deg,#fce4ec,#f8bbd9);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span style="font-size:18px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">{{ item.product.name|first|upper }}</span>
+            </div>
+            {% endif %}
             <div class="order-item-info">
               <h5>{{ item.product.name }}</h5>
               <span>Qty: {{ item.quantity }}</span>

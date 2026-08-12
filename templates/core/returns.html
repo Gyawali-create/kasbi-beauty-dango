@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Returns & Refunds — {{ site_settings.site_name }}{% endblock %}
+
+{% block content %}
+
+<!-- PAGE HEADER -->
+<div style="background:var(--cream);padding:40px 6%;text-align:center;border-bottom:1px solid rgba(0,0,0,0.05);">
+    <h1 style="font-family:'Cormorant Garamond',serif;font-size:42px;color:var(--dark);margin-bottom:8px;">
+        Returns &amp; Refunds
+    </h1>
+    <p style="color:var(--gray);font-size:15px;">Our hassle-free return &amp; refund policy</p>
+    <div style="font-size:13px;color:var(--gray);margin-top:8px;">
+        <a href="{% url 'core:home' %}" style="color:var(--primary);">Home</a> / Returns &amp; Refunds
+    </div>
+</div>
+
+<!-- POLICY CONTENT -->
+<section style="padding:60px 6%;max-width:900px;margin:0 auto;">
+
+    {% if site.returns_policy %}
+    <!-- Dynamic policy from admin SiteSettings (Summernote HTML) -->
+    <div style="background:var(--white);border-radius:20px;padding:40px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.05);line-height:1.9;font-size:15px;color:var(--gray);">
+        {{ site.returns_policy|safe }}
+    </div>
+
+    {% else %}
+    <!-- Default policy when none is set in admin -->
+    <div style="background:var(--white);border-radius:20px;padding:40px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.05);">
+
+        <!-- Notice banner -->
+        <div style="background:linear-gradient(135deg,#fce4ec,#f8bbd9);border-radius:14px;padding:20px 24px;margin-bottom:36px;display:flex;gap:16px;align-items:flex-start;">
+            <i class="fa-solid fa-circle-info" style="color:var(--primary);font-size:22px;flex-shrink:0;margin-top:2px;"></i>
+            <div>
+                <div style="font-weight:700;color:var(--dark);margin-bottom:4px;">Easy 7-Day Returns &amp; Refunds</div>
+                <div style="color:var(--gray);font-size:14px;">We want you to love your purchase. If you're not satisfied, we're here to help.</div>
+            </div>
+        </div>
+
+        <!-- ── RETURN POLICY ─────────────────────────── -->
+        <div style="margin-bottom:32px;">
+            <h2 style="font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--dark);margin-bottom:14px;display:flex;align-items:center;gap:10px;">
+                <span style="width:36px;height:36px;background:var(--primary);color:white;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;">1</span>
+                Return Policy
+            </h2>
+            <ul style="list-style:none;padding:0;color:var(--gray);font-size:15px;line-height:2;">
+                <li style="padding:8px 0;border-bottom:1px solid var(--cream);display:flex;align-items:flex-start;gap:10px;">
+                    <i class="fa-solid fa-check" style="color:var(--primary);margin-top:4px;flex-shrink:0;"></i>
+                    Returns accepted within <strong style="color:var(--dark);">7 days</strong> of delivery
+                </li>
+                <li style="padding:8px 0;border-bottom:1px solid var(--cream);display:flex;align-items:flex-start;gap:10px;">
+                    <i class="fa-solid fa-check" style="color:var(--primary);margin-top:4px;flex-shrink:0;"></i>
+                    Product must be <strong style="color:var(--dark);">unused, sealed, and in original packaging</strong>
+                </li>
+                <li style="padding:8px 0;border-bottom:1px solid var(--cream);display:flex;align-items:flex-start;gap:10px;">
+                    <i class="fa-solid fa-check" style="color:var(--primary);margin-top:4px;flex-shrink:0;"></i>
+                    Proof of purchase (order number) required
+                </li>
+                <li style="padding:8px 0;display:flex;align-items:flex-start;gap:10px;">
+                    <i class="fa-solid fa-xmark" style="color:#e74c3c;margin-top:4px;flex-shrink:0;"></i>
+                    Opened, used, or damaged products are <strong style="color:#e74c3c;">not eligible</strong> for return
+                </li>
+            </ul>
+        </div>
+
+        <!-- ── REFUND POLICY ──────────────────────────── -->
+        <div style="margin-bottom:32px;">
+            <h2 style="font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--dark);margin-bottom:14px;display:flex;align-items:center;gap:10px;">
+                <span style="width:36px;height:36px;background:var(--primary);color:white;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;">2</span>
+                Refund Policy
+            </h2>
+            <ul style="list-style:none;padding:0;color:var(--gray);font-size:15px;line-height:2;">
+                <li style="padding:8px 0;border-bottom:1px solid var(--cream);display:flex;align-items:flex-start;gap:10px;">
+                    <i class="fa-solid fa-check" style="color:var(--primary);margin-top:4px;flex-shrink:0;"></i>
+                    Once your return is received &amp; inspected, refund is processed within <strong style="color:var(--dark);">3–5 business days</strong>
+                </li>
+                <li style="padding:8px 0;border-bottom:1px solid var(--cream);display:flex;align-items:flex-start;gap:10px;">
+                    <i class="fa-solid fa-check" style="color:var(--primary);margin-top:4px;flex-shrink:0;"></i>
+                    Refunds are issued to the <strong style="color:var(--dark);">original payment method</strong>
+                </li>
+                <li style="padding:8px 0;border-bottom:1px solid var(--cream);display:flex;align-items:flex-start;gap:10px;">
+                    <i class="fa-solid fa-check" style="color:var(--primary);margin-top:4px;flex-shrink:0;"></i>
+                    For <strong style="color:var(--dark);">eSewa / Khalti</strong> — refund to your wallet within 1–2 days
+                </li>
+                <li style="padding:8px 0;display:flex;align-items:flex-start;gap:10px;">
+                    <i class="fa-solid fa-check" style="color:var(--primary);margin-top:4px;flex-shrink:0;"></i>
+                    For <strong style="color:var(--dark);">COD orders</strong> — refund via bank transfer or eSewa (we contact you)
+                </li>
+            </ul>
+        </div>
+
+        <!-- ── NON-RETURNABLE ─────────────────────────── -->
+        <div style="margin-bottom:32px;">
+            <h2 style="font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--dark);margin-bottom:14px;display:flex;align-items:center;gap:10px;">
+                <span style="width:36px;height:36px;background:var(--primary);color:white;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;">3</span>
+                Non-Returnable Items
+            </h2>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                {% for item in non_returnable_items %}
+                <div style="background:var(--cream);border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:10px;font-size:14px;color:var(--gray);">
+                    <i class="fa-solid fa-ban" style="color:#e74c3c;font-size:12px;flex-shrink:0;"></i>
+                    {{ item }}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- ── HOW TO RETURN ──────────────────────────── -->
+        <div style="margin-bottom:32px;">
+            <h2 style="font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--dark);margin-bottom:20px;display:flex;align-items:center;gap:10px;">
+                <span style="width:36px;height:36px;background:var(--primary);color:white;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;">4</span>
+                How to Request a Return / Refund
+            </h2>
+            <div style="display:flex;flex-direction:column;gap:14px;">
+                {% for step in return_steps %}
+                <div style="display:flex;align-items:flex-start;gap:14px;background:var(--cream);border-radius:12px;padding:14px 18px;">
+                    <span style="width:28px;height:28px;background:var(--primary);color:white;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:1px;">{{ forloop.counter }}</span>
+                    <span style="color:var(--gray);font-size:14px;line-height:1.6;">{{ step }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div style="background:linear-gradient(135deg,var(--primary),#D58A94);border-radius:16px;padding:28px 32px;text-align:center;color:white;margin-top:16px;">
+            <h3 style="font-family:'Cormorant Garamond',serif;font-size:24px;margin-bottom:8px;">Still have questions?</h3>
+            <p style="opacity:0.9;font-size:14px;margin-bottom:18px;">Our team is happy to help you with your return or refund.</p>
+            <a href="{% url 'core:contact' %}"
+               style="background:white;color:var(--primary);padding:11px 28px;border-radius:30px;font-weight:700;font-size:14px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+                <i class="fa-regular fa-message"></i> Contact Us
+            </a>
+        </div>
+
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from django_summernote.admin import SummernoteModelAdmin
 from .models import ContactMessage, SiteSettings
 
 
@@ -23,7 +24,8 @@ class ContactMessageAdmin(admin.ModelAdmin):
 
 
 @admin.register(SiteSettings)
-class SiteSettingsAdmin(admin.ModelAdmin):
+class SiteSettingsAdmin(SummernoteModelAdmin):
+    summernote_fields = ('returns_policy',)
     list_display = ('site_name', 'tagline', 'email', 'phone', 'address')
 
     fieldsets = (
@@ -36,10 +38,17 @@ class SiteSettingsAdmin(admin.ModelAdmin):
         ('Contact Info', {
             'fields': ('email', 'phone', 'address'),
         }),
+        ('Social Media Links', {
+            'description': 'Add full URLs e.g. https://facebook.com/yourpage',
+            'fields': ('facebook_url', 'instagram_url', 'youtube_url', 'tiktok_url'),
+        }),
+        ('Returns & Refunds Policy', {
+            'description': 'Leave blank to show the default policy. Write your own to override it.',
+            'fields': ('returns_policy',),
+        }),
     )
 
     def has_add_permission(self, request):
-        # Singleton — only one record allowed (pk=1)
         return not SiteSettings.objects.exists()
 
     def has_delete_permission(self, request, obj=None):

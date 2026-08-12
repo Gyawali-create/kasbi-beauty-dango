@@ -122,11 +122,28 @@ def checkout_view(request):
 def esewa_initiate(request, order_number):
     """Render a page that auto-submits the eSewa payment form."""
     order = get_object_or_404(Order, order_number=order_number, user=request.user)
+
+    # Generate a NEW unique transaction UUID every attempt
+    # Using order_number + timestamp so eSewa never sees a duplicate
+    import datetime
+    timestamp = datetime.datetime.now().strftime('%m%d%H%M%S')
+    transaction_uuid = f'{order.order_number}-{timestamp}'
+
     total_amount = str(order.total)
-    transaction_uuid = order.order_number
     product_code = settings.ESEWA_PRODUCT_CODE
     signature = _esewa_signature(total_amount, transaction_uuid, product_code)
     base = settings.ESEWA_BASE_URL
+
+    # Update or create the pending payment record with the new UUID
+    payment, _ = Payment.objects.update_or_create(
+        order=order,
+        defaults={
+            'amount': order.total,
+            'method': 'esewa',
+            'status': 'pending',
+            'transaction_id': transaction_uuid,
+        }
+    )
 
     context = {
         'order': order,
