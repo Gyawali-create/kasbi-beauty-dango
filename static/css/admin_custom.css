@@ -1,0 +1,46 @@
+/* ===== ADMIN PANEL — READABLE INPUT TEXT ===== */
+
+/* All input fields, textareas, selects — global scope */
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+input[type="tel"],
+input[type="date"],
+input[type="datetime-local"],
+input[type="search"],
+textarea,
+select {
+    color: #1a1a2e !important;
+    -webkit-text-fill-color: #1a1a2e !important;
+    background-color: #ffffff !important;
+    opacity: 1 !important;
+}
+
+/* Placeholder text */
+input::placeholder,
+textarea::placeholder {
+    color: #999999 !important;
+    -webkit-text-fill-color: #999999 !important;
+    opacity: 1 !important;
+}
+
+/* Select dropdown options */
+select option {
+    color: #1a1a2e !important;
+    background-color: #ffffff !important;
+}
+
+/* Related field widgets (Category, Brand dropdowns) */
+.related-widget-wrapper select,
+.vForeignKeyRawIdAdminField {
+    color: #1a1a2e !important;
+    -webkit-text-fill-color: #1a1a2e !important;
+}
+
+/* Filter sidebar search */
+#changelist-search input {
+    color: #1a1a2e !important;
+    -webkit-text-fill-color: #1a1a2e !important;
+}

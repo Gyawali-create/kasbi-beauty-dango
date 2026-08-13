@@ -70,13 +70,30 @@ class BrandAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('thumbnail_preview', 'name', 'category', 'brand', 'price', 'discount_price', 'stock', 'is_active', 'is_featured', 'popularity', 'created_at')
-    list_filter = ('category', 'brand', 'is_active', 'is_featured')
+    list_display = ('thumbnail_preview', 'name', 'category', 'brand', 'price', 'discount_price', 'stock', 'is_active', 'is_featured', 'is_new_arrival', 'is_bestseller', 'popularity', 'created_at')
+    list_filter = ('category', 'brand', 'is_active', 'is_featured', 'is_new_arrival', 'is_bestseller')
     search_fields = ('name', 'description')
-    list_editable = ('price', 'discount_price', 'stock', 'is_active', 'is_featured')
+    list_editable = ('price', 'discount_price', 'stock', 'is_active', 'is_featured', 'is_new_arrival', 'is_bestseller')
     prepopulated_fields = {'slug': ('name',)}
     inlines = [ProductImageInline, ReviewInline]
     ordering = ('-created_at',)
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'slug', 'category', 'brand'),
+        }),
+        ('Pricing & Stock', {
+            'fields': ('price', 'discount_price', 'stock'),
+        }),
+        ('Media', {
+            'fields': ('thumbnail',),
+        }),
+        ('Status & Flags', {
+            'fields': (('is_active', 'is_featured', 'is_new_arrival', 'is_bestseller'), 'popularity'),
+        }),
+        ('Description', {
+            'fields': ('description',),
+        }),
+    )
 
     def thumbnail_preview(self, obj):
         if obj.thumbnail:

@@ -20,7 +20,7 @@
     {% for item in items %}
     <div class="product-card">
       <div class="image-wrap">
-        {% if item.product.discount_price %}<span class="discount">Sale</span>{% endif %}
+        {% if item.product.has_discount %}<span class="discount">-{{ item.product.get_discount_percent }}%</span>{% endif %}
         <a href="{% url 'products:wishlist_remove' item.product.id %}" class="wishlist" style="background:var(--primary);color:white;border-color:var(--primary);">
           <i class="fa-solid fa-heart"></i>
         </a>
@@ -32,8 +32,8 @@
         <span class="brand">{{ item.product.brand|default:"" }}</span>
         <h3><a href="{{ item.product.get_absolute_url }}" style="color:inherit;text-decoration:none;">{{ item.product.name }}</a></h3>
         <div class="price">
-          <span class="current">Rs.{{ item.product.current_price }}</span>
-          {% if item.product.discount_price %}<span class="old">Rs.{{ item.product.price }}</span>{% endif %}
+          <span class="current">Rs.{{ item.product.current_price|floatformat:0 }}</span>
+          {% if item.product.has_discount %}<span class="old">Rs.{{ item.product.price|floatformat:0 }}</span>{% endif %}
         </div>
         {% if item.product.in_stock %}
         <form method="post" action="{% url 'cart:add' item.product.id %}" style="margin:0;">

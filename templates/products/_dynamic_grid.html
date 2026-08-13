@@ -35,7 +35,9 @@
                 <div class="product-card" data-category="{{ p.category.slug|default:'' }}" data-price="{{ p.current_price }}" data-rating="5">
                     <div class="image-wrap">
                         {% if p.is_featured %}<span class="badge-bestseller">&#11088; Best Seller</span>{% endif %}
-                        {% if p.discount_price %}<span class="discount">Sale</span>{% endif %}
+                        {% if p.is_new_arrival %}<span class="badge-new-arrival">✨ New</span>{% endif %}
+                        {% if p.is_bestseller %}<span class="badge-bestseller-flag">🔥 Bestseller</span>{% endif %}
+                        {% if p.has_discount %}<span class="discount">-{{ p.get_discount_percent }}%</span>{% endif %}
                         <span class="wishlist" onclick="event.preventDefault();event.stopPropagation();KisbaWL(this,{{ p.id }})">
                             <i class="{% if p.id in wishlist_ids %}fa-solid{% else %}fa-regular{% endif %} fa-heart"></i>
                         </span>
@@ -46,8 +48,8 @@
                         <h3>{{ p.name }}</h3>
                         <div class="rating">&#9733;&#9733;&#9733;&#9733;&#9733; <span>({{ p.popularity|default:0 }})</span></div>
                         <div class="price">
-                            <span class="current">Rs.{{ p.current_price }}</span>
-                            {% if p.discount_price %}<span class="old">Rs.{{ p.price }}</span>{% endif %}
+                            <span class="current">Rs.{{ p.current_price|floatformat:0 }}</span>
+                            {% if p.has_discount %}<span class="old">Rs.{{ p.price|floatformat:0 }}</span>{% endif %}
                         </div>
                         {% if user.is_authenticated and p.in_stock %}
                         <form method="post" action="{% url 'cart:add' p.id %}" onclick="event.stopPropagation();" style="margin:0;">
@@ -148,4 +150,10 @@ function KisbaToast(msg) {
 @keyframes kbSlideIn  { from { transform:translateY(100px);opacity:0; } to { transform:translateY(0);opacity:1; } }
 @keyframes kbSlideOut { from { transform:translateY(0);opacity:1; } to { transform:translateY(100px);opacity:0; } }
 .pagination a:hover { background:#5E4074 !important; color:white !important; border-color:#5E4074 !important; }
+.badge-new-arrival{position:absolute;top:10px;left:10px;background:#4caf50;color:#fff;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;z-index:2;pointer-events:none;}
+.badge-bestseller-flag{position:absolute;top:10px;left:10px;background:#e77b78;color:#fff;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;z-index:2;pointer-events:none;}
+/* When featured badge is also present, shift new-arrival and bestseller-flag down */
+.badge-bestseller ~ .badge-new-arrival{top:36px;}
+.badge-bestseller ~ .badge-bestseller-flag{top:36px;}
+.badge-bestseller ~ .badge-new-arrival ~ .badge-bestseller-flag{top:62px;}
 </style>

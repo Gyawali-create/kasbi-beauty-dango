@@ -11,17 +11,19 @@
             <!-- Preserve search query if present -->
             {% if query %}<input type="hidden" name="q" value="{{ query }}">{% endif %}
 
-            <!-- CATEGORIES -->
+            <!-- CATEGORIES (hidden on dedicated category pages — already scoped) -->
+            {% if not locked_category_slug %}
             <div class="filter-group">
                 <h4>Categories</h4>
                 {% for cat in categories %}
                 <label>
                     <input type="checkbox" name="category" value="{{ cat.slug }}"
-                        {% if selected_category == cat.slug %}checked{% endif %}>
+                        {% if cat.slug in selected_categories %}checked{% endif %}>
                     {{ cat.name }}
                 </label>
                 {% endfor %}
             </div>
+            {% endif %}
 
             <!-- PRICE RANGE -->
             <div class="filter-group">
@@ -41,7 +43,7 @@
                 {% for brand in brands %}
                 <label>
                     <input type="checkbox" name="brand" value="{{ brand.slug }}"
-                        {% if selected_brand == brand.slug %}checked{% endif %}>
+                        {% if brand.slug in selected_brands %}checked{% endif %}>
                     {{ brand.name }}
                 </label>
                 {% endfor %}
@@ -50,7 +52,7 @@
             <!-- SORT -->
             <div class="filter-group">
                 <h4>Sort By</h4>
-                <select name="sort" onchange="this.form.submit()">
+                <select name="sort">
                     <option value="newest"     {% if sort == 'newest' %}selected{% endif %}>Newest First</option>
                     <option value="price_low"  {% if sort == 'price_low' %}selected{% endif %}>Price: Low to High</option>
                     <option value="price_high" {% if sort == 'price_high' %}selected{% endif %}>Price: High to Low</option>
@@ -75,15 +77,12 @@
                 Showing {{ page_obj.start_index }}–{{ page_obj.end_index }}
                 of {{ page_obj.paginator.count }} product{{ page_obj.paginator.count|pluralize }}
             </span>
-            <select onchange="window.location=this.value">
-                <option value="?sort=newest{% if query %}&q={{ query }}{% endif %}"
-                    {% if sort == 'newest' %}selected{% endif %}>Sort by: Newest</option>
-                <option value="?sort=price_low{% if query %}&q={{ query }}{% endif %}"
-                    {% if sort == 'price_low' %}selected{% endif %}>Sort by: Price: Low to High</option>
-                <option value="?sort=price_high{% if query %}&q={{ query }}{% endif %}"
-                    {% if sort == 'price_high' %}selected{% endif %}>Sort by: Price: High to Low</option>
-                <option value="?sort=popularity{% if query %}&q={{ query }}{% endif %}"
-                    {% if sort == 'popularity' %}selected{% endif %}>Sort by: Most Popular</option>
+            {# Top-right sort: submits the full filter form so no params are lost #}
+            <select onchange="document.getElementById('filterForm').querySelector('[name=sort]').value=this.value;document.getElementById('filterForm').submit();">
+                <option value="newest"     {% if sort == 'newest' %}selected{% endif %}>Sort by: Newest</option>
+                <option value="price_low"  {% if sort == 'price_low' %}selected{% endif %}>Sort by: Price: Low to High</option>
+                <option value="price_high" {% if sort == 'price_high' %}selected{% endif %}>Sort by: Price: High to Low</option>
+                <option value="popularity" {% if sort == 'popularity' %}selected{% endif %}>Sort by: Most Popular</option>
             </select>
         </div>
 
@@ -124,10 +123,14 @@
                             {% if p.is_featured %}
                             <span class="product-badge bestseller">⭐ Featured</span>
                             {% endif %}
-                            {% if p.discount_price %}
-                            <span class="product-badge discount">
-                                -{% widthratio p.discount_price p.price 100 as pct %}{{ 100|add:"-"|stringformat:"s" }}{{ pct }}%
-                            </span>
+                            {% if p.is_new_arrival %}
+                            <span class="product-badge new-arrival">✨ New</span>
+                            {% endif %}
+                            {% if p.is_bestseller %}
+                            <span class="product-badge bestseller-flag">🔥 Bestseller</span>
+                            {% endif %}
+                            {% if p.has_discount %}
+                            <span class="product-badge discount">-{{ p.get_discount_percent }}%</span>
                             {% endif %}
                         </div>
 
@@ -135,9 +138,9 @@
                         <h3>{{ p.name|truncatechars:40 }}</h3>
 
                         <div class="price">
-                            <span class="current">Rs.{{ p.current_price }}</span>
-                            {% if p.discount_price %}
-                            <span class="old">Rs.{{ p.price }}</span>
+                            <span class="current">Rs.{{ p.current_price|floatformat:0 }}</span>
+                            {% if p.has_discount %}
+                            <span class="old">Rs.{{ p.price|floatformat:0 }}</span>
                             {% endif %}
                         </div>
 
@@ -180,8 +183,9 @@
         <!-- PAGINATION -->
         {% if page_obj.has_other_pages %}
         <div class="pagination">
+            {# Build a reusable param string that preserves all active filters #}
             {% if page_obj.has_previous %}
-            <a href="?page={{ page_obj.previous_page_number }}{% if sort %}&sort={{ sort }}{% endif %}{% if query %}&q={{ query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_brand %}&brand={{ selected_brand }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}">
+            <a href="?page={{ page_obj.previous_page_number }}{% if sort %}&sort={{ sort }}{% endif %}{% if query %}&q={{ query }}{% endif %}{% for c in selected_categories %}&category={{ c }}{% endfor %}{% for b in selected_brands %}&brand={{ b }}{% endfor %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}">
                 <i class="fa-solid fa-chevron-left"></i>
             </a>
             {% endif %}
@@ -190,12 +194,12 @@
                 {% if page_obj.number == num %}
                 <a class="active">{{ num }}</a>
                 {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                <a href="?page={{ num }}{% if sort %}&sort={{ sort }}{% endif %}{% if query %}&q={{ query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_brand %}&brand={{ selected_brand }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}">{{ num }}</a>
+                <a href="?page={{ num }}{% if sort %}&sort={{ sort }}{% endif %}{% if query %}&q={{ query }}{% endif %}{% for c in selected_categories %}&category={{ c }}{% endfor %}{% for b in selected_brands %}&brand={{ b }}{% endfor %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}">{{ num }}</a>
                 {% endif %}
             {% endfor %}
 
             {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}{% if sort %}&sort={{ sort }}{% endif %}{% if query %}&q={{ query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_brand %}&brand={{ selected_brand }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}">
+            <a href="?page={{ page_obj.next_page_number }}{% if sort %}&sort={{ sort }}{% endif %}{% if query %}&q={{ query }}{% endif %}{% for c in selected_categories %}&category={{ c }}{% endfor %}{% for b in selected_brands %}&brand={{ b }}{% endfor %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}">
                 <i class="fa-solid fa-chevron-right"></i>
             </a>
             {% endif %}
@@ -241,6 +245,8 @@
 .product-badge.bestseller{background:var(--primary);color:#fff;}
 .product-badge.discount{background:#e74c3c;color:#fff;}
 .product-badge.new-badge{background:#2ecc71;color:#fff;}
+.product-badge.new-arrival{background:#4caf50;color:#fff;}
+.product-badge.bestseller-flag{background:#e77b78;color:#fff;}
 .product-card .info .brand{font-size:10px;color:#999;text-transform:uppercase;letter-spacing:0.5px;font-weight:700;}
 .product-card .info h3{font-size:14px;font-weight:600;margin:4px 0 10px;line-height:1.3;color:var(--dark);}
 .product-card .info .price{display:flex;align-items:baseline;gap:8px;margin-bottom:12px;margin-top:auto;}
