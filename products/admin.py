@@ -49,10 +49,11 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Brand)
 class BrandAdmin(admin.ModelAdmin):
-    list_display = ('logo_preview', 'name', 'slug', 'is_active', 'product_count')
-    list_filter = ('is_active',)
+    list_display = ('logo_preview', 'name', 'slug', 'categories_display', 'is_active', 'product_count')
+    list_filter = ('is_active', 'categories')
     search_fields = ('name',)
     prepopulated_fields = {'slug': ('name',)}
+    filter_horizontal = ('categories',)
 
     def logo_preview(self, obj):
         if obj.logo:
@@ -66,6 +67,19 @@ class BrandAdmin(admin.ModelAdmin):
     def product_count(self, obj):
         return obj.products.filter(is_active=True).count()
     product_count.short_description = 'Products'
+
+    def categories_display(self, obj):
+        cats = obj.categories.all()
+        if not cats:
+            return mark_safe('<span style="color:#bbb;">—</span>')
+        pills = ''.join(
+            f'<span style="display:inline-block;background:#faebed;color:#C97786;'
+            f'border:1px solid #f0c4cc;border-radius:20px;padding:2px 10px;'
+            f'font-size:11px;font-weight:600;margin:2px 2px 2px 0;">{c.name}</span>'
+            for c in cats
+        )
+        return mark_safe(pills)
+    categories_display.short_description = 'Categories'
 
 
 @admin.register(Product)

@@ -1,189 +1,2635 @@
 ﻿{% extends 'base.html' %}
 {% load static %}
+
 {% block title %}Contact Us — {{ site.site_name }}{% endblock %}
 
 {% block content %}
 
-<!-- ===== PAGE HEADER ===== -->
-<div style="background:var(--cream);padding:40px 6%;text-align:center;border-bottom:1px solid rgba(0,0,0,0.05);">
-  <h1 style="font-family:'Cormorant Garamond',serif;font-size:42px;color:var(--dark);margin-bottom:8px;">Contact Us</h1>
-  <p style="color:var(--gray);font-size:15px;">We'd love to hear from you</p>
-  <div style="font-size:13px;color:var(--gray);margin-top:8px;">
-    <a href="{% url 'core:home' %}" style="color:var(--primary);">Home</a> / Contact
-  </div>
-</div>
+<style>
 
-<!-- ===== CONTACT SECTION ===== -->
+/* =========================================================
+   KISBA BEAUTY - PREMIUM CONTACT PAGE
+   ========================================================= */
+
+.contact-section {
+    --contact-primary: var(--primary, #c85b7a);
+    --contact-secondary: #e99aaf;
+    --contact-orange: #f2b27d;
+    --contact-dark: #3b2931;
+    --contact-gray: #81757a;
+
+    position: relative;
+    min-height: calc(100vh - 80px);
+
+    padding: 70px 5% 100px;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 5% 10%,
+            rgba(230, 126, 150, .16),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 95% 15%,
+            rgba(242, 178, 125, .18),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(218, 151, 170, .12),
+            transparent 30%
+        ),
+        #fffaf8;
+}
+
+
+/* =========================================================
+   ANIMATED BACKGROUND GRADIENT
+   ========================================================= */
+
+.contact-section::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: -30%;
+
+    background:
+        radial-gradient(
+            circle at 30% 30%,
+            rgba(255, 190, 207, .14),
+            transparent 20%
+        ),
+        radial-gradient(
+            circle at 70% 70%,
+            rgba(255, 210, 170, .12),
+            transparent 20%
+        );
+
+    animation:
+        backgroundMove 18s ease-in-out infinite alternate;
+
+    pointer-events: none;
+}
+
+@keyframes backgroundMove {
+
+    0% {
+        transform:
+            translate3d(-3%, -2%, 0)
+            scale(1);
+    }
+
+    50% {
+        transform:
+            translate3d(3%, 2%, 0)
+            scale(1.05);
+    }
+
+    100% {
+        transform:
+            translate3d(-2%, 4%, 0)
+            scale(1.02);
+    }
+}
+
+
+/* =========================================================
+   LARGE FLOATING BLOBS
+   ========================================================= */
+
+.contact-blob {
+
+    position: absolute;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    filter: blur(2px);
+
+    z-index: 1;
+}
+
+.blob-one {
+
+    width: 280px;
+    height: 280px;
+
+    top: -120px;
+    right: -80px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(214, 103, 135, .18),
+            rgba(214, 103, 135, 0)
+        );
+
+    animation:
+        blobFloatOne 9s ease-in-out infinite;
+}
+
+.blob-two {
+
+    width: 220px;
+    height: 220px;
+
+    bottom: -80px;
+    left: -60px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(242, 178, 125, .18),
+            rgba(242, 178, 125, 0)
+        );
+
+    animation:
+        blobFloatTwo 11s ease-in-out infinite;
+}
+
+.blob-three {
+
+    width: 150px;
+    height: 150px;
+
+    top: 42%;
+    right: 8%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(231, 155, 177, .10),
+            transparent
+        );
+
+    animation:
+        blobFloatThree 7s ease-in-out infinite;
+}
+
+@keyframes blobFloatOne {
+
+    0%,100% {
+        transform:
+            translate(0,0)
+            scale(1);
+    }
+
+    50% {
+        transform:
+            translate(-35px,45px)
+            scale(1.12);
+    }
+}
+
+@keyframes blobFloatTwo {
+
+    0%,100% {
+        transform:
+            translate(0,0)
+            scale(1);
+    }
+
+    50% {
+        transform:
+            translate(35px,-30px)
+            scale(1.15);
+    }
+}
+
+@keyframes blobFloatThree {
+
+    0%,100% {
+        transform:
+            translateY(0)
+            scale(1);
+    }
+
+    50% {
+        transform:
+            translateY(-35px)
+            scale(1.12);
+    }
+}
+
+
+/* =========================================================
+   FLOATING PARTICLES
+   ========================================================= */
+
+.particle {
+
+    position: absolute;
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(205, 94, 124, .35);
+
+    box-shadow:
+        0 0 12px
+        rgba(205, 94, 124, .25);
+
+    pointer-events: none;
+
+    z-index: 2;
+}
+
+.particle-1 {
+    top: 18%;
+    left: 8%;
+    animation: particleFloat 5s ease-in-out infinite;
+}
+
+.particle-2 {
+    top: 70%;
+    left: 15%;
+    width: 5px;
+    height: 5px;
+    animation: particleFloat 7s ease-in-out infinite reverse;
+}
+
+.particle-3 {
+    top: 28%;
+    right: 10%;
+    width: 6px;
+    height: 6px;
+    animation: particleFloat 6s ease-in-out infinite;
+}
+
+.particle-4 {
+    bottom: 18%;
+    right: 17%;
+    width: 9px;
+    height: 9px;
+    animation: particleFloat 8s ease-in-out infinite reverse;
+}
+
+.particle-5 {
+    top: 48%;
+    left: 4%;
+    width: 4px;
+    height: 4px;
+    animation: particleFloat 4s ease-in-out infinite;
+}
+
+@keyframes particleFloat {
+
+    0%,100% {
+        transform:
+            translate3d(0,0,0);
+        opacity: .3;
+    }
+
+    50% {
+        transform:
+            translate3d(15px,-30px,0);
+        opacity: .9;
+    }
+}
+
+
+/* =========================================================
+   DECORATIVE RINGS
+   ========================================================= */
+
+.contact-ring {
+
+    position: absolute;
+
+    border: 1px solid
+        rgba(202, 100, 130, .18);
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    z-index: 1;
+}
+
+.ring-one {
+
+    width: 90px;
+    height: 90px;
+
+    top: 12%;
+    left: 3%;
+
+    animation:
+        ringFloat 8s ease-in-out infinite;
+}
+
+.ring-two {
+
+    width: 55px;
+    height: 55px;
+
+    bottom: 18%;
+    right: 4%;
+
+    animation:
+        ringFloat 6s ease-in-out infinite reverse;
+}
+
+@keyframes ringFloat {
+
+    0%,100% {
+        transform:
+            translateY(0)
+            rotate(0deg);
+    }
+
+    50% {
+        transform:
+            translateY(-20px)
+            rotate(180deg);
+    }
+}
+
+
+/* =========================================================
+   MAIN GRID
+   ========================================================= */
+
+.contact-grid {
+
+    position: relative;
+
+    z-index: 5;
+
+    max-width: 1150px;
+
+    margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.08fr)
+        minmax(300px, .92fr);
+
+    gap: 38px;
+
+    align-items: start;
+}
+
+
+/* =========================================================
+   FORM CARD
+   ========================================================= */
+
+.contact-form {
+
+    position: relative;
+
+    padding: 42px;
+
+    border-radius: 30px;
+
+    background:
+        rgba(255,255,255,.76);
+
+    backdrop-filter:
+        blur(25px);
+
+    -webkit-backdrop-filter:
+        blur(25px);
+
+    border:
+        1px solid
+        rgba(255,255,255,.9);
+
+    box-shadow:
+        0 30px 80px
+        rgba(83,42,55,.09),
+
+        inset 0 1px 0
+        rgba(255,255,255,.9);
+
+    transform-style: preserve-3d;
+
+    animation:
+        formEntrance 1s
+        cubic-bezier(.2,.8,.2,1)
+        both;
+
+    transition:
+        box-shadow .5s ease,
+        transform .2s ease;
+}
+
+.contact-form::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.45),
+            transparent 45%,
+            rgba(222,115,145,.05)
+        );
+
+    pointer-events: none;
+}
+
+.contact-form::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 120px;
+    height: 120px;
+
+    right: -40px;
+    top: -40px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(215,102,135,.08);
+
+    filter: blur(2px);
+
+    animation:
+        formGlow 6s ease-in-out infinite;
+
+    pointer-events: none;
+}
+
+@keyframes formEntrance {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateX(-60px)
+            translateY(30px)
+            rotateY(7deg);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateX(0)
+            translateY(0)
+            rotateY(0);
+
+    }
+}
+
+@keyframes formGlow {
+
+    0%,100% {
+
+        transform:
+            scale(1);
+
+        opacity: .5;
+    }
+
+    50% {
+
+        transform:
+            scale(1.4);
+
+        opacity: 1;
+    }
+}
+
+
+/* =========================================================
+   HEADING
+   ========================================================= */
+
+.contact-form h3 {
+
+    position: relative;
+
+    z-index: 2;
+
+    margin: 0 0 8px;
+
+    color:
+        var(--contact-dark);
+
+    font-size:
+        clamp(30px,3vw,40px);
+
+    font-weight: 700;
+
+    letter-spacing:
+        -1px;
+
+    animation:
+        headingReveal .8s
+        ease .2s both;
+}
+
+@keyframes headingReveal {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(15px);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+/* =========================================================
+   HEADING LINE
+   ========================================================= */
+
+.contact-form h3::after {
+
+    content: "";
+
+    display: block;
+
+    width: 55px;
+
+    height: 4px;
+
+    margin-top: 13px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--contact-primary),
+            var(--contact-orange)
+        );
+
+    animation:
+        lineAnimation 1s
+        cubic-bezier(.2,.8,.2,1)
+        .45s both;
+}
+
+@keyframes lineAnimation {
+
+    from {
+
+        width: 0;
+        opacity: 0;
+    }
+
+    to {
+
+        width: 55px;
+        opacity: 1;
+    }
+}
+
+
+/* =========================================================
+   INTRO TEXT
+   ========================================================= */
+
+.contact-intro {
+
+    position: relative;
+
+    z-index: 2;
+
+    max-width: 600px;
+
+    margin:
+        16px 0 30px;
+
+    color:
+        var(--contact-gray);
+
+    font-size: 14px;
+
+    line-height: 1.8;
+
+    animation:
+        textReveal .8s
+        ease .4s both;
+}
+
+@keyframes textReveal {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(12px);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+/* =========================================================
+   FORM GROUP
+   ========================================================= */
+
+.form-group {
+
+    position: relative;
+
+    z-index: 3;
+
+    margin-bottom: 19px;
+
+    animation:
+        fieldEntrance .7s
+        cubic-bezier(.2,.8,.2,1)
+        both;
+}
+
+.form-group:nth-child(1) {
+    animation-delay: .25s;
+}
+
+.form-group:nth-child(2) {
+    animation-delay: .35s;
+}
+
+.form-group:nth-child(3) {
+    animation-delay: .45s;
+}
+
+.form-group:nth-child(4) {
+    animation-delay: .55s;
+}
+
+@keyframes fieldEntrance {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(25px);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+/* =========================================================
+   INPUT
+   ========================================================= */
+
+.modern-input {
+
+    position: relative;
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding:
+        16px 18px;
+
+    border:
+        1px solid
+        #eadfe3;
+
+    border-radius:
+        15px;
+
+    background:
+        rgba(255,255,255,.9);
+
+    color:
+        var(--contact-dark);
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+        border-color .35s ease,
+        box-shadow .35s ease,
+        transform .35s ease,
+        background .35s ease;
+}
+
+.modern-input::placeholder {
+
+    color:
+        #aaa0a4;
+
+    transition:
+        opacity .3s ease,
+        transform .3s ease;
+}
+
+.modern-input:focus::placeholder {
+
+    opacity: .5;
+
+    transform:
+        translateX(5px);
+}
+
+.modern-input:hover {
+
+    border-color:
+        #d9bdc5;
+
+    background:
+        #fff;
+}
+
+.modern-input:focus {
+
+    border-color:
+        var(--contact-primary);
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+
+        0 12px 28px
+        rgba(194,80,115,.10),
+
+        0 0 0 4px
+        rgba(194,80,115,.06);
+}
+
+textarea.modern-input {
+
+    min-height:
+        145px;
+
+    resize:
+        vertical;
+
+    line-height:
+        1.65;
+}
+
+
+/* =========================================================
+   INPUT FOCUS GLOW
+   ========================================================= */
+
+.form-group::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 18px;
+    right: 18px;
+
+    bottom: -2px;
+
+    height: 2px;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--contact-primary),
+            transparent
+        );
+
+    transform:
+        scaleX(0);
+
+    opacity: 0;
+
+    transition:
+        transform .4s ease,
+        opacity .4s ease;
+
+    pointer-events: none;
+}
+
+.form-group:focus-within::after {
+
+    transform:
+        scaleX(1);
+
+    opacity:
+        .8;
+}
+
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+.modern-input.input-error {
+
+    border-color:
+        #e74c3c !important;
+
+    background:
+        #fffafa;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(231,76,60,.06);
+}
+
+.form-error {
+
+    display: none;
+
+    margin:
+        7px 0 0 5px;
+
+    color:
+        #e74c3c;
+
+    font-size:
+        12px;
+
+    font-weight:
+        500;
+}
+
+.form-error.show {
+
+    display: block;
+
+    animation:
+        errorAppear .3s ease;
+}
+
+@keyframes errorAppear {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(-5px);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+.shake {
+
+    animation:
+        inputShake .4s ease;
+}
+
+@keyframes inputShake {
+
+    0%,100% {
+        transform: translateX(0);
+    }
+
+    20% {
+        transform: translateX(-7px);
+    }
+
+    40% {
+        transform: translateX(7px);
+    }
+
+    60% {
+        transform: translateX(-5px);
+    }
+
+    80% {
+        transform: translateX(3px);
+    }
+}
+
+
+/* =========================================================
+   SUBMIT BUTTON
+   ========================================================= */
+
+.modern-submit {
+
+    position: relative;
+
+    overflow: hidden;
+
+    z-index: 3;
+
+    width: 100%;
+
+    padding:
+        16px 22px;
+
+    border: none;
+
+    border-radius:
+        15px;
+
+    color:
+        white;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--contact-primary),
+            #d96b8c,
+            var(--contact-secondary)
+        );
+
+    background-size:
+        200% 200%;
+
+    cursor:
+        pointer;
+
+    font-family:
+        inherit;
+
+    font-size:
+        14px;
+
+    font-weight:
+        600;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        10px;
+
+    box-shadow:
+        0 12px 30px
+        rgba(193,78,112,.24);
+
+    animation:
+        buttonGradient 5s
+        ease infinite;
+
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease;
+}
+
+@keyframes buttonGradient {
+
+    0% {
+        background-position:
+            0% 50%;
+    }
+
+    50% {
+        background-position:
+            100% 50%;
+    }
+
+    100% {
+        background-position:
+            0% 50%;
+    }
+}
+
+
+/* Button shine */
+
+.modern-submit::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    left: -120%;
+
+    width: 65%;
+
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.4),
+            transparent
+        );
+
+    transform:
+        skewX(-20deg);
+
+    transition:
+        left .8s ease;
+}
+
+.modern-submit:hover::before {
+
+    left:
+        140%;
+}
+
+.modern-submit:hover {
+
+    transform:
+        translateY(-4px)
+        scale(1.01);
+
+    box-shadow:
+        0 18px 40px
+        rgba(193,78,112,.32);
+}
+
+.modern-submit:active {
+
+    transform:
+        translateY(-1px)
+        scale(.98);
+}
+
+
+/* Button icon */
+
+.modern-submit i {
+
+    transition:
+        transform .5s
+        cubic-bezier(.2,.8,.2,1);
+}
+
+.modern-submit:hover i {
+
+    transform:
+        translateX(6px)
+        rotate(-12deg);
+}
+
+
+/* =========================================================
+   CONTACT INFO
+   ========================================================= */
+
+.contact-info {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        18px;
+
+    animation:
+        infoEntrance 1s
+        cubic-bezier(.2,.8,.2,1)
+        .15s both;
+}
+
+@keyframes infoEntrance {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateX(60px);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateX(0);
+    }
+}
+
+
+/* =========================================================
+   INFO CARD
+   ========================================================= */
+
+.contact-info .card {
+
+    position:
+        relative;
+
+    overflow:
+        hidden;
+
+    padding:
+        26px;
+
+    border-radius:
+        23px;
+
+    background:
+        rgba(255,255,255,.74);
+
+    backdrop-filter:
+        blur(20px);
+
+    -webkit-backdrop-filter:
+        blur(20px);
+
+    border:
+        1px solid
+        rgba(255,255,255,.9);
+
+    box-shadow:
+        0 15px 40px
+        rgba(80,40,55,.07);
+
+    transform:
+        translateY(0);
+
+    transition:
+        transform .45s
+        cubic-bezier(.2,.8,.2,1),
+        box-shadow .45s ease,
+        border-color .45s ease;
+}
+
+
+/* Card entrance stagger */
+
+.contact-info .card:nth-child(1) {
+    animation:
+        cardReveal .7s ease .25s both;
+}
+
+.contact-info .card:nth-child(2) {
+    animation:
+        cardReveal .7s ease .38s both;
+}
+
+.contact-info .card:nth-child(3) {
+    animation:
+        cardReveal .7s ease .51s both;
+}
+
+.contact-info .card:nth-child(4) {
+    animation:
+        cardReveal .7s ease .64s both;
+}
+
+@keyframes cardReveal {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(30px)
+            translateX(20px);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            translateX(0);
+    }
+}
+
+
+/* Card glow */
+
+.contact-info .card::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 130px;
+    height: 130px;
+
+    right: -60px;
+    bottom: -60px;
+
+    border-radius:
+        50%;
+
+    background:
+        rgba(210,100,130,.07);
+
+    transition:
+        transform .6s ease;
+}
+
+.contact-info .card:hover::before {
+
+    transform:
+        scale(1.8);
+}
+
+.contact-info .card:hover {
+
+    transform:
+        translateY(-9px)
+        translateX(-4px);
+
+    box-shadow:
+        0 25px 55px
+        rgba(80,40,55,.12);
+
+    border-color:
+        rgba(207,105,135,.25);
+}
+
+
+/* =========================================================
+   CARD ICON
+   ========================================================= */
+
+.contact-info .card > i:first-child {
+
+    width:
+        48px;
+
+    height:
+        48px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    margin-bottom:
+        15px;
+
+    border-radius:
+        15px;
+
+    color:
+        var(--contact-primary);
+
+    background:
+        rgba(205,91,125,.10);
+
+    font-size:
+        18px;
+
+    transition:
+        transform .45s ease,
+        background .45s ease;
+}
+
+.contact-info .card:hover > i:first-child {
+
+    transform:
+        rotate(-10deg)
+        scale(1.12);
+
+    background:
+        rgba(205,91,125,.17);
+}
+
+
+/* =========================================================
+   CARD TEXT
+   ========================================================= */
+
+.contact-info .card h4 {
+
+    position:
+        relative;
+
+    margin:
+        0 0 7px;
+
+    color:
+        var(--contact-dark);
+
+    font-size:
+        17px;
+
+    font-weight:
+        700;
+}
+
+.contact-info .card p {
+
+    position:
+        relative;
+
+    margin:
+        0;
+
+    color:
+        var(--contact-gray);
+
+    font-size:
+        13px;
+
+    line-height:
+        1.7;
+}
+
+.contact-info .card a {
+
+    transition:
+        color .25s ease;
+}
+
+.contact-info .card a:hover {
+
+    color:
+        var(--contact-primary) !important;
+}
+
+
+/* =========================================================
+   SOCIAL CARD
+   ========================================================= */
+
+.social-card {
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,246,242,.9),
+            rgba(255,251,248,.8)
+        ) !important;
+}
+
+.social-icons {
+
+    display:
+        flex;
+
+    gap:
+        11px;
+
+    margin-top:
+        15px;
+}
+
+.social-icon {
+
+    position:
+        relative;
+
+    width:
+        43px;
+
+    height:
+        43px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    color:
+        white;
+
+    border-radius:
+        50%;
+
+    text-decoration:
+        none;
+
+    box-shadow:
+        0 8px 18px
+        rgba(0,0,0,.10);
+
+    transition:
+        transform .4s
+        cubic-bezier(.2,.8,.2,1),
+        box-shadow .4s ease;
+}
+
+.social-icon:hover {
+
+    transform:
+        translateY(-7px)
+        scale(1.12)
+        rotate(5deg);
+
+    box-shadow:
+        0 15px 28px
+        rgba(0,0,0,.18);
+}
+
+
+/* =========================================================
+   CURSOR GLOW
+   ========================================================= */
+
+.cursor-glow {
+
+    position:
+        fixed;
+
+    width:
+        180px;
+
+    height:
+        180px;
+
+    border-radius:
+        50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(213,102,135,.08),
+            transparent 65%
+        );
+
+    pointer-events:
+        none;
+
+    z-index:
+        3;
+
+    transform:
+        translate(-50%,-50%);
+
+    opacity:
+        0;
+
+    transition:
+        opacity .3s ease;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .contact-section {
+
+        padding:
+            55px 25px 75px;
+    }
+
+    .contact-grid {
+
+        grid-template-columns:
+            1fr;
+
+        max-width:
+            700px;
+    }
+
+    .contact-info {
+
+        display:
+            grid;
+
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .social-card {
+
+        grid-column:
+            span 2;
+    }
+
+    .cursor-glow {
+
+        display:
+            none;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .contact-section {
+
+        padding:
+            40px 16px 55px;
+    }
+
+    .contact-form {
+
+        padding:
+            27px 20px;
+
+        border-radius:
+            23px;
+    }
+
+    .contact-form h3 {
+
+        font-size:
+            29px;
+    }
+
+    .contact-info {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .social-card {
+
+        grid-column:
+            span 1;
+    }
+
+    .blob-three,
+    .ring-one,
+    .ring-two {
+
+        display:
+            none;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+
+        animation-duration:
+            .01ms !important;
+
+        animation-iteration-count:
+            1 !important;
+
+        transition-duration:
+            .01ms !important;
+    }
+}
+
+</style>
+
+
+<!-- =========================================================
+     BACKGROUND DECORATIONS
+     ========================================================= -->
+
 <section class="contact-section">
-  <div class="contact-grid">
 
-    <!-- ===== CONTACT FORM ===== -->
-    <div class="contact-form">
-      <h3>Send a Message</h3>
-      <p style="color:var(--gray);font-size:14px;margin-bottom:24px;">
-        Have a question about products, orders, or anything else? We're here to help — we reply within 24 hours.
-      </p>
+    <div class="contact-blob blob-one"></div>
+    <div class="contact-blob blob-two"></div>
+    <div class="contact-blob blob-three"></div>
 
-      <form method="POST" novalidate>
-        {% csrf_token %}
+    <div class="contact-ring ring-one"></div>
+    <div class="contact-ring ring-two"></div>
 
-        <div style="margin-bottom:16px;">
-          <input
-            type="text"
-            name="name"
-            placeholder="Your Full Name *"
-            value="{{ form.name.value|default:'' }}"
-            required
-            style="width:100%;padding:13px 16px;border:1px solid {% if form.name.errors %}#e74c3c{% else %}#e0e0e0{% endif %};border-radius:12px;font-size:14px;font-family:inherit;outline:none;transition:border-color .2s;box-sizing:border-box;"
-            onfocus="this.style.borderColor='var(--primary)'"
-            onblur="this.style.borderColor='#e0e0e0'"
-          >
-          {% if form.name.errors %}
-          <p style="color:#e74c3c;font-size:12px;margin:5px 0 0 4px;">{{ form.name.errors|striptags }}</p>
-          {% endif %}
+    <span class="particle particle-1"></span>
+    <span class="particle particle-2"></span>
+    <span class="particle particle-3"></span>
+    <span class="particle particle-4"></span>
+    <span class="particle particle-5"></span>
+
+
+    <!-- Cursor Glow -->
+
+    <div
+        class="cursor-glow"
+        id="cursorGlow"
+    ></div>
+
+
+    <!-- =====================================================
+         MAIN GRID
+         ===================================================== -->
+
+    <div class="contact-grid">
+
+
+        <!-- =================================================
+             CONTACT FORM
+             ================================================= -->
+
+        <div
+            class="contact-form"
+            id="contactCard"
+        >
+
+            <h3>
+                Send a Message
+            </h3>
+
+            <p class="contact-intro">
+
+                Have a question about products, orders,
+                or anything else?
+
+                We're here to help. Send us a message
+                and our team will get back to you
+                within 24 hours.
+
+            </p>
+
+
+            <form
+                method="POST"
+                id="contactForm"
+                novalidate
+            >
+
+                {% csrf_token %}
+
+
+                <!-- NAME -->
+
+                <div class="form-group">
+
+                    <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        class="modern-input {% if form.name.errors %}input-error{% endif %}"
+                        placeholder="Your Full Name *"
+                        value="{{ form.name.value|default:'' }}"
+                        autocomplete="name"
+                    >
+
+                    <p
+                        id="nameError"
+                        class="form-error {% if form.name.errors %}show{% endif %}"
+                    >
+                        {% if form.name.errors %}
+                            {{ form.name.errors|striptags }}
+                        {% else %}
+                            Please enter your full name.
+                        {% endif %}
+                    </p>
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <input
+                        type="email"
+                        name="email"
+                        id="email"
+                        class="modern-input {% if form.email.errors %}input-error{% endif %}"
+                        placeholder="Your Email Address *"
+                        value="{{ form.email.value|default:'' }}"
+                        autocomplete="email"
+                    >
+
+                    <p
+                        id="emailError"
+                        class="form-error {% if form.email.errors %}show{% endif %}"
+                    >
+                        {% if form.email.errors %}
+                            {{ form.email.errors|striptags }}
+                        {% else %}
+                            Please enter your email address.
+                        {% endif %}
+                    </p>
+
+                </div>
+
+
+                <!-- SUBJECT -->
+
+                <div class="form-group">
+
+                    <input
+                        type="text"
+                        name="subject"
+                        id="subject"
+                        class="modern-input"
+                        placeholder="Subject (optional)"
+                        value="{{ form.subject.value|default:'' }}"
+                    >
+
+                </div>
+
+
+                <!-- MESSAGE -->
+
+                <div class="form-group">
+
+                    <textarea
+                        name="message"
+                        id="message"
+                        class="modern-input {% if form.message.errors %}input-error{% endif %}"
+                        placeholder="Your Message *"
+                    >{{ form.message.value|default:'' }}</textarea>
+
+                    <p
+                        id="messageError"
+                        class="form-error {% if form.message.errors %}show{% endif %}"
+                    >
+                        {% if form.message.errors %}
+                            {{ form.message.errors|striptags }}
+                        {% else %}
+                            Please enter your message.
+                        {% endif %}
+                    </p>
+
+                </div>
+
+
+                <!-- BUTTON -->
+
+                <button
+                    type="submit"
+                    id="submitButton"
+                    class="modern-submit"
+                >
+
+                    <i class="fa-regular fa-paper-plane"></i>
+
+                    <span>
+                        Send Message
+                    </span>
+
+                </button>
+
+            </form>
+
         </div>
 
-        <div style="margin-bottom:16px;">
-          <input
-            type="email"
-            name="email"
-            placeholder="Your Email Address *"
-            value="{{ form.email.value|default:'' }}"
-            required
-            style="width:100%;padding:13px 16px;border:1px solid {% if form.email.errors %}#e74c3c{% else %}#e0e0e0{% endif %};border-radius:12px;font-size:14px;font-family:inherit;outline:none;transition:border-color .2s;box-sizing:border-box;"
-            onfocus="this.style.borderColor='var(--primary)'"
-            onblur="this.style.borderColor='#e0e0e0'"
-          >
-          {% if form.email.errors %}
-          <p style="color:#e74c3c;font-size:12px;margin:5px 0 0 4px;">{{ form.email.errors|striptags }}</p>
-          {% endif %}
+
+        <!-- =================================================
+             CONTACT INFORMATION
+             ================================================= -->
+
+        <div class="contact-info">
+
+
+            {% if site.address %}
+
+            <div class="card">
+
+                <i class="fa-solid fa-location-dot"></i>
+
+                <h4>
+                    Visit Us
+                </h4>
+
+                <p>
+                    {{ site.address }}
+                </p>
+
+            </div>
+
+            {% endif %}
+
+
+            {% if site.phone %}
+
+            <div class="card">
+
+                <i class="fa-solid fa-phone"></i>
+
+                <h4>
+                    Call Us
+                </h4>
+
+                <p>
+
+                    <a
+                        href="tel:{{ site.phone }}"
+                        style="
+                            color:inherit;
+                            text-decoration:none;
+                        "
+                    >
+                        {{ site.phone }}
+                    </a>
+
+                </p>
+
+                <p
+                    style="
+                        font-size:13px;
+                        color:#888;
+                        margin-top:4px;
+                    "
+                >
+                    Mon–Sat, 10am–7pm
+                </p>
+
+            </div>
+
+            {% endif %}
+
+
+            {% if site.email %}
+
+            <div class="card">
+
+                <i class="fa-regular fa-envelope"></i>
+
+                <h4>
+                    Email Us
+                </h4>
+
+                <p>
+
+                    <a
+                        href="mailto:{{ site.email }}"
+                        style="
+                            color:inherit;
+                            text-decoration:none;
+                        "
+                    >
+                        {{ site.email }}
+                    </a>
+
+                </p>
+
+                <p
+                    style="
+                        font-size:13px;
+                        color:#888;
+                        margin-top:4px;
+                    "
+                >
+                    We reply within 24 hours
+                </p>
+
+            </div>
+
+            {% endif %}
+
+
+            {% if not site.address and not site.phone and not site.email %}
+
+            <div class="card">
+
+                <i class="fa-solid fa-location-dot"></i>
+
+                <h4>
+                    Visit Us
+                </h4>
+
+                <p>
+                    Kathmandu, Nepal
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <i class="fa-regular fa-envelope"></i>
+
+                <h4>
+                    Email Us
+                </h4>
+
+                <p>
+                    support@Kisbabeauty.com
+                </p>
+
+                <p
+                    style="
+                        font-size:13px;
+                        color:#888;
+                        margin-top:4px;
+                    "
+                >
+                    We reply within 24 hours
+                </p>
+
+            </div>
+
+            {% endif %}
+
+
+            <!-- SOCIAL -->
+
+            <div class="card social-card">
+
+                <i class="fa-solid fa-share-nodes"></i>
+
+                <h4>
+                    Follow Us
+                </h4>
+
+                <div class="social-icons">
+
+
+                    {% if site.facebook_url %}
+
+                    <a
+                        href="{{ site.facebook_url }}"
+                        target="_blank"
+                        rel="noopener"
+                        class="social-icon"
+                        style="background:#1877f2;"
+                    >
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+
+                    {% else %}
+
+                    <a
+                        href="#"
+                        class="social-icon"
+                        style="background:#1877f2;"
+                    >
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+
+                    {% endif %}
+
+
+                    {% if site.instagram_url %}
+
+                    <a
+                        href="{{ site.instagram_url }}"
+                        target="_blank"
+                        rel="noopener"
+                        class="social-icon"
+                        style="
+                            background:
+                            linear-gradient(
+                                45deg,
+                                #f09433,
+                                #e6683c,
+                                #dc2743,
+                                #cc2366,
+                                #bc1888
+                            );
+                        "
+                    >
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+
+                    {% else %}
+
+                    <a
+                        href="#"
+                        class="social-icon"
+                        style="
+                            background:
+                            linear-gradient(
+                                45deg,
+                                #f09433,
+                                #e6683c,
+                                #dc2743,
+                                #cc2366,
+                                #bc1888
+                            );
+                        "
+                    >
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+
+                    {% endif %}
+
+
+                    {% if site.youtube_url %}
+
+                    <a
+                        href="{{ site.youtube_url }}"
+                        target="_blank"
+                        rel="noopener"
+                        class="social-icon"
+                        style="background:#ff0000;"
+                    >
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+
+                    {% else %}
+
+                    <a
+                        href="#"
+                        class="social-icon"
+                        style="background:#ff0000;"
+                    >
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+
+                    {% endif %}
+
+
+                    {% if site.tiktok_url %}
+
+                    <a
+                        href="{{ site.tiktok_url }}"
+                        target="_blank"
+                        rel="noopener"
+                        class="social-icon"
+                        style="background:#010101;"
+                    >
+                        <i class="fa-brands fa-tiktok"></i>
+                    </a>
+
+                    {% else %}
+
+                    <a
+                        href="#"
+                        class="social-icon"
+                        style="background:#010101;"
+                    >
+                        <i class="fa-brands fa-tiktok"></i>
+                    </a>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
         </div>
 
-        <div style="margin-bottom:16px;">
-          <input
-            type="text"
-            name="subject"
-            placeholder="Subject (optional)"
-            value="{{ form.subject.value|default:'' }}"
-            style="width:100%;padding:13px 16px;border:1px solid #e0e0e0;border-radius:12px;font-size:14px;font-family:inherit;outline:none;transition:border-color .2s;box-sizing:border-box;"
-            onfocus="this.style.borderColor='var(--primary)'"
-            onblur="this.style.borderColor='#e0e0e0'"
-          >
-        </div>
-
-        <div style="margin-bottom:20px;">
-          <textarea
-            name="message"
-            placeholder="Your Message *"
-            required
-            rows="5"
-            style="width:100%;padding:13px 16px;border:1px solid {% if form.message.errors %}#e74c3c{% else %}#e0e0e0{% endif %};border-radius:12px;font-size:14px;font-family:inherit;outline:none;transition:border-color .2s;resize:vertical;box-sizing:border-box;"
-            onfocus="this.style.borderColor='var(--primary)'"
-            onblur="this.style.borderColor='#e0e0e0'"
-          >{{ form.message.value|default:'' }}</textarea>
-          {% if form.message.errors %}
-          <p style="color:#e74c3c;font-size:12px;margin:5px 0 0 4px;">{{ form.message.errors|striptags }}</p>
-          {% endif %}
-        </div>
-
-        <button type="submit" class="btn-primary" style="width:100%;justify-content:center;padding:14px;">
-          <i class="fa-regular fa-paper-plane"></i> Send Message
-        </button>
-      </form>
     </div>
 
-    <!-- ===== CONTACT INFO (from SiteSettings) ===== -->
-    <div class="contact-info">
-      {% if site.address %}
-      <div class="card">
-        <i class="fa-solid fa-location-dot"></i>
-        <h4>Visit Us</h4>
-        <p>{{ site.address }}</p>
-      </div>
-      {% endif %}
-
-      {% if site.phone %}
-      <div class="card">
-        <i class="fa-solid fa-phone"></i>
-        <h4>Call Us</h4>
-        <p><a href="tel:{{ site.phone }}" style="color:inherit;text-decoration:none;">{{ site.phone }}</a></p>
-        <p style="font-size:13px;color:#888;margin-top:4px;">Mon–Sat, 10am–7pm</p>
-      </div>
-      {% endif %}
-
-      {% if site.email %}
-      <div class="card">
-        <i class="fa-regular fa-envelope"></i>
-        <h4>Email Us</h4>
-        <p><a href="mailto:{{ site.email }}" style="color:inherit;text-decoration:none;">{{ site.email }}</a></p>
-        <p style="font-size:13px;color:#888;margin-top:4px;">We reply within 24 hours</p>
-      </div>
-      {% endif %}
-
-      <!-- fallback if no settings saved yet -->
-      {% if not site.address and not site.phone and not site.email %}
-      <div class="card">
-        <i class="fa-solid fa-location-dot"></i>
-        <h4>Visit Us</h4>
-        <p>Kathmandu, Nepal</p>
-      </div>
-      <div class="card">
-        <i class="fa-regular fa-envelope"></i>
-        <h4>Email Us</h4>
-        <p>support@Kisbabeauty.com</p>
-        <p style="font-size:13px;color:#888;margin-top:4px;">We reply within 24 hours</p>
-      </div>
-      {% endif %}
-
-      <!-- Social links from SiteSettings -->
-      {% if site.facebook_url or site.instagram_url or site.youtube_url or site.tiktok_url %}
-      <div class="card" style="background:var(--cream);">
-        <i class="fa-solid fa-share-nodes"></i>
-        <h4>Follow Us</h4>
-        <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;">
-          {% if site.facebook_url %}
-          <a href="{{ site.facebook_url }}" target="_blank" rel="noopener"
-             style="width:40px;height:40px;background:#1877f2;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0;">
-            <i class="fa-brands fa-facebook-f" style="font-size:15px;line-height:1;"></i>
-          </a>
-          {% endif %}
-          {% if site.instagram_url %}
-          <a href="{{ site.instagram_url }}" target="_blank" rel="noopener"
-             style="width:40px;height:40px;background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0;">
-            <i class="fa-brands fa-instagram" style="font-size:16px;line-height:1;"></i>
-          </a>
-          {% endif %}
-          {% if site.youtube_url %}
-          <a href="{{ site.youtube_url }}" target="_blank" rel="noopener"
-             style="width:40px;height:40px;background:#ff0000;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0;">
-            <i class="fa-brands fa-youtube" style="font-size:16px;line-height:1;"></i>
-          </a>
-          {% endif %}
-          {% if site.tiktok_url %}
-          <a href="{{ site.tiktok_url }}" target="_blank" rel="noopener"
-             style="width:40px;height:40px;background:#010101;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0;">
-            <i class="fa-brands fa-tiktok" style="font-size:15px;line-height:1;"></i>
-          </a>
-          {% endif %}
-        </div>
-      </div>
-      {% else %}
-      <!-- Fallback social icons when none set in admin -->
-      <div class="card" style="background:var(--cream);">
-        <i class="fa-solid fa-share-nodes"></i>
-        <h4>Follow Us</h4>
-        <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;">
-          <a href="#" style="width:40px;height:40px;background:#1877f2;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0;"><i class="fa-brands fa-facebook-f" style="font-size:15px;line-height:1;"></i></a>
-          <a href="#" style="width:40px;height:40px;background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0;"><i class="fa-brands fa-instagram" style="font-size:16px;line-height:1;"></i></a>
-          <a href="#" style="width:40px;height:40px;background:#ff0000;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0;"><i class="fa-brands fa-youtube" style="font-size:16px;line-height:1;"></i></a>
-          <a href="#" style="width:40px;height:40px;background:#010101;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0;"><i class="fa-brands fa-tiktok" style="font-size:15px;line-height:1;"></i></a>
-        </div>
-      </div>
-      {% endif %}
-
-    </div><!-- end contact-info -->
-
-  </div><!-- end contact-grid -->
 </section>
+
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+    /* =====================================================
+       ELEMENTS
+       ===================================================== */
+
+    const form =
+        document.getElementById("contactForm");
+
+    const name =
+        document.getElementById("name");
+
+    const email =
+        document.getElementById("email");
+
+    const message =
+        document.getElementById("message");
+
+    const nameError =
+        document.getElementById("nameError");
+
+    const emailError =
+        document.getElementById("emailError");
+
+    const messageError =
+        document.getElementById("messageError");
+
+    const button =
+        document.getElementById("submitButton");
+
+    const card =
+        document.getElementById("contactCard");
+
+    const cursorGlow =
+        document.getElementById("cursorGlow");
+
+
+    /* =====================================================
+       CURSOR GLOW
+       ===================================================== */
+
+    if (
+        cursorGlow &&
+        window.innerWidth > 900
+    ) {
+
+        document.addEventListener(
+            "mousemove",
+            function (event) {
+
+                cursorGlow.style.left =
+                    event.clientX + "px";
+
+                cursorGlow.style.top =
+                    event.clientY + "px";
+
+                cursorGlow.style.opacity =
+                    "1";
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       3D CARD TILT
+       ===================================================== */
+
+    if (
+        card &&
+        window.innerWidth > 900
+    ) {
+
+        card.addEventListener(
+            "mousemove",
+            function (event) {
+
+                const rect =
+                    card.getBoundingClientRect();
+
+                const x =
+                    (event.clientX - rect.left)
+                    / rect.width;
+
+                const y =
+                    (event.clientY - rect.top)
+                    / rect.height;
+
+                const rotateY =
+                    (x - .5) * 5;
+
+                const rotateX =
+                    (y - .5) * -5;
+
+
+                card.style.transform =
+                    `
+                    perspective(1200px)
+                    rotateX(${rotateX}deg)
+                    rotateY(${rotateY}deg)
+                    translateY(-3px)
+                    `;
+
+            }
+        );
+
+
+        card.addEventListener(
+            "mouseleave",
+            function () {
+
+                card.style.transform =
+                    `
+                    perspective(1200px)
+                    rotateX(0)
+                    rotateY(0)
+                    translateY(0)
+                    `;
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       ERROR FUNCTION
+       ===================================================== */
+
+    function showError(
+        input,
+        error,
+        text
+    ) {
+
+        input.classList.add(
+            "input-error"
+        );
+
+        error.textContent =
+            text;
+
+        error.classList.add(
+            "show"
+        );
+
+        input.classList.remove(
+            "shake"
+        );
+
+        void input.offsetWidth;
+
+        input.classList.add(
+            "shake"
+        );
+    }
+
+
+    /* =====================================================
+       REMOVE ERROR
+       ===================================================== */
+
+    function removeError(
+        input,
+        error
+    ) {
+
+        input.classList.remove(
+            "input-error"
+        );
+
+        error.classList.remove(
+            "show"
+        );
+    }
+
+
+    /* =====================================================
+       NAME VALIDATION
+       ===================================================== */
+
+    function validateName() {
+
+        if (
+            name.value.trim() === ""
+        ) {
+
+            showError(
+                name,
+                nameError,
+                "Please enter your full name."
+            );
+
+            return false;
+        }
+
+        removeError(
+            name,
+            nameError
+        );
+
+        return true;
+    }
+
+
+    /* =====================================================
+       EMAIL VALIDATION
+       ===================================================== */
+
+    function validateEmail() {
+
+        const value =
+            email.value.trim();
+
+
+        if (value === "") {
+
+            showError(
+                email,
+                emailError,
+                "Please enter your email address."
+            );
+
+            return false;
+        }
+
+
+        const pattern =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+        if (
+            !pattern.test(value)
+        ) {
+
+            showError(
+                email,
+                emailError,
+                "Please enter a valid email address."
+            );
+
+            return false;
+        }
+
+
+        removeError(
+            email,
+            emailError
+        );
+
+        return true;
+    }
+
+
+    /* =====================================================
+       MESSAGE VALIDATION
+       ===================================================== */
+
+    function validateMessage() {
+
+        if (
+            message.value.trim() === ""
+        ) {
+
+            showError(
+                message,
+                messageError,
+                "Please enter your message."
+            );
+
+            return false;
+        }
+
+
+        removeError(
+            message,
+            messageError
+        );
+
+        return true;
+    }
+
+
+    /* =====================================================
+       LIVE NAME VALIDATION
+       ===================================================== */
+
+    name.addEventListener(
+        "input",
+        function () {
+
+            if (
+                this.value.trim() !== ""
+            ) {
+
+                removeError(
+                    name,
+                    nameError
+                );
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       LIVE EMAIL VALIDATION
+       ===================================================== */
+
+    email.addEventListener(
+        "input",
+        function () {
+
+            if (
+                this.value.trim() !== ""
+            ) {
+
+                removeError(
+                    email,
+                    emailError
+                );
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       LIVE MESSAGE VALIDATION
+       ===================================================== */
+
+    message.addEventListener(
+        "input",
+        function () {
+
+            if (
+                this.value.trim() !== ""
+            ) {
+
+                removeError(
+                    message,
+                    messageError
+                );
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       BLUR VALIDATION
+       ===================================================== */
+
+    name.addEventListener(
+        "blur",
+        validateName
+    );
+
+    email.addEventListener(
+        "blur",
+        validateEmail
+    );
+
+    message.addEventListener(
+        "blur",
+        validateMessage
+    );
+
+
+    /* =====================================================
+       FORM SUBMISSION
+       ===================================================== */
+
+    form.addEventListener(
+        "submit",
+        function (event) {
+
+
+            const validName =
+                validateName();
+
+            const validEmail =
+                validateEmail();
+
+            const validMessage =
+                validateMessage();
+
+
+            /* =============================================
+               STOP SUBMISSION
+               ============================================= */
+
+            if (
+                !validName ||
+                !validEmail ||
+                !validMessage
+            ) {
+
+                event.preventDefault();
+
+
+                const firstError =
+                    document.querySelector(
+                        ".input-error"
+                    );
+
+
+                if (firstError) {
+
+                    firstError.scrollIntoView({
+                        behavior:
+                            "smooth",
+
+                        block:
+                            "center"
+                    });
+
+
+                    setTimeout(
+                        function () {
+
+                            firstError.focus();
+
+                        },
+                        450
+                    );
+
+                }
+
+                return;
+            }
+
+
+            /* =============================================
+               SENDING ANIMATION
+               ============================================= */
+
+            button.disabled =
+                true;
+
+            button.style.pointerEvents =
+                "none";
+
+
+            button.innerHTML =
+                `
+                <i
+                    class="
+                        fa-solid
+                        fa-circle-notch
+                        fa-spin
+                    "
+                ></i>
+
+                <span>
+                    Sending...
+                </span>
+                `;
+
+        }
+    );
+
+
+    /* =====================================================
+       SOCIAL ICON RANDOM FLOAT
+       ===================================================== */
+
+    const socialIcons =
+        document.querySelectorAll(
+            ".social-icon"
+        );
+
+
+    socialIcons.forEach(
+        function (icon, index) {
+
+            icon.style.animation =
+                `
+                socialFloat
+                ${3 + index * .4}s
+                ease-in-out
+                infinite
+                ${index * .15}s
+                `;
+
+        }
+    );
+
+
+    });
+
+</script>
+
+
+<style>
+
+/* =========================================================
+   SOCIAL FLOAT ANIMATION
+   ========================================================= */
+
+@keyframes socialFloat {
+
+    0%,100% {
+
+        margin-top:
+            0;
+    }
+
+    50% {
+
+        margin-top:
+            -3px;
+    }
+}
+
+</style>
 
 {% endblock %}

@@ -1,9 +1,16 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.db.models import Q, Avg
+from django.db.models import Q, Avg, F, ExpressionWrapper, FloatField
 from django.core.paginator import Paginator
 from .models import Product, Category, Brand, Wishlist, Review
+
+DISCOUNT_CHOICES = [
+    ('10', 'Up to -10%'),
+    ('20', 'Up to -20%'),
+    ('30', 'Up to -30%'),
+    ('50', 'Up to -50%'),
+]
 
 
 def _product_list_context(request, products, page_title=None, locked_category_slug=None):
@@ -45,6 +52,26 @@ def _product_list_context(request, products, page_title=None, locked_category_sl
         except (ValueError, TypeError):
             max_price = ''
 
+    # Discount filter — keep only products whose % off is >= min_discount
+    min_discount = request.GET.get('min_discount', '').strip()
+    if min_discount:
+        try:
+            min_pct = int(min_discount)
+            # discount_price must exist and the % off must meet the threshold
+            products = products.filter(
+                discount_price__isnull=False,
+                discount_price__lt=F('price'),
+            )
+            # Annotate and filter by computed percent
+            products = products.annotate(
+                discount_pct=ExpressionWrapper(
+                    (F('price') - F('discount_price')) * 100.0 / F('price'),
+                    output_field=FloatField()
+                )
+            ).filter(discount_pct__gte=min_pct)
+        except (ValueError, TypeError):
+            min_discount = ''
+
     sort = request.GET.get('sort', 'newest')
     sort_map = {
         'price_low':  'price',
@@ -77,6 +104,8 @@ def _product_list_context(request, products, page_title=None, locked_category_sl
         'sort':                sort,
         'min_price':           min_price,
         'max_price':           max_price,
+        'min_discount':        min_discount,
+        'discount_choices':    DISCOUNT_CHOICES,
         'wishlist_ids':        wishlist_ids,
         'page_title':          page_title,
     }
@@ -138,7 +167,7 @@ def category_products(request, category_slug):
 
 def brands_view(request):
     """Brands page — matches frontend/brands.html exactly."""
-    brands = Brand.objects.filter(is_active=True).order_by('name')
+    brands = Brand.objects.filter(is_active=True).prefetch_related('categories').order_by('name')
     return render(request, 'products/brands.html', {'brands': brands})
 
 
@@ -146,6 +175,28 @@ def offers_view(request):
     """Offers page — matches frontend/offers.html exactly."""
     products = Product.objects.filter(is_active=True, discount_price__isnull=False)
     ctx = _product_list_context(request, products, page_title='Special Offers')
+
+    # Deals of the Day — top 8 products sorted by highest discount %
+    deals = (
+        Product.objects
+        .filter(is_active=True, discount_price__isnull=False, discount_price__lt=F('price'))
+        .annotate(
+            discount_pct=ExpressionWrapper(
+                (F('price') - F('discount_price')) * 100.0 / F('price'),
+                output_field=FloatField()
+            )
+        )
+        .order_by('-discount_pct')[:8]
+    )
+    ctx['deals_products'] = deals
+
+    wishlist_ids = []
+    if request.user.is_authenticated:
+        wishlist_ids = list(
+            Wishlist.objects.filter(user=request.user).values_list('product_id', flat=True)
+        )
+    ctx['wishlist_ids'] = wishlist_ids
+
     return render(request, 'products/offers.html', ctx)
 
 

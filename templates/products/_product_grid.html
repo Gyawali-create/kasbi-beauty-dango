@@ -41,12 +41,37 @@
             <div class="filter-group">
                 <h4>Brands</h4>
                 {% for brand in brands %}
-                <label>
+                <label class="brand-label{% if forloop.counter > 6 %} brand-extra" style="display:none{% endif %}">
                     <input type="checkbox" name="brand" value="{{ brand.slug }}"
                         {% if brand.slug in selected_brands %}checked{% endif %}>
                     {{ brand.name }}
                 </label>
                 {% endfor %}
+                {% if brands|length > 6 %}
+                <button type="button" class="btn-show-more" id="brandToggleBtn" onclick="toggleBrands()">
+                    <i class="fa-solid fa-chevron-down" id="brandToggleIcon"></i> Show more ({{ brands|length|add:"-6" }} more)
+                </button>
+                {% endif %}
+            </div>
+
+            <!-- DISCOUNT -->
+            <div class="filter-group">
+                <h4>Discount</h4>
+                {% for pct, label in discount_choices %}
+                <label>
+                    <input type="radio" name="min_discount" value="{{ pct }}"
+                           {% if min_discount == pct|stringformat:"s" %}checked{% endif %}
+                           style="accent-color:var(--primary);width:15px;height:15px;cursor:pointer;">
+                    {{ label }}
+                </label>
+                {% endfor %}
+                {% if min_discount %}
+                <label>
+                    <input type="radio" name="min_discount" value=""
+                           style="accent-color:var(--primary);width:15px;height:15px;cursor:pointer;">
+                    Any discount
+                </label>
+                {% endif %}
             </div>
 
             <!-- SORT -->
@@ -185,7 +210,7 @@
         <div class="pagination">
             {# Build a reusable param string that preserves all active filters #}
             {% if page_obj.has_previous %}
-            <a href="?page={{ page_obj.previous_page_number }}{% if sort %}&sort={{ sort }}{% endif %}{% if query %}&q={{ query }}{% endif %}{% for c in selected_categories %}&category={{ c }}{% endfor %}{% for b in selected_brands %}&brand={{ b }}{% endfor %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}">
+            <a href="?page={{ page_obj.previous_page_number }}{% if sort %}&sort={{ sort }}{% endif %}{% if query %}&q={{ query }}{% endif %}{% for c in selected_categories %}&category={{ c }}{% endfor %}{% for b in selected_brands %}&brand={{ b }}{% endfor %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if min_discount %}&min_discount={{ min_discount }}{% endif %}">
                 <i class="fa-solid fa-chevron-left"></i>
             </a>
             {% endif %}
@@ -194,12 +219,12 @@
                 {% if page_obj.number == num %}
                 <a class="active">{{ num }}</a>
                 {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                <a href="?page={{ num }}{% if sort %}&sort={{ sort }}{% endif %}{% if query %}&q={{ query }}{% endif %}{% for c in selected_categories %}&category={{ c }}{% endfor %}{% for b in selected_brands %}&brand={{ b }}{% endfor %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}">{{ num }}</a>
+                <a href="?page={{ num }}{% if sort %}&sort={{ sort }}{% endif %}{% if query %}&q={{ query }}{% endif %}{% for c in selected_categories %}&category={{ c }}{% endfor %}{% for b in selected_brands %}&brand={{ b }}{% endfor %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if min_discount %}&min_discount={{ min_discount }}{% endif %}">{{ num }}</a>
                 {% endif %}
             {% endfor %}
 
             {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}{% if sort %}&sort={{ sort }}{% endif %}{% if query %}&q={{ query }}{% endif %}{% for c in selected_categories %}&category={{ c }}{% endfor %}{% for b in selected_brands %}&brand={{ b }}{% endfor %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}">
+            <a href="?page={{ page_obj.next_page_number }}{% if sort %}&sort={{ sort }}{% endif %}{% if query %}&q={{ query }}{% endif %}{% for c in selected_categories %}&category={{ c }}{% endfor %}{% for b in selected_brands %}&brand={{ b }}{% endfor %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if min_discount %}&min_discount={{ min_discount }}{% endif %}">
                 <i class="fa-solid fa-chevron-right"></i>
             </a>
             {% endif %}
@@ -226,6 +251,8 @@
 .btn-filter{padding:11px 16px;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.3s;width:100%;font-family:'Inter',sans-serif;background:var(--primary);color:#fff;}
 .btn-filter:hover{opacity:.9;transform:translateY(-1px);}
 .btn-filter-clear{background:rgba(201,119,134,0.12);color:var(--primary)!important;border:1px solid rgba(201,119,134,0.3);}
+.btn-show-more{display:flex;align-items:center;gap:6px;padding:6px 0;background:none;border:none;color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;margin-top:4px;transition:opacity 0.2s;}
+.btn-show-more:hover{opacity:0.75;}
 .shop-toolbar{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid #ece7dd;margin-bottom:24px;flex-wrap:wrap;gap:12px;}
 .shop-toolbar span{font-size:14px;color:#666;}
 .shop-toolbar select{padding:8px 16px;border:1px solid #e2ded7;border-radius:20px;font-size:13px;outline:none;background:#fff;cursor:pointer;font-family:'Inter',sans-serif;}
@@ -268,6 +295,33 @@
 </style>
 
 <script>
+var _brandsExpanded = false;
+function toggleBrands() {
+    _brandsExpanded = !_brandsExpanded;
+    var extras = document.querySelectorAll('.brand-extra');
+    var btn    = document.getElementById('brandToggleBtn');
+    var icon   = document.getElementById('brandToggleIcon');
+    extras.forEach(function(el) {
+        el.style.display = _brandsExpanded ? 'flex' : 'none';
+    });
+    if (_brandsExpanded) {
+        btn.innerHTML = '<i class="fa-solid fa-chevron-up" id="brandToggleIcon"></i> Show less';
+    } else {
+        btn.innerHTML = '<i class="fa-solid fa-chevron-down" id="brandToggleIcon"></i> Show more (' + extras.length + ' more)';
+    }
+}
+
+// On page load: if a hidden brand is already checked (active filter), auto-expand
+(function() {
+    var extras = document.querySelectorAll('.brand-extra');
+    for (var i = 0; i < extras.length; i++) {
+        if (extras[i].querySelector('input[type="checkbox"]').checked) {
+            toggleBrands();
+            break;
+        }
+    }
+})();
+
 function toggleWishlist(el, productId) {
     var icon = el.querySelector('i');
     var isWishlisted = icon.classList.contains('fa-solid');

@@ -3,69 +3,238 @@
 {% block title %}All Brands — {{ site_settings.site_name }}{% endblock %}
 
 {% block pre_content %}
-<div style="background:var(--cream);padding:40px 6%;text-align:center;border-bottom:1px solid rgba(0,0,0,0.05);">
-    <span style="font-size:12px;letter-spacing:2px;color:var(--primary);font-weight:600;text-transform:uppercase;">Our Partners</span>
-    <h1 style="font-family:'Cormorant Garamond',serif;font-size:42px;color:var(--dark);margin:10px 0 8px;">
-        All <span style="color:var(--primary);">Brands</span>
-    </h1>
-    <p style="color:var(--gray);font-size:15px;" id="brandCount">Showing {{ brands|length }} brand{{ brands|length|pluralize }}</p>
-    <div style="font-size:13px;color:var(--gray);margin-top:8px;">
-        <a href="{% url 'core:home' %}" style="color:var(--primary);">Home</a> / Brands
+<div style="background:var(--cream);padding:16px 6%;border-bottom:1px solid rgba(0,0,0,0.05);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+    <div>
+        <span style="font-size:11px;letter-spacing:2px;color:var(--primary);font-weight:600;text-transform:uppercase;">Our Partners</span>
+        <h1 style="font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--dark);margin:2px 0 0;">All <span style="color:var(--primary);">Brands</span></h1>
     </div>
+    <p style="color:var(--gray);font-size:13px;margin:0;" id="brandCount">Showing {{ brands|length }} brand{{ brands|length|pluralize }}</p>
 </div>
 {% endblock %}
 
 {% block content %}
 <section style="padding:40px 6% 80px;max-width:1440px;margin:0 auto;">
+    <div class="brands-page">
+        <div class="brand-filter" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:32px;justify-content:center;">
+            <button class="filter-btn active" data-filter="all" style="padding:10px 24px;border:2px solid var(--primary);border-radius:50px;background:var(--primary);color:#fff;font-weight:600;cursor:pointer;transition:all 0.3s ease;font-size:14px;">All</button>
+            <button class="filter-btn" data-filter="skincare" style="padding:10px 24px;border:2px solid var(--primary);border-radius:50px;background:transparent;color:var(--primary);font-weight:600;cursor:pointer;transition:all 0.3s ease;font-size:14px;">Skincare</button>
+            <button class="filter-btn" data-filter="makeup" style="padding:10px 24px;border:2px solid var(--primary);border-radius:50px;background:transparent;color:var(--primary);font-weight:600;cursor:pointer;transition:all 0.3s ease;font-size:14px;">Makeup</button>
+            <button class="filter-btn" data-filter="hair-care" style="padding:10px 24px;border:2px solid var(--primary);border-radius:50px;background:transparent;color:var(--primary);font-weight:600;cursor:pointer;transition:all 0.3s ease;font-size:14px;">Hair Care</button>
+            <button class="filter-btn" data-filter="fragrance" style="padding:10px 24px;border:2px solid var(--primary);border-radius:50px;background:transparent;color:var(--primary);font-weight:600;cursor:pointer;transition:all 0.3s ease;font-size:14px;">Fragrance</button>
+            <button class="filter-btn" data-filter="korean" style="padding:10px 24px;border:2px solid var(--primary);border-radius:50px;background:transparent;color:var(--primary);font-weight:600;cursor:pointer;transition:all 0.3s ease;font-size:14px;">Korean Beauty</button>
+            <button class="filter-btn" data-filter="babycare" style="padding:10px 24px;border:2px solid var(--primary);border-radius:50px;background:transparent;color:var(--primary);font-weight:600;cursor:pointer;transition:all 0.3s ease;font-size:14px;">Babycare</button>
+        </div>
 
-    {% if brands %}
-    <!-- Brand Grid — 4 columns, dynamic from DB -->
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;" id="brandsGrid">
-
-        {% for brand in brands %}
-        <a href="{% url 'products:shop' %}?brand={{ brand.slug }}"
-           class="brand-card"
-           style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;position:relative;overflow:hidden;"
-           onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';"
-           onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)';">
-
-            <!-- Logo / Image area -->
-            <div style="width:100%;height:390px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;">
-                {% if brand.logo %}
-                <img src="{{ brand.logo.url }}" alt="{{ brand.name }}"
-                     style="width:100%;height:390px;object-fit:cover;">
-                {% else %}
-                <span style="font-size:64px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">
-                    {{ brand.name|first|upper }}
-                </span>
-                {% endif %}
-            </div>
-
-            <!-- Info -->
-            <div style="padding:16px 16px 8px 16px;">
-                <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">{{ brand.name }}</h4>
-                <span style="font-size:13px;color:var(--gray);">{{ brand.products.count }} Product{{ brand.products.count|pluralize }}</span>
-            </div>
-
-        </a>
-        {% endfor %}
-
+        {% if brands %}
+        <!-- Brand Grid — 4 columns, dynamic from DB -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;" id="brandsGrid">
+            {% for brand in brands %}
+            <a href="{% url 'products:shop' %}?brand={{ brand.slug }}"
+               class="brand-card"
+               data-categories="{% for cat in brand.categories.all %}{{ cat.slug }} {% endfor %}"
+               style="background:var(--white);border-radius:16px;padding:0 0 20px 0;text-align:center;text-decoration:none;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--shadow);transition:all .25s ease;display:flex;flex-direction:column;align-items:center;position:relative;overflow:hidden;"
+               onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-hover)';this.style.borderColor='var(--primary)';"
+               onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='rgba(0,0,0,0.06)'">
+                <!-- Logo / Image area -->
+                <div class="brand-logo-wrap" style="width:100%;height:390px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;border-bottom:1px solid #f0f0f0;position:relative;">
+                    {% if brand.logo %}
+                    <img src="{{ brand.logo.url }}" alt="{{ brand.name }}" class="brand-logo-img"
+                         style="width:100%;height:390px;object-fit:cover;filter:none;">
+                    {% else %}
+                    <span style="font-size:64px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">
+                        {{ brand.name|first|upper }}
+                    </span>
+                    {% endif %}
+                    <span class="brand-shine"></span>
+                </div>
+                <!-- Info -->
+                <div style="padding:16px 16px 8px 16px;width:100%;">
+                    <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin:0 0 4px;">{{ brand.name }}</h4>
+                    <span style="font-size:13px;color:var(--gray);">{{ brand.products.count }} Product{{ brand.products.count|pluralize }}</span>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div style="text-align:center;padding:80px 20px;">
+            <i class="fa-solid fa-tags" style="font-size:48px;color:var(--primary);opacity:0.3;margin-bottom:16px;display:block;"></i>
+            <h3 style="color:var(--dark);font-family:'Cormorant Garamond',serif;font-size:28px;margin-bottom:8px;">No brands yet</h3>
+            <p style="color:var(--gray);margin-bottom:24px;">Add brands from the admin panel to show them here.</p>
+            <a href="{% url 'products:shop' %}" class="btn-primary" style="display:inline-flex;">Browse All Products</a>
+        </div>
+        {% endif %}
     </div>
-
-    {% else %}
-    <div style="text-align:center;padding:80px 20px;">
-        <i class="fa-solid fa-tags" style="font-size:48px;color:var(--primary);opacity:0.3;margin-bottom:16px;display:block;"></i>
-        <h3 style="color:var(--dark);font-family:'Cormorant Garamond',serif;font-size:28px;margin-bottom:8px;">No brands yet</h3>
-        <p style="color:var(--gray);margin-bottom:24px;">Add brands from the admin panel to show them here.</p>
-        <a href="{% url 'products:shop' %}" class="btn-primary" style="display:inline-flex;">Browse All Products</a>
-    </div>
-    {% endif %}
-
 </section>
 
 <style>
+/* Filter button styles */
+.filter-btn {
+    padding: 10px 24px;
+    border: 2px solid var(--primary);
+    border-radius: 50px;
+    background: transparent;
+    color: var(--primary);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.filter-btn:hover {
+    background: var(--primary);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.filter-btn.active {
+    background: var(--primary);
+    color: #fff;
+}
+
+/* Brand card styles */
 @media(max-width:1100px){#brandsGrid{grid-template-columns:repeat(3,1fr)!important;}}
 @media(max-width:768px){#brandsGrid{grid-template-columns:repeat(2,1fr)!important;gap:16px!important;}}
 @media(max-width:480px){#brandsGrid{grid-template-columns:1fr 1fr!important;gap:12px!important;}}
+
+/* fix: force full color, override any inherited grayscale filter on .brand-card img */
+#brandsGrid .brand-card img,
+#brandsGrid .brand-card .brand-logo-img {
+    filter: none !important;
+    -webkit-filter: none !important;
+}
+
+/* animated gradient glow ring on hover — same as homepage Featured Brands */
+#brandsGrid .brand-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--primary), var(--gold), var(--primary-light), var(--gold));
+    background-size: 300% 300%;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity .4s ease;
+    pointer-events: none;
+    z-index: 3;
+}
+
+#brandsGrid .brand-card:hover::before {
+    opacity: 1;
+    animation: abGradientMove 2.5s ease infinite;
+}
+
+@keyframes abGradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* subtle image zoom on hover */
+#brandsGrid .brand-card img {
+    transition: transform .5s cubic-bezier(.22,1,.36,1);
+}
+
+#brandsGrid .brand-card:hover img {
+    transform: scale(1.09);
+}
+
+/* idle shimmer sweep across the logo image */
+#brandsGrid .brand-shine {
+    position: absolute;
+    top: 0; left: -60%;
+    width: 35%; height: 100%;
+    background: linear-gradient(115deg, transparent, rgba(255,255,255,.4), transparent);
+    transform: skewX(-20deg);
+    pointer-events: none;
+    z-index: 2;
+    animation: abIdleShine 7s ease-in-out infinite;
+}
+
+#brandsGrid .brand-card:nth-child(2n) .brand-shine { animation-delay: 1.2s; }
+#brandsGrid .brand-card:nth-child(3n) .brand-shine { animation-delay: 2.4s; }
+#brandsGrid .brand-card:nth-child(4n) .brand-shine { animation-delay: 3.6s; }
+#brandsGrid .brand-card:nth-child(5n) .brand-shine { animation-delay: 4.8s; }
+
+@keyframes abIdleShine {
+    0% { left: -60%; }
+    14% { left: 130%; }
+    100% { left: 130%; }
+}
+
+/* Hide filtered items */
+.brand-card.hidden {
+    display: none !important;
+}
+
+/* Animation for filtering */
+.brand-card {
+    transition: all 0.3s ease;
+}
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get all filter buttons
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    // Get all brand cards
+    const brandCards = document.querySelectorAll('.brand-card');
+    // Get the brand count element
+    const brandCountElement = document.getElementById('brandCount');
+
+    // Function to filter brands
+    function filterBrands(category) {
+        let visibleCount = 0;
+
+        brandCards.forEach(function(card) {
+            // data-categories is a space-separated list of slugs e.g. "skincare makeup"
+            const cardCategories = (card.getAttribute('data-categories') || '').trim().split(/\s+/);
+
+            if (category === 'all' || cardCategories.includes(category)) {
+                card.classList.remove('hidden');
+                visibleCount++;
+            } else {
+                card.classList.add('hidden');
+            }
+        });
+
+        // Update the brand count
+        if (brandCountElement) {
+            brandCountElement.textContent = 'Showing ' + visibleCount + ' brand' + (visibleCount !== 1 ? 's' : '');
+        }
+    }
+
+    // Add click event to each filter button
+    filterButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            // Remove active class from all buttons
+            filterButtons.forEach(function(btn) {
+                btn.classList.remove('active');
+                btn.style.background = 'transparent';
+                btn.style.color = 'var(--primary)';
+            });
+
+            // Add active class to clicked button
+            this.classList.add('active');
+            this.style.background = 'var(--primary)';
+            this.style.color = '#fff';
+
+            // Get the filter value
+            const filterValue = this.getAttribute('data-filter');
+            
+            // Filter the brands
+            filterBrands(filterValue);
+        });
+    });
+
+    // If there are brand cards, ensure the "All" filter is active initially
+    if (brandCards.length > 0) {
+        // Make sure all brands are visible initially
+        filterBrands('all');
+    }
+});
+</script>
 {% endblock %}

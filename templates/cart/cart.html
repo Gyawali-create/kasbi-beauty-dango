@@ -1,36 +1,396 @@
 ﻿{% extends 'base.html' %}
+
+{% block pre_content %}{% endblock %}
+
+{% block extra_head %}
+<style>
+/* ===== CART PAGE ANIMATIONS ===== */
+
+.cart-page-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 30px;
+    opacity: 0;
+    transform: translateY(-12px);
+    animation: cartFadeDown 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes cartFadeDown {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.cart-page-header .cart-icon-badge {
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--primary, #5E4074), #7a5599);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 22px;
+    flex-shrink: 0;
+    box-shadow: 0 10px 26px rgba(94,64,116,0.3);
+    animation: cartIconFloat 3s ease-in-out infinite;
+}
+
+@keyframes cartIconFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-4px) rotate(-4deg); }
+}
+
+.cart-page-header h2 {
+    font-weight: 700;
+    margin: 0;
+    position: relative;
+    display: inline-block;
+}
+
+.cart-page-header h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 42px;
+    height: 3px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--primary, #5E4074), var(--gold, #D4AF37));
+    animation: cartUnderlineGrow 0.8s ease-out 0.4s both;
+}
+
+@keyframes cartUnderlineGrow {
+    from { width: 0; opacity: 0; }
+    to { width: 42px; opacity: 1; }
+}
+
+.cart-page-header .cart-subtitle {
+    font-size: 13px;
+    color: var(--gray, #888);
+    margin-top: 4px;
+    font-weight: 500;
+}
+
+/* Table container */
+.cart-table-wrap {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: cartFadeUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s forwards;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+}
+
+@keyframes cartFadeUp {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.cart-table thead th {
+    background: var(--cream, #faf7f2);
+    border-bottom: 2px solid rgba(0,0,0,0.05);
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--gray, #888);
+    font-weight: 700;
+    padding: 16px 14px;
+}
+
+.cart-table tbody tr {
+    opacity: 0;
+    transform: translateX(-16px);
+    animation: cartRowIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    transition: background 0.3s ease;
+}
+
+.cart-table tbody tr:nth-child(1) { animation-delay: 0.15s; }
+.cart-table tbody tr:nth-child(2) { animation-delay: 0.22s; }
+.cart-table tbody tr:nth-child(3) { animation-delay: 0.29s; }
+.cart-table tbody tr:nth-child(4) { animation-delay: 0.36s; }
+.cart-table tbody tr:nth-child(5) { animation-delay: 0.43s; }
+.cart-table tbody tr:nth-child(n+6) { animation-delay: 0.5s; }
+
+@keyframes cartRowIn {
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.cart-table tbody tr:hover {
+    background: rgba(94,64,116,0.03);
+}
+
+.cart-table tbody tr.removing {
+    animation: cartRowOut 0.4s ease forwards;
+}
+
+@keyframes cartRowOut {
+    to { opacity: 0; transform: translateX(30px) scale(0.97); }
+}
+
+.cart-table td {
+    padding: 16px 14px;
+    vertical-align: middle;
+}
+
+.cart-table .product-link {
+    position: relative;
+    transition: color 0.25s ease;
+}
+
+.cart-table .product-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 2px;
+    background: var(--primary, #5E4074);
+    transition: width 0.3s ease;
+}
+
+.cart-table .product-link:hover {
+    color: var(--primary, #5E4074) !important;
+}
+
+.cart-table .product-link:hover::after {
+    width: 100%;
+}
+
+/* Quantity form */
+.qty-form input[type="number"] {
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.qty-form input[type="number"]:focus {
+    border-color: var(--primary, #5E4074);
+    box-shadow: 0 0 0 3px rgba(94,64,116,0.1);
+}
+
+.qty-form .btn {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease, background 0.25s ease, color 0.25s ease;
+}
+
+.qty-form .btn:hover {
+    transform: translateY(-2px);
+}
+
+.qty-form .btn:active {
+    transform: scale(0.94);
+}
+
+.qty-form.updated .btn {
+    animation: qtyPulse 0.5s ease;
+}
+
+@keyframes qtyPulse {
+    0% { box-shadow: 0 0 0 0 rgba(94,64,116,0.4); }
+    100% { box-shadow: 0 0 0 12px rgba(94,64,116,0); }
+}
+
+/* subtotal number flash on update */
+.subtotal-cell {
+    transition: color 0.3s ease;
+}
+
+.subtotal-cell.flash {
+    color: var(--primary, #5E4074);
+    animation: subtotalFlash 0.6s ease;
+}
+
+@keyframes subtotalFlash {
+    0% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+}
+
+/* Remove button */
+.remove-item-btn {
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.remove-item-btn:hover {
+    transform: scale(1.12) rotate(-6deg);
+    background: #e74c3c !important;
+    color: white !important;
+    border-color: #e74c3c !important;
+}
+
+.remove-item-btn:active {
+    transform: scale(0.9);
+}
+
+/* Summary card */
+.cart-summary-card {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+    animation: cartFadeUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards;
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 10px 34px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 90px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.cart-summary-card:hover {
+    box-shadow: 0 16px 44px rgba(0,0,0,0.12);
+}
+
+.cart-summary-card .btn-Kisba {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+}
+
+.cart-summary-card .btn-Kisba::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.cart-summary-card .btn-Kisba:hover::after {
+    width: 300px;
+    height: 300px;
+}
+
+.cart-summary-card .btn-Kisba:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(94,64,116,0.3);
+}
+
+/* Empty cart state */
+.cart-empty {
+    text-align: center;
+    padding: 80px 20px;
+    opacity: 0;
+    transform: translateY(16px);
+    animation: cartFadeUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s forwards;
+}
+
+.cart-empty .empty-icon-wrap {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.cart-empty .empty-icon-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -22px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(94,64,116,0.08) 0%, transparent 70%);
+    animation: cartOrbPulse 3s ease-in-out infinite;
+}
+
+@keyframes cartOrbPulse {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.15); opacity: 1; }
+}
+
+.cart-empty i.bi-cart-x {
+    font-size: 56px;
+    color: #d8cbe0;
+    position: relative;
+    z-index: 1;
+    animation: cartEmptyFloat 3s ease-in-out infinite;
+}
+
+@keyframes cartEmptyFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(-4deg); }
+}
+
+.cart-empty p {
+    font-size: 16px;
+    margin-top: 6px;
+}
+
+.cart-empty a {
+    font-weight: 600;
+    position: relative;
+    transition: color 0.25s ease;
+}
+
+.cart-empty a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 2px;
+    background: currentColor;
+    transition: width 0.3s ease;
+}
+
+.cart-empty a:hover::after {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .cart-summary-card {
+        position: static;
+        width: 100% !important;
+        margin-top: 20px;
+    }
+    .cart-page-header .cart-icon-badge {
+        width: 44px;
+        height: 44px;
+        font-size: 18px;
+    }
+}
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container py-4">
-  <h2 class="text-Kisba mb-4">Shopping Cart</h2>
+  <div class="cart-page-header">
+    <div class="cart-icon-badge"><i class="bi bi-bag-heart"></i></div>
+    <div>
+      <h2 class="text-Kisba">Shopping Cart</h2>
+      {% if cart.items.all %}
+      <div class="cart-subtitle">{{ cart.item_count }} item{{ cart.item_count|pluralize }} ready for checkout</div>
+      {% else %}
+      <div class="cart-subtitle">Nothing here yet</div>
+      {% endif %}
+    </div>
+  </div>
+
   {% if cart.items.all %}
-  <div class="table-responsive">
-    <table class="table align-middle bg-white rounded">
+  <div class="table-responsive cart-table-wrap">
+    <table class="table align-middle bg-white mb-0 cart-table">
       <thead>
         <tr><th>Product</th><th>Price</th><th>Quantity</th><th>Subtotal</th><th></th></tr>
       </thead>
-      <tbody>
+      <tbody id="cartBody">
         {% for item in cart.items.all %}
-        <tr>
+        <tr data-item-id="{{ item.id }}">
           <td>
-            <a href="{{ item.product.get_absolute_url }}" class="text-decoration-none text-dark fw-bold">{{ item.product.name }}</a>
+            <a href="{{ item.product.get_absolute_url }}" class="text-decoration-none text-dark fw-bold product-link">{{ item.product.name }}</a>
           </td>
           <td>Rs. {{ item.product.current_price }}</td>
           <td style="width: 160px;">
-            <form method="post" action="{% url 'cart:update' item.id %}" class="d-flex gap-2">
+            <form method="post" action="{% url 'cart:update' item.id %}" class="d-flex gap-2 qty-form">
               {% csrf_token %}
               <input type="number" name="quantity" value="{{ item.quantity }}" min="0" max="{{ item.product.stock }}" class="form-control form-control-sm">
               <button type="submit" class="btn btn-sm btn-outline-Kisba">Update</button>
             </form>
           </td>
-          <td>Rs. {{ item.subtotal }}</td>
-          <td><a href="{% url 'cart:remove' item.id %}" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></a></td>
+          <td class="subtotal-cell">Rs. {{ item.subtotal }}</td>
+          <td><a href="{% url 'cart:remove' item.id %}" class="btn btn-sm btn-outline-danger remove-item-btn"><i class="bi bi-trash"></i></a></td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
   <div class="d-flex justify-content-end">
-    <div class="card p-4 stat-card" style="width: 320px;">
+    <div class="card p-4 stat-card cart-summary-card" style="width: 320px;">
       <div class="d-flex justify-content-between mb-2">
         <span>Total ({{ cart.item_count }} items)</span>
         <strong>Rs. {{ cart.total }}</strong>
@@ -39,7 +399,41 @@
     </div>
   </div>
   {% else %}
-  <p class="text-muted">Your cart is empty. <a href="{% url 'products:list' %}">Continue shopping</a></p>
+  <div class="cart-empty">
+    <div class="empty-icon-wrap">
+      <i class="bi bi-cart-x"></i>
+    </div>
+    <p class="text-muted">Your cart is empty. <a href="{% url 'products:list' %}" class="text-Kisba">Continue shopping</a></p>
+  </div>
   {% endif %}
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Fade-out row before navigating on remove
+document.querySelectorAll('.remove-item-btn').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+        var row = this.closest('tr');
+        if (row) {
+            e.preventDefault();
+            var href = this.getAttribute('href');
+            row.classList.add('removing');
+            setTimeout(function () {
+                window.location.href = href;
+            }, 380);
+        }
+    });
+});
+
+// Small pulse + subtotal flash feedback when updating quantity
+document.querySelectorAll('.qty-form').forEach(function (form) {
+    form.addEventListener('submit', function () {
+        form.classList.add('updated');
+        var row = form.closest('tr');
+        var subtotal = row ? row.querySelector('.subtotal-cell') : null;
+        if (subtotal) subtotal.classList.add('flash');
+    });
+});
+</script>
 {% endblock %}

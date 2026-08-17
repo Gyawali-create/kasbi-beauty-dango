@@ -30,6 +30,12 @@ class Brand(models.Model):
     slug = models.SlugField(max_length=120, unique=True, blank=True)
     logo = models.ImageField(upload_to='brands/', blank=True, null=True)
     is_active = models.BooleanField(default=True)
+    categories = models.ManyToManyField(
+        'Category',
+        blank=True,
+        related_name='brands',
+        help_text='Categories this brand belongs to (e.g. Skincare, Makeup)'
+    )
 
     class Meta:
         ordering = ['name']

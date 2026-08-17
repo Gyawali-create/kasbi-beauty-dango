@@ -1,99 +1,884 @@
 ﻿{% extends 'base.html' %}
 {% load static %}
+
 {% block title %}Order #{{ order.order_number }} — {{ site_settings.site_name }}{% endblock %}
 
+{% block extra_head %}
+<style>
+/* =========================================================
+   KISBA BEAUTY — ORDER DETAIL
+   PREMIUM DYNAMIC / ANIMATED DESIGN
+========================================================= */
+
+:root {
+    --detail-pink: #c2185b;
+    --detail-wine: #6b0f24;
+    --detail-cream: #fffaf7;
+    --detail-gold: #c9a84c;
+    --detail-dark: #1a1414;
+    --detail-muted: #8a8181;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes fadeSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes heroGlow {
+    0%, 100% {
+        opacity: 0.4;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+@keyframes shimmerCard {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes pulseBorder {
+    0%, 100% {
+        border-color: rgba(194, 24, 91, 0.15);
+    }
+    50% {
+        border-color: rgba(194, 24, 91, 0.35);
+    }
+}
+
+@keyframes countUp {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* =========================
+   HERO SECTION - PREMIUM
+========================= */
+
+.order-detail-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 40px 6% 35px;
+    text-align: center;
+    background: linear-gradient(135deg, #fff7f4 0%, #fff 40%, #fff6f8 100%);
+    border-bottom: 2px solid rgba(194, 24, 91, 0.08);
+}
+
+.order-detail-hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 50%, rgba(194, 24, 91, 0.03) 0%, transparent 60%);
+    animation: heroGlow 4s ease-in-out infinite;
+}
+
+.hero-content-wrap {
+    position: relative;
+    z-index: 2;
+}
+
+.order-detail-hero .order-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(194, 24, 91, 0.08);
+    padding: 6px 18px 6px 14px;
+    border-radius: 30px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--detail-pink);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+}
+
+.order-detail-hero .order-badge i {
+    font-size: 12px;
+}
+
+.order-detail-hero h1 {
+    margin: 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 4.5vw, 44px);
+    font-weight: 700;
+    color: var(--detail-wine);
+    letter-spacing: -0.5px;
+}
+
+.order-detail-hero .order-meta-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.order-detail-hero .order-meta-info span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--detail-muted);
+    font-size: 13px;
+}
+
+.order-detail-hero .order-meta-info i {
+    color: var(--detail-pink);
+    font-size: 12px;
+}
+
+.order-detail-hero .order-meta-info .divider {
+    color: rgba(0,0,0,0.1);
+}
+
+/* Status Badge Large */
+.status-badge-large {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.status-badge-large::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    animation: dotPulse 1.7s ease-in-out infinite;
+}
+
+.status-badge-large.status-pending {
+    background: #fff5d8;
+    color: #8a6500;
+}
+.status-badge-large.status-pending::before {
+    background: #d9a400;
+}
+
+.status-badge-large.status-processing {
+    background: #e4f0ff;
+    color: #12528d;
+}
+.status-badge-large.status-processing::before {
+    background: #3182ce;
+}
+
+.status-badge-large.status-shipped {
+    background: #e3f7fa;
+    color: #11616b;
+}
+.status-badge-large.status-shipped::before {
+    background: #1aa6b7;
+}
+
+.status-badge-large.status-delivered {
+    background: #e5f7e9;
+    color: #1c6b35;
+}
+.status-badge-large.status-delivered::before {
+    background: #36a852;
+}
+
+.status-badge-large.status-cancelled {
+    background: #fbe5e7;
+    color: #8a2630;
+}
+.status-badge-large.status-cancelled::before {
+    background: #d64550;
+}
+
+@keyframes dotPulse {
+    0%, 100% { transform: scale(1); opacity: .7; }
+    50% { transform: scale(1.4); opacity: 1; }
+}
+
+/* =========================
+   MAIN CONTENT
+========================= */
+
+.order-detail-main {
+    padding: 40px 6% 90px;
+    max-width: 920px;
+    margin: 0 auto;
+    animation: fadeSlideUp 0.7s ease both;
+}
+
+/* Back Button */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--detail-pink);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 25px;
+    background: rgba(194, 24, 91, 0.06);
+    transition: all 0.3s ease;
+    margin-bottom: 28px;
+}
+
+.back-link:hover {
+    background: rgba(194, 24, 91, 0.12);
+    transform: translateX(-4px);
+}
+
+.back-link i {
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+.back-link:hover i {
+    transform: translateX(-3px);
+}
+
+/* =========================
+   CARD BASE
+========================= */
+
+.detail-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 28px 30px;
+    box-shadow: 0 8px 35px rgba(63, 31, 39, 0.06);
+    border: 1px solid rgba(107, 15, 36, 0.06);
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.detail-card:hover {
+    border-color: rgba(194, 24, 91, 0.12);
+    box-shadow: 0 12px 45px rgba(63, 31, 39, 0.09);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--detail-dark);
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid rgba(194, 24, 91, 0.06);
+}
+
+.card-header i {
+    color: var(--detail-pink);
+    font-size: 16px;
+}
+
+.card-header .badge-count {
+    background: rgba(194, 24, 91, 0.08);
+    padding: 2px 10px;
+    border-radius: 15px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--detail-pink);
+    margin-left: auto;
+}
+
+/* =========================
+   ITEMS LIST
+========================= */
+
+.order-item {
+    display: flex;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.order-item:last-child {
+    border-bottom: none;
+}
+
+.order-item:hover {
+    background: rgba(194, 24, 91, 0.02);
+    margin: 0 -10px;
+    padding: 14px 10px;
+    border-radius: 12px;
+}
+
+.item-image {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    background: linear-gradient(135deg, #fce4ec, #fff5f8);
+    border-radius: 12px;
+    padding: 6px;
+    flex-shrink: 0;
+}
+
+.item-image-placeholder {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #fce4ec, #f8bbd9);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.item-image-placeholder span {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--detail-pink);
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.item-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.item-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--detail-dark);
+    margin-bottom: 2px;
+}
+
+.item-meta {
+    font-size: 12px;
+    color: var(--detail-muted);
+}
+
+.item-price {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--detail-pink);
+    white-space: nowrap;
+}
+
+/* =========================
+   ORDER SUMMARY
+========================= */
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    font-size: 14px;
+    color: var(--detail-muted);
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+
+.summary-row:last-of-type {
+    border-bottom: none;
+}
+
+.summary-row.total {
+    padding: 14px 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--detail-dark);
+    border-top: 2px solid rgba(194, 24, 91, 0.1);
+    border-bottom: none;
+}
+
+.summary-row.total .total-amount {
+    color: var(--detail-pink);
+    font-size: 20px;
+}
+
+.summary-row.discount {
+    color: #2ecc71;
+}
+
+/* =========================
+   INFO GRID
+========================= */
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.info-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 24px 26px;
+    box-shadow: 0 8px 35px rgba(63, 31, 39, 0.06);
+    border: 1px solid rgba(107, 15, 36, 0.06);
+    transition: all 0.3s ease;
+}
+
+.info-card:hover {
+    border-color: rgba(194, 24, 91, 0.12);
+    box-shadow: 0 12px 45px rgba(63, 31, 39, 0.09);
+}
+
+.info-card .info-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--detail-dark);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(194, 24, 91, 0.06);
+}
+
+.info-card .info-title i {
+    color: var(--detail-pink);
+    font-size: 14px;
+}
+
+.info-card p {
+    font-size: 14px;
+    color: var(--detail-dark);
+    margin-bottom: 4px;
+}
+
+.info-card .info-label {
+    font-size: 12px;
+    color: var(--detail-muted);
+    font-weight: 500;
+}
+
+/* =========================
+   PAYMENT STATUS
+========================= */
+
+.payment-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.payment-status-badge.paid {
+    background: #d4edda;
+    color: #155724;
+}
+
+.payment-status-badge.unpaid {
+    background: #fff3cd;
+    color: #856404;
+}
+
+/* =========================
+   PAY NOW SECTION - PREMIUM
+========================= */
+
+.pay-section {
+    background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(255,247,244,0.98));
+    border-radius: 20px;
+    padding: 32px 36px;
+    box-shadow: 0 8px 35px rgba(63, 31, 39, 0.06);
+    border: 2px solid rgba(96, 187, 70, 0.15);
+    text-align: center;
+    animation: pulseBorder 3s ease-in-out infinite;
+}
+
+.pay-section .pay-icon {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #60BB46, #4a9a35);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+}
+
+.pay-section .pay-icon i {
+    font-size: 24px;
+    color: white;
+}
+
+.pay-section h4 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--detail-dark);
+    margin-bottom: 6px;
+}
+
+.pay-section .pay-sub {
+    color: var(--detail-muted);
+    font-size: 14px;
+    margin-bottom: 22px;
+}
+
+.pay-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: #60BB46;
+    color: white;
+    padding: 15px 36px;
+    border-radius: 35px;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(96, 187, 70, 0.25);
+}
+
+.pay-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(96, 187, 70, 0.35);
+    color: white;
+}
+
+.pay-btn .esewa-circle {
+    width: 30px;
+    height: 30px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.pay-btn .esewa-circle span {
+    color: #60BB46;
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.pay-section .secure-note {
+    font-size: 12px;
+    color: var(--detail-muted);
+    margin-top: 14px;
+}
+
+.pay-section .secure-note i {
+    margin-right: 4px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 760px) {
+    .order-detail-hero {
+        padding: 30px 5% 25px;
+    }
+
+    .order-detail-hero h1 {
+        font-size: 28px;
+    }
+
+    .order-detail-hero .order-meta-info {
+        gap: 12px;
+        font-size: 12px;
+    }
+
+    .order-detail-main {
+        padding: 30px 5% 70px;
+    }
+
+    .detail-card {
+        padding: 20px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .info-card {
+        padding: 20px;
+    }
+
+    .pay-section {
+        padding: 24px 20px;
+    }
+
+    .pay-btn {
+        padding: 13px 24px;
+        font-size: 14px;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .order-item {
+        padding: 12px 0;
+    }
+
+    .item-image, .item-image-placeholder {
+        width: 50px;
+        height: 50px;
+    }
+
+    .item-price {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 430px) {
+    .order-detail-hero h1 {
+        font-size: 24px;
+    }
+
+    .order-detail-hero .order-meta-info {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .order-detail-hero .order-meta-info .divider {
+        display: none;
+    }
+
+    .detail-card {
+        padding: 16px;
+        border-radius: 16px;
+    }
+
+    .summary-row.total {
+        font-size: 16px;
+    }
+
+    .summary-row.total .total-amount {
+        font-size: 18px;
+    }
+
+    .pay-section {
+        padding: 20px 16px;
+    }
+}
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+</style>
+{% endblock %}
+
 {% block content %}
-<div style="background:var(--cream);padding:30px 6%;text-align:center;border-bottom:1px solid rgba(0,0,0,0.05);">
-  <h1 style="font-family:'Cormorant Garamond',serif;font-size:38px;color:var(--dark);">Order #{{ order.order_number }}</h1>
-  <p style="color:var(--gray);">Placed on {{ order.created_at|date:"F d, Y" }}</p>
+
+<div class="order-detail-hero">
+    <div class="hero-content-wrap">
+
+        <div class="order-badge">
+            <i class="fa-solid fa-receipt"></i>
+            Order Details
+        </div>
+
+        <h1>Order #{{ order.order_number }}</h1>
+
+        <div class="order-meta-info">
+            <span>
+                <i class="fa-regular fa-calendar"></i>
+                {{ order.created_at|date:"F d, Y" }}
+            </span>
+            <span class="divider">|</span>
+            <span>
+                <i class="fa-regular fa-clock"></i>
+                {{ order.created_at|time:"g:i A" }}
+            </span>
+            <span class="divider">|</span>
+            <span>
+                <i class="fa-solid fa-box"></i>
+                {{ order.items.count }} item{{ order.items.count|pluralize }}
+            </span>
+            <span class="divider">|</span>
+            <span class="status-badge-large status-{{ order.status }}">
+                {{ order.get_status_display }}
+            </span>
+        </div>
+
+    </div>
 </div>
 
-<section style="padding:40px 6% 80px;max-width:860px;margin:0 auto;">
-  <a href="{% url 'orders:history' %}" style="display:inline-flex;align-items:center;gap:8px;color:var(--primary);font-size:14px;text-decoration:none;margin-bottom:24px;">
-    <i class="fa-solid fa-arrow-left"></i> Back to Orders
-  </a>
+<section class="order-detail-main">
 
-  <!-- ===== ITEMS ===== -->
-  <div style="background:var(--white);border-radius:var(--border-radius);padding:30px;box-shadow:var(--shadow);margin-bottom:20px;border:1px solid rgba(0,0,0,0.04);">
-    <h4 style="font-size:15px;font-weight:700;color:var(--dark);margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--cream);">
-      <i class="fa-solid fa-bag-shopping" style="color:var(--primary);margin-right:8px;"></i>Items Ordered
-    </h4>
-    {% for item in order.items.all %}
-    <div style="display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--cream);align-items:center;">
+    <a href="{% url 'orders:history' %}" class="back-link">
+        <i class="fa-solid fa-arrow-left"></i>
+        Back to Orders
+    </a>
 
-      <!-- Product image — show thumbnail if product exists and has one, else show initial -->
-      {% if item.product and item.product.thumbnail %}
-      <img src="{{ item.product.thumbnail.url }}"
-           style="width:60px;height:60px;object-fit:contain;background:var(--cream);border-radius:10px;padding:6px;flex-shrink:0;"
-           alt="{{ item.product_name }}">
-      {% else %}
-      <div style="width:60px;height:60px;background:linear-gradient(135deg,#fce4ec,#f8bbd9);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-        <span style="font-size:22px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">
-          {{ item.product_name|first|upper }}
-        </span>
-      </div>
-      {% endif %}
+    <!-- ===== ITEMS ===== -->
+    <div class="detail-card">
+        <div class="card-header">
+            <i class="fa-solid fa-bag-shopping"></i>
+            Items Ordered
+            <span class="badge-count">{{ order.items.count }} items</span>
+        </div>
 
-      <div style="flex:1;min-width:0;">
-        <div style="font-size:14px;font-weight:600;color:var(--dark);">{{ item.product_name }}</div>
-        <div style="font-size:12px;color:var(--gray);">Rs. {{ item.price }} × {{ item.quantity }}</div>
-      </div>
-      <div style="font-size:15px;font-weight:700;color:var(--primary);white-space:nowrap;">Rs. {{ item.subtotal }}</div>
+        {% for item in order.items.all %}
+        <div class="order-item">
+
+            {% if item.product and item.product.thumbnail %}
+            <img src="{{ item.product.thumbnail.url }}"
+                 class="item-image"
+                 alt="{{ item.product_name }}">
+            {% else %}
+            <div class="item-image-placeholder">
+                <span>{{ item.product_name|first|upper }}</span>
+            </div>
+            {% endif %}
+
+            <div class="item-details">
+                <div class="item-name">{{ item.product_name }}</div>
+                <div class="item-meta">Rs. {{ item.price }} × {{ item.quantity }}</div>
+            </div>
+
+            <div class="item-price">Rs. {{ item.subtotal }}</div>
+
+        </div>
+        {% endfor %}
+
+        <!-- Summary -->
+        <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(0,0,0,0.04);">
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span>Rs. {{ order.subtotal }}</span>
+            </div>
+
+            {% if order.discount_amount > 0 %}
+            <div class="summary-row discount">
+                <span>Discount</span>
+                <span>−Rs. {{ order.discount_amount }}</span>
+            </div>
+            {% endif %}
+
+            {% if order.shipping_cost > 0 %}
+            <div class="summary-row">
+                <span>Shipping</span>
+                <span>Rs. {{ order.shipping_cost }}</span>
+            </div>
+            {% endif %}
+
+            <div class="summary-row total">
+                <span>Total</span>
+                <span class="total-amount">Rs. {{ order.total }}</span>
+            </div>
+        </div>
     </div>
-    {% endfor %}
 
-    <div style="display:flex;justify-content:space-between;padding:12px 0;font-size:14px;color:var(--gray);border-bottom:1px solid var(--cream);">
-      <span>Subtotal</span><span>Rs. {{ order.subtotal }}</span>
+    <!-- ===== SHIPPING + PAYMENT ===== -->
+    <div class="info-grid">
+
+        <div class="info-card">
+            <div class="info-title">
+                <i class="fa-solid fa-location-dot"></i>
+                Shipping Information
+            </div>
+            <p style="font-weight:600;font-size:15px;">{{ order.full_name }}</p>
+            <p style="font-size:13px;color:var(--detail-muted);margin-bottom:4px;">
+                <i class="fa-solid fa-phone" style="font-size:11px;margin-right:6px;color:var(--detail-pink);"></i>
+                {{ order.phone }}
+            </p>
+            <p style="font-size:13px;color:var(--detail-muted);">
+                <i class="fa-solid fa-location-dot" style="font-size:11px;margin-right:6px;color:var(--detail-pink);"></i>
+                {{ order.address_line }}, {{ order.city }}, {{ order.country }}
+            </p>
+        </div>
+
+        <div class="info-card">
+            <div class="info-title">
+                <i class="fa-solid fa-credit-card"></i>
+                Payment Details
+            </div>
+            <p style="font-weight:600;font-size:14px;margin-bottom:6px;">
+                {{ order.get_payment_method_display }}
+            </p>
+
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px;">
+                {% if order.is_paid %}
+                <span class="payment-status-badge paid">
+                    <i class="fa-solid fa-check-circle"></i> Paid
+                </span>
+                <span style="font-size:12px;color:var(--detail-muted);">
+                    on {{ order.paid_at|date:"M d, Y"|default:"" }}
+                </span>
+                {% else %}
+                <span class="payment-status-badge unpaid">
+                    <i class="fa-solid fa-clock"></i> Pending
+                </span>
+                {% endif %}
+            </div>
+
+            <p style="font-size:13px;color:var(--detail-muted);margin-bottom:0;">
+                Status: <strong style="color:var(--detail-dark);">{{ order.get_status_display }}</strong>
+            </p>
+        </div>
+
     </div>
-    {% if order.discount_amount > 0 %}
-    <div style="display:flex;justify-content:space-between;padding:12px 0;font-size:14px;color:#2ecc71;border-bottom:1px solid var(--cream);">
-      <span>Discount</span><span>−Rs. {{ order.discount_amount }}</span>
+
+    <!-- ===== PAY NOW SECTION ===== -->
+    {% if not order.is_paid and order.status == 'pending' and order.payment_method == 'esewa' %}
+    <div class="pay-section">
+
+        <div class="pay-icon">
+            <i class="fa-solid fa-lock"></i>
+        </div>
+
+        <h4>Complete Your Payment</h4>
+        <p class="pay-sub">
+            You selected <strong>eSewa</strong> as your payment method.
+            Click below to pay securely.
+        </p>
+
+        <a href="{% url 'orders:esewa_initiate' order.order_number %}" class="pay-btn">
+            <div class="esewa-circle">
+                <span>e</span>
+            </div>
+            Pay Rs. {{ order.total }} with eSewa
+        </a>
+
+        <p class="secure-note">
+            <i class="fa-solid fa-shield-halved"></i>
+            Secured by eSewa — you'll be redirected to complete payment
+        </p>
+
     </div>
     {% endif %}
-    <div style="display:flex;justify-content:space-between;padding:14px 0;font-size:18px;font-weight:700;color:var(--dark);">
-      <span>Total</span><span style="color:var(--primary);">Rs. {{ order.total }}</span>
-    </div>
-  </div>
-
-  <!-- ===== SHIPPING + PAYMENT ===== -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;">
-    <div style="background:var(--white);border-radius:var(--border-radius);padding:24px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.04);">
-      <h4 style="font-size:14px;font-weight:700;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid var(--cream);">
-        <i class="fa-solid fa-location-dot" style="color:var(--primary);margin-right:6px;"></i>Shipping
-      </h4>
-      <p style="font-size:14px;color:var(--dark);font-weight:600;margin-bottom:4px;">{{ order.full_name }}</p>
-      <p style="font-size:13px;color:var(--gray);margin-bottom:4px;">{{ order.phone }}</p>
-      <p style="font-size:13px;color:var(--gray);">{{ order.address_line }}, {{ order.city }}, {{ order.country }}</p>
-    </div>
-    <div style="background:var(--white);border-radius:var(--border-radius);padding:24px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.04);">
-      <h4 style="font-size:14px;font-weight:700;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid var(--cream);">
-        <i class="fa-solid fa-credit-card" style="color:var(--primary);margin-right:6px;"></i>Payment
-      </h4>
-      <p style="font-size:14px;color:var(--dark);margin-bottom:6px;">{{ order.get_payment_method_display }}</p>
-      {% if order.is_paid %}
-      <span style="color:#155724;background:#d4edda;padding:3px 12px;border-radius:20px;font-size:12px;display:inline-block;margin-bottom:6px;">✓ Paid</span>
-      {% else %}
-      <span style="color:#856404;background:#fff3cd;padding:3px 12px;border-radius:20px;font-size:12px;display:inline-block;margin-bottom:6px;">Pending</span>
-      {% endif %}
-      <p style="font-size:13px;color:var(--dark);">Status: <strong>{{ order.get_status_display }}</strong></p>
-    </div>
-  </div>
-
-  <!-- ===== PAY NOW SECTION (only for unpaid eSewa/Khalti/card orders) ===== -->
-  {% if not order.is_paid and order.status == 'pending' and order.payment_method == 'esewa' %}
-  <div style="background:var(--white);border-radius:var(--border-radius);padding:28px 30px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.04);text-align:center;">
-    <h4 style="font-size:16px;font-weight:700;color:var(--dark);margin-bottom:8px;">Complete Your Payment</h4>
-    <p style="color:var(--gray);font-size:14px;margin-bottom:20px;">You selected eSewa as your payment method. Click below to pay securely.</p>
-    <a href="{% url 'orders:esewa_initiate' order.order_number %}"
-       style="display:inline-flex;align-items:center;gap:10px;background:#60BB46;color:white;padding:14px 32px;border-radius:30px;font-weight:700;font-size:15px;text-decoration:none;transition:all 0.2s;">
-      <div style="width:28px;height:28px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-        <span style="color:#60BB46;font-size:14px;font-weight:900;">e</span>
-      </div>
-      Pay Rs. {{ order.total }} with eSewa
-    </a>
-    <p style="font-size:12px;color:var(--gray);margin-top:12px;">🔒 Secured by eSewa — you'll be redirected to complete payment</p>
-  </div>
-  {% endif %}
 
 </section>
+
 {% endblock %}
