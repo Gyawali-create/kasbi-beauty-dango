@@ -30,6 +30,12 @@ class Brand(models.Model):
     slug = models.SlugField(max_length=120, unique=True, blank=True)
     logo = models.ImageField(upload_to='brands/', blank=True, null=True)
     is_active = models.BooleanField(default=True)
+    categories = models.ManyToManyField(
+        'Category',
+        blank=True,
+        related_name='brands',
+        help_text='Categories this brand belongs to (e.g. Skincare, Makeup)'
+    )
 
     class Meta:
         ordering = ['name']
@@ -55,6 +61,8 @@ class Product(models.Model):
     thumbnail = models.ImageField(upload_to='products/', blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_featured = models.BooleanField(default=False)
+    is_new_arrival = models.BooleanField(default=False)
+    is_bestseller = models.BooleanField(default=False)
     popularity = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -81,7 +89,26 @@ class Product(models.Model):
 
     @property
     def current_price(self):
-        return self.discount_price if self.discount_price else self.price
+        if self.discount_price and self.discount_price < self.price:
+            return self.discount_price
+        return self.price
+
+    @property
+    def has_discount(self):
+        """True only when discount_price is set AND is genuinely lower than price."""
+        return bool(self.discount_price and self.discount_price < self.price)
+
+    def get_discount_percent(self):
+        """Returns the whole-number % saved, e.g. 29 for a 4500→3200 discount."""
+        if not self.has_discount:
+            return 0
+        return round(((self.price - self.discount_price) / self.price) * 100)
+
+    def get_save_amount(self):
+        """Returns the whole-number amount saved, e.g. 1300 for a 4500→3200 discount."""
+        if not self.has_discount:
+            return 0
+        return round(self.price - self.discount_price)
 
     @property
     def in_stock(self):

@@ -1,62 +1,965 @@
 ﻿{% extends 'base.html' %}
 {% load static %}
+
 {% block title %}My Orders — Kisba Beauty{% endblock %}
 
 {% block extra_head %}
 <style>
-.orders-section{padding:50px 6% 80px;max-width:960px;margin:0 auto;}
-.order-card{background:var(--white);border-radius:var(--border-radius);padding:24px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.04);margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;transition:var(--transition);}
-.order-card:hover{box-shadow:var(--shadow-hover);}
-.order-meta{display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
-.status-badge{padding:5px 14px;border-radius:30px;font-size:12px;font-weight:600;text-transform:uppercase;}
-.status-pending{background:#fff3cd;color:#856404;}
-.status-processing{background:#cce5ff;color:#004085;}
-.status-shipped{background:#d1ecf1;color:#0c5460;}
-.status-delivered{background:#d4edda;color:#155724;}
-.status-cancelled{background:#f8d7da;color:#721c24;}
+
+/* =========================================================
+   KISBA BEAUTY — MY ORDERS
+   PREMIUM DYNAMIC / ANIMATED DESIGN
+========================================================= */
+
+:root {
+    --order-pink: #c2185b;
+    --order-pink-light: #fce4ec;
+    --order-wine: #6b0f24;
+    --order-cream: #fffaf7;
+    --order-text: #292525;
+    --order-muted: #8a8181;
+}
+
+/* =========================
+   PAGE ANIMATIONS
+========================= */
+
+@keyframes pageFade {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes heroReveal {
+    from {
+        opacity: 0;
+        transform: translateY(-15px) scale(.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes cardReveal {
+    from {
+        opacity: 0;
+        transform: translateY(35px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes floating {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-12px) rotate(3deg);
+    }
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(194, 24, 91, .12);
+    }
+    50% {
+        box-shadow: 0 0 0 9px rgba(194, 24, 91, .04);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -500px 0;
+    }
+    100% {
+        background-position: 500px 0;
+    }
+}
+
+@keyframes shine {
+    0% {
+        transform: translateX(-120%);
+    }
+    100% {
+        transform: translateX(120%);
+    }
+}
+
+@keyframes dotPulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: .7;
+    }
+    50% {
+        transform: scale(1.35);
+        opacity: 1;
+    }
+}
+
+/* =========================
+   MAIN PAGE
+========================= */
+
+.orders-page {
+    min-height: 70vh;
+    background:
+        radial-gradient(circle at 10% 20%, rgba(194,24,91,.035), transparent 25%),
+        radial-gradient(circle at 90% 80%, rgba(107,15,36,.035), transparent 25%),
+        var(--order-cream);
+    animation: pageFade .8s ease both;
+}
+
+/* =========================
+   HERO - SMALLER
+========================= */
+
+.orders-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 28px 6% 24px; /* Reduced padding */
+    text-align: center;
+    background:
+        linear-gradient(135deg, #fff7f4 0%, #fff 50%, #fff6f8 100%);
+    border-bottom: 1px solid rgba(194,24,91,.08);
+    animation: heroReveal .9s ease both;
+}
+
+/* Decorative circles - smaller */
+
+.orders-hero::before,
+.orders-hero::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.orders-hero::before {
+    width: 120px; /* Reduced */
+    height: 120px;
+    background: rgba(194,24,91,.055);
+    left: -40px;
+    top: -45px;
+    animation: floating 6s ease-in-out infinite;
+}
+
+.orders-hero::after {
+    width: 100px; /* Reduced */
+    height: 100px;
+    background: rgba(107,15,36,.045);
+    right: -30px;
+    bottom: -35px;
+    animation: floating 7s ease-in-out infinite reverse;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-icon {
+    width: 42px; /* Reduced */
+    height: 42px;
+    margin: 0 auto 8px; /* Reduced margin */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: var(--order-pink);
+    background: rgba(194,24,91,.08);
+    font-size: 17px; /* Reduced */
+    animation: pulseGlow 2.5s infinite;
+}
+
+.orders-hero h1 {
+    margin: 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(26px, 3.5vw, 34px); /* Reduced */
+    line-height: 1;
+    color: var(--order-wine);
+    letter-spacing: -.5px;
+}
+
+.orders-hero p {
+    margin: 6px 0 0; /* Reduced margin */
+    color: var(--order-muted);
+    font-size: 13px; /* Reduced */
+}
+
+/* =========================
+   ORDER SECTION - BIGGER
+========================= */
+
+.orders-section {
+    width: min(1020px, 92%); /* Wider */
+    margin: 0 auto;
+    padding: 50px 0 100px; /* More padding */
+}
+
+/* =========================
+   ORDER CARD - BIGGER
+========================= */
+
+.order-card {
+    position: relative;
+    overflow: hidden;
+
+    background: rgba(255,255,255,.94);
+    border-radius: 20px;
+    padding: 28px 30px; /* More padding */
+
+    border: 1px solid rgba(107,15,36,.07);
+    box-shadow:
+        0 8px 30px rgba(63,31,39,.055);
+
+    margin-bottom: 20px; /* More spacing */
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+    flex-wrap: wrap;
+
+    opacity: 0;
+    animation: cardReveal .7s ease forwards;
+
+    transition:
+        transform .35s cubic-bezier(.2,.8,.2,1),
+        box-shadow .35s ease,
+        border-color .35s ease;
+}
+
+/* Stagger cards */
+
+.order-card:nth-child(1) {
+    animation-delay: .10s;
+}
+.order-card:nth-child(2) {
+    animation-delay: .18s;
+}
+.order-card:nth-child(3) {
+    animation-delay: .26s;
+}
+.order-card:nth-child(4) {
+    animation-delay: .34s;
+}
+.order-card:nth-child(5) {
+    animation-delay: .42s;
+}
+.order-card:nth-child(6) {
+    animation-delay: .50s;
+}
+.order-card:nth-child(7) {
+    animation-delay: .58s;
+}
+.order-card:nth-child(8) {
+    animation-delay: .66s;
+}
+
+/* Card shine */
+
+.order-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 35%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.55),
+        transparent
+    );
+    transform: translateX(-130%);
+    pointer-events: none;
+}
+
+.order-card:hover::before {
+    animation: shine .8s ease;
+}
+
+.order-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(194,24,91,.15);
+    box-shadow:
+        0 18px 42px rgba(63,31,39,.11);
+}
+
+/* =========================
+   ORDER INFORMATION - BIGGER
+========================= */
+
+.order-info {
+    min-width: 200px;
+}
+
+.order-number {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-size: 17px; /* Bigger */
+    font-weight: 750;
+    color: var(--order-text);
+    margin-bottom: 8px;
+}
+
+.order-number i {
+    color: var(--order-pink);
+    font-size: 15px;
+}
+
+.order-date {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: var(--order-muted);
+    font-size: 14px; /* Bigger */
+}
+
+/* =========================
+   ORDER META - BIGGER
+========================= */
+
+.order-meta {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px; /* More gap */
+    flex-wrap: wrap;
+}
+
+.order-total {
+    font-size: 22px; /* Bigger */
+    font-weight: 800;
+    color: var(--order-pink);
+    margin-right: 5px;
+    white-space: nowrap;
+}
+
+/* =========================
+   STATUS - BIGGER
+========================= */
+
+.status-badge {
+    position: relative;
+
+    padding: 8px 16px; /* More padding */
+    border-radius: 30px;
+
+    font-size: 12px; /* Bigger */
+    font-weight: 750;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    transition: transform .25s ease;
+}
+
+.status-badge:hover {
+    transform: scale(1.06);
+}
+
+.status-badge::before {
+    content: "";
+    width: 8px; /* Bigger */
+    height: 8px;
+    border-radius: 50%;
+    animation: dotPulse 1.7s ease-in-out infinite;
+}
+
+/* Status colors - keeping the same */
+
+.status-pending {
+    background: #fff5d8;
+    color: #8a6500;
+}
+.status-pending::before {
+    background: #d9a400;
+}
+
+.status-processing {
+    background: #e4f0ff;
+    color: #12528d;
+}
+.status-processing::before {
+    background: #3182ce;
+}
+
+.status-shipped {
+    background: #e3f7fa;
+    color: #11616b;
+}
+.status-shipped::before {
+    background: #1aa6b7;
+}
+
+.status-delivered {
+    background: #e5f7e9;
+    color: #1c6b35;
+}
+.status-delivered::before {
+    background: #36a852;
+}
+
+.status-cancelled {
+    background: #fbe5e7;
+    color: #8a2630;
+}
+.status-cancelled::before {
+    background: #d64550;
+}
+
+/* =========================
+   PAYMENT BADGE - BIGGER
+========================= */
+
+.payment-badge {
+    padding: 8px 14px; /* More padding */
+    border-radius: 20px;
+
+    font-size: 12px; /* Bigger */
+    font-weight: 750;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    transition: transform .25s ease;
+}
+
+.payment-badge:hover {
+    transform: translateY(-2px);
+}
+
+.payment-paid {
+    background: #e5f7e9;
+    color: #196b32;
+}
+
+.payment-unpaid {
+    background: #fff5d8;
+    color: #8a6500;
+}
+
+/* =========================
+   BUTTONS - BIGGER
+========================= */
+
+.order-btn {
+    position: relative;
+    overflow: hidden;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    border: none;
+    text-decoration: none;
+
+    padding: 10px 18px; /* More padding */
+    border-radius: 25px; /* Rounder */
+
+    font-size: 13px; /* Bigger */
+    font-weight: 700;
+
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease,
+        background .3s ease;
+}
+
+.order-btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background: linear-gradient(
+        110deg,
+        transparent 30%,
+        rgba(255,255,255,.3),
+        transparent 70%
+    );
+
+    transform: translateX(-120%);
+}
+
+.order-btn:hover::before {
+    transform: translateX(120%);
+    transition: transform .6s ease;
+}
+
+.view-btn {
+    color: #fff;
+    background: var(--order-wine);
+    box-shadow: 0 5px 16px rgba(107,15,36,.15);
+}
+
+.view-btn:hover {
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 9px 22px rgba(107,15,36,.23);
+}
+
+.esewe-btn {
+    color: #fff;
+    background: #60bb46;
+    box-shadow: 0 5px 16px rgba(96,187,70,.16);
+}
+
+.esewe-btn:hover {
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 9px 22px rgba(96,187,70,.27);
+}
+
+.esewe-logo {
+    width: 20px; /* Bigger */
+    height: 20px;
+
+    background: #fff;
+    color: #60bb46;
+
+    border-radius: 50%;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 10px;
+    font-weight: 900;
+}
+
+/* =========================
+   EMPTY STATE - BIGGER
+========================= */
+
+.empty-orders {
+    position: relative;
+    overflow: hidden;
+
+    text-align: center;
+    padding: 85px 30px; /* More padding */
+
+    background: rgba(255,255,255,.85);
+    border: 1px solid rgba(107,15,36,.07);
+    border-radius: 24px;
+
+    box-shadow: 0 12px 35px rgba(63,31,39,.055);
+
+    animation: cardReveal .8s ease both;
+}
+
+.empty-orders::before,
+.empty-orders::after {
+    content: "";
+    position: absolute;
+
+    width: 120px;
+    height: 120px;
+
+    border-radius: 50%;
+    background: rgba(194,24,91,.045);
+
+    animation: floating 6s ease-in-out infinite;
+}
+
+.empty-orders::before {
+    left: -40px;
+    top: -35px;
+}
+
+.empty-orders::after {
+    right: -35px;
+    bottom: -45px;
+    animation-delay: 1s;
+}
+
+.empty-icon {
+    position: relative;
+    z-index: 2;
+
+    width: 90px; /* Bigger */
+    height: 90px;
+
+    margin: 0 auto 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: linear-gradient(
+        135deg,
+        #fff0f4,
+        #fff8f5
+    );
+
+    color: var(--order-pink);
+    font-size: 34px; /* Bigger */
+
+    animation: floating 4s ease-in-out infinite;
+}
+
+.empty-orders h3 {
+    position: relative;
+    z-index: 2;
+
+    margin: 0 0 12px;
+
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 34px; /* Bigger */
+
+    color: var(--order-wine);
+}
+
+.empty-orders p {
+    position: relative;
+    z-index: 2;
+
+    color: var(--order-muted);
+    font-size: 16px; /* Bigger */
+    margin-bottom: 28px;
+}
+
+.shop-btn {
+    position: relative;
+    z-index: 2;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 14px 28px; /* More padding */
+
+    border-radius: 30px;
+
+    color: #fff;
+    background: var(--order-wine);
+
+    text-decoration: none;
+
+    font-size: 14px; /* Bigger */
+    font-weight: 700;
+
+    box-shadow: 0 7px 20px rgba(107,15,36,.18);
+
+    transition: all .3s ease;
+}
+
+.shop-btn:hover {
+    color: #fff;
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 12px 28px rgba(107,15,36,.25);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 760px) {
+
+    .orders-hero {
+        padding: 22px 5% 20px;
+    }
+
+    .orders-hero h1 {
+        font-size: 24px;
+    }
+
+    .orders-hero p {
+        font-size: 12px;
+    }
+
+    .orders-section {
+        width: 94%;
+        padding: 30px 0 70px;
+    }
+
+    .order-card {
+        padding: 20px;
+        align-items: flex-start;
+    }
+
+    .order-info {
+        width: 100%;
+    }
+
+    .order-meta {
+        width: 100%;
+        justify-content: flex-start;
+        gap: 8px;
+    }
+
+    .order-total {
+        width: 100%;
+        margin-bottom: 5px;
+        font-size: 20px;
+    }
+
+    .order-btn {
+        padding: 8px 14px;
+        font-size: 11px;
+    }
+
+    .status-badge {
+        padding: 6px 12px;
+        font-size: 10px;
+    }
+
+    .payment-badge {
+        padding: 6px 10px;
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 430px) {
+
+    .orders-hero h1 {
+        font-size: 22px;
+    }
+
+    .orders-hero p {
+        font-size: 11px;
+    }
+
+    .order-meta {
+        gap: 6px;
+    }
+
+    .order-btn {
+        flex: 1;
+        padding: 8px 12px;
+        font-size: 10px;
+    }
+
+    .empty-orders {
+        padding: 50px 16px;
+    }
+
+    .empty-orders h3 {
+        font-size: 28px;
+    }
+}
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+}
+
 </style>
 {% endblock %}
 
+
 {% block content %}
-<div style="background:var(--cream);padding:30px 6%;text-align:center;">
-  <h1 style="font-family:'Cormorant Garamond',serif;font-size:38px;color:var(--dark);">My Orders</h1>
-  <p style="color:var(--gray);">Track and manage all your Kisba Beauty orders</p>
+
+<div class="orders-page">
+
+    <!-- =========================
+         HERO - SMALLER
+    ========================== -->
+
+    <div class="orders-hero">
+
+        <div class="hero-content">
+
+            <div class="hero-icon">
+                <i class="fa-solid fa-bag-shopping"></i>
+            </div>
+
+            <h1>My Orders</h1>
+
+            <p>
+                Track and manage all your Kisba Beauty orders
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         ORDERS - BIGGER
+    ========================== -->
+
+    <section class="orders-section">
+
+        {% if orders %}
+
+            {% for order in orders %}
+
+            <div class="order-card">
+
+                <!-- ORDER INFORMATION -->
+
+                <div class="order-info">
+
+                    <div class="order-number">
+
+                        <i class="fa-solid fa-receipt"></i>
+
+                        <span>
+                            #{{ order.order_number }}
+                        </span>
+
+                    </div>
+
+                    <div class="order-date">
+
+                        <i class="fa-regular fa-calendar"></i>
+
+                        <span>
+                            {{ order.created_at|date:"F d, Y" }}
+                        </span>
+
+                        <span>·</span>
+
+                        <span>
+                            {{ order.items.count }}
+                            item{{ order.items.count|pluralize }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ORDER ACTIONS -->
+
+                <div class="order-meta">
+
+                    <!-- TOTAL -->
+
+                    <span class="order-total">
+                        Rs. {{ order.total }}
+                    </span>
+
+
+                    <!-- STATUS -->
+
+                    <span class="status-badge status-{{ order.status }}">
+                        {{ order.get_status_display }}
+                    </span>
+
+
+                    <!-- PAYMENT -->
+
+                    {% if order.is_paid %}
+
+                        <span class="payment-badge payment-paid">
+                            <i class="fa-solid fa-check"></i>
+                            Paid
+                        </span>
+
+                    {% else %}
+
+                        <span class="payment-badge payment-unpaid">
+                            <i class="fa-solid fa-clock"></i>
+                            Unpaid
+                        </span>
+
+                    {% endif %}
+
+
+                    <!-- VIEW ORDER -->
+
+                    <a
+                        href="{% url 'orders:detail' order.order_number %}"
+                        class="order-btn view-btn"
+                    >
+                        <i class="fa-regular fa-eye"></i>
+                        View Order
+                    </a>
+
+
+                    <!-- ESEWA PAYMENT -->
+
+                    {% if not order.is_paid and order.status == 'pending' and order.payment_method == 'esewa' %}
+
+                        <a
+                            href="{% url 'orders:esewa_initiate' order.order_number %}"
+                            class="order-btn esewe-btn"
+                        >
+
+                            <span class="esewe-logo">
+                                e
+                            </span>
+
+                            Pay with eSewa
+
+                        </a>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+
+        {% else %}
+
+            <!-- =========================
+                 EMPTY ORDERS - BIGGER
+            ========================== -->
+
+            <div class="empty-orders">
+
+                <div class="empty-icon">
+
+                    <i class="fa-solid fa-bag-shopping"></i>
+
+                </div>
+
+                <h3>
+                    No orders yet
+                </h3>
+
+                <p>
+                    Your beauty journey starts here.
+                    Discover something you love and place your first order!
+                </p>
+
+                <a
+                    href="{% url 'products:shop' %}"
+                    class="shop-btn"
+                >
+                    <i class="fa-solid fa-shop"></i>
+                    Shop Now
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
 </div>
 
-<section class="orders-section">
-  {% if orders %}
-  {% for order in orders %}
-  <div class="order-card">
-    <div>
-      <div style="font-weight:700;font-size:15px;color:var(--dark);margin-bottom:4px;">#{{ order.order_number }}</div>
-      <div style="font-size:13px;color:var(--gray);">{{ order.created_at|date:"F d, Y" }} · {{ order.items.count }} item{{ order.items.count|pluralize }}</div>
-    </div>
-    <div class="order-meta">
-      <span style="font-size:18px;font-weight:700;color:var(--primary);">Rs. {{ order.total }}</span>
-      <span class="status-badge status-{{ order.status }}">{{ order.get_status_display }}</span>
-      {% if order.is_paid %}
-      <span style="background:#d4edda;color:#155724;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;">✓ Paid</span>
-      {% else %}
-      <span style="background:#fff3cd;color:#856404;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;">Unpaid</span>
-      {% endif %}
-      <a href="{% url 'orders:detail' order.order_number %}" style="background:var(--primary);color:white;padding:8px 20px;border-radius:20px;font-size:13px;font-weight:600;text-decoration:none;transition:var(--transition);">View Order</a>
-      {% if not order.is_paid and order.status == 'pending' and order.payment_method == 'esewa' %}
-      <a href="{% url 'orders:esewa_initiate' order.order_number %}"
-         style="background:#60BB46;color:white;padding:8px 20px;border-radius:20px;font-size:13px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
-        <span style="width:18px;height:18px;background:white;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#60BB46;flex-shrink:0;">e</span>
-        Pay with eSewa
-      </a>
-      {% endif %}
-    </div>
-  </div>
-  {% endfor %}
-  {% else %}
-  <div style="text-align:center;padding:80px 20px;">
-    <i class="fa-regular fa-bag-shopping" style="font-size:60px;color:#ddd;display:block;margin-bottom:20px;"></i>
-    <h3 style="font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--dark);margin-bottom:10px;">No orders yet</h3>
-    <p style="color:var(--gray);margin-bottom:24px;">Start shopping to place your first order!</p>
-    <a href="{% url 'products:shop' %}" class="btn-primary" style="display:inline-flex;"><i class="fa-solid fa-shop" style="margin-right:8px;"></i>Shop Now</a>
-  </div>
-  {% endif %}
-</section>
 {% endblock %}

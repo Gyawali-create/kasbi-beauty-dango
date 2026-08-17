@@ -15,7 +15,7 @@ urlpatterns = [
 
     # Category pages — each has its own template with matching banner
     path('skincare/',     views.category_products, {'category_slug': 'skincare'},  name='skincare'),
-    path('haircare/',     views.category_products, {'category_slug': 'haircare'},  name='haircare'),
+    path('haircare/',     views.category_products, {'category_slug': 'hair-care'},  name='haircare'),
     path('makeup/',       views.category_products, {'category_slug': 'makeup'},    name='makeup'),
 
     # Special pages

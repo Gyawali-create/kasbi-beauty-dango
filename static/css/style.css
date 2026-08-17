@@ -176,7 +176,7 @@ ul {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 6%;
+    padding: 28px 6%;
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.04);
     position: sticky;
     top: 0;
@@ -2016,9 +2016,9 @@ ul {
 
 /* ===== FEATURED BRANDS ===== */
 .featured-brands {
-    padding: 60px 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+    padding: 60px 0;
+    width: 100%;
+    margin: 0;
 }
 
 .section-header {
@@ -2028,6 +2028,7 @@ ul {
     margin-bottom: 30px;
     flex-wrap: wrap;
     gap: 12px;
+    padding: 0 6%;
 }
 
 .section-title {
@@ -2092,52 +2093,61 @@ ul {
     grid-template-columns: repeat(4, 1fr);
     gap: 25px;
     margin-bottom: 40px;
+    padding: 0 6%;
 }
 
-.brand-card {
-    background: #fff;
-    border-radius: 12px;
-    padding: 40px 20px 30px;
+.featured-brands .brand-card {
+    background: var(--cream);
+    border-radius: var(--border-radius);
     text-align: center;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-    border: 1px solid #f0f0f0;
-    transition: all 0.3s ease;
+    transition: var(--transition);
+    border: 1px solid rgba(0,0,0,0.04);
+    cursor: pointer;
+    flex: 0 0 230px;
+    text-decoration: none;
+    color: inherit;
+    overflow: hidden;
 }
 
-.brand-card:hover {
+.featured-brands .brand-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 35px rgba(233, 30, 99, 0.12);
-    border-color: #e91e63;
+    box-shadow: 0 8px 35px rgba(201,119,134,0.18);
+    border-color: var(--primary);
 }
 
-.brand-logo img {
-    max-width: 180px;
-    max-height: 420px;
-    width: auto;
-    height: auto;
-    object-fit: contain;
+.featured-brands .brand-logo {
+    width: 100%;
+    height: 230px;
+    overflow: hidden;
+    background: var(--white);
+    flex-shrink: 0;
+}
+
+.featured-brands .brand-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     display: block;
-    filter: none !important;
-    -webkit-filter: none !important;
+    transition: transform 0.35s ease;
 }
 
-.brand-card h4 {
-    font-size: 17px;
-    font-weight: 600;
-    color: #222;
-    margin: 0 0 5px 0;
+.featured-brands .brand-card:hover .brand-logo img {
+    transform: scale(1.05);
 }
 
-.brand-card p {
+.featured-brands .brand-card h4 {
     font-size: 13px;
-    color: #999;
+    font-weight: 700;
+    color: var(--dark);
     margin: 0;
-    font-weight: 400;
+    padding: 12px 10px 14px;
+}
 }
 
 .view-all-container {
     text-align: center;
     margin-top: 10px;
+    padding: 0 6%;
 }
 
 .view-all-btn {
@@ -2192,7 +2202,7 @@ ul {
 
 @media (max-width: 768px) {
     .featured-brands {
-        padding: 40px 15px;
+        padding: 40px 0;
     }
     
     .section-title h2 {
@@ -2203,8 +2213,8 @@ ul {
 @media (max-width: 576px) {
     .brands-grid {
         grid-template-columns: 1fr;
-        max-width: 320px;
-        margin: 0 auto 40px;
+        max-width: 100%;
+        margin: 0 0 40px;
     }
     
     .section-title h2 {
@@ -2243,6 +2253,7 @@ ul {
     position: relative;
     overflow: hidden;
     min-height: 320px;
+    padding: 0 6%;
 }
 
 .brand-page {
@@ -2288,8 +2299,8 @@ ul {
 @media (max-width: 576px) {
     .brand-page {
         grid-template-columns: 1fr;
-        max-width: 320px;
-        margin: 0 auto;
+        max-width: 100%;
+        margin: 0;
     }
 }
 
@@ -2771,6 +2782,7 @@ ul {
     padding:0 20px;
     outline:none;
     font-size:16px;
+    color: #1a1a2e;
 }
 
 .search button{

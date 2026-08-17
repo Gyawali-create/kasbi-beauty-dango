@@ -148,11 +148,47 @@
             100% { width: 100%; opacity: 0.45; }
         }
 
+        /* Sparkle decorations floating around the hero copy */
+        .hero-sparkle {
+            position: absolute;
+            color: var(--gold, #D4AF37);
+            opacity: 0;
+            pointer-events: none;
+            animation: sparkleFloat 3.2s ease-in-out infinite, sparkleIn 0.6s ease forwards;
+            z-index: 1;
+        }
+        .hero-sparkle.s1 { top: 6%;  left: 2%;  font-size: 20px; animation-delay: 0.9s, 0.9s; }
+        .hero-sparkle.s2 { top: 46%; left: -1%; font-size: 14px; animation-delay: 1.6s, 1.6s; }
+        .hero-sparkle.s3 { top: 78%; left: 8%;  font-size: 16px; animation-delay: 2.1s, 2.1s; }
+
+        @keyframes sparkleIn { to { opacity: 0.8; } }
+        @keyframes sparkleFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+            50% { transform: translateY(-12px) rotate(20deg) scale(1.15); }
+        }
+
         /* Shop Now button — dusty pink to match the KASBI highlight */
         .hero-buttons .btn-primary {
             background: linear-gradient(135deg, #D58A94, #C97786);
             border-color: #D58A94;
             box-shadow: 0 10px 30px rgba(213,138,148,0.35);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-buttons .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -75%;
+            width: 50%; height: 100%;
+            background: linear-gradient(115deg, transparent, rgba(255,255,255,0.55), transparent);
+            transform: skewX(-20deg);
+            animation: btnSweep 3.4s ease-in-out infinite;
+        }
+
+        @keyframes btnSweep {
+            0% { left: -75%; }
+            35%, 100% { left: 140%; }
         }
 
         .hero-buttons .btn-primary:hover {
@@ -225,7 +261,39 @@
             position: relative;
             overflow: hidden;
             transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
+
+        .product-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .product-badges {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 6px;
+            min-height: 20px;
+        }
+        .product-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .product-badge.bestseller       { background: var(--primary); color: #fff; }
+        .product-badge.bestseller-flag  { background: #e77b78; color: #fff; }
+        .product-badge.new-arrival      { background: #4caf50; color: #fff; }
+        .product-badge.discount         { background: #e74c3c; color: #fff; }
 
         .product-card::before {
             content: '';
@@ -300,7 +368,16 @@
             transform: scale(0.8);
         }
 
-        /* Discount badge pulse */
+        .product-card .wishlist.pulse {
+            animation: wishPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes wishPop {
+            0% { transform: scale(1); }
+            35% { transform: scale(1.5) rotate(-14deg); }
+            100% { transform: scale(1); }
+        }
+
         .discount {
             animation: pulseBadge 2s ease-in-out infinite;
         }
@@ -310,7 +387,6 @@
             50% { transform: scale(1.05); }
         }
 
-        /* Flash sale glow */
         .flash-sale {
             position: relative;
             overflow: hidden;
@@ -384,7 +460,6 @@
             50% { transform: scale(1.05); }
         }
 
-        /* Offer cards with glass morphism */
         .offer-card {
             position: relative;
             overflow: hidden;
@@ -426,7 +501,6 @@
             box-shadow: 0 12px 30px rgba(0,0,0,0.15);
         }
 
-        /* Trust badges floating */
         .trust-badge {
             display: inline-flex;
             align-items: center;
@@ -448,7 +522,6 @@
             box-shadow: 0 8px 30px rgba(0,0,0,0.08);
         }
 
-        /* Newsletter with particle effect */
         .newsletter {
             position: relative;
             overflow: hidden;
@@ -491,7 +564,6 @@
             box-shadow: var(--shadow-gold);
         }
 
-        /* Scroll reveal animations */
         .scroll-reveal {
             opacity: 0;
             transform: translateY(40px);
@@ -508,7 +580,6 @@
         .scroll-reveal:nth-child(4) { transition-delay: 0.3s; }
         .scroll-reveal:nth-child(5) { transition-delay: 0.4s; }
 
-        /* Stagger children animations */
         .stagger-children > * {
             opacity: 0;
             transform: translateY(30px);
@@ -528,7 +599,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Mouse follow glow */
         .mouse-glow {
             position: fixed;
             width: 400px;
@@ -544,6 +614,18 @@
 
         .mouse-glow.active {
             opacity: 1;
+        }
+
+        /* ===== TOP SCROLL PROGRESS BAR ===== */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary, #5E4074), var(--gold, #D4AF37));
+            z-index: 10001;
+            transition: width 0.1s linear;
         }
 
         /* ===== FLOATING QUICK-ACCESS DOCK ===== */
@@ -630,8 +712,6 @@
         .qd-btn.qd-account i.qd-icon { color: var(--primary); }
         .qd-btn.qd-top i.qd-icon { color: var(--primary); }
 
-        /* Distinct, more vibrant label colors per button on hover/active
-           (instead of everything turning the same purple) */
         .qd-btn.qd-top:hover,
         .qd-btn.qd-top:focus-visible,
         .qd-btn.qd-top.active {
@@ -887,6 +967,7 @@
         }
 
         .shop-categories .cat-item {
+            position: relative;
             background: var(--cream);
             border-radius: var(--border-radius);
             padding: 25px 20px;
@@ -896,6 +977,20 @@
             cursor: pointer;
             text-decoration: none;
             color: inherit;
+            overflow: hidden;
+        }
+
+        .shop-categories .cat-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(94,64,116,0.08), rgba(212,175,55,0.08));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .shop-categories .cat-item:hover::before {
+            opacity: 1;
         }
 
         .shop-categories .cat-item:hover {
@@ -909,17 +1004,206 @@
             font-size: 36px;
             margin-bottom: 10px;
             display: block;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .shop-categories .cat-item:hover .icon {
+            transform: scale(1.15) rotate(-6deg);
         }
 
         .shop-categories .cat-item h4 {
             font-size: 14px;
             font-weight: 600;
             color: var(--dark);
+            position: relative;
+            z-index: 1;
         }
 
         .shop-categories .cat-item span {
             font-size: 12px;
             color: var(--gray);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== SCROLLING TRUST MARQUEE (pure CSS, always renders, no JS timing) ===== */
+        .trust-marquee {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--primary, #5E4074), #4A3260);
+            padding: 22px 0;
+        }
+
+        .trust-marquee::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 15% 30%, rgba(212,175,55,0.16), transparent 55%),
+                        radial-gradient(circle at 85% 70%, rgba(255,255,255,0.08), transparent 55%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .trust-marquee::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, var(--primary, #5E4074) 0%, transparent 8%, transparent 92%, var(--primary, #5E4074) 100%);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .trust-marquee .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: marqueeScroll 26s linear infinite;
+        }
+
+        .trust-marquee:hover .marquee-track {
+            animation-play-state: paused;
+        }
+
+        @keyframes marqueeScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .trust-marquee .marquee-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0 36px;
+            white-space: nowrap;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .trust-marquee .marquee-item i {
+            color: var(--gold, #D4AF37);
+            font-size: 15px;
+            animation: marqueeIconPulse 1.8s ease-in-out infinite;
+        }
+
+        .trust-marquee .marquee-item:nth-child(3n) i { animation-delay: .3s; }
+        .trust-marquee .marquee-item:nth-child(5n) i { animation-delay: .6s; }
+
+        @keyframes marqueeIconPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.25); }
+        }
+
+        .trust-marquee .marquee-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.35);
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            .trust-marquee .marquee-item { font-size: 13px; padding: 0 22px; }
+        }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials {
+            padding: 70px 6% 80px;
+            background: var(--cream);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonials .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .testimonials .t-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .testimonial-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 28px 26px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0,0,0,0.04);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '\201C';
+            position: absolute;
+            top: 8px;
+            right: 20px;
+            font-family: Georgia, serif;
+            font-size: 60px;
+            color: var(--primary);
+            opacity: 0.08;
+            line-height: 1;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary);
+        }
+
+        .testimonial-card .stars {
+            color: var(--gold, #D4AF37);
+            font-size: 13px;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+
+        .testimonial-card p.quote {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--dark);
+            margin-bottom: 18px;
+            min-height: 84px;
+        }
+
+        .testimonial-card .who {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .testimonial-card .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-gradient, linear-gradient(135deg,#5E4074,#8A6BA8));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .testimonial-card .who .name {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .testimonial-card .who .loc {
+            font-size: 11px;
+            color: var(--gray);
+        }
+
+        @media (max-width: 900px) {
+            .testimonials .t-grid { grid-template-columns: 1fr; }
         }
 
         /* Deals of the Day */
@@ -950,6 +1234,7 @@
             box-shadow: var(--shadow);
             position: relative;
             overflow: hidden;
+            display: block;
         }
 
         .deal-card::before {
@@ -982,6 +1267,7 @@
             font-size: 32px;
             color: var(--gray);
             margin-bottom: 12px;
+            overflow: hidden;
         }
 
         .deal-card h4 {
@@ -1048,55 +1334,293 @@
             color: var(--gold);
         }
 
-        /* Featured Brands */
+        /* ===== Featured Brands — dynamic carousel ===== */
         .featured-brands {
-            padding: 60px 6% 80px;
+            padding: 60px 0 80px;
             background: var(--white);
         }
 
-        .featured-brands .brands-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
+        .featured-brands .section-header {
+            padding: 0 6%;
+            margin-bottom: 24px;
+        }
+
+        .featured-brands .view-all-container {
+            padding: 0 6%;
+        }
+
+        .featured-brands .brands-slider-outer {
+            position: relative;
+        }
+
+        .featured-brands .brands-slider-wrap {
+            display: flex;
             gap: 24px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding: 4px 6% 16px;
+            cursor: grab;
+            -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 2%, #000 98%, transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0, #000 2%, #000 98%, transparent 100%);
+        }
+
+        .featured-brands .brands-slider-wrap.dragging {
+            cursor: grabbing;
+            scroll-behavior: auto;
+        }
+
+        .featured-brands .brands-slider-wrap::-webkit-scrollbar {
+            display: none;
         }
 
         .featured-brands .brand-card {
-            background: var(--cream);
-            border-radius: var(--border-radius);
-            padding: 30px;
-            text-align: center;
-            transition: var(--transition);
-            border: 1px solid rgba(0,0,0,0.04);
-            cursor: pointer;
+            flex: 0 0 230px;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity .5s ease, transform .5s ease;
+            padding: 0;
+            background: transparent;
+            box-shadow: none;
+            border: none;
+            border-radius: 0;
         }
 
-        .featured-brands .brand-card:hover {
-            transform: translateY(-8px) scale(1.02);
+        .featured-brands.visible .brand-card { opacity: 1; transform: translateY(0); }
+        .featured-brands.visible .brand-card:nth-child(1) { transition-delay: .05s; }
+        .featured-brands.visible .brand-card:nth-child(2) { transition-delay: .10s; }
+        .featured-brands.visible .brand-card:nth-child(3) { transition-delay: .15s; }
+        .featured-brands.visible .brand-card:nth-child(4) { transition-delay: .20s; }
+        .featured-brands.visible .brand-card:nth-child(5) { transition-delay: .25s; }
+        .featured-brands.visible .brand-card:nth-child(6) { transition-delay: .30s; }
+        .featured-brands.visible .brand-card:nth-child(n+7) { transition-delay: .35s; }
+
+        .featured-brands .brand-card-inner {
+            position: relative;
+            background: var(--cream);
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(0,0,0,0.04);
+            overflow: hidden;
+            transform-style: preserve-3d;
+            will-change: transform;
+            transition: transform .5s cubic-bezier(.22,1,.36,1), box-shadow .35s ease, border-color .3s ease;
+        }
+
+        .featured-brands .brand-card:hover .brand-card-inner {
             box-shadow: var(--shadow-hover);
             border-color: var(--primary);
+        }
+
+        .featured-brands .brand-card-inner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            padding: 2px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--gold), var(--primary-light), var(--gold));
+            background-size: 300% 300%;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity .4s ease;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .featured-brands .brand-card:hover .brand-card-inner::before {
+            opacity: 1;
+            animation: fbGradientMove 2.5s ease infinite;
+        }
+
+        @keyframes fbGradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .featured-brands .brand-card .brand-logo {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
             background: var(--white);
         }
 
-        .featured-brands .brand-card .brand-icon {
-            font-size: 48px;
-            color: var(--primary);
-            margin-bottom: 10px;
+        .featured-brands .brand-card .brand-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             display: block;
+            filter: none;
+            transition: transform .5s cubic-bezier(.22,1,.36,1), filter .4s ease;
+        }
+
+        .featured-brands .brand-card:hover .brand-logo img {
+            transform: scale(1.09);
+            filter: none;
+        }
+
+        .featured-brands .brand-card .brand-logo::after {
+            content: '';
+            position: absolute;
+            left: 0; right: 0; bottom: 0;
+            height: 46%;
+            background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.10) 100%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity .35s ease;
+            z-index: 1;
+        }
+
+        .featured-brands .brand-card:hover .brand-logo::after {
+            opacity: 1;
+        }
+
+        .featured-brands .brand-card .brand-logo .brand-shine {
+            position: absolute;
+            top: 0; left: -60%;
+            width: 35%; height: 100%;
+            background: linear-gradient(115deg, transparent, rgba(255,255,255,.4), transparent);
+            transform: skewX(-20deg);
+            pointer-events: none;
+            z-index: 2;
+            animation: fbIdleShine 7s ease-in-out infinite;
+        }
+
+        @keyframes fbIdleShine {
+            0% { left: -60%; }
+            14% { left: 130%; }
+            100% { left: 130%; }
+        }
+
+        .featured-brands .brand-card:nth-child(2n) .brand-shine { animation-delay: 1.2s; }
+        .featured-brands .brand-card:nth-child(3n) .brand-shine { animation-delay: 2.4s; }
+        .featured-brands .brand-card:nth-child(4n) .brand-shine { animation-delay: 3.6s; }
+        .featured-brands .brand-card:nth-child(5n) .brand-shine { animation-delay: 4.8s; }
+
+        .featured-brands .brand-card .brand-badge {
+            position: absolute;
+            right: 14px;
+            bottom: 14px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            opacity: 0;
+            transform: scale(.4) rotate(-25deg);
+            transition: opacity .3s ease, transform .45s cubic-bezier(.34,1.56,.64,1);
+            box-shadow: 0 8px 20px rgba(201,119,134,.45);
+            z-index: 3;
+        }
+
+        .featured-brands .brand-card:hover .brand-badge {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+        }
+
+        .featured-brands .brand-card .brand-fallback {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            font-size: 60px;
+            font-weight: 800;
+            color: var(--primary);
+            font-family: 'Cormorant Garamond', serif;
         }
 
         .featured-brands .brand-card h4 {
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: .3px;
             color: var(--dark);
+            margin: 0;
+            padding: 18px 12px 8px;
+            transition: color .3s ease;
         }
 
-        .featured-brands .brand-card span {
-            font-size: 13px;
+        .featured-brands .brand-card:hover h4 {
+            color: var(--primary);
+        }
+
+        .featured-brands .brand-card .brand-underline {
+            display: block;
+            width: 0;
+            height: 2px;
+            margin: 0 auto 16px;
+            background: var(--primary-gradient);
+            border-radius: 2px;
+            transition: width .35s ease;
+        }
+
+        .featured-brands .brand-card:hover .brand-underline {
+            width: 32px;
+        }
+
+        .featured-brands .fb-arrow {
+            position: absolute;
+            top: 150px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(0,0,0,0.06);
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(6px);
+            color: var(--primary);
+            font-size: 17px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+            transition: var(--transition);
+            z-index: 2;
+        }
+
+        .featured-brands .fb-arrow:hover {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+            box-shadow: var(--shadow-hover);
+            transform: scale(1.08);
+        }
+
+        .featured-brands .fb-arrow:active {
+            transform: scale(0.94);
+        }
+
+        .featured-brands .fb-arrow-left { left: 6px; }
+        .featured-brands .fb-arrow-right { right: 6px; }
+
+        .featured-brands .fb-empty {
+            width: 100%;
+            text-align: center;
+            padding: 30px;
             color: var(--gray);
         }
 
-        /* ===== EXISTING STYLES ===== */
-        
+        @media (max-width: 900px) {
+            .featured-brands .fb-arrow { display: none; }
+        }
+
+        @media (max-width: 600px) {
+            .featured-brands .brand-card { flex-basis: 175px; }
+            .featured-brands .brand-card .brand-logo { height: 200px; }
+            .featured-brands .brand-card h4 { font-size: 15px; }
+        }
+
         /* Brand Showcase */
         .brand-showcase {
             padding: 60px 6% 80px;
@@ -1155,39 +1679,8 @@
 
         /* Korean Glow Picks */
         .korean-picks {
-            padding: 60px 6% 80px;
+            padding: 80px 6% 100px;
             background: var(--white);
-        }
-
-        .korean-picks .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .korean-picks .section-header h2 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 38px;
-            color: var(--dark);
-        }
-
-        .korean-picks .section-header h2 .highlight {
-            color: var(--primary);
-        }
-
-        .korean-picks .section-header a {
-            color: var(--primary);
-            font-weight: 600;
-            font-size: 14px;
-            transition: var(--transition);
-        }
-
-        .korean-picks .section-header a:hover {
-            color: var(--gold);
-            transform: translateX(4px);
         }
 
         /* Social Feed */
@@ -1318,6 +1811,9 @@
             .features-footer {
                 grid-template-columns: repeat(2, 1fr);
             }
+            .testimonials .t-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         @media (max-width: 768px) {
@@ -1355,9 +1851,6 @@
                 grid-template-columns: 1fr;
                 gap: 16px;
             }
-            .korean-picks .section-header h2 {
-                font-size: 28px;
-            }
             .shop-categories .section-header h2 {
                 font-size: 28px;
             }
@@ -1370,14 +1863,16 @@
             .hero h1 { font-size: 30px; }
             .hero-badge { font-size: 10px; padding: 6px 14px; }
             .floating-card { display: none; }
+            .hero-sparkle { display: none; }
             .shop-categories .cat-grid {
                 grid-template-columns: 1fr 1fr;
             }
             .deals-grid {
                 grid-template-columns: 1fr 1fr;
             }
-            .featured-brands .brands-grid {
-                grid-template-columns: 1fr 1fr;
+            .featured-brands .brand-card {
+                flex: 0 0 calc(50% - 10px);
+                min-width: 160px;
             }
             .brand-showcase .brand-grid {
                 grid-template-columns: 1fr 1fr;
@@ -1385,24 +1880,367 @@
             .social-feed .feed-grid {
                 grid-template-columns: 1fr;
             }
-            .korean-picks .section-header {
-                flex-direction: column;
-                text-align: center;
-            }
             .shop-categories .section-header {
                 flex-direction: column;
                 text-align: center;
             }
         }
+
+        /* ===== ANIMATED EYEBROW LABELS (".sub" spans used across section headers) ===== */
+        .sub {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--primary);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .scroll-reveal.visible .sub {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .sub::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--gold, #D4AF37);
+            box-shadow: 0 0 0 0 rgba(212,175,55,0.5);
+            animation: subDotPulse 1.8s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes subFadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes subDotPulse {
+            0% { box-shadow: 0 0 0 0 rgba(212,175,55,0.5); }
+            70% { box-shadow: 0 0 0 8px rgba(212,175,55,0); }
+            100% { box-shadow: 0 0 0 0 rgba(212,175,55,0); }
+        }
+
+        /* Animated underline sweep beneath every section h2's highlighted word,
+           triggers once the parent scroll-reveal section becomes visible */
+        .section-title h2 .highlight,
+        .section-header h2 .highlight {
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2 .highlight::after,
+        .section-header h2 .highlight::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 0%;
+            height: 3px;
+            border-radius: 3px;
+            background: linear-gradient(90deg, var(--gold, #D4AF37), var(--primary));
+            transition: width 1s cubic-bezier(0.22, 1, 0.36, 1) 0.2s;
+        }
+
+        .scroll-reveal.visible .section-title h2 .highlight::after,
+        .scroll-reveal.visible .section-header h2 .highlight::after,
+        .featured-brands.visible .section-header h2 .highlight::after {
+            width: 100%;
+        }
+
+        /* ===== KASBI BANNER — hover zoom + light sweep ===== */
+        .kasbi-beauty {
+            overflow: hidden;
+        }
+
+        .kasbi-image {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+
+        .kasbi-image img {
+            display: block;
+            width: 100%;
+            transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .kasbi-image::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -60%;
+            width: 40%; height: 100%;
+            background: linear-gradient(115deg, transparent, rgba(255,255,255,0.35), transparent);
+            transform: skewX(-20deg);
+            pointer-events: none;
+            z-index: 2;
+            transition: none;
+        }
+
+        .kasbi-image:hover img {
+            transform: scale(1.04);
+        }
+
+        .kasbi-image:hover::after {
+            animation: kasbiSweep 1s ease-in-out;
+        }
+
+        @keyframes kasbiSweep {
+            0% { left: -60%; }
+            100% { left: 130%; }
+        }
+
+        /* Respect reduced-motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        /* ============================================================
+           PREMIUM LAYER — extra depth, hover effects, stagger reveals
+        ============================================================ */
+
+        /* Smooth scrolling */
+        html { scroll-behavior: smooth; }
+
+        /* ── HERO ── animated gradient mesh + hero image float ── */
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 50% at 80% 50%, rgba(201,119,134,0.07), transparent),
+                radial-gradient(ellipse 40% 40% at 20% 80%, rgba(212,175,55,0.05), transparent);
+            pointer-events: none;
+            z-index: 0;
+            animation: heroBgPulse 8s ease-in-out infinite alternate;
+        }
+        @keyframes heroBgPulse {
+            0%   { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        /* hero image soft glow behind it */
+        .hero-right { position: relative; }
+        .hero-right img {
+            filter: drop-shadow(0 30px 60px rgba(201,119,134,0.22));
+            animation: heroImgFloat 5s ease-in-out infinite;
+            will-change: transform;
+        }
+        @keyframes heroImgFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            33%       { transform: translateY(-10px) rotate(0.6deg); }
+            66%       { transform: translateY(-6px) rotate(-0.4deg); }
+        }
+        .hero-right::before {
+            content: '';
+            position: absolute;
+            width: 70%; height: 70%;
+            top: 15%; left: 15%;
+            background: radial-gradient(circle, rgba(201,119,134,0.18) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: glowRing 4s ease-in-out infinite alternate;
+            z-index: 0;
+        }
+        @keyframes glowRing {
+            0%   { transform: scale(0.9); opacity: 0.6; }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+        /* cascade-in hero text elements */
+        .hero p         { opacity:0; transform:translateY(18px); animation: heroFadeUp .8s cubic-bezier(.34,1.2,.64,1) .85s forwards; }
+        .hero-features  { opacity:0; transform:translateY(14px); animation: heroFadeUp .7s ease 1.1s forwards; }
+        .hero-buttons   { opacity:0; transform:translateY(14px); animation: heroFadeUp .7s ease 1.0s forwards; }
+        .hero .trust-badge        { opacity:0; transform:translateY(10px); animation: heroFadeUp .6s ease 1.3s forwards; }
+        .hero .trust-badge:last-child { animation-delay: 1.45s; }
+
+        /* secondary button hover */
+        .hero-buttons .btn-secondary {
+            position: relative; overflow: hidden;
+            transition: all 0.35s cubic-bezier(.34,1.2,.64,1);
+        }
+        .hero-buttons .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 28px rgba(201,119,134,0.2);
+        }
+
+        /* ── PRODUCT CARD — deeper depth, gradient border, 3D ─ */
+        .product-card {
+            box-shadow: 0 2px 12px rgba(0,0,0,.06), 0 1px 3px rgba(0,0,0,.04);
+            will-change: transform, box-shadow;
+        }
+        .product-card:hover {
+            transform: translateY(-14px) scale(1.02);
+            box-shadow: 0 24px 48px rgba(201,119,134,.18), 0 8px 20px rgba(0,0,0,.08);
+        }
+        /* animated gradient border ring */
+        .product-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1.5px;
+            background: linear-gradient(135deg, #C97786, #D4AF37, #C97786);
+            background-size: 200% 200%;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            pointer-events: none;
+            z-index: 4;
+        }
+        .product-card:hover::after {
+            opacity: 1;
+            animation: cardBorderGlow 2.5s ease infinite;
+        }
+        @keyframes cardBorderGlow {
+            0%,100% { background-position: 0%   50%; }
+            50%      { background-position: 100% 50%; }
+        }
+        .product-card .image-wrap {
+            background: linear-gradient(145deg, #faf7f2, #f5f0e8);
+            box-shadow: inset 0 -4px 12px rgba(0,0,0,.03);
+        }
+        /* badge pop-in */
+        .product-badge { animation: badgePop .4s cubic-bezier(.34,1.56,.64,1) both; }
+        @keyframes badgePop {
+            0%   { opacity:0; transform:scale(.6); }
+            100% { opacity:1; transform:scale(1); }
+        }
+        .product-badge.bestseller-flag { animation-delay:.05s; }
+        .product-badge.new-arrival     { animation-delay:.10s; }
+        .product-badge.discount        { animation-delay:.15s; }
+        /* add-to-cart enhanced */
+        .product-card .add-btn {
+            background: linear-gradient(135deg, var(--primary,#C97786), #C97786);
+            border-radius: 10px;
+            font-weight: 700;
+        }
+        .product-card .add-btn:not(:disabled):hover {
+            background: linear-gradient(135deg, #C97786, #b86070);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(201,119,134,.4);
+        }
+        .product-card .add-btn:not(:disabled):active { transform: scale(.97); }
+
+        /* ── CATEGORY CARDS ──────────────────────────────────── */
+        .shop-categories .cat-item {
+            box-shadow: 0 2px 10px rgba(0,0,0,.04);
+        }
+        .shop-categories .cat-item:hover {
+            transform: translateY(-10px) scale(1.025);
+            box-shadow: 0 20px 40px rgba(201,119,134,.14), 0 4px 12px rgba(0,0,0,.06);
+        }
+        .shop-categories .cat-item:hover span { color: var(--primary); }
+
+        /* ── TESTIMONIALS ────────────────────────────────────── */
+        .testimonial-card { transition: all .45s cubic-bezier(.34,1.2,.64,1); }
+        .testimonial-card:hover {
+            transform: translateY(-10px) scale(1.01);
+            box-shadow: 0 20px 44px rgba(201,119,134,.14), 0 4px 12px rgba(0,0,0,.06);
+        }
+        .testimonial-card .avatar {
+            box-shadow: 0 4px 14px rgba(94,64,116,.3);
+            transition: transform .4s cubic-bezier(.34,1.56,.64,1);
+        }
+        .testimonial-card:hover .avatar { transform: scale(1.12) rotate(-5deg); }
+
+        /* ── OFFER CARDS ─────────────────────────────────────── */
+        .offer-card:hover {
+            transform: translateY(-10px) scale(1.025);
+            box-shadow: 0 28px 56px rgba(0,0,0,.18), 0 8px 20px rgba(0,0,0,.10);
+        }
+
+        /* ── FEATURES ICONS ──────────────────────────────────── */
+        .feature .icon {
+            background: linear-gradient(145deg,#f7f2ef,#f0ebe2);
+            box-shadow: 0 4px 16px rgba(0,0,0,.06);
+        }
+        .feature:hover .icon {
+            background: linear-gradient(135deg,#C97786,#ffc70d);
+            color: white !important;
+            box-shadow: 0 10px 30px rgba(201,119,134,.35);
+        }
+
+        /* ── FLASH SALE animated gradient bg ────────────────── */
+        .flash-sale {
+            background: linear-gradient(135deg,#C97786 0%,#f55670 50%,#C97786 100%);
+            background-size: 200% 200%;
+            animation: flashBgMove 6s ease-in-out infinite;
+        }
+        @keyframes flashBgMove {
+            0%,100% { background-position: 0%   50%; }
+            50%      { background-position: 100% 50%; }
+        }
+
+        /* ── NEWSLETTER depth ────────────────────────────────── */
+        .newsletter {
+           background: linear-gradient(135deg, #1f1218 0%, #2a1520 100%);
+        }
+        .newsletter h2 {
+            background: linear-gradient(135deg,#fff 40%,#D4AF37);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* ── DEAL CARDS ──────────────────────────────────────── */
+        .deal-card { transition: all .4s cubic-bezier(.34,1.2,.64,1); }
+        .deal-card:hover {
+            transform: translateY(-10px) scale(1.015);
+            box-shadow: 0 20px 40px rgba(0,0,0,.12);
+        }
+
+        /* ── FEATURED BRANDS arrows fade in on section hover ── */
+        .featured-brands .fb-arrow {
+            opacity: 0;
+            transition: opacity .3s, background .3s, color .3s, transform .3s;
+        }
+        .featured-brands:hover .fb-arrow { opacity: 1; }
+
+        /* ── sub label trailing dot ──────────────────────────── */
+        .sub::after {
+            content: '';
+            display: inline-block;
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--primary,#C97786);
+            opacity: .4;
+            margin-left: 4px;
+            flex-shrink: 0;
+        }
+
+        /* ── mobile hide label on tiny screens ──────────────── */
+        @media (max-width:400px) {
+            .qd-btn:hover .qd-label,
+            .qd-btn:focus-visible .qd-label { display:none; }
+        }
 </style>
 {% endblock %}
 
 {% block content %}
+<div class="scroll-progress" id="scrollProgress"></div>
+<div class="mouse-glow" id="mouseGlow"></div>
+
 <!-- ===== HERO ===== -->
     <section class="hero">
         <div class="glow-orb purple"></div>
         <div class="glow-orb gold"></div>
         <div class="particles" id="particles"></div>
+        <span class="hero-sparkle s1"><i class="fa-solid fa-sparkle"></i></span>
+        <span class="hero-sparkle s2"><i class="fa-solid fa-sparkle"></i></span>
+        <span class="hero-sparkle s3"><i class="fa-solid fa-sparkle"></i></span>
 
         <div class="hero-left">
             <div class="hero-badge">
@@ -1466,7 +2304,7 @@
                 <i class="fa-solid fa-bolt"></i> Shop Deals
             </a>
         </div>
-        <div class="timer">
+        <div class="timer" data-days="5" data-hours="4" data-minutes="39" data-seconds="16">
             <div class="timer-item">
                 <span class="num">05</span>
                 <span class="lbl">Days</span>
@@ -1492,7 +2330,7 @@
         <h2>Shop By <span class="highlight">Category</span></h2>
         <a href="{% url 'products:shop' %}">View all categories →</a>
     </div>
-    <div class="cat-grid">
+    <div class="cat-grid stagger-children">
         <a href="{% url 'products:skincare' %}" class="cat-item">
             <img src="{% static 'img/skincare.png' %}" alt="Skincare">
             <h4>Skincare</h4>
@@ -1535,7 +2373,37 @@
         </a>
     </div>
 </section>
-    
+
+    <!-- ===== SCROLLING TRUST MARQUEE ===== -->
+    <section class="trust-marquee">
+        <div class="marquee-track">
+            <span class="marquee-item"><i class="fa-solid fa-heart"></i> 20,000+ Happy Customers</span>
+            <span class="marquee-dot"></span>
+            <span class="marquee-item"><i class="fa-solid fa-spa"></i> 250+ Beauty Products</span>
+            <span class="marquee-dot"></span>
+            <span class="marquee-item"><i class="fa-solid fa-award"></i> 45+ Trusted Brands</span>
+            <span class="marquee-dot"></span>
+            <span class="marquee-item"><i class="fa-solid fa-truck-fast"></i> Delivering Nationwide</span>
+            <span class="marquee-dot"></span>
+            <span class="marquee-item"><i class="fa-solid fa-shield-halved"></i> 100% Genuine Products</span>
+            <span class="marquee-dot"></span>
+            <span class="marquee-item"><i class="fa-solid fa-star"></i> Rated 4.9 by Shoppers</span>
+            <span class="marquee-dot"></span>
+            <!-- duplicate set for a seamless loop -->
+            <span class="marquee-item"><i class="fa-solid fa-heart"></i> 20,000+ Happy Customers</span>
+            <span class="marquee-dot"></span>
+            <span class="marquee-item"><i class="fa-solid fa-spa"></i> 250+ Beauty Products</span>
+            <span class="marquee-dot"></span>
+            <span class="marquee-item"><i class="fa-solid fa-award"></i> 45+ Trusted Brands</span>
+            <span class="marquee-dot"></span>
+            <span class="marquee-item"><i class="fa-solid fa-truck-fast"></i> Delivering Nationwide</span>
+            <span class="marquee-dot"></span>
+            <span class="marquee-item"><i class="fa-solid fa-shield-halved"></i> 100% Genuine Products</span>
+            <span class="marquee-dot"></span>
+            <span class="marquee-item"><i class="fa-solid fa-star"></i> Rated 4.9 by Shoppers</span>
+            <span class="marquee-dot"></span>
+        </div>
+    </section>
 
     <!-- ===== FEATURED BRANDS ===== -->
     <section class="featured-brands scroll-reveal">
@@ -1544,125 +2412,117 @@
                 <span class="sub">FEATURED BRANDS</span>
                 <h2>Top <span class="highlight">Beauty Brands</span></h2>
             </div>
-            <div class="section-controls">
-                <button class="nav-btn prev-btn" aria-label="Previous">
-                    <i class="fa-solid fa-chevron-left"></i>
-                </button>
-                <button class="nav-btn next-btn" aria-label="Next">
-                    <i class="fa-solid fa-chevron-right"></i>
-                </button>
+        </div>
+
+        <div class="brands-slider-outer">
+            {% if nav_brands %}
+            
+            <button type="button" id="fbNext" class="fb-arrow fb-arrow-right" aria-label="Scroll right"><i class="fa-solid fa-chevron-right"></i></button>
+            {% endif %}
+
+            <div class="brands-slider-wrap" id="brandsScroll">
+                {% for brand in nav_brands %}
+                <a href="{% url 'products:shop' %}?brand={{ brand.slug }}" class="brand-card">
+                    <div class="brand-card-inner">
+                        <div class="brand-logo">
+                            {% if brand.logo %}
+                            <img src="{{ brand.logo.url }}" alt="{{ brand.name }}" loading="lazy">
+                            {% else %}
+                            <span class="brand-fallback">{{ brand.name|first|upper }}</span>
+                            {% endif %}
+                            <span class="brand-shine"></span>
+                            <span class="brand-badge"><i class="fa-solid fa-bag-shopping"></i></span>
+                        </div>
+                        <h4>{{ brand.name }}</h4>
+                        <span class="brand-underline"></span>
+                    </div>
+                </a>
+                {% empty %}
+                <div class="fb-empty">
+                    No brands yet. Add brands from the admin panel.
+                </div>
+                {% endfor %}
             </div>
         </div>
-        
-        <div class="brands-grid" id="brandsGrid">
-            {% for brand in nav_brands %}
-            <a href="{% url 'products:shop' %}?brand={{ brand.slug }}"
-               class="brand-card"
-               onclick="window.location='{% url 'products:shop' %}?brand={{ brand.slug }}'">
-                <div class="brand-logo">
-                    {% if brand.logo %}
-                    <img src="{{ brand.logo.url }}" alt="{{ brand.name }}">
-                    {% else %}
-                    <span style="font-size:36px;font-weight:800;color:var(--primary);font-family:'Cormorant Garamond',serif;">
-                        {{ brand.name|first|upper }}
-                    </span>
-                    {% endif %}
+
+      
+
+    <!-- ===== KOREAN GLOW PICKS (dynamic) ===== -->
+    <section class="korean-picks">
+        <div class="section-title scroll-reveal">
+            <span class="sub">KOREAN BEAUTY</span>
+            <h2>🇰🇷 Korean <span class="highlight">Glow Picks</span></h2>
+        </div>
+        <div class="product-grid">
+            {% for p in korean_products %}
+            <a href="{{ p.get_absolute_url }}" class="product-link scroll-reveal">
+                <div class="product-card">
+                    <div class="image-wrap">
+                        {% if user.is_authenticated %}
+                        <span class="wishlist {% if p.id in wishlist_ids %}active{% endif %}"
+                              onclick="event.preventDefault();event.stopPropagation();toggleWishlist(this,{{ p.id }});">
+                            <i class="fa-{% if p.id in wishlist_ids %}solid{% else %}regular{% endif %} fa-heart"></i>
+                        </span>
+                        {% else %}
+                        <a href="{% url 'accounts:login' %}?next=/" class="wishlist" onclick="event.stopPropagation();">
+                            <i class="fa-regular fa-heart"></i>
+                        </a>
+                        {% endif %}
+                        {% if p.thumbnail %}
+                        <img src="{{ p.thumbnail.url }}" alt="{{ p.name }}" loading="lazy">
+                        {% else %}
+                        <svg viewBox="0 0 200 200" style="position:absolute;inset:0;width:100%;height:100%;">
+                            <rect width="200" height="200" fill="#f0ebe2"/>
+                            <text x="100" y="118" font-family="Cormorant Garamond,serif"
+                                  font-size="72" font-weight="700" fill="#C97786"
+                                  text-anchor="middle">{{ p.name|first|upper }}</text>
+                        </svg>
+                        {% endif %}
+                    </div>
+                    <div class="info">
+                        <div class="product-badges">
+                            {% if p.is_bestseller %}<span class="product-badge bestseller-flag">🔥 Bestseller</span>{% endif %}
+                            {% if p.is_new_arrival %}<span class="product-badge new-arrival">✨ New</span>{% endif %}
+                            {% if p.has_discount %}<span class="product-badge discount">-{{ p.get_discount_percent }}%</span>{% endif %}
+                        </div>
+                        <span class="brand">{{ p.brand.name|default:"" }}</span>
+                        <h3>{{ p.name|truncatechars:40 }}</h3>
+                        <div class="price">
+                            <span class="current">Rs.{{ p.current_price|floatformat:0 }}</span>
+                            {% if p.has_discount %}<span class="old">Rs.{{ p.price|floatformat:0 }}</span>{% endif %}
+                        </div>
+                        {% if user.is_authenticated %}
+                            {% if p.in_stock %}
+                            <form method="post" action="{% url 'cart:add' p.id %}" class="add-to-cart-form" onclick="event.stopPropagation();">
+                                {% csrf_token %}
+                                <input type="hidden" name="quantity" value="1">
+                                <input type="hidden" name="next" value="/">
+                                <button type="submit" class="add-btn">
+                                    <i class="fa-solid fa-cart-plus" style="margin-right:6px;"></i>Add To Cart
+                                </button>
+                            </form>
+                            {% else %}
+                            <button class="add-btn" disabled>Out of Stock</button>
+                            {% endif %}
+                        {% else %}
+                        <a href="{% url 'accounts:login' %}?next=/" class="add-btn"
+                           style="display:block;text-align:center;text-decoration:none;"
+                           onclick="event.stopPropagation();">Login to Buy</a>
+                        {% endif %}
+                    </div>
                 </div>
-                <h4>{{ brand.name }}</h4>
-                <p>{{ brand.products.count }} Products</p>
             </a>
             {% empty %}
-            <div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--gray);">
-                No brands yet. Add brands from the admin panel.
+            <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--gray);">
+                <p>No Korean picks yet — check back soon!</p>
+                <a href="{% url 'products:shop' %}" class="btn-secondary" style="margin-top:12px;display:inline-block;">Browse All Products</a>
             </div>
             {% endfor %}
         </div>
-
-        <div class="view-all-container">
-            <a href="{% url 'products:brands' %}" class="view-all-btn">
-                View All Brands <i class="fa-solid fa-arrow-right"></i>
+        <div style="text-align:center;margin-top:40px;">
+            <a href="{% url 'products:shop' %}?category=korean" class="btn-secondary" style="padding:12px 40px;transition:all 0.3s;">
+                Explore All Korean Beauty <i class="fa-solid fa-arrow-right" style="margin-left:10px;"></i>
             </a>
-        </div>
-
-    </section>
-
-    <!-- ===== KOREAN GLOW PICKS ===== -->
-    <section class="korean-picks scroll-reveal">
-        <div class="section-header">
-            <h2>🇰🇷 Korean <span class="highlight">Glow Picks</span></h2>
-            <a href="{% url 'products:shop' %}?category=korean">Explore All →</a>
-        </div>
-        <div class="product-grid" style="grid-template-columns: repeat(4, 1fr);">
-            <div class="product-card">
-                <div class="image-wrap">
-                    <span class="badge-bestseller" style="position:absolute; top:14px; left:14px; background:var(--gold-gradient); color:var(--dark); padding:3px 12px; border-radius:30px; font-size:10px; font-weight:700; text-transform:uppercase; z-index:1;">⭐ Best Seller</span>
-                    <span class="discount" style="top:45px;">-23%</span>
-                    <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                    <img src="{% static 'img/product1.png' %}" alt="COSRX Snail Essence">
-                </div>
-                <div class="info">
-                    <span class="brand">COSRX</span>
-                    <h3>Advanced Snail 96 Mucin</h3>
-                    <div class="rating">★★★★★ <span>(363)</span></div>
-                    <div class="price">
-                        <span class="current">Rs.2,150</span>
-                        <span class="old">Rs.2,800</span>
-                    </div>
-                    <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="image-wrap">
-                    <span class="discount">-10%</span>
-                    <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                    <img src="{% static 'img/product2.png' %}" alt="COSRX Cleanser">
-                </div>
-                <div class="info">
-                    <span class="brand">COSRX</span>
-                    <h3>Low pH Good Morning Gel</h3>
-                    <div class="rating">★★★★★ <span>(289)</span></div>
-                    <div class="price">
-                        <span class="current">Rs.1,485</span>
-                        <span class="old">Rs.1,650</span>
-                    </div>
-                    <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="image-wrap">
-                    <span class="badge-new" style="position:absolute; top:14px; left:14px; background:#2ecc71; color:white; padding:3px 12px; border-radius:30px; font-size:10px; font-weight:700; text-transform:uppercase; z-index:1;">✨ New</span>
-                    <span class="discount" style="top:45px;">-10%</span>
-                    <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                    <img src="{% static 'img/product3.png' %}" alt="COSRX Serum">
-                </div>
-                <div class="info">
-                    <span class="brand">COSRX</span>
-                    <h3>Niacinamide 15% Serum</h3>
-                    <div class="rating">★★★★★ <span>(412)</span></div>
-                    <div class="price">
-                        <span class="current">Rs.2,565</span>
-                        <span class="old">Rs.2,850</span>
-                    </div>
-                    <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="image-wrap">
-                    <span class="discount">-10%</span>
-                    <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                    <img src="{% static 'img/product4.png' %}" alt="COSRX Cream">
-                </div>
-                <div class="info">
-                    <span class="brand">COSRX</span>
-                    <h3>Hyaluronic Acid Cream</h3>
-                    <div class="rating">★★★★★ <span>(234)</span></div>
-                    <div class="price">
-                        <span class="current">Rs.2,880</span>
-                        <span class="old">Rs.3,200</span>
-                    </div>
-                    <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -1673,74 +2533,70 @@
             <h2>Everyone's <span class="highlight">Favourite</span></h2>
         </div>
         <div class="product-grid">
-            <div class="product-card scroll-reveal">
-                <div class="image-wrap">
-                    <span class="discount">-25%</span>
-                    <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                    <img src="{% static 'img/product1.png' %}" alt="CeraVe Cleanser">
-                </div>
-                <div class="info">
-                    <span class="brand">CeraVe</span>
-                    <h3>Hydrating Cleanser</h3>
-                    <div class="rating">★★★★★ <span>(325)</span></div>
-                    <div class="price">
-                        <span class="current">Rs.2,650</span>
-                        <span class="old">Rs.3,200</span>
+            {% for p in bestseller_products %}
+            <a href="{{ p.get_absolute_url }}" class="product-link scroll-reveal">
+                <div class="product-card">
+                    <div class="image-wrap">
+                        {% if user.is_authenticated %}
+                        <span class="wishlist {% if p.id in wishlist_ids %}active{% endif %}"
+                              onclick="event.preventDefault();event.stopPropagation();toggleWishlist(this,{{ p.id }});">
+                            <i class="fa-{% if p.id in wishlist_ids %}solid{% else %}regular{% endif %} fa-heart"></i>
+                        </span>
+                        {% else %}
+                        <a href="{% url 'accounts:login' %}?next=/" class="wishlist" onclick="event.stopPropagation();">
+                            <i class="fa-regular fa-heart"></i>
+                        </a>
+                        {% endif %}
+                        {% if p.thumbnail %}
+                        <img src="{{ p.thumbnail.url }}" alt="{{ p.name }}" loading="lazy">
+                        {% else %}
+                        <svg viewBox="0 0 200 200" style="position:absolute;inset:0;width:100%;height:100%;">
+                            <rect width="200" height="200" fill="#f0ebe2"/>
+                            <text x="100" y="118" font-family="Cormorant Garamond,serif"
+                                  font-size="72" font-weight="700" fill="#C97786"
+                                  text-anchor="middle">{{ p.name|first|upper }}</text>
+                        </svg>
+                        {% endif %}
                     </div>
-                    <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                </div>
-            </div>
-            <div class="product-card scroll-reveal">
-                <div class="image-wrap">
-                    <span class="discount">-15%</span>
-                    <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                    <img src="{% static 'img/product2.png' %}" alt="The Ordinary">
-                </div>
-                <div class="info">
-                    <span class="brand">The Ordinary</span>
-                    <h3>Niacinamide 10%</h3>
-                    <div class="rating">★★★★★ <span>(280)</span></div>
-                    <div class="price">
-                        <span class="current">Rs.2,350</span>
-                        <span class="old">Rs.2,850</span>
+                    <div class="info">
+                        <div class="product-badges">
+                            {% if p.is_bestseller %}<span class="product-badge bestseller-flag">🔥 Bestseller</span>{% endif %}
+                            {% if p.is_new_arrival %}<span class="product-badge new-arrival">✨ New</span>{% endif %}
+                            {% if p.has_discount %}<span class="product-badge discount">-{{ p.get_discount_percent }}%</span>{% endif %}
+                        </div>
+                        <span class="brand">{{ p.brand.name|default:"" }}</span>
+                        <h3>{{ p.name|truncatechars:40 }}</h3>
+                        <div class="price">
+                            <span class="current">Rs.{{ p.current_price|floatformat:0 }}</span>
+                            {% if p.has_discount %}<span class="old">Rs.{{ p.price|floatformat:0 }}</span>{% endif %}
+                        </div>
+                        {% if user.is_authenticated %}
+                            {% if p.in_stock %}
+                            <form method="post" action="{% url 'cart:add' p.id %}" class="add-to-cart-form" onclick="event.stopPropagation();">
+                                {% csrf_token %}
+                                <input type="hidden" name="quantity" value="1">
+                                <input type="hidden" name="next" value="/">
+                                <button type="submit" class="add-btn">
+                                    <i class="fa-solid fa-cart-plus" style="margin-right:6px;"></i>Add To Cart
+                                </button>
+                            </form>
+                            {% else %}
+                            <button class="add-btn" disabled>Out of Stock</button>
+                            {% endif %}
+                        {% else %}
+                        <a href="{% url 'accounts:login' %}?next=/" class="add-btn"
+                           style="display:block;text-align:center;text-decoration:none;"
+                           onclick="event.stopPropagation();">Login to Buy</a>
+                        {% endif %}
                     </div>
-                    <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
                 </div>
+            </a>
+            {% empty %}
+            <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--gray);">
+                <p>No bestsellers yet — check back soon!</p>
+                <a href="{% url 'products:shop' %}" class="btn-secondary" style="margin-top:12px;display:inline-block;">Browse All Products</a>
             </div>
-            <div class="product-card scroll-reveal">
-                <div class="image-wrap">
-                    <span class="discount">-35%</span>
-                    <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                    <img src="{% static 'img/product3.png' %}" alt="Maybelline">
-                </div>
-                <div class="info">
-                    <span class="brand">Maybelline</span>
-                    <h3>SuperStay Lipstick</h3>
-                    <div class="rating">★★★★★ <span>(540)</span></div>
-                    <div class="price">
-                        <span class="current">Rs.1,450</span>
-                        <span class="old">Rs.2,000</span>
-                    </div>
-                    <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                </div>
-            </div>
-            <div class="product-card scroll-reveal">
-                <div class="image-wrap">
-                    <span class="discount">-20%</span>
-                    <span class="wishlist"><i class="fa-regular fa-heart"></i></span>
-                    <img src="{% static 'img/product4.png' %}" alt="Cetaphil">
-                </div>
-                <div class="info">
-                    <span class="brand">Cetaphil</span>
-                    <h3>Moisturizing Lotion</h3>
-                    <div class="rating">★★★★★ <span>(198)</span></div>
-                    <div class="price">
-                        <span class="current">Rs.2,850</span>
-                        <span class="old">Rs.3,400</span>
-                    </div>
-                    <button class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-                </div>
-            </div>
+            {% endfor %}
         </div>
         <div style="text-align:center; margin-top:40px;">
             <a href="{% url 'products:bestsellers' %}" class="btn-secondary" style="padding:12px 40px; transition: all 0.3s;">
@@ -1749,75 +2605,77 @@
         </div>
     </section>
 
-    <!-- ===== DEALS OF THE DAY ===== -->
+    <!-- ===== TESTIMONIALS ===== -->
+    <section class="testimonials scroll-reveal">
+        <div class="section-title">
+            <span class="sub">LOVED BY NEPAL</span>
+            <h2>What Our <span class="highlight">Customers Say</span></h2>
+        </div>
+        <div class="t-grid stagger-children">
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="quote">Ordered COSRX skincare and it arrived in two days, perfectly packed. Everything was 100% genuine — my go-to store now.</p>
+                <div class="who">
+                    <div class="avatar">A</div>
+                    <div><div class="name">Anisha R.</div><div class="loc">Kathmandu</div></div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="quote">Cash on delivery made it so easy to try Kasbi for the first time. Their customer support helped me pick the right products.</p>
+                <div class="who">
+                    <div class="avatar">S</div>
+                    <div><div class="name">Sujata K.</div><div class="loc">Pokhara</div></div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="quote">Huge selection of Korean brands you can't find anywhere else in Nepal. Prices are fair and delivery was faster than expected.</p>
+                <div class="who">
+                    <div class="avatar">P</div>
+                    <div><div class="name">Prashant M.</div><div class="loc">Biratnagar</div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== DEALS OF THE DAY (dynamic — Out of Stock from DB) ===== -->
     <section class="deals-day scroll-reveal">
         <div class="section-title">
             <span class="sub">DEALS OF THE DAY</span>
             <h2>Out of Stock <span class="highlight">Items</span></h2>
         </div>
-        <div class="deals-grid">
-            <div class="deal-card">
-                <div class="deal-img">🧴</div>
-                <h4>AXIS-Y spot the difference blemish treatment</h4>
-                <span class="category-tag">Skincare</span>
-                <div class="price">Rs. 2,100.00</div>
+        <div class="deals-grid stagger-children">
+            {% for p in out_of_stock_products %}
+            <a href="{{ p.get_absolute_url }}" class="deal-card">
+                <div class="deal-img">
+                    {% if p.thumbnail %}
+                    <img src="{{ p.thumbnail.url }}" alt="{{ p.name }}" style="width:100%;height:100%;object-fit:contain;">
+                    {% else %}🧴{% endif %}
+                </div>
+                <h4>{{ p.name|truncatechars:44 }}</h4>
+                <span class="category-tag">{{ p.category|default:"" }}</span>
+                <div class="price">Rs. {{ p.current_price|floatformat:0 }}</div>
+                {% if user.is_authenticated %}
+                <span class="wishlist-deal {% if p.id in wishlist_ids %}active{% endif %}"
+                      onclick="event.preventDefault();event.stopPropagation();toggleWishlist(this,{{ p.id }});">
+                    <i class="fa-{% if p.id in wishlist_ids %}solid{% else %}regular{% endif %} fa-heart"></i>
+                </span>
+                {% else %}
                 <div class="wishlist-deal"><i class="fa-regular fa-heart"></i></div>
-            </div>
-            <div class="deal-card">
-                <div class="deal-img">🧪</div>
-                <h4>CeraVe acne control gel</h4>
-                <span class="category-tag">Skincare</span>
-                <div class="price">Rs. 2,950.00</div>
-                <div class="wishlist-deal"><i class="fa-regular fa-heart"></i></div>
-            </div>
-            <div class="deal-card">
-                <div class="deal-img">💄</div>
-                <h4>INGLOT duraline makeup mixing liquid</h4>
-                <span class="category-tag">Makeup</span>
-                <div class="price">Rs. 2,100.00</div>
-                <div class="wishlist-deal"><i class="fa-regular fa-heart"></i></div>
-            </div>
-            <div class="deal-card">
-                <div class="deal-img">🧴</div>
-                <h4>Sanosan baby chamomile shampoo</h4>
-                <span class="category-tag">Babycare</span>
-                <div class="price">Rs. 825.00</div>
-                <div class="wishlist-deal"><i class="fa-regular fa-heart"></i></div>
-            </div>
-            <div class="deal-card">
-                <div class="deal-img">🧴</div>
-                <h4>Sanosan baby care lotion</h4>
-                <span class="category-tag">Babycare</span>
-                <div class="price">Rs. 1,080.00</div>
-                <div class="wishlist-deal"><i class="fa-regular fa-heart"></i></div>
-            </div>
-            <div class="deal-card">
-                <div class="deal-img">🧴</div>
-                <h4>Sanosan baby nappy rash cream</h4>
-                <span class="category-tag">Babycare</span>
-                <div class="price">Rs. 2,200.00</div>
-                <div class="wishlist-deal"><i class="fa-regular fa-heart"></i></div>
-            </div>
-            <div class="deal-card">
-                <div class="deal-img">🧼</div>
-                <h4>Sanosan baby care soap</h4>
-                <span class="category-tag">Babycare</span>
-                <div class="price">Rs. 420.00</div>
-                <div class="wishlist-deal"><i class="fa-regular fa-heart"></i></div>
-            </div>
-            <div class="deal-card">
-                <div class="deal-img">🧴</div>
-                <h4>Sanosan baby care oil</h4>
-                <span class="category-tag">Babycare</span>
-                <div class="price">Rs. 1,000.00</div>
-                <div class="wishlist-deal"><i class="fa-regular fa-heart"></i></div>
-            </div>
+                {% endif %}
+            </a>
+            {% empty %}
+            <div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--gray);">No out-of-stock items currently.</div>
+            {% endfor %}
         </div>
+        {% if out_of_stock_products %}
         <div style="text-align:center; margin-top:30px;">
             <a href="{% url 'products:shop' %}?sort=outofstock" class="btn-secondary" style="padding:12px 40px;">
                 Load More <i class="fa-solid fa-arrow-down" style="margin-left:10px;"></i>
             </a>
         </div>
+        {% endif %}
     </section>
 
     <!-- ===== OFFER BANNERS ===== -->
@@ -1890,7 +2748,7 @@
                 </div>
                 <div class="feed-info">
                     <h4>Perfect solution for dark underarms</h4>
-                    <div class="hashtags">#badkunderarms #bdbydoor #underarmwhitening</div>
+                    <div class="hashtags">#skincare #beauty #nepal</div>
                 </div>
             </div>
             <div class="feed-item">
@@ -1943,125 +2801,15 @@
             <span style="font-size:12px; letter-spacing:3px; opacity:0.7; font-weight:300;">STAY IN THE GLOW</span>
             <h2 style="font-family:'Cormorant Garamond',serif; font-size:42px; margin:12px 0 16px; font-weight:700;">Get 10% Off Your First Order</h2>
             <p style="font-weight:300; opacity:0.8; margin-bottom:28px; font-size:15px;">Subscribe to get exclusive offers, beauty tips, and new arrivals straight to your inbox.</p>
-            <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
-                <input type="email" placeholder="Enter your email address" style="flex:1; min-width:240px; padding:14px 22px; border:none; border-radius:50px; font-size:14px; outline:none; font-family:'Inter',sans-serif; background:rgba(255,255,255,0.15); color:white; backdrop-filter:blur(4px); border:1px solid rgba(255,255,255,0.1);">
-                <button style="background:var(--gold-gradient); color:var(--dark); border:none; padding:14px 32px; border-radius:50px; font-weight:600; font-size:14px; cursor:pointer; transition:var(--transition);">
+            <form id="newsletterForm" style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
+                <input type="email" id="newsletterEmail" required placeholder="Enter your email address" style="flex:1; min-width:240px; padding:14px 22px; border:none; border-radius:50px; font-size:14px; outline:none; font-family:'Inter',sans-serif; background:rgba(255,255,255,0.15); color:white; backdrop-filter:blur(4px); border:1px solid rgba(255,255,255,0.1);">
+                <button type="submit" style="background:var(--gold-gradient); color:var(--dark); border:none; padding:14px 32px; border-radius:50px; font-weight:600; font-size:14px; cursor:pointer; transition:var(--transition);">
                     <i class="fa-regular fa-paper-plane" style="margin-right:8px;"></i>Subscribe
                 </button>
-            </div>
+            </form>
             <p style="font-size:12px; opacity:0.5; margin-top:14px;">No spam. Unsubscribe anytime.</p>
         </div>
     </section>
-
-<!-- ===== BEST SELLERS (Dynamic from DB) ===== -->
-<section class="best-sellers">
-  <div class="section-title scroll-reveal">
-    <span class="sub">BEST SELLERS</span>
-    <h2>Everyone's <span class="highlight">Favourite</span></h2>
-  </div>
-  <div class="product-grid">
-    {% for p in bestseller_products %}
-    <div class="product-card scroll-reveal">
-      <div class="image-wrap">
-        {% if p.discount_price %}<span class="discount">-Sale</span>{% endif %}
-        {% if p.id in wishlist_ids %}<a href="{% url 'products:wishlist_remove' p.id %}" class="wishlist"><i class="fa-solid fa-heart"></i></a>
-        {% elif user.is_authenticated %}<a href="{% url 'products:wishlist_add' p.id %}" class="wishlist"><i class="fa-regular fa-heart"></i></a>
-        {% else %}<span class="wishlist"><i class="fa-regular fa-heart"></i></span>{% endif %}
-        <a href="{{ p.get_absolute_url }}">
-          <img src="{% if p.thumbnail %}{{ p.thumbnail.url }}{% else %}{% static 'img/hero.png' %}{% endif %}" alt="{{ p.name }}">
-        </a>
-      </div>
-      <div class="info">
-        <span class="brand">{{ p.brand|default:"" }}</span>
-        <h3><a href="{{ p.get_absolute_url }}" style="color:inherit;text-decoration:none;">{{ p.name|truncatechars:32 }}</a></h3>
-        <div class="price">
-          <span class="current">Rs.{{ p.current_price }}</span>
-          {% if p.discount_price %}<span class="old">Rs.{{ p.price }}</span>{% endif %}
-        </div>
-        {% if user.is_authenticated and p.in_stock %}
-        <form method="post" action="{% url 'cart:add' p.id %}" style="margin:0;">{% csrf_token %}
-          <input type="hidden" name="quantity" value="1">
-          <input type="hidden" name="next" value="{% url 'core:home' %}">
-          <button type="submit" class="add-btn"><i class="fa-solid fa-cart-plus" style="margin-right:8px;"></i>Add To Cart</button>
-        </form>
-        {% elif not p.in_stock %}<button class="add-btn" disabled style="opacity:0.5;">Out of Stock</button>
-        {% else %}<a href="{% url 'accounts:login' %}" class="add-btn" style="text-align:center;display:block;text-decoration:none;">Login to Buy</a>
-        {% endif %}
-      </div>
-    </div>
-    {% empty %}
-    <div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--gray);">No products yet. Add some from the admin panel!</div>
-    {% endfor %}
-  </div>
-  <div style="text-align:center;margin-top:40px;">
-    <a href="{% url 'products:bestsellers' %}" class="btn-secondary" style="padding:12px 40px;">View All Best Sellers <i class="fa-solid fa-arrow-right" style="margin-left:10px;"></i></a>
-  </div>
-</section>
-
-<!-- ===== DEALS OF THE DAY (Out of Stock from DB) ===== -->
-<section class="deals-day scroll-reveal">
-  <div class="section-title"><span class="sub">DEALS OF THE DAY</span><h2>Out of Stock <span class="highlight">Items</span></h2></div>
-  <div class="deals-grid">
-    {% for p in out_of_stock_products %}
-    <a href="{{ p.get_absolute_url }}" class="deal-card" style="text-decoration:none;color:inherit;">
-      <div class="deal-img">{% if p.thumbnail %}<img src="{{ p.thumbnail.url }}" alt="{{ p.name }}" style="width:100%;height:100%;object-fit:contain;">{% else %}🧴{% endif %}</div>
-      <h4>{{ p.name }}</h4>
-      <span class="category-tag">{{ p.category|default:"" }}</span>
-      <div class="price">Rs. {{ p.current_price }}</div>
-      {% if user.is_authenticated %}<span href="{% url 'products:wishlist_add' p.id %}" class="wishlist-deal"><i class="fa-regular fa-heart"></i></span>{% else %}<div class="wishlist-deal"><i class="fa-regular fa-heart"></i></div>{% endif %}
-    </a>
-    {% empty %}
-    <div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--gray);">No out-of-stock items currently.</div>
-    {% endfor %}
-  </div>
-</section>
-
-<!-- ===== OFFER BANNERS ===== -->
-<section class="offers">
-  <div class="offer-card purple scroll-reveal"><span class="tag">🌟 LIMITED OFFER</span><h3>Buy 2 Get 1 FREE</h3><p>Selected Korean Skincare — stock up &amp; save big!</p><a href="{% url 'products:offers' %}" class="offer-btn"><i class="fa-solid fa-gift" style="margin-right:8px;"></i>Shop Now</a></div>
-  <div class="offer-card gold scroll-reveal"><span class="tag">🎉 NEW MEMBER</span><h3>20% OFF</h3><p>On Your First Purchase — welcome to the Kasbi family!</p><a href="{% url 'products:offers' %}" class="offer-btn"><i class="fa-solid fa-ticket" style="margin-right:8px;"></i>Claim Now</a></div>
-  <div class="offer-card green scroll-reveal"><span class="tag">🚚 FREE SHIPPING</span><h3>Orders Above Rs.3000</h3><p>Anywhere Inside Nepal — no hidden charges.</p><a href="{% url 'products:offers' %}" class="offer-btn"><i class="fa-solid fa-map-location-dot" style="margin-right:8px;"></i>Explore</a></div>
-</section>
-
-<!-- ===== FEATURES ===== -->
-<section class="features">
-  <div class="feature scroll-reveal"><div class="icon"><i class="fa-solid fa-truck-fast"></i></div><h3>Nationwide Delivery</h3><p>Fast shipping all over Nepal with real-time tracking</p></div>
-  <div class="feature scroll-reveal"><div class="icon"><i class="fa-solid fa-medal"></i></div><h3>100% Authentic</h3><p>Guaranteed original beauty products from trusted brands</p></div>
-  <div class="feature scroll-reveal"><div class="icon"><i class="fa-solid fa-credit-card"></i></div><h3>Secure Payment</h3><p>eSewa • Khalti • COD • Cards — all safe &amp; encrypted</p></div>
-  <div class="feature scroll-reveal"><div class="icon"><i class="fa-solid fa-headset"></i></div><h3>24/7 Support</h3><p>Dedicated beauty experts to guide you every step</p></div>
-</section>
-
-<!-- ===== SOCIAL FEED ===== -->
-<section class="social-feed scroll-reveal">
-  <div class="section-title"><span class="sub">FOLLOW US</span><h2>Social <span class="highlight">Feed</span></h2></div>
-  <div class="feed-grid">
-    <div class="feed-item"><div class="feed-img" style="background:linear-gradient(135deg,#E8D5E8,#F0E0F0);"><span style="position:absolute;top:12px;left:12px;background:rgba(0,0,0,0.5);color:white;padding:4px 10px;border-radius:20px;font-size:11px;">00:24</span><i class="fa-brands fa-instagram"></i></div><div class="feed-info"><h4>Our people on stage day</h4><p>Behind the scenes at our latest event ✨</p></div></div>
-    <div class="feed-item"><div class="feed-img" style="background:linear-gradient(135deg,#F5E6D3,#F0D8C8);"><span style="position:absolute;top:12px;left:12px;background:rgba(0,0,0,0.5);color:white;padding:4px 10px;border-radius:20px;font-size:11px;">00:25</span><i class="fa-brands fa-instagram"></i></div><div class="feed-info"><h4>Perfect solution for dark underarms</h4><div class="hashtags">#skincare #beauty #nepal</div></div></div>
-    <div class="feed-item"><div class="feed-img" style="background:linear-gradient(135deg,#D4E8D4,#E8F0E0);"><div class="play-btn"><i class="fa-solid fa-play"></i></div><span style="position:absolute;top:12px;left:12px;background:rgba(0,0,0,0.5);color:white;padding:4px 10px;border-radius:20px;font-size:11px;">11:47</span><i class="fa-brands fa-youtube" style="color:#ff0000;"></i></div><div class="feed-info"><h4>How To Take Care of Oily &amp; Acne-prone Skin</h4><p>Skincare Routine • Oily • Acne Prone</p></div></div>
-    <div class="feed-item"><div class="feed-img" style="background:linear-gradient(135deg,#F0D8C8,#E8C8B8);"><div class="play-btn"><i class="fa-solid fa-play"></i></div><span style="position:absolute;top:12px;left:12px;background:rgba(0,0,0,0.5);color:white;padding:4px 10px;border-radius:20px;font-size:11px;">01:11:15</span><i class="fa-solid fa-podcast" style="color:#7B5A93;"></i></div><div class="feed-info"><h4>Skincare &amp; Entrepreneurship Podcast</h4><p>With Ekata Tandukar | Founder, Jina Alchemy</p></div></div>
-  </div>
-</section>
-
-<!-- ===== FEATURES FOOTER ===== -->
-<div class="features-footer">
-  <div class="feature-item"><i class="fa-solid fa-hand-holding-dollar"></i><h4>Cash On Delivery</h4><p>Pay after you get it</p></div>
-  <div class="feature-item"><i class="fa-solid fa-shield-halved"></i><h4>100% Privacy</h4><p>Your Privacy Is Concerned</p></div>
-  <div class="feature-item"><i class="fa-solid fa-arrows-rotate"></i><h4>Free Replacement</h4><p>All orders are freely replaced</p></div>
-</div>
-
-<!-- ===== NEWSLETTER ===== -->
-<section class="newsletter scroll-reveal">
-  <div style="max-width:600px;margin:0 auto;text-align:center;position:relative;z-index:1;">
-    <span style="font-size:12px;letter-spacing:3px;opacity:0.7;font-weight:300;">STAY IN THE GLOW</span>
-    <h2 style="font-family:'Cormorant Garamond',serif;font-size:42px;margin:12px 0 16px;font-weight:700;">Get 10% Off Your First Order</h2>
-    <p style="font-weight:300;opacity:0.8;margin-bottom:28px;font-size:15px;">Subscribe to get exclusive offers, beauty tips, and new arrivals straight to your inbox.</p>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
-      <input type="email" placeholder="Enter your email address" style="flex:1;min-width:240px;padding:14px 22px;border:none;border-radius:50px;font-size:14px;outline:none;font-family:'Inter',sans-serif;background:rgba(255,255,255,0.15);color:white;backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,0.1);">
-      <button onclick="showToast('Subscribed! Check your inbox for 10% off.')" style="background:var(--gold-gradient);color:var(--dark);border:none;padding:14px 32px;border-radius:50px;font-weight:600;font-size:14px;cursor:pointer;"><i class="fa-regular fa-paper-plane" style="margin-right:8px;"></i>Subscribe</button>
-    </div>
-    <p style="font-size:12px;opacity:0.5;margin-top:14px;">No spam. Unsubscribe anytime.</p>
-  </div>
-</section>
 {% endblock %}
 
 {% block extra_js %}
@@ -2073,10 +2821,7 @@
     function performSearch() {
         const searchTerm = searchInput.value.trim();
         if (searchTerm) {
-            // Show toast notification
             showSearchToast(`🔍 Searching for "${searchTerm}"...`);
-            
-            // Redirect to SEARCH PAGE with query parameter
             setTimeout(() => {
                 window.location.href = '/products/search/?q=' + encodeURIComponent(searchTerm);
             }, 800);
@@ -2085,7 +2830,6 @@
         }
     }
 
-    // Search button click
     if (searchButton) {
         searchButton.addEventListener('click', function(e) {
             e.preventDefault();
@@ -2093,7 +2837,6 @@
         });
     }
 
-    // Enter key press
     if (searchInput) {
         searchInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
@@ -2103,12 +2846,10 @@
         });
     }
 
-    // ===== SEARCH TOAST =====
+    // ===== TOAST NOTIFICATION (shared) =====
     function showSearchToast(message) {
         const existingToast = document.querySelector('.toast-notification');
-        if (existingToast) {
-            existingToast.remove();
-        }
+        if (existingToast) existingToast.remove();
 
         const toast = document.createElement('div');
         toast.className = 'toast-notification';
@@ -2135,11 +2876,10 @@
 
         setTimeout(() => {
             toast.style.animation = 'slideOutDown 0.4s ease forwards';
-            setTimeout(() => {
-                toast.remove();
-            }, 400);
+            setTimeout(() => toast.remove(), 400);
         }, 3000);
     }
+    window.showToast = showSearchToast;
 
     // ===== FLOATING QUICK-ACCESS DOCK =====
     const qdScrollTop = document.getElementById('qdScrollTop');
@@ -2148,18 +2888,15 @@
     const categoryBackdrop = document.getElementById('categoryBackdrop');
     const categoryClose = document.getElementById('categoryClose');
 
-    // Back-to-top button: only show once the user has scrolled down
     if (qdScrollTop) {
         window.addEventListener('scroll', () => {
             qdScrollTop.classList.toggle('visible', window.scrollY > 400);
         });
-
         qdScrollTop.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
 
-    // Categories flyout open/close
     function openCategoryFlyout() {
         categoryFlyout.classList.add('open');
         categoryBackdrop.classList.add('visible');
@@ -2178,110 +2915,194 @@
 
     if (qdCategoriesBtn) {
         qdCategoriesBtn.addEventListener('click', () => {
-            if (categoryFlyout.classList.contains('open')) {
-                closeCategoryFlyout();
-            } else {
-                openCategoryFlyout();
-            }
+            if (categoryFlyout.classList.contains('open')) closeCategoryFlyout();
+            else openCategoryFlyout();
         });
     }
-
-    if (categoryClose) {
-        categoryClose.addEventListener('click', closeCategoryFlyout);
-    }
-
-    if (categoryBackdrop) {
-        categoryBackdrop.addEventListener('click', closeCategoryFlyout);
-    }
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeCategoryFlyout();
-    });
+    if (categoryClose) categoryClose.addEventListener('click', closeCategoryFlyout);
+    if (categoryBackdrop) categoryBackdrop.addEventListener('click', closeCategoryFlyout);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeCategoryFlyout(); });
 
     // ===== MOUSE GLOW EFFECT =====
     const mouseGlow = document.getElementById('mouseGlow');
     let mouseTimeout;
+    if (mouseGlow) {
+        document.addEventListener('mousemove', (e) => {
+            mouseGlow.style.left = e.clientX + 'px';
+            mouseGlow.style.top = e.clientY + 'px';
+            mouseGlow.classList.add('active');
+            clearTimeout(mouseTimeout);
+            mouseTimeout = setTimeout(() => mouseGlow.classList.remove('active'), 100);
+        });
+    }
 
-    document.addEventListener('mousemove', (e) => {
-        mouseGlow.style.left = e.clientX + 'px';
-        mouseGlow.style.top = e.clientY + 'px';
-        mouseGlow.classList.add('active');
-        
-        clearTimeout(mouseTimeout);
-        mouseTimeout = setTimeout(() => {
-            mouseGlow.classList.remove('active');
-        }, 100);
-    });
+    // ===== SCROLL PROGRESS BAR =====
+    const scrollProgress = document.getElementById('scrollProgress');
+    function updateScrollProgress() {
+        if (!scrollProgress) return;
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        scrollProgress.style.width = pct + '%';
+    }
+    window.addEventListener('scroll', updateScrollProgress, { passive: true });
+    updateScrollProgress();
 
     // ===== FLOATING PARTICLES =====
     function createParticles() {
         const container = document.getElementById('particles');
+        if (!container) return;
         const count = 30;
-        
         for (let i = 0; i < count; i++) {
             const particle = document.createElement('div');
             particle.classList.add('particle');
-            
             const size = Math.random() * 4 + 2;
             const x = Math.random() * 100;
             const duration = Math.random() * 15 + 10;
             const delay = Math.random() * 10;
-            
             particle.style.width = size + 'px';
             particle.style.height = size + 'px';
             particle.style.left = x + '%';
             particle.style.animationDuration = duration + 's';
             particle.style.animationDelay = delay + 's';
             particle.style.opacity = Math.random() * 0.3 + 0.1;
-            
             container.appendChild(particle);
         }
     }
-    
     createParticles();
 
-    // ===== SCROLL REVEAL =====
-    const scrollReveal = () => {
-        const elements = document.querySelectorAll('.scroll-reveal');
-        const windowHeight = window.innerHeight;
-        
-        elements.forEach(el => {
-            const rect = el.getBoundingClientRect();
-            if (rect.top < windowHeight - 100) {
-                el.classList.add('visible');
-            }
-        });
-    };
+    // ===== SCROLL REVEAL — IntersectionObserver (smoother & cheaper than scroll listeners) =====
+    (function () {
+        const targets = document.querySelectorAll('.scroll-reveal, .featured-brands');
+        if (!('IntersectionObserver' in window)) {
+            targets.forEach(el => el.classList.add('visible'));
+            return;
+        }
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    io.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+        targets.forEach(el => io.observe(el));
+    })();
 
-    window.addEventListener('scroll', scrollReveal);
-    window.addEventListener('load', scrollReveal);
+    // ===== FLASH SALE COUNTDOWN TIMER (real countdown, driven by data attrs) =====
+    (function () {
+        const timerEl = document.querySelector('.flash-sale .timer');
+        if (!timerEl) return;
+        const days = timerEl.querySelector('.timer-item:nth-child(1) .num');
+        const hours = timerEl.querySelector('.timer-item:nth-child(2) .num');
+        const minutes = timerEl.querySelector('.timer-item:nth-child(3) .num');
+        const seconds = timerEl.querySelector('.timer-item:nth-child(4) .num');
 
-    // ===== TIMER COUNTDOWN =====
-    const timer = () => {
-        const days = document.querySelector('.timer-item:nth-child(1) .num');
-        const hours = document.querySelector('.timer-item:nth-child(2) .num');
-        const minutes = document.querySelector('.timer-item:nth-child(3) .num');
-        const seconds = document.querySelector('.timer-item:nth-child(4) .num');
+        let totalSeconds =
+            (parseInt(timerEl.dataset.days, 10) || 0) * 86400 +
+            (parseInt(timerEl.dataset.hours, 10) || 0) * 3600 +
+            (parseInt(timerEl.dataset.minutes, 10) || 0) * 60 +
+            (parseInt(timerEl.dataset.seconds, 10) || 0);
 
-        let d = 5, h = 4, m = 39, s = 16;
-
-        setInterval(() => {
-            s--;
-            if (s < 0) { s = 59; m--; }
-            if (m < 0) { m = 59; h--; }
-            if (h < 0) { h = 23; d--; }
-
+        function render() {
+            const d = Math.floor(totalSeconds / 86400);
+            const h = Math.floor((totalSeconds % 86400) / 3600);
+            const m = Math.floor((totalSeconds % 3600) / 60);
+            const s = totalSeconds % 60;
             days.textContent = String(d).padStart(2, '0');
             hours.textContent = String(h).padStart(2, '0');
             minutes.textContent = String(m).padStart(2, '0');
             seconds.textContent = String(s).padStart(2, '0');
+        }
+        render();
+        setInterval(() => {
+            if (totalSeconds > 0) totalSeconds--;
+            render();
         }, 1000);
-    };
+    })();
 
-    timer();
+    // ===== WISHLIST TOGGLE (real AJAX — best-sellers / korean-picks / deals cards) =====
+    function toggleWishlist(el, productId) {
+        var icon = el.querySelector('i');
+        var isWishlisted = icon.classList.contains('fa-solid');
+        var url = isWishlisted
+            ? '/products/wishlist/remove/' + productId + '/'
+            : '/products/wishlist/add/'  + productId + '/';
 
-    // ===== WISHLIST TOGGLE =====
-    document.querySelectorAll('.wishlist, .wishlist-deal').forEach(btn => {
+        el.classList.add('pulse');
+        setTimeout(() => el.classList.remove('pulse'), 500);
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        }).then(function() {
+            if (isWishlisted) {
+                icon.classList.replace('fa-solid', 'fa-regular');
+                el.classList.remove('active');
+                showSearchToast('💔 Removed from Wishlist');
+            } else {
+                icon.classList.replace('fa-regular', 'fa-solid');
+                el.classList.add('active');
+                showSearchToast('❤️ Added to Wishlist!');
+            }
+        }).catch(function() {
+            window.location.href = url;
+        });
+    }
+    window.toggleWishlist = toggleWishlist;
+
+    // ===== ADD TO CART — micro-interaction + confetti burst, then let the real form POST through =====
+    function burstConfetti(originEl) {
+        const rect = originEl.getBoundingClientRect();
+        const colors = ['#D58A94', '#D4AF37', '#5E4074', '#EBCB65'];
+        for (let i = 0; i < 10; i++) {
+            const bit = document.createElement('span');
+            const size = Math.random() * 6 + 4;
+            bit.style.cssText = `
+                position: fixed;
+                left: ${rect.left + rect.width / 2}px;
+                top: ${rect.top + rect.height / 2}px;
+                width: ${size}px;
+                height: ${size}px;
+                background: ${colors[i % colors.length]};
+                border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+                pointer-events: none;
+                z-index: 10000;
+                opacity: 1;
+            `;
+            document.body.appendChild(bit);
+            const angle = Math.random() * Math.PI * 2;
+            const distance = Math.random() * 60 + 40;
+            const dx = Math.cos(angle) * distance;
+            const dy = Math.sin(angle) * distance - 20;
+            bit.animate([
+                { transform: 'translate(0,0) scale(1)', opacity: 1 },
+                { transform: `translate(${dx}px, ${dy}px) scale(0.4)`, opacity: 0 }
+            ], { duration: 650 + Math.random() * 300, easing: 'cubic-bezier(.2,.7,.3,1)' })
+            .onfinish = () => bit.remove();
+        }
+    }
+
+    document.querySelectorAll('.add-to-cart-form').forEach(form => {
+        form.addEventListener('submit', function() {
+            const btn = this.querySelector('.add-btn');
+            if (!btn) return;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="margin-right:8px;"></i>Adding...';
+            btn.disabled = true;
+            burstConfetti(btn);
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }, 2000);
+        });
+    });
+
+    // ===== STATIC WISHLIST BUTTONS (deal cards without a logged-in user) =====
+    document.querySelectorAll('.deal-card .wishlist-deal:not([onclick])').forEach(btn => {
         btn.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
@@ -2289,67 +3110,26 @@
             icon.classList.toggle('fa-regular');
             icon.classList.toggle('fa-solid');
             if (icon.classList.contains('fa-solid')) {
-                this.style.background = '#5E4074';
-                this.style.color = 'white';
-                this.style.borderColor = '#5E4074';
-                this.style.transform = 'scale(1.2)';
-                setTimeout(() => { this.style.transform = ''; }, 300);
                 this.classList.add('active');
                 showSearchToast('❤️ Added to Wishlist!');
             } else {
-                this.style.background = '';
-                this.style.color = '';
-                this.style.borderColor = '';
                 this.classList.remove('active');
                 showSearchToast('💔 Removed from Wishlist');
             }
         });
     });
 
-    // ===== ADD TO CART ANIMATION =====
-    document.querySelectorAll('.add-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
+    // ===== NEWSLETTER SUBSCRIBE =====
+    const newsletterForm = document.getElementById('newsletterForm');
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            const originalText = this.innerHTML;
-            const productName = this.closest('.product-card')?.querySelector('h3')?.textContent || 'Product';
-            
-            this.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="margin-right:8px;"></i>Adding...';
-            this.style.background = '#5E4074';
-            this.style.color = 'white';
-            this.disabled = true;
-            
-            setTimeout(() => {
-                this.innerHTML = '<i class="fa-solid fa-check" style="margin-right:8px;"></i>Added!';
-                this.style.background = '#2ecc71';
-                this.style.color = 'white';
-                
-                // Update cart badge
-                updateCartBadge();
-                showSearchToast(`✅ ${productName} added to cart!`);
-                
-                setTimeout(() => {
-                    this.innerHTML = originalText;
-                    this.style.background = '';
-                    this.style.color = '';
-                    this.disabled = false;
-                }, 2000);
-            }, 800);
+            const emailInput = document.getElementById('newsletterEmail');
+            if (emailInput && emailInput.value.trim()) {
+                showSearchToast('✨ Subscribed! Check your inbox for 10% off.');
+                emailInput.value = '';
+            }
         });
-    });
-
-    // ===== CART BADGE UPDATE =====
-    let cartCount = 3;
-
-    function updateCartBadge() {
-        cartCount++;
-        const badge = document.querySelector('.cart-badge');
-        if (badge) {
-            badge.textContent = cartCount;
-            badge.style.animation = 'none';
-            setTimeout(() => {
-                badge.style.animation = 'badgePulse 0.5s ease';
-            }, 10);
-        }
     }
 
     // ===== PARALLAX EFFECT ON HERO =====
@@ -2359,32 +3139,22 @@
             const rect = e.currentTarget.getBoundingClientRect();
             const x = (e.clientX - rect.left) / rect.width - 0.5;
             const y = (e.clientY - rect.top) / rect.height - 0.5;
-            
             const heroRight = document.querySelector('.hero-right img');
             const floatingCard = document.querySelector('.floating-card');
-            
-            if (heroRight) {
-                heroRight.style.transform = `translate(${x * 10}px, ${y * 10}px)`;
-            }
-            if (floatingCard) {
-                floatingCard.style.transform = `translate(${-x * 8}px, ${-y * 8}px)`;
-            }
+            if (heroRight) heroRight.style.transform = `translate(${x * 10}px, ${y * 10}px)`;
+            if (floatingCard) floatingCard.style.transform = `translate(${-x * 8}px, ${-y * 8}px)`;
         });
     }
 
     // ===== NAVIGATION SCROLL EFFECT =====
-    let lastScroll = 0;
     const header = document.querySelector('.header');
-
-    window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset;
-        if (currentScroll > 100) {
-            header.style.boxShadow = '0 4px 30px rgba(0,0,0,0.08)';
-        } else {
-            header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.04)';
-        }
-        lastScroll = currentScroll;
-    });
+    if (header) {
+        window.addEventListener('scroll', () => {
+            header.style.boxShadow = window.pageYOffset > 100
+                ? '0 4px 30px rgba(0,0,0,0.08)'
+                : '0 2px 20px rgba(0,0,0,0.04)';
+        }, { passive: true });
+    }
 
     // ===== SMOOTH SCROLL FOR ANCHOR LINKS =====
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -2393,75 +3163,124 @@
             if (href !== '#') {
                 e.preventDefault();
                 const target = document.querySelector(href);
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
     });
 
-    // ===== BRAND CAROUSEL PAGINATION =====
-    document.addEventListener('DOMContentLoaded', function() {
-        const pages = document.querySelectorAll('.brand-page');
-        const prevBtn = document.querySelector('.prev-btn');
-        const nextBtn = document.querySelector('.next-btn');
-        let currentPage = 0;
-        const totalPages = pages.length;
+    // ===== FEATURED BRANDS — dynamic auto-scrolling carousel =====
+    (function () {
+        var section = document.querySelector('.featured-brands');
+        var wrap = document.getElementById('brandsScroll');
+        if (!section || !wrap) return;
 
-        function updateButtons() {
-            if (prevBtn) prevBtn.disabled = currentPage === 0;
-            if (nextBtn) nextBtn.disabled = currentPage === totalPages - 1;
-        }
+        var prevBtn = document.getElementById('fbPrev');
+        var nextBtn = document.getElementById('fbNext');
 
-        function showPage(index) {
-            pages.forEach((page, i) => {
-                page.classList.remove('active');
-                if (i === index) {
-                    page.classList.add('active');
-                }
-            });
-            updateButtons();
-        }
+        var originalCards = Array.prototype.slice.call(wrap.querySelectorAll('.brand-card'));
+        var isLoopable = originalCards.length >= 4;
 
-        if (prevBtn && nextBtn) {
-            prevBtn.addEventListener('click', function() {
-                if (currentPage > 0) {
-                    currentPage--;
-                    showPage(currentPage);
-                }
-            });
-
-            nextBtn.addEventListener('click', function() {
-                if (currentPage < totalPages - 1) {
-                    currentPage++;
-                    showPage(currentPage);
-                }
+        if (isLoopable) {
+            originalCards.forEach(function (card) {
+                var clone = card.cloneNode(true);
+                clone.setAttribute('aria-hidden', 'true');
+                clone.tabIndex = -1;
+                wrap.appendChild(clone);
             });
         }
 
-        // Initialize first page
-        showPage(0);
-    });
+        var isPaused = false;
+        var isDragging = false;
+        var resumeTimer = null;
+        var speed = 0.4;
 
-    // ===== ADD CSS ANIMATIONS =====
+        function loop() {
+            if (isLoopable && !isPaused && !isDragging) {
+                wrap.scrollLeft += speed;
+                var half = wrap.scrollWidth / 2;
+                if (wrap.scrollLeft >= half) wrap.scrollLeft -= half;
+            }
+            requestAnimationFrame(loop);
+        }
+        requestAnimationFrame(loop);
+
+        function pause() { isPaused = true; clearTimeout(resumeTimer); }
+        function scheduleResume() {
+            clearTimeout(resumeTimer);
+            resumeTimer = setTimeout(function () { isPaused = false; }, 2600);
+        }
+
+        wrap.addEventListener('mouseenter', pause);
+        wrap.addEventListener('mouseleave', scheduleResume);
+        wrap.addEventListener('touchstart', pause, { passive: true });
+        wrap.addEventListener('touchend', scheduleResume);
+
+        function step(dir) {
+            pause();
+            var card = wrap.querySelector('.brand-card');
+            var cardWidth = card ? card.getBoundingClientRect().width + 24 : 254;
+            wrap.scrollBy({ left: dir * cardWidth * 2, behavior: 'smooth' });
+            scheduleResume();
+        }
+        if (prevBtn) prevBtn.addEventListener('click', function () { step(-1); });
+        if (nextBtn) nextBtn.addEventListener('click', function () { step(1); });
+
+        var isTouch = window.matchMedia('(pointer: coarse)').matches;
+        if (!isTouch) {
+            var tiltCards = wrap.querySelectorAll('.brand-card-inner');
+            tiltCards.forEach(function (inner) {
+                inner.addEventListener('mousemove', function (e) {
+                    var rect = inner.getBoundingClientRect();
+                    var x = e.clientX - rect.left;
+                    var y = e.clientY - rect.top;
+                    var rotateY = ((x - rect.width / 2) / (rect.width / 2)) * 6;
+                    var rotateX = -((y - rect.height / 2) / (rect.height / 2)) * 6;
+                    inner.style.transition = 'transform .1s ease-out';
+                    inner.style.transform = 'perspective(700px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) translateY(-8px) scale(1.02)';
+                });
+                inner.addEventListener('mouseleave', function () {
+                    inner.style.transition = 'transform .5s cubic-bezier(.22,1,.36,1)';
+                    inner.style.transform = 'perspective(700px) rotateX(0) rotateY(0) translateY(0) scale(1)';
+                });
+            });
+        }
+
+        var startX = 0, startScroll = 0;
+        wrap.addEventListener('mousedown', function (e) {
+            isDragging = true;
+            wrap.classList.add('dragging');
+            startX = e.pageX;
+            startScroll = wrap.scrollLeft;
+            pause();
+        });
+        window.addEventListener('mousemove', function (e) {
+            if (!isDragging) return;
+            wrap.scrollLeft = startScroll - (e.pageX - startX);
+        });
+        window.addEventListener('mouseup', function () {
+            if (!isDragging) return;
+            isDragging = false;
+            wrap.classList.remove('dragging');
+            scheduleResume();
+        });
+    })();
+
+    // ===== ADD CSS ANIMATIONS (toast keyframes / cart badge) =====
     const styleSheet = document.createElement('style');
     styleSheet.textContent = `
         @keyframes slideInUp {
             0% { transform: translateY(100px); opacity: 0; }
             100% { transform: translateY(0); opacity: 1; }
         }
-        
         @keyframes slideOutDown {
             0% { transform: translateY(0); opacity: 1; }
             100% { transform: translateY(100px); opacity: 0; }
         }
-        
         @keyframes badgePulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.4); }
             100% { transform: scale(1); }
         }
-        
         .cart-badge {
             display: inline-block;
             background: #e91e63;
@@ -2476,16 +3295,185 @@
             top: -8px;
             right: -10px;
         }
-        
-        .header-icons > div {
-            position: relative;
-        }
-        
-        .toast-notification {
-            border-left: 4px solid #e91e63;
-        }
+        .header-icons > div { position: relative; }
+        .toast-notification { border-left: 4px solid #e91e63; }
     `;
     document.head.appendChild(styleSheet);
+
+    // ===== PREMIUM ENHANCEMENTS =====
+
+    // Hero image mouse parallax (desktop only)
+    (function () {
+        var heroImg = document.querySelector('.hero-right img');
+        var heroSection = document.querySelector('.hero');
+        if (!heroImg || !heroSection || window.matchMedia('(max-width:768px)').matches) return;
+        var ticking = false;
+        heroSection.addEventListener('mousemove', function (e) {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+                var rect = heroSection.getBoundingClientRect();
+                var x = (e.clientX - rect.left) / rect.width - 0.5;
+                var y = (e.clientY - rect.top)  / rect.height - 0.5;
+                heroImg.style.transform = 'translateY('+(y*-12)+'px) translateX('+(x*6)+'px) rotate('+(x*1.5)+'deg)';
+                ticking = false;
+            });
+        });
+        heroSection.addEventListener('mouseleave', function () {
+            heroImg.style.transform = '';
+        });
+    })();
+
+    // Product card 3D tilt on hover (desktop only)
+    (function () {
+        if (window.matchMedia('(max-width:768px)').matches) return;
+        document.querySelectorAll('.product-card').forEach(function (card) {
+            card.addEventListener('mousemove', function (e) {
+                var rect = card.getBoundingClientRect();
+                var x = (e.clientX - rect.left) / rect.width  - 0.5;
+                var y = (e.clientY - rect.top)  / rect.height - 0.5;
+                card.style.transform = 'translateY(-14px) scale(1.02) rotateX('+(-y*4)+'deg) rotateY('+(x*4)+'deg)';
+            });
+            card.addEventListener('mouseleave', function () {
+                card.style.transform = '';
+            });
+        });
+    })();
+
+    // Stagger product grids on scroll
+    (function () {
+        if (!('IntersectionObserver' in window)) return;
+        document.querySelectorAll('.product-grid').forEach(function (grid) {
+            new IntersectionObserver(function (entries, obs) {
+                if (!entries[0].isIntersecting) return;
+                grid.querySelectorAll('.product-link').forEach(function (link, i) {
+                    link.style.transitionDelay = (i * 0.07) + 's';
+                    link.classList.add('visible');
+                });
+                obs.unobserve(grid);
+            }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }).observe(grid);
+        });
+    })();
+
+    // Stagger category cards
+    (function () {
+        if (!('IntersectionObserver' in window)) return;
+        var catGrid = document.querySelector('.cat-grid');
+        if (!catGrid) return;
+        new IntersectionObserver(function (entries, obs) {
+            if (!entries[0].isIntersecting) return;
+            catGrid.querySelectorAll('.cat-item').forEach(function (item, i) {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(28px)';
+                item.style.transition = 'opacity .5s ease, transform .5s cubic-bezier(.34,1.2,.64,1)';
+                setTimeout(function () {
+                    item.style.opacity = '1';
+                    item.style.transform = '';
+                }, 60 * i + 50);
+            });
+            obs.unobserve(catGrid);
+        }, { threshold: 0.1 }).observe(catGrid);
+    })();
+
+    // Stagger testimonial cards
+    (function () {
+        if (!('IntersectionObserver' in window)) return;
+        var tGrid = document.querySelector('.t-grid');
+        if (!tGrid) return;
+        new IntersectionObserver(function (entries, obs) {
+            if (!entries[0].isIntersecting) return;
+            tGrid.querySelectorAll('.testimonial-card').forEach(function (card, i) {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px) scale(.97)';
+                card.style.transition = 'opacity .6s ease, transform .6s cubic-bezier(.34,1.2,.64,1)';
+                setTimeout(function () {
+                    card.style.opacity = '1';
+                    card.style.transform = '';
+                }, 100 * i + 80);
+            });
+            obs.unobserve(tGrid);
+        }, { threshold: 0.1 }).observe(tGrid);
+    })();
+
+    // Stagger offer cards
+    (function () {
+        if (!('IntersectionObserver' in window)) return;
+        var offers = document.querySelector('.offers');
+        if (!offers) return;
+        new IntersectionObserver(function (entries, obs) {
+            if (!entries[0].isIntersecting) return;
+            offers.querySelectorAll('.offer-card').forEach(function (card, i) {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(36px) scale(.96)';
+                card.style.transition = 'opacity .6s ease, transform .65s cubic-bezier(.34,1.3,.64,1)';
+                setTimeout(function () {
+                    card.style.opacity = '1';
+                    card.style.transform = '';
+                }, 120 * i + 60);
+            });
+            obs.unobserve(offers);
+        }, { threshold: 0.1 }).observe(offers);
+    })();
+
+    // Stagger features row
+    (function () {
+        if (!('IntersectionObserver' in window)) return;
+        var features = document.querySelector('.features');
+        if (!features) return;
+        new IntersectionObserver(function (entries, obs) {
+            if (!entries[0].isIntersecting) return;
+            features.querySelectorAll('.feature').forEach(function (f, i) {
+                f.style.opacity = '0';
+                f.style.transform = 'translateY(24px)';
+                f.style.transition = 'opacity .5s ease, transform .5s cubic-bezier(.34,1.2,.64,1)';
+                setTimeout(function () {
+                    f.style.opacity = '1';
+                    f.style.transform = '';
+                }, 80 * i + 40);
+            });
+            obs.unobserve(features);
+        }, { threshold: 0.12 }).observe(features);
+    })();
+
+    // Stagger social feed
+    (function () {
+        if (!('IntersectionObserver' in window)) return;
+        var feedGrid = document.querySelector('.feed-grid');
+        if (!feedGrid) return;
+        new IntersectionObserver(function (entries, obs) {
+            if (!entries[0].isIntersecting) return;
+            feedGrid.querySelectorAll('.feed-item').forEach(function (item, i) {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(28px)';
+                item.style.transition = 'opacity .55s ease, transform .55s cubic-bezier(.34,1.2,.64,1)';
+                setTimeout(function () {
+                    item.style.opacity = '1';
+                    item.style.transform = '';
+                }, 90 * i + 40);
+            });
+            obs.unobserve(feedGrid);
+        }, { threshold: 0.1 }).observe(feedGrid);
+    })();
+
+    // Stagger deal cards
+    (function () {
+        if (!('IntersectionObserver' in window)) return;
+        var dealsGrid = document.querySelector('.deals-grid');
+        if (!dealsGrid) return;
+        new IntersectionObserver(function (entries, obs) {
+            if (!entries[0].isIntersecting) return;
+            dealsGrid.querySelectorAll('.deal-card').forEach(function (card, i) {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(24px)';
+                card.style.transition = 'opacity .5s ease, transform .5s cubic-bezier(.34,1.2,.64,1)';
+                setTimeout(function () {
+                    card.style.opacity = '1';
+                    card.style.transform = '';
+                }, 75 * i + 40);
+            });
+            obs.unobserve(dealsGrid);
+        }, { threshold: 0.1 }).observe(dealsGrid);
+    })();
 
     console.log('✨ Kasbi Beauty — Glow with Confidence ✨');
 </script>

@@ -2,26 +2,281 @@
 {% load static %}
 {% block title %}My Wishlist — Kisba Beauty{% endblock %}
 
+{% block extra_head %}
+<style>
+/* ===== WISHLIST HEADER ===== */
+.wishlist-hero {
+    background: var(--cream);
+    padding: 50px 6% 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.wishlist-hero::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: rgba(94,64,116,0.06);
+    filter: blur(50px);
+    animation: wlOrbPulse 4s ease-in-out infinite;
+}
+
+.wishlist-hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px;
+    left: -60px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: rgba(212,175,55,0.06);
+    filter: blur(50px);
+    animation: wlOrbPulse 4s ease-in-out infinite 2s;
+}
+
+@keyframes wlOrbPulse {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.15); opacity: 1; }
+}
+
+.wishlist-hero .wl-icon {
+    font-size: 30px;
+    color: var(--primary);
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(-14px) scale(0.8);
+    animation: wlHeaderIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s forwards;
+    animation-fill-mode: forwards;
+}
+
+.wishlist-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px;
+    color: var(--dark);
+    margin: 10px 0 0;
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(16px);
+    animation: wlHeaderIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.25s forwards;
+}
+
+@keyframes wlHeaderIn {
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* item count pill */
+.wl-count-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--white);
+    border: 1px solid rgba(0,0,0,0.06);
+    color: var(--gray);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 18px;
+    border-radius: 40px;
+    margin-bottom: 26px;
+    box-shadow: var(--shadow);
+    opacity: 0;
+    transform: translateY(14px);
+    animation: wlHeaderIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s forwards;
+}
+
+.wl-count-pill i { color: var(--primary); }
+
+/* ===== PRODUCT GRID REVEAL ===== */
+.wl-grid .product-card {
+    opacity: 0;
+    transform: translateY(28px);
+    animation: wlCardIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.wl-grid .product-card:nth-child(1) { animation-delay: 0.05s; }
+.wl-grid .product-card:nth-child(2) { animation-delay: 0.12s; }
+.wl-grid .product-card:nth-child(3) { animation-delay: 0.19s; }
+.wl-grid .product-card:nth-child(4) { animation-delay: 0.26s; }
+.wl-grid .product-card:nth-child(5) { animation-delay: 0.33s; }
+.wl-grid .product-card:nth-child(6) { animation-delay: 0.40s; }
+.wl-grid .product-card:nth-child(7) { animation-delay: 0.47s; }
+.wl-grid .product-card:nth-child(8) { animation-delay: 0.54s; }
+.wl-grid .product-card:nth-child(n+9) { animation-delay: 0.6s; }
+
+@keyframes wlCardIn {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.wl-grid .product-card {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.5s ease;
+}
+
+.wl-grid .product-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.05) 50%, transparent 70%);
+    transform: rotate(45deg) translateX(-100%);
+    transition: transform 0.8s;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.wl-grid .product-card:hover::before {
+    transform: rotate(45deg) translateX(100%);
+}
+
+.wl-grid .product-card:hover {
+    transform: translateY(-10px) scale(1.015);
+    box-shadow: var(--shadow-hover);
+}
+
+.wl-grid .product-card .image-wrap img {
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.wl-grid .product-card:hover .image-wrap img {
+    transform: scale(1.07) rotate(-1.5deg);
+}
+
+/* saved heart — gentle pulse to remind it's "loved" */
+.wl-grid .wishlist {
+    animation: wlHeartBeat 2.4s ease-in-out infinite;
+}
+
+@keyframes wlHeartBeat {
+    0%, 100% { transform: scale(1); }
+    15% { transform: scale(1.18); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.1); }
+    60% { transform: scale(1); }
+}
+
+.wl-grid .wishlist:hover {
+    animation: none;
+    transform: scale(1.15) rotate(-8deg);
+}
+
+/* remove animation on click feedback */
+.wl-grid .product-card.removing {
+    animation: wlCardOut 0.4s ease forwards;
+}
+
+@keyframes wlCardOut {
+    to { opacity: 0; transform: scale(0.85) translateY(10px); }
+}
+
+.wl-grid .add-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.wl-grid .add-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.wl-grid .add-btn:hover::after {
+    width: 260px;
+    height: 260px;
+}
+
+/* ===== EMPTY STATE ===== */
+.wl-empty {
+    text-align: center;
+    padding: 90px 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: wlHeaderIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s forwards;
+}
+
+.wl-empty .wl-empty-icon-wrap {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 24px;
+}
+
+.wl-empty .wl-empty-icon-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -20px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(94,64,116,0.08) 0%, transparent 70%);
+    animation: wlOrbPulse 3s ease-in-out infinite;
+}
+
+.wl-empty i.fa-heart-crack,
+.wl-empty i.fa-heart {
+    font-size: 60px;
+    color: #e3d5ea;
+    position: relative;
+    z-index: 1;
+    animation: wlEmptyFloat 3s ease-in-out infinite;
+}
+
+@keyframes wlEmptyFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(-4deg); }
+}
+
+.wl-empty h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    color: var(--dark);
+    margin-bottom: 10px;
+}
+
+.wl-empty p {
+    color: var(--gray);
+    margin-bottom: 26px;
+}
+
+.wl-empty .btn-primary {
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+}
+
+.wl-empty .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 32px rgba(94,64,116,0.25);
+}
+</style>
+{% endblock %}
+
 {% block content %}
-<div style="background:var(--cream);padding:30px 6%;text-align:center;">
-  <h1 style="font-family:'Cormorant Garamond',serif;font-size:38px;color:var(--dark);">My Wishlist</h1>
-  <p style="color:var(--gray);">Your saved favorites — shop them anytime</p>
-  <div style="font-size:13px;color:var(--gray);">
-    <a href="{% url 'core:home' %}" style="color:var(--primary);">Home</a> / Wishlist
-  </div>
+<div class="wishlist-hero">
+  <i class="fa-solid fa-heart wl-icon"></i>
+  <h1>My Wishlist</h1>
 </div>
 
 <section style="padding:40px 6% 80px;">
   {% if items %}
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;flex-wrap:wrap;gap:12px;">
-    <span style="color:var(--gray);font-size:14px;">{{ items.count }} item{{ items.count|pluralize }} in your wishlist</span>
+  <div style="display:flex;justify-content:center;margin-bottom:30px;">
+    <span class="wl-count-pill"><i class="fa-solid fa-heart"></i> {{ items.count }} item{{ items.count|pluralize }} saved</span>
   </div>
-  <div class="product-grid">
+  <div class="product-grid wl-grid" id="wishlistGrid">
     {% for item in items %}
-    <div class="product-card">
+    <div class="product-card" data-id="{{ item.product.id }}">
       <div class="image-wrap">
-        {% if item.product.discount_price %}<span class="discount">Sale</span>{% endif %}
-        <a href="{% url 'products:wishlist_remove' item.product.id %}" class="wishlist" style="background:var(--primary);color:white;border-color:var(--primary);">
+        {% if item.product.has_discount %}<span class="discount">-{{ item.product.get_discount_percent }}%</span>{% endif %}
+        <a href="{% url 'products:wishlist_remove' item.product.id %}" class="wishlist remove-wishlist-btn" style="background:var(--primary);color:white;border-color:var(--primary);">
           <i class="fa-solid fa-heart"></i>
         </a>
         <a href="{{ item.product.get_absolute_url }}">
@@ -32,8 +287,8 @@
         <span class="brand">{{ item.product.brand|default:"" }}</span>
         <h3><a href="{{ item.product.get_absolute_url }}" style="color:inherit;text-decoration:none;">{{ item.product.name }}</a></h3>
         <div class="price">
-          <span class="current">Rs.{{ item.product.current_price }}</span>
-          {% if item.product.discount_price %}<span class="old">Rs.{{ item.product.price }}</span>{% endif %}
+          <span class="current">Rs.{{ item.product.current_price|floatformat:0 }}</span>
+          {% if item.product.has_discount %}<span class="old">Rs.{{ item.product.price|floatformat:0 }}</span>{% endif %}
         </div>
         {% if item.product.in_stock %}
         <form method="post" action="{% url 'cart:add' item.product.id %}" style="margin:0;">
@@ -48,14 +303,35 @@
     {% endfor %}
   </div>
   {% else %}
-  <div style="text-align:center;padding:80px 20px;">
-    <i class="fa-regular fa-heart" style="font-size:64px;color:#ddd;display:block;margin-bottom:20px;"></i>
-    <h2 style="font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--dark);margin-bottom:10px;">Your Wishlist is Empty</h2>
-    <p style="color:var(--gray);margin-bottom:24px;">Save your favorite products to buy them later.</p>
+  <div class="wl-empty">
+    <div class="wl-empty-icon-wrap">
+      <i class="fa-regular fa-heart"></i>
+    </div>
+    <h2>Your Wishlist is Empty</h2>
+    <p>Save your favorite products to buy them later.</p>
     <a href="{% url 'products:shop' %}" class="btn-primary" style="display:inline-flex;">
       <i class="fa-solid fa-shop" style="margin-right:8px;"></i> Start Shopping
     </a>
   </div>
   {% endif %}
 </section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Smooth fade-out when removing an item from the wishlist
+document.querySelectorAll('.remove-wishlist-btn').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+        var card = this.closest('.product-card');
+        if (card) {
+            e.preventDefault();
+            var href = this.getAttribute('href');
+            card.classList.add('removing');
+            setTimeout(function () {
+                window.location.href = href;
+            }, 380);
+        }
+    });
+});
+</script>
 {% endblock %}

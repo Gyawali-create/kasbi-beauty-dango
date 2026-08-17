@@ -32,7 +32,15 @@
 <!-- ===== HEADER ===== -->
 <header class="header">
     <div class="logo">
-        <a href="{% url 'core:home' %}"><img src="{% static 'img/logo_new.png' %}" alt="Kasbi Beauty"></a>
+        <a href="{% url 'core:home' %}">
+            {% if site_settings.logo %}
+            <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.site_name }}"
+                 style="height:105px;width:auto;object-fit:contain;">
+            {% else %}
+            <img src="{% static 'img/logo_new.png' %}" alt="Kasbi Beauty"
+                 style="height:105px;width:auto;object-fit:contain;">
+            {% endif %}
+        </a>
     </div>
 
     <form class="search" method="get" action="{% url 'products:search' %}">

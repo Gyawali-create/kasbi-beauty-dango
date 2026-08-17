@@ -2,17 +2,6 @@
 {% load static %}
 {% block title %}Hair Care — {{ site_settings.site_name }}{% endblock %}
 
-{% block pre_content %}
-<div style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);padding:40px 6%;text-align:center;border-bottom:1px solid rgba(0,0,0,0.04);">
-    <span style="font-size:12px;letter-spacing:2px;color:#2e7d32;font-weight:600;text-transform:uppercase;">✿ Category</span>
-    <h1 style="font-family:'Cormorant Garamond',serif;font-size:42px;color:var(--dark);margin:10px 0 8px;">Hair Care</h1>
-    <p style="color:var(--gray);max-width:500px;margin:0 auto;">Strengthen, nourish, and style with our expert-curated hair care collection.</p>
-    <div style="font-size:13px;color:var(--gray);margin-top:10px;">
-        <a href="{% url 'core:home' %}" style="color:var(--primary);">Home</a> / Hair Care
-    </div>
-</div>
-{% endblock %}
-
 {% block content %}
 {% include 'products/_product_grid.html' %}
 {% endblock %}

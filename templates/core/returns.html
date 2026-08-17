@@ -4,134 +4,1552 @@
 
 {% block content %}
 
-<!-- PAGE HEADER -->
-<div style="background:var(--cream);padding:40px 6%;text-align:center;border-bottom:1px solid rgba(0,0,0,0.05);">
-    <h1 style="font-family:'Cormorant Garamond',serif;font-size:42px;color:var(--dark);margin-bottom:8px;">
-        Returns &amp; Refunds
-    </h1>
-    <p style="color:var(--gray);font-size:15px;">Our hassle-free return &amp; refund policy</p>
-    <div style="font-size:13px;color:var(--gray);margin-top:8px;">
-        <a href="{% url 'core:home' %}" style="color:var(--primary);">Home</a> / Returns &amp; Refunds
-    </div>
-</div>
+<style>
 
-<!-- POLICY CONTENT -->
-<section style="padding:60px 6%;max-width:900px;margin:0 auto;">
+/* =========================================================
+   KISBA BEAUTY — RETURNS & REFUNDS
+   PREMIUM ANIMATED DESIGN
+========================================================= */
+
+/* ---------- KEYFRAMES ---------- */
+
+@keyframes pageFade {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(55px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-45px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeRight {
+    from {
+        opacity: 0;
+        transform: translateX(45px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(.75);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes floating {
+    0%,100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-18px);
+    }
+}
+
+@keyframes floatingRotate {
+    0%,100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-14px) rotate(5deg);
+    }
+}
+
+@keyframes pulse {
+    0%,100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 rgba(212,175,55,0);
+    }
+    50% {
+        transform: scale(1.06);
+        box-shadow: 0 0 35px rgba(212,175,55,.18);
+    }
+}
+
+@keyframes glow {
+    0%,100% {
+        box-shadow: 0 15px 40px rgba(0,0,0,.06);
+    }
+    50% {
+        box-shadow: 0 20px 55px rgba(212,175,55,.16);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -300% center;
+    }
+    100% {
+        background-position: 300% center;
+    }
+}
+
+@keyframes shine {
+    0% {
+        left: -120%;
+    }
+    100% {
+        left: 120%;
+    }
+}
+
+@keyframes rotateSlow {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes borderPulse {
+    0%,100% {
+        border-color: rgba(212,175,55,.12);
+    }
+    50% {
+        border-color: rgba(212,175,55,.45);
+    }
+}
+
+@keyframes iconBounce {
+    0%,100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+/* ---------- PAGE HEADER ---------- */
+
+.returns-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 85px 6% 75px;
+    text-align: center;
+    background:
+        radial-gradient(circle at 15% 20%, rgba(212,175,55,.10), transparent 28%),
+        radial-gradient(circle at 85% 70%, rgba(212,175,55,.08), transparent 30%),
+        var(--cream);
+    border-bottom: 1px solid rgba(0,0,0,.05);
+    animation: pageFade .9s ease forwards;
+}
+
+.returns-hero::before {
+    content: "";
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    border: 1px solid rgba(212,175,55,.12);
+    border-radius: 50%;
+    top: -220px;
+    left: -100px;
+    animation: rotateSlow 25s linear infinite;
+}
+
+.returns-hero::after {
+    content: "";
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border: 1px dashed rgba(212,175,55,.16);
+    border-radius: 50%;
+    right: -100px;
+    bottom: -170px;
+    animation: rotateSlow 20s linear infinite reverse;
+}
+
+.hero-floating {
+    position: absolute;
+    color: var(--primary);
+    opacity: .18;
+    pointer-events: none;
+}
+
+.hero-floating.one {
+    top: 25px;
+    left: 18%;
+    font-size: 20px;
+    animation: floatingRotate 4s ease-in-out infinite;
+}
+
+.hero-floating.two {
+    top: 50%;
+    right: 17%;
+    font-size: 14px;
+    animation: floating 5s ease-in-out infinite .8s;
+}
+
+.hero-floating.three {
+    bottom: 30px;
+    left: 28%;
+    font-size: 12px;
+    animation: floating 4.5s ease-in-out infinite 1s;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    border: 1px solid rgba(212,175,55,.25);
+    border-radius: 50px;
+    background: rgba(255,255,255,.65);
+    color: var(--primary);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    backdrop-filter: blur(10px);
+    animation: scaleIn .8s cubic-bezier(.34,1.56,.64,1) .1s both;
+}
+
+.hero-title {
+    margin: 20px 0 10px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 58px;
+    line-height: 1;
+    color: var(--dark);
+    font-weight: 700;
+    animation: fadeUp .9s ease .2s both;
+}
+
+.hero-title span {
+    background: linear-gradient(
+        90deg,
+        var(--primary),
+        #f0c85a,
+        var(--primary)
+    );
+    background-size: 250% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 4s linear infinite;
+}
+
+.hero-description {
+    max-width: 560px;
+    margin: 18px auto 0;
+    color: var(--gray);
+    font-size: 15px;
+    line-height: 1.8;
+    animation: fadeUp .9s ease .35s both;
+}
+
+/* ---------- MAIN AREA ---------- */
+
+.returns-wrapper {
+    position: relative;
+    padding: 70px 6%;
+    max-width: 1050px;
+    margin: auto;
+}
+
+.returns-wrapper::before {
+    content: "";
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(
+        circle,
+        rgba(212,175,55,.06),
+        transparent 70%
+    );
+    left: -300px;
+    top: 250px;
+    pointer-events: none;
+}
+
+.returns-wrapper::after {
+    content: "";
+    position: absolute;
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(
+        circle,
+        rgba(212,175,55,.05),
+        transparent 70%
+    );
+    right: -280px;
+    bottom: 200px;
+    pointer-events: none;
+}
+
+/* ---------- POLICY CARD ---------- */
+
+.policy-card {
+    position: relative;
+    z-index: 2;
+    background: rgba(255,255,255,.95);
+    border: 1px solid rgba(0,0,0,.05);
+    border-radius: 30px;
+    padding: 48px;
+    box-shadow:
+        0 20px 70px rgba(0,0,0,.07);
+    animation: fadeUp 1s ease .3s both;
+    overflow: hidden;
+}
+
+.policy-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--primary),
+        #f5d742,
+        var(--primary),
+        transparent
+    );
+    background-size: 200% auto;
+    animation: shimmer 4s linear infinite;
+}
+
+.policy-card:hover {
+    box-shadow:
+        0 30px 90px rgba(0,0,0,.10);
+}
+
+/* ---------- ADMIN POLICY ---------- */
+
+.dynamic-policy {
+    line-height: 1.9;
+    font-size: 15px;
+    color: var(--gray);
+}
+
+.dynamic-policy h1,
+.dynamic-policy h2,
+.dynamic-policy h3 {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--dark);
+}
+
+.dynamic-policy a {
+    color: var(--primary);
+    transition: all .3s ease;
+}
+
+.dynamic-policy a:hover {
+    letter-spacing: .3px;
+}
+
+/* ---------- NOTICE ---------- */
+
+.notice-banner {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 22px 24px;
+    margin-bottom: 42px;
+    border-radius: 20px;
+    background:
+        linear-gradient(
+            135deg,
+            #fff0f4,
+            #fce4ec
+        );
+    border: 1px solid rgba(212,175,55,.12);
+    animation: fadeLeft .8s ease .5s both;
+    transition: all .4s ease;
+}
+
+.notice-banner:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(212,175,55,.12);
+}
+
+.notice-icon {
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background: linear-gradient(
+        135deg,
+        var(--primary),
+        #e5b34d
+    );
+    animation: pulse 3s ease-in-out infinite;
+}
+
+.notice-title {
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.notice-text {
+    color: var(--gray);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* ---------- SECTION ---------- */
+
+.policy-section {
+    position: relative;
+    margin-bottom: 48px;
+    padding-bottom: 8px;
+    animation: fadeUp .8s ease both;
+}
+
+.policy-section:last-child {
+    margin-bottom: 0;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.number-badge {
+    position: relative;
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: white;
+    font-size: 13px;
+    font-weight: 800;
+    background: linear-gradient(
+        135deg,
+        var(--primary),
+        #e5b34d
+    );
+    box-shadow: 0 10px 25px rgba(212,175,55,.2);
+    transition: all .5s cubic-bezier(.34,1.56,.64,1);
+}
+
+.number-badge::before {
+    content: "";
+    position: absolute;
+    inset: -5px;
+    border: 1px solid rgba(212,175,55,.18);
+    border-radius: 50%;
+    animation: pulse 3s ease-in-out infinite;
+}
+
+.policy-section:hover .number-badge {
+    transform: rotate(360deg) scale(1.1);
+    box-shadow: 0 12px 35px rgba(212,175,55,.35);
+}
+
+.section-heading h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 29px;
+    color: var(--dark);
+    margin: 0;
+    font-weight: 700;
+}
+
+.section-heading h2::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 2px;
+    margin-top: 5px;
+    background: var(--primary);
+    border-radius: 2px;
+    transition: width .5s ease;
+}
+
+.policy-section:hover .section-heading h2::after {
+    width: 60px;
+}
+
+/* ---------- LIST ---------- */
+
+.policy-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.policy-list li {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 13px 15px;
+    margin-bottom: 4px;
+    color: var(--gray);
+    font-size: 15px;
+    line-height: 1.7;
+    border-radius: 12px;
+    border-bottom: 1px solid var(--cream);
+    transition:
+        transform .35s ease,
+        background .35s ease,
+        padding-left .35s ease;
+}
+
+.policy-list li:hover {
+    background: var(--cream);
+    transform: translateX(7px);
+    padding-left: 20px;
+}
+
+.policy-list li i {
+    margin-top: 5px;
+    flex-shrink: 0;
+    transition: transform .4s ease;
+}
+
+.policy-list li:hover i {
+    transform: scale(1.25) rotate(8deg);
+}
+
+.policy-list strong {
+    color: var(--dark);
+}
+
+/* ---------- NON RETURNABLE GRID ---------- */
+
+.non-returnable-grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 13px;
+}
+
+.non-returnable-item {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 15px 17px;
+    background: var(--cream);
+    border: 1px solid transparent;
+    border-radius: 14px;
+    color: var(--gray);
+    font-size: 14px;
+    transition: all .4s cubic-bezier(.34,1.56,.64,1);
+}
+
+.non-returnable-item::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background: #e74c3c;
+    transform: scaleY(0);
+    transition: transform .4s ease;
+}
+
+.non-returnable-item:hover {
+    transform: translateY(-5px) scale(1.02);
+    background: white;
+    border-color: rgba(231,76,60,.12);
+    box-shadow: 0 15px 35px rgba(0,0,0,.07);
+}
+
+.non-returnable-item:hover::before {
+    transform: scaleY(1);
+}
+
+.non-returnable-item i {
+    color: #e74c3c;
+    transition: transform .4s ease;
+}
+
+.non-returnable-item:hover i {
+    transform: rotate(180deg) scale(1.2);
+}
+
+/* ---------- RETURN STEPS ---------- */
+
+.return-steps {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.return-steps::before {
+    content: "";
+    position: absolute;
+    left: 17px;
+    top: 18px;
+    bottom: 18px;
+    width: 1px;
+    background: linear-gradient(
+        to bottom,
+        var(--primary),
+        rgba(212,175,55,.08)
+    );
+}
+
+.return-step {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 16px 18px;
+    background: var(--cream);
+    border: 1px solid transparent;
+    border-radius: 15px;
+    transition: all .45s cubic-bezier(.34,1.56,.64,1);
+}
+
+.return-step:hover {
+    transform: translateX(8px);
+    background: white;
+    border-color: rgba(212,175,55,.2);
+    box-shadow: 0 15px 35px rgba(0,0,0,.07);
+}
+
+.step-number {
+    width: 35px;
+    height: 35px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: white;
+    background: linear-gradient(
+        135deg,
+        var(--primary),
+        #e4b34f
+    );
+    font-size: 12px;
+    font-weight: 800;
+    box-shadow: 0 7px 18px rgba(212,175,55,.2);
+    transition: all .4s ease;
+}
+
+.return-step:hover .step-number {
+    transform: scale(1.15) rotate(10deg);
+}
+
+.step-text {
+    color: var(--gray);
+    font-size: 14px;
+    line-height: 1.7;
+    padding-top: 5px;
+}
+
+/* ---------- CTA ---------- */
+
+.return-cta {
+    position: relative;
+    overflow: hidden;
+    margin-top: 45px;
+    padding: 42px 30px;
+    text-align: center;
+    border-radius: 25px;
+    color: white;
+    background:
+        radial-gradient(
+            circle at 10% 20%,
+            rgba(255,255,255,.15),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(255,255,255,.12),
+            transparent 25%
+        ),
+        linear-gradient(
+            135deg,
+            var(--primary),
+            #c97883,
+            #d58a94
+        );
+    background-size: 150% 150%;
+    animation:
+        fadeUp .9s ease both,
+        glow 4s ease-in-out infinite;
+}
+
+.return-cta::before {
+    content: "✦";
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    font-size: 20px;
+    opacity: .35;
+    animation: floatingRotate 4s ease-in-out infinite;
+}
+
+.return-cta::after {
+    content: "✦";
+    position: absolute;
+    bottom: 20px;
+    right: 35px;
+    font-size: 14px;
+    opacity: .3;
+    animation: floating 4s ease-in-out infinite 1s;
+}
+
+.return-cta h3 {
+    position: relative;
+    z-index: 1;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.return-cta p {
+    position: relative;
+    z-index: 1;
+    opacity: .9;
+    font-size: 14px;
+    margin-bottom: 22px;
+}
+
+.cta-button {
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 13px 30px;
+    border-radius: 50px;
+    background: white;
+    color: var(--primary);
+    font-weight: 800;
+    font-size: 14px;
+    text-decoration: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,.12);
+    transition: all .45s cubic-bezier(.34,1.56,.64,1);
+}
+
+.cta-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 80%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(212,175,55,.25),
+        transparent
+    );
+    transform: skewX(-20deg);
+}
+
+.cta-button:hover {
+    transform: translateY(-5px) scale(1.04);
+    box-shadow: 0 18px 40px rgba(0,0,0,.18);
+}
+
+.cta-button:hover::before {
+    animation: shine .7s ease forwards;
+}
+
+.cta-button i {
+    transition: transform .4s ease;
+}
+
+.cta-button:hover i {
+    transform: translateX(5px);
+}
+
+/* ---------- SCROLL REVEAL ---------- */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition:
+        opacity .8s ease,
+        transform .8s cubic-bezier(.22,1,.36,1);
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-left {
+    opacity: 0;
+    transform: translateX(-45px);
+    transition:
+        opacity .8s ease,
+        transform .8s cubic-bezier(.22,1,.36,1);
+}
+
+.reveal-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 768px) {
+
+    .returns-hero {
+        padding: 65px 5% 60px;
+    }
+
+    .hero-title {
+        font-size: 43px;
+    }
+
+    .returns-wrapper {
+        padding: 45px 5%;
+    }
+
+    .policy-card {
+        padding: 28px 20px;
+        border-radius: 22px;
+    }
+
+    .section-heading h2 {
+        font-size: 25px;
+    }
+
+    .non-returnable-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .notice-banner {
+        padding: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .hero-title {
+        font-size: 36px;
+    }
+
+    .hero-description {
+        font-size: 14px;
+    }
+
+    .policy-card {
+        padding: 23px 16px;
+    }
+
+    .section-heading {
+        gap: 10px;
+    }
+
+    .number-badge {
+        width: 36px;
+        height: 36px;
+    }
+
+    .section-heading h2 {
+        font-size: 22px;
+    }
+
+    .policy-list li {
+        font-size: 14px;
+    }
+
+    .return-cta {
+        padding: 35px 20px;
+    }
+
+    .return-cta h3 {
+        font-size: 26px;
+    }
+}
+
+/* ---------- REDUCED MOTION ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+}
+
+</style>
+
+
+<!-- =========================================================
+     POLICY CONTENT
+========================================================= -->
+
+<section class="returns-wrapper">
 
     {% if site.returns_policy %}
-    <!-- Dynamic policy from admin SiteSettings (Summernote HTML) -->
-    <div style="background:var(--white);border-radius:20px;padding:40px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.05);line-height:1.9;font-size:15px;color:var(--gray);">
-        {{ site.returns_policy|safe }}
-    </div>
+
+        <!-- =================================================
+             DYNAMIC ADMIN POLICY
+        ================================================== -->
+
+        <div class="policy-card dynamic-policy reveal">
+
+            {{ site.returns_policy|safe }}
+
+        </div>
+
 
     {% else %}
-    <!-- Default policy when none is set in admin -->
-    <div style="background:var(--white);border-radius:20px;padding:40px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.05);">
 
-        <!-- Notice banner -->
-        <div style="background:linear-gradient(135deg,#fce4ec,#f8bbd9);border-radius:14px;padding:20px 24px;margin-bottom:36px;display:flex;gap:16px;align-items:flex-start;">
-            <i class="fa-solid fa-circle-info" style="color:var(--primary);font-size:22px;flex-shrink:0;margin-top:2px;"></i>
-            <div>
-                <div style="font-weight:700;color:var(--dark);margin-bottom:4px;">Easy 7-Day Returns &amp; Refunds</div>
-                <div style="color:var(--gray);font-size:14px;">We want you to love your purchase. If you're not satisfied, we're here to help.</div>
-            </div>
-        </div>
+        <!-- =================================================
+             DEFAULT POLICY
+        ================================================== -->
 
-        <!-- ── RETURN POLICY ─────────────────────────── -->
-        <div style="margin-bottom:32px;">
-            <h2 style="font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--dark);margin-bottom:14px;display:flex;align-items:center;gap:10px;">
-                <span style="width:36px;height:36px;background:var(--primary);color:white;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;">1</span>
-                Return Policy
-            </h2>
-            <ul style="list-style:none;padding:0;color:var(--gray);font-size:15px;line-height:2;">
-                <li style="padding:8px 0;border-bottom:1px solid var(--cream);display:flex;align-items:flex-start;gap:10px;">
-                    <i class="fa-solid fa-check" style="color:var(--primary);margin-top:4px;flex-shrink:0;"></i>
-                    Returns accepted within <strong style="color:var(--dark);">7 days</strong> of delivery
-                </li>
-                <li style="padding:8px 0;border-bottom:1px solid var(--cream);display:flex;align-items:flex-start;gap:10px;">
-                    <i class="fa-solid fa-check" style="color:var(--primary);margin-top:4px;flex-shrink:0;"></i>
-                    Product must be <strong style="color:var(--dark);">unused, sealed, and in original packaging</strong>
-                </li>
-                <li style="padding:8px 0;border-bottom:1px solid var(--cream);display:flex;align-items:flex-start;gap:10px;">
-                    <i class="fa-solid fa-check" style="color:var(--primary);margin-top:4px;flex-shrink:0;"></i>
-                    Proof of purchase (order number) required
-                </li>
-                <li style="padding:8px 0;display:flex;align-items:flex-start;gap:10px;">
-                    <i class="fa-solid fa-xmark" style="color:#e74c3c;margin-top:4px;flex-shrink:0;"></i>
-                    Opened, used, or damaged products are <strong style="color:#e74c3c;">not eligible</strong> for return
-                </li>
-            </ul>
-        </div>
+        <div class="policy-card">
 
-        <!-- ── REFUND POLICY ──────────────────────────── -->
-        <div style="margin-bottom:32px;">
-            <h2 style="font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--dark);margin-bottom:14px;display:flex;align-items:center;gap:10px;">
-                <span style="width:36px;height:36px;background:var(--primary);color:white;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;">2</span>
-                Refund Policy
-            </h2>
-            <ul style="list-style:none;padding:0;color:var(--gray);font-size:15px;line-height:2;">
-                <li style="padding:8px 0;border-bottom:1px solid var(--cream);display:flex;align-items:flex-start;gap:10px;">
-                    <i class="fa-solid fa-check" style="color:var(--primary);margin-top:4px;flex-shrink:0;"></i>
-                    Once your return is received &amp; inspected, refund is processed within <strong style="color:var(--dark);">3–5 business days</strong>
-                </li>
-                <li style="padding:8px 0;border-bottom:1px solid var(--cream);display:flex;align-items:flex-start;gap:10px;">
-                    <i class="fa-solid fa-check" style="color:var(--primary);margin-top:4px;flex-shrink:0;"></i>
-                    Refunds are issued to the <strong style="color:var(--dark);">original payment method</strong>
-                </li>
-                <li style="padding:8px 0;border-bottom:1px solid var(--cream);display:flex;align-items:flex-start;gap:10px;">
-                    <i class="fa-solid fa-check" style="color:var(--primary);margin-top:4px;flex-shrink:0;"></i>
-                    For <strong style="color:var(--dark);">eSewa / Khalti</strong> — refund to your wallet within 1–2 days
-                </li>
-                <li style="padding:8px 0;display:flex;align-items:flex-start;gap:10px;">
-                    <i class="fa-solid fa-check" style="color:var(--primary);margin-top:4px;flex-shrink:0;"></i>
-                    For <strong style="color:var(--dark);">COD orders</strong> — refund via bank transfer or eSewa (we contact you)
-                </li>
-            </ul>
-        </div>
+            <!-- NOTICE -->
 
-        <!-- ── NON-RETURNABLE ─────────────────────────── -->
-        <div style="margin-bottom:32px;">
-            <h2 style="font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--dark);margin-bottom:14px;display:flex;align-items:center;gap:10px;">
-                <span style="width:36px;height:36px;background:var(--primary);color:white;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;">3</span>
-                Non-Returnable Items
-            </h2>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-                {% for item in non_returnable_items %}
-                <div style="background:var(--cream);border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:10px;font-size:14px;color:var(--gray);">
-                    <i class="fa-solid fa-ban" style="color:#e74c3c;font-size:12px;flex-shrink:0;"></i>
-                    {{ item }}
+            <div class="notice-banner reveal-left">
+
+                <div class="notice-icon">
+                    <i class="fa-solid fa-circle-info"></i>
                 </div>
-                {% endfor %}
-            </div>
-        </div>
 
-        <!-- ── HOW TO RETURN ──────────────────────────── -->
-        <div style="margin-bottom:32px;">
-            <h2 style="font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--dark);margin-bottom:20px;display:flex;align-items:center;gap:10px;">
-                <span style="width:36px;height:36px;background:var(--primary);color:white;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;">4</span>
-                How to Request a Return / Refund
-            </h2>
-            <div style="display:flex;flex-direction:column;gap:14px;">
-                {% for step in return_steps %}
-                <div style="display:flex;align-items:flex-start;gap:14px;background:var(--cream);border-radius:12px;padding:14px 18px;">
-                    <span style="width:28px;height:28px;background:var(--primary);color:white;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:1px;">{{ forloop.counter }}</span>
-                    <span style="color:var(--gray);font-size:14px;line-height:1.6;">{{ step }}</span>
+                <div>
+
+                    <div class="notice-title">
+                        Easy 7-Day Returns &amp; Refunds
+                    </div>
+
+                    <div class="notice-text">
+                        We want you to love your purchase.
+                        If you're not satisfied, we're here to help.
+                    </div>
+
                 </div>
-                {% endfor %}
+
             </div>
+
+
+            <!-- =================================================
+                 SECTION 1
+            ================================================== -->
+
+            <div class="policy-section reveal">
+
+                <div class="section-heading">
+
+                    <span class="number-badge">
+                        1
+                    </span>
+
+                    <h2>
+                        Return Policy
+                    </h2>
+
+                </div>
+
+                <ul class="policy-list">
+
+                    <li>
+                        <i class="fa-solid fa-check"></i>
+
+                        <span>
+                            Returns accepted within
+                            <strong>7 days</strong>
+                            of delivery
+                        </span>
+
+                    </li>
+
+                    <li>
+                        <i class="fa-solid fa-check"></i>
+
+                        <span>
+                            Product must be
+                            <strong>
+                                unused, sealed, and in original packaging
+                            </strong>
+                        </span>
+
+                    </li>
+
+                    <li>
+                        <i class="fa-solid fa-check"></i>
+
+                        <span>
+                            Proof of purchase
+                            (order number) required
+                        </span>
+
+                    </li>
+
+                    <li>
+
+                        <i
+                            class="fa-solid fa-xmark"
+                            style="color:#e74c3c;"
+                        ></i>
+
+                        <span>
+                            Opened, used, or damaged products are
+                            <strong style="color:#e74c3c;">
+                                not eligible
+                            </strong>
+                            for return
+                        </span>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- =================================================
+                 SECTION 2
+            ================================================== -->
+
+            <div class="policy-section reveal">
+
+                <div class="section-heading">
+
+                    <span class="number-badge">
+                        2
+                    </span>
+
+                    <h2>
+                        Refund Policy
+                    </h2>
+
+                </div>
+
+                <ul class="policy-list">
+
+                    <li>
+                        <i class="fa-solid fa-check"></i>
+
+                        <span>
+                            Once your return is received &amp; inspected,
+                            refund is processed within
+                            <strong>
+                                3–5 business days
+                            </strong>
+                        </span>
+
+                    </li>
+
+                    <li>
+                        <i class="fa-solid fa-check"></i>
+
+                        <span>
+                            Refunds are issued to the
+                            <strong>
+                                original payment method
+                            </strong>
+                        </span>
+
+                    </li>
+
+                    <li>
+                        <i class="fa-solid fa-check"></i>
+
+                        <span>
+                            For
+                            <strong>
+                                eSewa / Khalti
+                            </strong>
+                            — refund to your wallet within 1–2 days
+                        </span>
+
+                    </li>
+
+                    <li>
+                        <i class="fa-solid fa-check"></i>
+
+                        <span>
+                            For
+                            <strong>
+                                COD orders
+                            </strong>
+                            — refund via bank transfer or eSewa
+                            (we contact you)
+                        </span>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- =================================================
+                 SECTION 3
+            ================================================== -->
+
+            <div class="policy-section reveal">
+
+                <div class="section-heading">
+
+                    <span class="number-badge">
+                        3
+                    </span>
+
+                    <h2>
+                        Non-Returnable Items
+                    </h2>
+
+                </div>
+
+                <div class="non-returnable-grid">
+
+                    {% for item in non_returnable_items %}
+
+                    <div class="non-returnable-item">
+
+                        <i class="fa-solid fa-ban"></i>
+
+                        <span>
+                            {{ item }}
+                        </span>
+
+                    </div>
+
+                    {% empty %}
+
+                    <div class="non-returnable-item">
+                        <i class="fa-solid fa-ban"></i>
+                        <span>Opened beauty products</span>
+                    </div>
+
+                    <div class="non-returnable-item">
+                        <i class="fa-solid fa-ban"></i>
+                        <span>Used cosmetics</span>
+                    </div>
+
+                    <div class="non-returnable-item">
+                        <i class="fa-solid fa-ban"></i>
+                        <span>Damaged products</span>
+                    </div>
+
+                    <div class="non-returnable-item">
+                        <i class="fa-solid fa-ban"></i>
+                        <span>Products without original packaging</span>
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 SECTION 4
+            ================================================== -->
+
+            <div class="policy-section reveal">
+
+                <div class="section-heading">
+
+                    <span class="number-badge">
+                        4
+                    </span>
+
+                    <h2>
+                        How to Request a Return / Refund
+                    </h2>
+
+                </div>
+
+                <div class="return-steps">
+
+                    {% for step in return_steps %}
+
+                    <div class="return-step">
+
+                        <span class="step-number">
+                            {{ forloop.counter }}
+                        </span>
+
+                        <span class="step-text">
+                            {{ step }}
+                        </span>
+
+                    </div>
+
+                    {% empty %}
+
+                    <div class="return-step">
+
+                        <span class="step-number">
+                            1
+                        </span>
+
+                        <span class="step-text">
+                            Contact our support team with your order number.
+                        </span>
+
+                    </div>
+
+                    <div class="return-step">
+
+                        <span class="step-number">
+                            2
+                        </span>
+
+                        <span class="step-text">
+                            Tell us the reason for your return or refund request.
+                        </span>
+
+                    </div>
+
+                    <div class="return-step">
+
+                        <span class="step-number">
+                            3
+                        </span>
+
+                        <span class="step-text">
+                            Our team will review your request and guide you
+                            through the return process.
+                        </span>
+
+                    </div>
+
+                    <div class="return-step">
+
+                        <span class="step-number">
+                            4
+                        </span>
+
+                        <span class="step-text">
+                            Once the product is inspected and approved,
+                            your refund will be processed.
+                        </span>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 CTA
+            ================================================== -->
+
+            <div class="return-cta reveal">
+
+                <h3>
+                    Still have questions?
+                </h3>
+
+                <p>
+                    Our team is happy to help you with your
+                    return or refund.
+                </p>
+
+                <a
+                    href="{% url 'core:contact' %}"
+                    class="cta-button"
+                >
+
+                    <i class="fa-regular fa-message"></i>
+
+                    Contact Us
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+            </div>
+
         </div>
 
-        <!-- CTA -->
-        <div style="background:linear-gradient(135deg,var(--primary),#D58A94);border-radius:16px;padding:28px 32px;text-align:center;color:white;margin-top:16px;">
-            <h3 style="font-family:'Cormorant Garamond',serif;font-size:24px;margin-bottom:8px;">Still have questions?</h3>
-            <p style="opacity:0.9;font-size:14px;margin-bottom:18px;">Our team is happy to help you with your return or refund.</p>
-            <a href="{% url 'core:contact' %}"
-               style="background:white;color:var(--primary);padding:11px 28px;border-radius:30px;font-weight:700;font-size:14px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
-                <i class="fa-regular fa-message"></i> Contact Us
-            </a>
-        </div>
-
-    </div>
     {% endif %}
+
 </section>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* ==========================================
+       SCROLL REVEAL
+    ========================================== */
+
+    const revealElements =
+        document.querySelectorAll(
+            ".reveal, .reveal-left"
+        );
+
+    const observer =
+        new IntersectionObserver(
+            function(entries) {
+
+                entries.forEach(function(entry) {
+
+                    if (entry.isIntersecting) {
+
+                        entry.target.classList.add(
+                            "visible"
+                        );
+
+                        observer.unobserve(
+                            entry.target
+                        );
+
+                    }
+
+                });
+
+            },
+            {
+                threshold: 0.12,
+                rootMargin: "0px 0px -60px 0px"
+            }
+        );
+
+    revealElements.forEach(function(element) {
+
+        observer.observe(element);
+
+    });
+
+
+    /* ==========================================
+       STAGGER POLICY SECTIONS
+    ========================================== */
+
+    const sections =
+        document.querySelectorAll(
+            ".policy-section"
+        );
+
+    sections.forEach(function(section, index) {
+
+        section.style.transitionDelay =
+            (index * 0.08) + "s";
+
+    });
+
+
+    /* ==========================================
+       INTERACTIVE RETURN STEPS
+    ========================================== */
+
+    const steps =
+        document.querySelectorAll(
+            ".return-step"
+        );
+
+    steps.forEach(function(step) {
+
+        step.addEventListener(
+            "mouseenter",
+            function() {
+
+                const number =
+                    this.querySelector(
+                        ".step-number"
+                    );
+
+                if (number) {
+
+                    number.style.transform =
+                        "scale(1.15) rotate(10deg)";
+
+                }
+
+            }
+        );
+
+        step.addEventListener(
+            "mouseleave",
+            function() {
+
+                const number =
+                    this.querySelector(
+                        ".step-number"
+                    );
+
+                if (number) {
+
+                    number.style.transform =
+                        "scale(1) rotate(0deg)";
+
+                }
+
+            }
+        );
+
+    });
+
+
+    /* ==========================================
+       CTA BUTTON
+    ========================================== */
+
+    const cta =
+        document.querySelector(
+            ".cta-button"
+        );
+
+    if (cta) {
+
+        cta.addEventListener(
+            "mouseenter",
+            function() {
+
+                const arrow =
+                    this.querySelector(
+                        ".fa-arrow-right"
+                    );
+
+                if (arrow) {
+
+                    arrow.style.transform =
+                        "translateX(6px)";
+
+                }
+
+            }
+        );
+
+        cta.addEventListener(
+            "mouseleave",
+            function() {
+
+                const arrow =
+                    this.querySelector(
+                        ".fa-arrow-right"
+                    );
+
+                if (arrow) {
+
+                    arrow.style.transform =
+                        "translateX(0)";
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* ==========================================
+       CARD MOUSE TILT EFFECT
+       Very subtle — keeps it premium
+    ========================================== */
+
+    const card =
+        document.querySelector(
+            ".policy-card"
+        );
+
+    if (card && window.innerWidth > 900) {
+
+        card.addEventListener(
+            "mousemove",
+            function(e) {
+
+                const rect =
+                    card.getBoundingClientRect();
+
+                const x =
+                    e.clientX - rect.left;
+
+                const y =
+                    e.clientY - rect.top;
+
+                const centerX =
+                    rect.width / 2;
+
+                const centerY =
+                    rect.height / 2;
+
+                const rotateX =
+                    ((y - centerY) / centerY) * -0.5;
+
+                const rotateY =
+                    ((x - centerX) / centerX) * 0.5;
+
+                card.style.transform =
+                    `perspective(1200px)
+                     rotateX(${rotateX}deg)
+                     rotateY(${rotateY}deg)`;
+
+            }
+        );
+
+        card.addEventListener(
+            "mouseleave",
+            function() {
+
+                card.style.transform =
+                    "perspective(1200px) rotateX(0) rotateY(0)";
+
+            }
+        );
+
+    }
+
+});
+
+</script>
+
+
 {% endblock %}

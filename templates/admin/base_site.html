@@ -18,6 +18,7 @@
 {% block extrastyle %}
 {{ block.super }}
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/admin_custom.css' %}">
 <style>
 /* ══════════════════════════════════════
    BASE RESET
@@ -240,6 +241,21 @@ input[type=number],input[type=url],select,textarea{
   font-size:13px!important;
   font-family:'Inter',sans-serif!important;
   transition:border-color 0.2s,box-shadow 0.2s!important;
+  background:#fff!important;
+  color:#1a1a2e!important;
+  -webkit-text-fill-color:#1a1a2e!important;
+  opacity:1!important;
+}
+input[type=text]::placeholder,input[type=email]::placeholder,
+input[type=password]::placeholder,input[type=number]::placeholder,
+input[type=url]::placeholder,input[type=tel]::placeholder,
+input[type=search]::placeholder,textarea::placeholder{
+  color:#999!important;
+  -webkit-text-fill-color:#999!important;
+  opacity:1!important;
+}
+select option{
+  color:#1a1a2e!important;
   background:#fff!important;
 }
 input[type=text]:focus,input[type=email]:focus,

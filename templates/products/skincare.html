@@ -2,17 +2,6 @@
 {% load static %}
 {% block title %}Skincare — {{ site_settings.site_name }}{% endblock %}
 
-{% block pre_content %}
-<div style="background:linear-gradient(135deg,#E8D5E8,#F0E0F0);padding:40px 6%;text-align:center;border-bottom:1px solid rgba(0,0,0,0.04);">
-    <span style="font-size:12px;letter-spacing:2px;color:var(--primary);font-weight:600;text-transform:uppercase;">✦ Category</span>
-    <h1 style="font-family:'Cormorant Garamond',serif;font-size:42px;color:var(--dark);margin:10px 0 8px;">Skincare</h1>
-    <p style="color:var(--gray);max-width:500px;margin:0 auto;">Cleanse, nourish, and protect with our curated range of skincare essentials.</p>
-    <div style="font-size:13px;color:var(--gray);margin-top:10px;">
-        <a href="{% url 'core:home' %}" style="color:var(--primary);">Home</a> / Skincare
-    </div>
-</div>
-{% endblock %}
-
 {% block content %}
 {% include 'products/_product_grid.html' %}
 {% endblock %}
